@@ -116,7 +116,7 @@ const Hero: React.FC = () => {
         <div className="flex justify-center mt-4 md:mt-4 lg:mt-2">
           <button
             onClick={scrollToBenefits}
-            className="text-gray-700 flex flex-col items-center gap-1 opacity-70 hover:opacity-100 transition-opacity"
+            className="text-[#003399] flex flex-col items-center gap-1 opacity-90 hover:opacity-100 transition-opacity"
             aria-label="Rolar para benefícios"
           >
             <span className="text-sm md:text-sm lg:text-xs font-medium">Saiba mais</span>
