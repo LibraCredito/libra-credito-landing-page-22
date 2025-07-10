@@ -270,6 +270,12 @@ const ContactForm: React.FC<ContactFormProps> = ({
         <Button
           type="submit"
           disabled={loading || !aceitePrivacidade}
+          onClick={(e) => {
+            if (!nome || !email || !telefone || !imovelProprio) {
+              e.preventDefault();
+              alert('Por favor, preencha todos os campos antes de solicitar a análise.');
+            }
+          }}
           className={`w-full py-3 text-sm font-semibold ${buttonClassName}`}
         >
           {loading ? (
@@ -432,6 +438,12 @@ const ContactForm: React.FC<ContactFormProps> = ({
             <Button
               type="submit"
               disabled={loading || !aceitePrivacidade}
+              onClick={(e) => {
+                if (!nome || !email || !telefone || !imovelProprio) {
+                  e.preventDefault();
+                  alert('Por favor, preencha todos os campos antes de solicitar a análise.');
+                }
+              }}
               className="w-full bg-gray-400 hover:bg-gray-500 text-white py-3 text-sm font-semibold"
             >
               {loading ? (

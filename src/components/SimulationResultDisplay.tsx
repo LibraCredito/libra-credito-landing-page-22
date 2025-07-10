@@ -129,7 +129,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         <div className="flex items-center gap-2 mb-4">
           <CheckCircle className="w-5 h-5 text-green-600" />
           <div>
-            <h3 className="font-bold">Simulação Pronta!</h3>
+            <h3 className="font-bold text-white">Simulação Pronta!</h3>
           </div>
         </div>
 
@@ -170,12 +170,9 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         {/* Renda mínima */}
         <div className="bg-green-50 rounded-lg p-3 mb-4 text-center relative text-green-700">
           <div className="text-sm mb-1 flex items-center justify-center gap-1">
-            <span>Renda necessária</span>
+            <span className="font-bold">Renda necessária</span>
             <TooltipInfo content="Renda familiar podendo ser composta por até 4 pessoas">
               <Users className="w-3 h-3" />
-            </TooltipInfo>
-            <TooltipInfo content="Informações sobre comprovação de renda">
-              <Info className="w-3 h-3" />
             </TooltipInfo>
           </div>
           <div className="text-lg font-bold">
@@ -199,7 +196,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         </div>
 
         {/* CTA e Formulário compacto */}
-        <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-800 rounded-lg p-3 mb-4 lg:mb-3 text-center">
+        <div className="bg-libra-blue text-white rounded-lg p-3 mb-4 lg:mb-3 text-center">
           <p className="font-bold">🎉 Gostou? Solicite uma consultoria gratuita!</p>
         </div>
         
@@ -221,7 +218,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
       <div className="flex items-center justify-between mb-3">
       <div className="flex items-center gap-2">
           <CheckCircle className="w-5 h-5 text-green-600" />
-          <h3 className="text-lg font-bold">Simulação Pronta!</h3>
+          <h3 className="text-lg font-bold text-white">Simulação Pronta!</h3>
         </div>
         <Button
           onClick={onNewSimulation}
@@ -259,12 +256,9 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
               {/* Renda mínima */}
               <div className="text-center rounded-lg p-2 border border-green-200">
                 <div className="text-xs mb-1 flex items-center justify-center gap-1">
-                  <span>Renda necessária</span>
+                  <span className="font-bold">Renda necessária</span>
                   <TooltipInfo content="Renda familiar podendo ser composta por até 4 pessoas">
                     <Users className="w-3 h-3" />
-                  </TooltipInfo>
-                  <TooltipInfo content="Informações sobre comprovação de renda">
-                    <Info className="w-3 h-3" />
                   </TooltipInfo>
                 </div>
                 <div className="text-base font-bold">
@@ -286,12 +280,9 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
             </div>
             <div className="bg-green-50 rounded-lg p-4 text-center relative">
               <div className="text-xs mb-1 flex items-center justify-center gap-1">
-                <span>Renda necessária</span>
+                <span className="font-bold">Renda necessária</span>
                 <TooltipInfo content="Renda familiar podendo ser composta por até 4 pessoas">
                   <Users className="w-3 h-3" />
-                </TooltipInfo>
-                <TooltipInfo content="Informações sobre comprovação de renda">
-                  <Info className="w-3 h-3" />
                 </TooltipInfo>
               </div>
               <div className="text-xl lg:text-2xl font-bold">
@@ -314,7 +305,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
       </div>
 
       {/* CTA e Formulário compacto */}
-      <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-800 rounded-lg p-3 mb-4 lg:mb-3 text-center">
+      <div className="bg-libra-blue text-white rounded-lg p-3 mb-4 lg:mb-3 text-center">
         <p className="font-bold">🎉 Gostou? Solicite uma consultoria gratuita!</p>
       </div>
       
