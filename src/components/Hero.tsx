@@ -59,7 +59,7 @@ const Hero: React.FC = () => {
             <div>
                 <h1
                   id="hero-heading"
-                  className="text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-bold mb-3 md:mb-3 lg:mb-3 leading-tight"
+                  className="text-[clamp(1rem,5vw,3.75rem)] font-bold mb-3 leading-tight"
                 >
                   <span className="whitespace-nowrap">Crédito Com Garantia de Imóvel</span>
                   <br />
