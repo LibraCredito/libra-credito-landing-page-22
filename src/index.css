@@ -258,8 +258,9 @@
     --header-height-mobile: 80px; /* py-2 (16px) + h-16 (64px) = 80px */
     /* Altura aproximada do header em desktop */
     --header-height-desktop: 86px;
-    --header-offset-mobile: 96px; /* altura + 16px de segurança */
-    --header-offset-desktop: 102px; /* altura + 16px de segurança */
+    /* Espaços compensados exatamente com a altura do header */
+    --header-offset-mobile: 80px;
+    --header-offset-desktop: 86px;
   }
 
 }

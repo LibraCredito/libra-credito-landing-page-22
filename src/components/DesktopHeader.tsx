@@ -47,7 +47,7 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
         const height = headerRef.current.offsetHeight;
         document.documentElement.style.setProperty(
           '--header-offset-desktop',
-          `${height + 16}px`
+          `${height}px`
         );
       }
     };
