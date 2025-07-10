@@ -108,11 +108,11 @@ const TrustBarMinimal: React.FC = () => {
                 <div className="text-center md:text-left">
                   <div className="text-[0.9rem] md:text-[1.2rem] font-bold text-white leading-none">
                     {stat.value}
-                    <span className="text-white font-bold text-[0.7rem] md:text-[1rem]">
+                    <span className="text-white font-bold text-[0.75rem] md:text-[1rem]">
                       {stat.suffix}
                     </span>
                   </div>
-                  <div className="text-[0.6rem] md:text-[0.7rem] font-medium text-white/80 mt-0.5">
+                  <div className="text-[0.75rem] md:text-[0.875rem] font-medium text-white/80 mt-0.5">
                     {stat.label}
                   </div>
                 </div>
