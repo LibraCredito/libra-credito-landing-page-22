@@ -158,8 +158,7 @@ export function useUserJourney(): UserJourneyHook {
         try {
           const utms = extractUTMParams();
           const deviceInfo = getDeviceInfo();
-          const ip = await getUserIP();
-          
+
           const newJourney: UserJourneyData = {
             session_id: sessionId,
             utm_source: utms.utm_source || null,
@@ -171,10 +170,20 @@ export function useUserJourney(): UserJourneyHook {
             landing_page: window.location.href,
             pages_visited: [],
             device_info: deviceInfo,
-            ip_address: ip
+            ip_address: null
           };
-          
+
           existingJourney = await supabaseApi.createUserJourney(newJourney);
+
+          getUserIP()
+            .then(ip =>
+              supabaseApi.updateUserJourney(sessionId, { ip_address: ip })
+            )
+            .catch(error => {
+              if (process.env.NODE_ENV === 'development') {
+                console.warn('Failed to update IP address:', error);
+              }
+            });
           if (process.env.NODE_ENV === 'development') {
             console.log('Nova jornada criada:', existingJourney);
           }

@@ -11,6 +11,7 @@ const BlogSection: React.FC = () => {
   const isMobile = useIsMobile();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
     const loadLatestPosts = async () => {
@@ -61,7 +62,29 @@ const BlogSection: React.FC = () => {
       }
     };
 
-    loadLatestPosts();
+    if (shouldLoad) {
+      loadLatestPosts();
+    }
+  }, [shouldLoad]);
+
+  // Start loading when section enters the viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '100px' }
+    );
+
+    const element = document.getElementById('blog-section');
+    if (element) {
+      observer.observe(element);
+    }
+
+    return () => observer.disconnect();
   }, []);
 
   const handleGoToBlog = () => {
@@ -69,7 +92,7 @@ const BlogSection: React.FC = () => {
   };
 
   return (
-    <section className={`${isMobile ? 'py-12' : 'py-16'} bg-white`}>
+    <section id="blog-section" className={`${isMobile ? 'py-12' : 'py-16'} bg-white`}>
       <div className="container mx-auto px-4">
         <div className="text-center mb-8 md:mb-12">
           <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold text-[#003399] mb-4`}>
