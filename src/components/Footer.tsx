@@ -106,6 +106,17 @@ const Footer: React.FC = () => {
                 <ExternalLink className="w-7 h-7" />
               </a>
             </div>
+
+            <div id="ra-verified-seal">
+              <script
+                type="text/javascript"
+                id="ra-embed-verified-seal"
+                src="https://s3.amazonaws.com/raichu-beta/ra-verified/bundle.js"
+                data-id="Y21PdzlSbG1iOEw4ZWVzMDpsaWJyYS1jcmVkaXRvLXNvbHVjb2VzLWZpbmFuY2VpcmFz"
+                data-target="ra-verified-seal"
+                data-model="2"
+              ></script>
+            </div>
             
             {/* Botão Voltar ao Topo - apenas desktop */}
             <button 
