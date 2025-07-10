@@ -52,7 +52,7 @@ const Hero: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10 flex-grow flex flex-col justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
           {/* Lado Esquerdo */}
-          <div className="text-[#003399] space-y-3 md:space-y-4 lg:space-y-3 xl:space-y-5">
+          <div className="text-[#003399] space-y-3 md:space-y-4 lg:space-y-3 xl:space-y-5 md:text-center md:flex md:flex-col md:items-center">
             {/* Espaçamento extra para mobile */}
             {isMobile && <div className="h-8"></div>}
             
@@ -85,7 +85,7 @@ const Hero: React.FC = () => {
             </div>
 
             {/* Botões */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-3 lg:gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-3 lg:gap-3 md:justify-center">
               <PremiumButton 
                 onClick={scrollToSimulator} 
                 variant="primary"

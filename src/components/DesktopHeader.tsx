@@ -109,12 +109,12 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
             </div>
 
             {/* Navegação */}
-            <nav className="flex-1 flex items-center justify-center space-x-6 xl:space-x-10 h-full">
+            <nav className="flex-1 flex items-center justify-center space-x-4 md:space-x-6 xl:space-x-10 h-full">
               {navigationItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`relative flex items-center h-full text-[1.0125rem] lg:text-[1.1406rem] xl:text-[1.2656rem] font-medium transition-all duration-200 hover:text-libra-blue ${
+                  className={`relative flex items-center h-full text-[0.95rem] md:text-[1.0125rem] lg:text-[1.1406rem] xl:text-[1.2656rem] font-medium transition-all duration-200 hover:text-libra-blue ${
                     location.pathname === item.path
                       ? 'text-libra-blue after:absolute after:bottom-[-10px] after:left-0 after:w-full after:h-0.5 after:bg-libra-blue'
                       : 'text-libra-navy hover:text-libra-blue'
