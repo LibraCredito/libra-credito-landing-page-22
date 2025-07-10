@@ -73,7 +73,7 @@ const HeroMinimal: React.FC = () => {
               <FloatingElement delay={200}>
                 <h1
                   id="hero-heading"
-                  className="text-[clamp(1rem,5vw,3.75rem)] font-bold leading-tight text-white"
+                  className="text-[clamp(1.15rem,5.75vw,4.3125rem)] font-bold leading-tight text-white"
                 >
                   <span className="whitespace-nowrap">Crédito Com Garantia de Imóvel</span>
                   <br />
