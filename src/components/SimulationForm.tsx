@@ -93,14 +93,7 @@ const SimulationForm: React.FC = () => {
       setTimeout(() => {
         const resultElement = document.querySelector('[data-result-section="true"]');
         if (resultElement) {
-          const offset = 20; // Pequeno offset para melhor visualização
-          const elementPosition = resultElement.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - offset;
-          
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
+          (resultElement as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }, 300); // Delay para garantir que o resultado seja renderizado
     }
@@ -483,7 +476,7 @@ const SimulationForm: React.FC = () => {
 
         {/* Resultado ou Complemento */}
         {(resultado || (isLtvMessage && apiMessage)) && (
-          <div data-result-section="true" className={showSideComplement ? '' : 'mt-4'}>
+          <div data-result-section="true" className={`${showSideComplement ? '' : 'mt-4'} scroll-mt-header`}>
             {resultado ? (
               <SimulationResultDisplay
                 resultado={resultado}

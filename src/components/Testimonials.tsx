@@ -103,7 +103,7 @@ const Testimonials: React.FC = () => {
   }, []);
   
   return (
-    <section id="testimonials" className={`${isMobile ? 'py-4' : 'py-8 md:py-12'} bg-white scroll-mt-[88px]`}>
+    <section id="testimonials" className={`${isMobile ? 'py-4' : 'py-8 md:py-12'} bg-white scroll-mt-header`}>
       <div className="container mx-auto px-4">
         <div className="text-center mb-6 md:mb-12">
           <div className="flex justify-center items-center gap-2 mb-2 md:mb-4">

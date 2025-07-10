@@ -193,6 +193,16 @@
       margin-top: var(--header-offset-desktop);
     }
   }
+
+  .scroll-mt-header {
+    scroll-margin-top: var(--header-offset-mobile);
+  }
+
+  @media (min-width: 768px) {
+    .scroll-mt-header {
+      scroll-margin-top: var(--header-offset-desktop);
+    }
+  }
   
   /* Para Hero sections que ocupam viewport completo */
   .min-h-screen-header {
