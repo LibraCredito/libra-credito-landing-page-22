@@ -67,7 +67,7 @@ const HeroMinimal: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             
             {/* Lado Esquerdo - Conteúdo Minimalista */}
-            <div className="text-white space-y-8">
+            <div className="text-white space-y-8 text-center flex flex-col items-center">
               
               {/* Título Original */}
               <FloatingElement delay={200}>
@@ -89,7 +89,7 @@ const HeroMinimal: React.FC = () => {
                   <p className="text-lg md:text-xl text-white/90 leading-relaxed font-medium">
                     Crédito inteligente para quem construiu patrimonio.
                   </p>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 justify-center">
                     <Shield className="w-5 h-5 text-[#00ccff] flex-shrink-0" aria-hidden="true" />
                     <p className="text-base md:text-lg text-white/80 leading-relaxed font-bold">
                       Atendimento Personalizado, Segurança e Transparência!
