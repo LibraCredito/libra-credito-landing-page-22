@@ -108,17 +108,20 @@ const Footer: React.FC = () => {
               </a>
             </div>
 
-            <RASeal />
-            
             {/* Botão Voltar ao Topo - apenas desktop */}
-            <button 
-              onClick={scrollToTop} 
+            <button
+              onClick={scrollToTop}
               className="hidden md:flex items-center gap-1 md:gap-2 ml-auto text-white/80 hover:text-white transition-colors text-xs md:text-sm"
               aria-label="Voltar ao topo"
             >
               <ChevronUp className="w-3 h-3 md:w-4 md:h-4" />
               <span className="hidden md:inline">Voltar ao topo</span>
             </button>
+          </div>
+
+          {/* Selo Reclame Aqui - posicionado à direita no desktop e centralizado no mobile */}
+          <div className="col-span-3 md:col-span-1 md:col-start-3 flex justify-center md:justify-end mt-4">
+            <RASeal />
           </div>
         </div>
 
