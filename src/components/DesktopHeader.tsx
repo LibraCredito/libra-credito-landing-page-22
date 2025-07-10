@@ -95,11 +95,12 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
         {/* Faixa principal */}
         <div className="border-b border-gray-100">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-[52px] lg:h-[68px]">
+          {/* Height increased 20% for desktop */}
+          <div className="flex items-center justify-between h-[62px] lg:h-[82px]">
             {/* Logo e slogan */}
             <div className="flex items-center gap-6">
               <Link to="/" className="flex items-center">
-                <div className="h-[52px] lg:h-[68px] overflow-hidden flex items-center">
+                <div className="h-[62px] lg:h-[82px] overflow-hidden flex items-center">
                   <ImageOptimizer
                     src="/images/logos/libra-logo.png"
                     alt="Libra Crédito - Home Equity com garantia de imóvel"
