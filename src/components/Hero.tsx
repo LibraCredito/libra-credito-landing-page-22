@@ -74,7 +74,7 @@ const Hero: React.FC = () => {
                     Atendimento Personalizado, Segurança e Transparência!
                   </p>
                 </div>
-                <p className="text-[0.9rem] md:text-[1.05rem] lg:text-[1.05rem] xl:text-[1.2rem] 2xl:text-[1.44rem] text-[#003399] leading-relaxed">
+                <p className="text-[0.9rem] md:text-[1.05rem] lg:text-[1.05rem] xl:text-[1.2rem] 2xl:text-[1.44rem] text-[#003399] leading-relaxed font-bold">
                   Taxas a partir de 1,19% a.m. • Até 180 meses • 100% online
                 </p>
               </div>
