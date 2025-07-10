@@ -26,18 +26,7 @@ const HeroMinimal: React.FC = () => {
   const scrollToBenefits = () => {
     const trustbarSection = document.getElementById('trustbar');
     if (trustbarSection) {
-      const headerOffsetMobile = 96;
-      const headerOffsetDesktop = 120;
-      const isMobileScreen = window.innerWidth < 768;
-      const headerOffset = isMobileScreen ? headerOffsetMobile : headerOffsetDesktop;
-      
-      const elementPosition = trustbarSection.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      trustbarSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 

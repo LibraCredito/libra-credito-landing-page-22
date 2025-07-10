@@ -84,7 +84,7 @@ const Benefits: React.FC = () => {
       {/* Ondas orientadas para cima antes da seção - apenas mobile */}
       {isMobile && <WaveSeparator variant="hero" height="md" inverted />}
       
-      <section id="benefits" className={`${isMobile ? 'pt-4 pb-6' : 'pt-6 md:pt-8 lg:pt-8 xl:pt-10 pb-6 md:pb-8 lg:pb-8 xl:pb-10'} bg-white scroll-mt-[88px]`}>
+      <section id="benefits" className={`${isMobile ? 'pt-4 pb-6' : 'pt-6 md:pt-8 lg:pt-8 xl:pt-10 pb-6 md:pb-8 lg:pb-8 xl:pb-10'} bg-white scroll-mt-header`}>
         <div className="container mx-auto px-4">
           <div className="text-center mb-6 md:mb-8 lg:mb-8 xl:mb-10">
             <p className={`${isMobile ? 'text-sm' : 'text-lg'} text-green-500 font-semibold uppercase tracking-wider mb-4`}>
@@ -130,28 +130,23 @@ const Benefits: React.FC = () => {
                 onClick={() => {
                   const testimonialsSection = document.getElementById('testimonials');
                   if (testimonialsSection) {
-                    // Procura pelo vídeo especificamente dentro da seção de testimonials
                     const videoContainer = testimonialsSection.querySelector('.aspect-video');
                     const extraOffset = window.innerHeight * 0.15; // Deslocamento adicional de 15%
                     if (videoContainer) {
-                      const videoPosition = videoContainer.getBoundingClientRect().top;
-                      const videoHeight = videoContainer.getBoundingClientRect().height;
+                      const rect = videoContainer.getBoundingClientRect();
                       const windowHeight = window.innerHeight;
                       const headerOffset = 120;
-
-                      // Calcula a posição para centralizar o vídeo na tela
-                      const centerOffset = (windowHeight - videoHeight) / 2;
-                      const targetPosition = videoPosition + window.pageYOffset - centerOffset - headerOffset + extraOffset;
+                      const centerOffset = (windowHeight - rect.height) / 2;
+                      const targetPosition = rect.top + window.pageYOffset - centerOffset - headerOffset + extraOffset;
 
                       window.scrollTo({
                         top: targetPosition,
                         behavior: 'smooth'
                       });
                     } else {
-                      // Fallback para a seção inteira se não encontrar o vídeo
                       const headerOffset = 120;
-                      const elementPosition = testimonialsSection.getBoundingClientRect().top;
-                      const offsetPosition = elementPosition + window.pageYOffset - headerOffset + extraOffset;
+                      const rect = testimonialsSection.getBoundingClientRect();
+                      const offsetPosition = rect.top + window.pageYOffset - headerOffset + extraOffset;
 
                       window.scrollTo({
                         top: offsetPosition,

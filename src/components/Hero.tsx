@@ -23,21 +23,22 @@ const Hero: React.FC = () => {
     const trustbar = document.getElementById('trustbar');
     if (card) {
       const headerOffset = window.innerWidth < 768 ? 96 : 108;
-      const trustbarHeight = trustbar ? trustbar.getBoundingClientRect().height : 0;
-      const cardHeight = card.getBoundingClientRect().height;
+      const trustbarRect = trustbar?.getBoundingClientRect();
+      const cardRect = card.getBoundingClientRect();
+      const trustbarHeight = trustbarRect ? trustbarRect.height : 0;
+      const cardHeight = cardRect.height;
       const centerOffset = (window.innerHeight - cardHeight) / 2;
       const baseTarget =
-        card.getBoundingClientRect().top +
+        cardRect.top +
         window.pageYOffset -
         headerOffset -
         trustbarHeight -
         centerOffset;
-      
-      // Rolagem responsiva: Desktop 20% (perfeito), Mobile 24% (ajustado)
-      const isMobile = window.innerWidth < 768;
-      const additionalScroll = window.innerHeight * (isMobile ? 0.24 : 0.20);
+
+      const isMobileView = window.innerWidth < 768;
+      const additionalScroll = window.innerHeight * (isMobileView ? 0.24 : 0.2);
       const target = baseTarget + additionalScroll;
-      
+
       window.scrollTo({ top: target, behavior: 'smooth' });
     }
   };
