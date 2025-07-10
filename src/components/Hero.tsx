@@ -52,33 +52,32 @@ const Hero: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10 flex-grow flex flex-col justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
           {/* Lado Esquerdo */}
-          <div className="text-[#003399] space-y-3 md:space-y-4 lg:space-y-3 xl:space-y-5 text-center flex flex-col items-center">
+          <div className="text-[#003399] space-y-3 md:space-y-4 lg:space-y-3 xl:space-y-5 text-center lg:text-left flex flex-col items-center lg:items-start">
             {/* Espaçamento extra para mobile */}
             {isMobile && <div className="h-8"></div>}
             
             <div>
                 <h1
                   id="hero-heading"
-                  className="text-[1.125rem] md:text-[1.35rem] lg:text-[1.35rem] xl:text-[1.6875rem] 2xl:text-[2.025rem] font-bold mb-3 leading-tight"
+                  className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold mb-4 leading-tight"
                 >
-                  <span className="whitespace-nowrap">Crédito Com Garantia de Imóvel</span>
-                  <br />
-                  é mais simples na Libra!
+                  <span className="block">Crédito com Garantia de Imóvel</span>
+                  <span className="block">é mais simples na Libra!</span>
                 </h1>
               <div className="space-y-3 md:space-y-3 lg:space-y-2">
                 <p className="text-sm md:text-base lg:text-base xl:text-lg text-[#003399] leading-relaxed font-medium">
-                  Crédito inteligente para quem construiu patrimonio.
+                  Crédito inteligente para quem construiu patrimônio.
                 </p>
-                <div className="flex items-center gap-3 justify-center">
+                <div className="flex items-center gap-3 justify-center lg:justify-start">
                   <Shield className="w-5 h-5 lg:w-5 lg:h-5 text-[#003399] flex-shrink-0" aria-hidden="true" />
-                  <p className="text-xs md:text-sm lg:text-sm xl:text-base text-[#003399] leading-relaxed font-bold text-center">
+                  <p className="text-xs md:text-sm lg:text-sm xl:text-base text-[#003399] leading-relaxed font-bold">
                     Atendimento Personalizado, Segurança e Transparência!
                   </p>
                 </div>
-                <p className="text-[0.9rem] md:text-[1.05rem] lg:text-[1.05rem] xl:text-[1.2rem] 2xl:text-[1.44rem] text-[#003399] leading-relaxed font-bold">
+                <p className="text-sm md:text-base lg:text-base xl:text-lg text-[#003399] leading-relaxed font-bold">
                   Taxas a partir de 1,19% a.m. • Até 180 meses • 100% online
                 </p>
-                <p className="text-[1.125rem] md:text-[1.35rem] lg:text-[1.35rem] xl:text-[1.6875rem] 2xl:text-[2.025rem] font-bold leading-tight">
+                <p className="text-lg md:text-xl lg:text-xl xl:text-2xl font-bold leading-tight">
                   Libere até 50% do valor do seu imóvel
                 </p>
               </div>
