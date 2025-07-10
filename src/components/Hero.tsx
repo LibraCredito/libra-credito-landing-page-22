@@ -65,9 +65,6 @@ const Hero: React.FC = () => {
                 <p className="text-sm md:text-base lg:text-base xl:text-lg text-[#003399] leading-relaxed font-medium">
                   Crédito inteligente para quem construiu patrimonio.
                 </p>
-                <p className="text-[1.125rem] md:text-[1.35rem] lg:text-[1.35rem] xl:text-[1.6875rem] 2xl:text-[2.025rem] font-bold leading-tight">
-                  Libere até 50% do valor do seu imóvel
-                </p>
                 <div className="flex items-center gap-3">
                   <Shield className="w-5 h-5 lg:w-5 lg:h-5 text-[#003399] flex-shrink-0" aria-hidden="true" />
                   <p className="text-xs md:text-sm lg:text-sm xl:text-base text-[#003399] leading-relaxed font-bold">
@@ -76,6 +73,9 @@ const Hero: React.FC = () => {
                 </div>
                 <p className="text-[0.9rem] md:text-[1.05rem] lg:text-[1.05rem] xl:text-[1.2rem] 2xl:text-[1.44rem] text-[#003399] leading-relaxed font-bold">
                   Taxas a partir de 1,19% a.m. • Até 180 meses • 100% online
+                </p>
+                <p className="text-[1.125rem] md:text-[1.35rem] lg:text-[1.35rem] xl:text-[1.6875rem] 2xl:text-[2.025rem] font-bold leading-tight">
+                  Libere até 50% do valor do seu imóvel
                 </p>
               </div>
             </div>
