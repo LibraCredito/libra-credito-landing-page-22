@@ -9,6 +9,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import Hero from '@/components/Hero';
 import TrustBarMinimal from '@/components/TrustBarMinimal';
 import WaveSeparator from '@/components/ui/WaveSeparator';
+import SlimWaveBand from '@/components/SlimWaveBand';
 
 // Lazy loading dos componentes pesados
 const Benefits = lazy(() => import('@/components/Benefits'));
@@ -58,7 +59,10 @@ const Index: React.FC = () => {
       <Suspense fallback={<SectionLoader />}>
         <Benefits />
       </Suspense>
-      
+
+      {/* Faixa de ondas dupla com sobreposição de azuis */}
+      <SlimWaveBand />
+
       <Suspense fallback={<SectionLoader />}>
         <Testimonials />
       </Suspense>
