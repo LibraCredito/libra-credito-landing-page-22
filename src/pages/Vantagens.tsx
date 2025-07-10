@@ -157,7 +157,16 @@ const Vantagens: React.FC = () => {
       icon: BadgeCheck,
       title: "Credibilidade",
       description: "Grupo Stéfani - 40+ anos",
-      benefit: <a href="https://www.construtorastefani.com.br/" target="_blank" rel="noopener noreferrer" className="text-white hover:underline">Tradição e confiança</a>
+      benefit: (
+        <a
+          href="https://www.construtorastefani.com.br/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-green-600 hover:underline"
+        >
+          Tradição e confiança
+        </a>
+      )
     }
   ];
 
@@ -199,17 +208,17 @@ const Vantagens: React.FC = () => {
                     return (
                       <div
                         key={index}
-                        className={`bg-green-600 ${isMobile ? 'p-3' : 'p-4 flex-1'} rounded-lg shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between`}
+                        className={`bg-blue-50 ${isMobile ? 'p-3' : 'p-4 flex-1'} rounded-lg shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between`}
                       >
                         <div className={`flex items-center ${isMobile ? 'mb-2' : 'mb-3'}`}>
-                          <div className={`bg-white/20 ${isMobile ? 'p-1.5' : 'p-2'} rounded-lg`}>
-                            <Icon className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-white`} />
+                          <div className={`bg-white ${isMobile ? 'p-1.5' : 'p-2'} rounded-lg`}>
+                            <Icon className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-green-600`} />
                           </div>
-                          <h3 className={`${isMobile ? 'text-sm' : 'text-base'} font-bold text-white ml-2`}>{vantagem.title}</h3>
+                          <h3 className={`${isMobile ? 'text-sm' : 'text-base'} font-bold text-libra-navy ml-2`}>{vantagem.title}</h3>
                         </div>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white ${isMobile ? 'mb-2' : 'mb-3'}`}>{vantagem.description}</p>
-                        <div className={`bg-white/20 rounded-lg ${isMobile ? 'p-2' : 'p-2'}`}>
-                          <p className={`text-white font-medium ${isMobile ? 'text-xs' : 'text-sm'}`}>{vantagem.benefit}</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-libra-navy ${isMobile ? 'mb-2' : 'mb-3'}`}>{vantagem.description}</p>
+                        <div className={`bg-white rounded-lg ${isMobile ? 'p-2' : 'p-2'}`}>
+                          <p className={`text-green-600 font-medium ${isMobile ? 'text-xs' : 'text-sm'}`}>{vantagem.benefit}</p>
                         </div>
                       </div>
                     );
