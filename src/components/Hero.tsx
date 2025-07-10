@@ -56,16 +56,16 @@ const Hero: React.FC = () => {
             {isMobile && <div className="h-8"></div>}
             
             <div>
-              <h1 id="hero-heading" className="text-xl md:text-2xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold mb-3 md:mb-3 lg:mb-3 leading-tight">
-                Crédito Com Garantia de Imóvel
-                <br />
-                é mais simples na Libra!
-              </h1>
+                <h1 id="hero-heading" className="text-[1.5rem] md:text-[1.8rem] lg:text-[1.8rem] xl:text-[2.25rem] 2xl:text-[2.7rem] font-bold mb-3 md:mb-3 lg:mb-3 leading-tight">
+                  Crédito Com Garantia de Imóvel
+                  <br />
+                  é mais simples na Libra!
+                </h1>
               <div className="space-y-3 md:space-y-3 lg:space-y-2">
                 <p className="text-sm md:text-base lg:text-base xl:text-lg text-[#003399] leading-relaxed font-medium">
                   Crédito inteligente para quem construiu patrimonio.
                 </p>
-                <p className="text-xl md:text-2xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold leading-tight">
+                <p className="text-[1.125rem] md:text-[1.35rem] lg:text-[1.35rem] xl:text-[1.6875rem] 2xl:text-[2.025rem] font-bold leading-tight">
                   Libere até 50% do valor do seu imóvel
                 </p>
                 <div className="flex items-center gap-3">
@@ -74,7 +74,7 @@ const Hero: React.FC = () => {
                     Atendimento Personalizado, Segurança e Transparência!
                   </p>
                 </div>
-                <p className="text-xs md:text-sm lg:text-sm xl:text-base text-[#003399] leading-relaxed font-bold">
+                <p className="text-[0.9rem] md:text-[1.05rem] lg:text-[1.05rem] xl:text-[1.2rem] 2xl:text-[1.44rem] text-[#003399] leading-relaxed">
                   Taxas a partir de 1,19% a.m. • Até 180 meses • 100% online
                 </p>
               </div>
