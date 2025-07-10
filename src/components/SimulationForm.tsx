@@ -382,11 +382,19 @@ const SimulationForm: React.FC = () => {
     }, 100);
   };
 
+  const isLtvMessage =
+    apiMessage &&
+    (apiMessage.type === 'limit_30_general' || apiMessage.type === 'limit_30_rural');
+
+  const showSideComplement = !isMobile && (resultado || isLtvMessage);
+
   return (
-    <div className={`container mx-auto px-3 ${isMobile ? 'py-2 pb-4' : 'py-2 min-h-[calc(100vh-4rem)]'} ${
-      resultado ? 'max-w-6xl' : 'max-w-xl'
-    }`}>
-      <div className={`${resultado ? 'grid grid-cols-1 lg:grid-cols-2 gap-6' : ''}`}>
+    <div
+      className={`container mx-auto px-3 ${
+        isMobile ? 'py-2 pb-4' : 'py-2 min-h-[calc(100vh-4rem)]'
+      } ${showSideComplement ? 'max-w-6xl' : 'max-w-xl'}`}
+    >
+      <div className={`${showSideComplement ? 'grid grid-cols-1 lg:grid-cols-2 gap-6' : ''}`}>
         {/* Formulário de Simulação */}
         <Card className="shadow-lg">
           <CardHeader className="text-center pb-2">
@@ -442,7 +450,7 @@ const SimulationForm: React.FC = () => {
               </div>
 
               {/* Mensagem inteligente da API */}
-              {apiMessage && (
+              {apiMessage && (!isLtvMessage || isMobile) && (
                 <div className="mt-3">
                   <SmartApiMessage
                     analysis={apiMessage}
@@ -473,17 +481,28 @@ const SimulationForm: React.FC = () => {
           </CardContent>
         </Card>
 
-        {/* Resultado da Simulação */}
-        {resultado && (
+        {/* Resultado ou Complemento */}
+        {showSideComplement && (
           <div data-result-section="true">
-            <SimulationResultDisplay
-              resultado={resultado}
-              valorEmprestimo={validation.emprestimoValue}
-              valorImovel={validation.garantiaValue}
-              cidade={cidade}
-              onNewSimulation={handleNewSimulation}
-              onSwitchToPrice={handleSwitchToPrice}
-            />
+            {resultado ? (
+              <SimulationResultDisplay
+                resultado={resultado}
+                valorEmprestimo={validation.emprestimoValue}
+                valorImovel={validation.garantiaValue}
+                cidade={cidade}
+                onNewSimulation={handleNewSimulation}
+                onSwitchToPrice={handleSwitchToPrice}
+              />
+            ) : (
+              isLtvMessage && apiMessage && (
+                <SmartApiMessage
+                  analysis={apiMessage}
+                  valorImovel={validation.garantiaValue}
+                  onAdjustValues={handleAdjustValues}
+                  onTryAgain={handleTryAgain}
+                />
+              )
+            )}
           </div>
         )}
       </div>
