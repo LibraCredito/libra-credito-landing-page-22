@@ -71,7 +71,7 @@ const Hero: React.FC = () => {
                 </p>
                 <div className="flex items-center gap-3 justify-center">
                   <Shield className="w-5 h-5 lg:w-5 lg:h-5 text-[#003399] flex-shrink-0" aria-hidden="true" />
-                  <p className="text-xs md:text-sm lg:text-sm xl:text-base text-[#003399] leading-relaxed font-bold">
+                  <p className="text-xs md:text-sm lg:text-sm xl:text-base text-[#003399] leading-relaxed font-bold text-center">
                     Atendimento Personalizado, Segurança e Transparência!
                   </p>
                 </div>
