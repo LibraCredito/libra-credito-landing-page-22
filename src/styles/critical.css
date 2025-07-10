@@ -16,7 +16,8 @@ body {
   --libra-blue: #003399;
   --libra-navy: #001166;
   --libra-gold: #D4AF37;
-  --header-height: 80px;
+  /* Increased header height by 20% for desktop */
+  --header-height: 96px;
 }
 
 /* Layout básico */
