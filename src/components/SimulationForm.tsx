@@ -482,8 +482,8 @@ const SimulationForm: React.FC = () => {
         </Card>
 
         {/* Resultado ou Complemento */}
-        {showSideComplement && (
-          <div data-result-section="true">
+        {(resultado || (isLtvMessage && apiMessage)) && (
+          <div data-result-section="true" className={showSideComplement ? '' : 'mt-4'}>
             {resultado ? (
               <SimulationResultDisplay
                 resultado={resultado}
@@ -494,14 +494,12 @@ const SimulationForm: React.FC = () => {
                 onSwitchToPrice={handleSwitchToPrice}
               />
             ) : (
-              isLtvMessage && apiMessage && (
-                <SmartApiMessage
-                  analysis={apiMessage}
-                  valorImovel={validation.garantiaValue}
-                  onAdjustValues={handleAdjustValues}
-                  onTryAgain={handleTryAgain}
-                />
-              )
+              <SmartApiMessage
+                analysis={apiMessage as ApiMessageAnalysis}
+                valorImovel={validation.garantiaValue}
+                onAdjustValues={handleAdjustValues}
+                onTryAgain={handleTryAgain}
+              />
             )}
           </div>
         )}
