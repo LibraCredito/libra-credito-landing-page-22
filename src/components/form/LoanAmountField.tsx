@@ -22,14 +22,11 @@ const LoanAmountField: React.FC<LoanAmountFieldProps> = ({ value, onChange }) =>
           <Input
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            placeholder="R$ 300.000"
+            placeholder="entre 75 mil e 5 milhões"
             className="text-sm"
             inputMode="numeric"
           />
         </div>
-        <p className="text-xs text-gray-500 mt-1">
-          Digite o valor completo • Entre R$ 100.000 e R$ 5.000.000
-        </p>
       </div>
     </div>
   );

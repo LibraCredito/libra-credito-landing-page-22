@@ -136,7 +136,7 @@ const CityAutocomplete = ({ value = '', onCityChange }) => {
       </div>
       <div className="flex-1 relative">
         <label className="block text-xs font-medium text-green-500 mb-1">
-          Selecione a cidade do imóvel a ser dado de garantia
+          Selecione a cidade do imóvel a ser utilizado como garantia
         </label>
         {/* Input with green border */}
         <input

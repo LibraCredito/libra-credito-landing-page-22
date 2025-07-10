@@ -402,7 +402,7 @@ const SimulationForm: React.FC = () => {
               Sua simulação em um clique!
             </CardTitle>
             <p className="text-gray-600 text-xs">
-              Com apenas algumas informações você já encontrará a proposta ideal, com parcelas que cabem no seu bolso!
+              Com apenas algumas informações você já entende se as parcelas que cabem no orçamento!
             </p>
           </CardHeader>
           

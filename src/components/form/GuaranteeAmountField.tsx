@@ -27,7 +27,7 @@ const GuaranteeAmountField: React.FC<GuaranteeAmountFieldProps> = ({
           <Input
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            placeholder="R$ 600.000"
+            placeholder="Mínimo 2x o valor do empréstimo"
             className="text-sm"
             inputMode="numeric"
           />
@@ -37,9 +37,6 @@ const GuaranteeAmountField: React.FC<GuaranteeAmountFieldProps> = ({
             O valor da garantia deve ser pelo menos 2x o valor do empréstimo
           </p>
         )}
-        <p className="text-xs text-gray-500 mt-1">
-          Digite o valor completo • Mínimo 2x o valor do empréstimo
-        </p>
       </div>
     </div>
   );
