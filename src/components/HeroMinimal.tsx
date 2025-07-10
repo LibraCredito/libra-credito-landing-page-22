@@ -91,7 +91,7 @@ const HeroMinimal: React.FC = () => {
                   </p>
                   <div className="flex items-center gap-3 justify-center">
                     <Shield className="w-5 h-5 text-[#00ccff] flex-shrink-0" aria-hidden="true" />
-                    <p className="text-base md:text-lg text-white/80 leading-relaxed font-bold">
+                    <p className="text-base md:text-lg text-white/80 leading-relaxed font-bold text-center">
                       Atendimento Personalizado, Segurança e Transparência!
                     </p>
                   </div>
