@@ -33,10 +33,10 @@ const PremiumButton: React.FC<PremiumButtonProps> = ({
       
       {/* Gradient overlay effect for primary button */}
       {variant === 'primary' && (
-        <div 
-          className="absolute inset-0 bg-gradient-to-r from-libra-gold to-libra-gold/80 
-                     transform translate-y-full group-hover:translate-y-0 
-                     transition-transform duration-300 ease-out" 
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-green-500 to-green-500/80
+                     transform translate-y-full group-hover:translate-y-0
+                     transition-transform duration-300 ease-out"
         />
       )}
       
