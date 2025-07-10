@@ -52,7 +52,7 @@ const Hero: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10 flex-grow flex flex-col justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
           {/* Lado Esquerdo */}
-          <div className="text-[#003399] space-y-3 md:space-y-4 lg:space-y-3 xl:space-y-5 md:text-center md:flex md:flex-col md:items-center">
+          <div className="text-[#003399] space-y-3 md:space-y-4 lg:space-y-3 xl:space-y-5 text-center flex flex-col items-center">
             {/* Espaçamento extra para mobile */}
             {isMobile && <div className="h-8"></div>}
             
@@ -69,7 +69,7 @@ const Hero: React.FC = () => {
                 <p className="text-sm md:text-base lg:text-base xl:text-lg text-[#003399] leading-relaxed font-medium">
                   Crédito inteligente para quem construiu patrimonio.
                 </p>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 justify-center">
                   <Shield className="w-5 h-5 lg:w-5 lg:h-5 text-[#003399] flex-shrink-0" aria-hidden="true" />
                   <p className="text-xs md:text-sm lg:text-sm xl:text-base text-[#003399] leading-relaxed font-bold">
                     Atendimento Personalizado, Segurança e Transparência!
