@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from '@/components/ScrollToTop';
-import GlobalTracker from '@/components/GlobalTracker';
+import LazyGlobalTracker from '@/components/LazyGlobalTracker';
 import { MobileOptimized } from '@/components/MobileOptimized';
 
 // Lazy load components
@@ -48,7 +48,7 @@ const App = () => (
       <MobileOptimized>
         <BrowserRouter>
           <ScrollToTop />
-          <GlobalTracker />
+          <LazyGlobalTracker />
           <Toaster />
           <Sonner />
           <Suspense fallback={<Loading />}>

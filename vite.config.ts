@@ -22,6 +22,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     target: 'esnext',
     minify: 'esbuild',
+    cssCodeSplit: true,
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
@@ -41,4 +42,4 @@ export default defineConfig(({ mode }) => ({
       }
     }
   }
-}));
+  }));

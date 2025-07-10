@@ -21,7 +21,16 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { supabaseApi, UserJourneyData, PageVisit, DeviceInfo } from '@/lib/supabase';
+import type { UserJourneyData, PageVisit, DeviceInfo } from '@/lib/supabase';
+
+// Lazy loader para evitar carregar Supabase na primeira pintura
+let cachedSupabase: any = null;
+async function getSupabaseApi() {
+  if (!cachedSupabase) {
+    cachedSupabase = (await import('@/lib/supabase')).supabaseApi;
+  }
+  return cachedSupabase as typeof import('@/lib/supabase').supabaseApi;
+}
 
 // Constantes
 const SESSION_STORAGE_KEY = 'libra_session_id';
@@ -143,6 +152,7 @@ export function useUserJourney(): UserJourneyHook {
       // Verificar se já existe jornada para esta sessão
       let existingJourney;
       
+      const supabaseApi = await getSupabaseApi();
       try {
         existingJourney = await supabaseApi.getUserJourney(sessionId);
       } catch (getError: any) {
@@ -244,11 +254,13 @@ export function useUserJourney(): UserJourneyHook {
             time_on_site: Number(updatedJourney.time_on_site) || 0
           };
           
-          supabaseApi.updateUserJourney(sessionId, safeData).catch((error) => {
-            if (process.env.NODE_ENV === 'development') {
-              console.warn('Failed to update user journey:', error);
-            }
-          });
+          getSupabaseApi().then(api =>
+            api.updateUserJourney(sessionId, safeData).catch((error) => {
+              if (process.env.NODE_ENV === 'development') {
+                console.warn('Failed to update user journey:', error);
+              }
+            })
+          );
         }
       }, 1000);
       
@@ -290,11 +302,13 @@ export function useUserJourney(): UserJourneyHook {
           }))
         };
         
-        supabaseApi.updateUserJourney(sessionId, safeData).catch((error) => {
-          if (process.env.NODE_ENV === 'development') {
-            console.warn('Failed to track simulation:', error);
-          }
-        });
+        getSupabaseApi().then(api =>
+          api.updateUserJourney(sessionId, safeData).catch((error) => {
+            if (process.env.NODE_ENV === 'development') {
+              console.warn('Failed to track simulation:', error);
+            }
+          })
+        );
       }
       
       return updatedJourney;
@@ -309,13 +323,15 @@ export function useUserJourney(): UserJourneyHook {
     const timeOnSite = Math.floor((currentTime - sessionStartTime.current) / 1000);
     
     if (isTracking) {
-      supabaseApi.updateUserJourney(sessionId, {
-        time_on_site: timeOnSite
-      }).catch((error) => {
-        if (process.env.NODE_ENV === 'development') {
-          console.warn('Failed to update time on site:', error);
-        }
-      });
+      getSupabaseApi().then(api =>
+        api.updateUserJourney(sessionId, {
+          time_on_site: timeOnSite
+        }).catch((error) => {
+          if (process.env.NODE_ENV === 'development') {
+            console.warn('Failed to update time on site:', error);
+          }
+        })
+      );
     }
   }, [sessionId, isTracking]);
   
