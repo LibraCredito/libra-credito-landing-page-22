@@ -1,4 +1,5 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
+import CriticalCssInjector from '@/components/CriticalCssInjector';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -42,43 +43,60 @@ const Loading = () => (
 // Configure query client
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <MobileOptimized>
-        <BrowserRouter>
-          <ScrollToTop />
-          <LazyGlobalTracker />
-          <Toaster />
-          <Sonner />
-          <Suspense fallback={<Loading />}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/vantagens" element={<Vantagens />} />
-              <Route path="/quem-somos" element={<QuemSomos />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="/parceiros" element={<Parceiros />} />
-              <Route path="/simulacao" element={<Simulacao />} />
-              <Route path="/simulacao/sapi" element={<SimulacaoSapi />} />
-              <Route path="/simulacao/local" element={<SimulacaoLocal />} />
-              <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
-              <Route path="/politica-cookies" element={<PoliticaCookies />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/test-supabase" element={<SupabaseTestPage />} />
-              <Route path="/test-webhook" element={<TestWebhook />} />
-              <Route path="/mobile-demo" element={<MobileDemo />} />
-              <Route path="/mobile-nav" element={<MobileNavDemo />} />
-              <Route path="/simulacao-wizard" element={<SimulacaoWizard />} />
-              <Route path="/wizard-test" element={<SimpleWizardTest />} />
-              <Route path="/home2" element={<Home2 />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </MobileOptimized>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  // Carrega o CSS não crítico de forma assíncrona após a montagem inicial
+  useEffect(() => {
+    const loadNonCriticalCss = () => {
+      // Importa os arquivos CSS completos de forma dinâmica
+      import('./index.css');
+      import('./styles/minimal-premium.css');
+    };
+
+    // Atraso para garantir que não interfira com a primeira pintura
+    const timer = setTimeout(loadNonCriticalCss, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <CriticalCssInjector />
+        <MobileOptimized>
+          <BrowserRouter>
+            <ScrollToTop />
+            <LazyGlobalTracker />
+            <Toaster />
+            <Sonner />
+            <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/vantagens" element={<Vantagens />} />
+                <Route path="/quem-somos" element={<QuemSomos />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/parceiros" element={<Parceiros />} />
+                <Route path="/simulacao" element={<Simulacao />} />
+                <Route path="/simulacao/sapi" element={<SimulacaoSapi />} />
+                <Route path="/simulacao/local" element={<SimulacaoLocal />} />
+                <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
+                <Route path="/politica-cookies" element={<PoliticaCookies />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/test-supabase" element={<SupabaseTestPage />} />
+                <Route path="/test-webhook" element={<TestWebhook />} />
+                <Route path="/mobile-demo" element={<MobileDemo />} />
+                <Route path="/mobile-nav" element={<MobileNavDemo />} />
+                <Route path="/simulacao-wizard" element={<SimulacaoWizard />} />
+                <Route path="/wizard-test" element={<SimpleWizardTest />} />
+                <Route path="/home2" element={<Home2 />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </MobileOptimized>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
