@@ -79,9 +79,6 @@ const Index: React.FC = () => {
         <FAQ />
       </Suspense>
       
-      {/* Ondas antes do botão "Conheça a Libra" - apenas mobile */}
-      {isMobile && <WaveSeparator variant="hero" height="md" />}
-      
       {/* Botão Conheça a Libra */}
       <section 
         className="py-8"
