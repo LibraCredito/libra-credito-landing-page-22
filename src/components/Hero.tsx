@@ -57,28 +57,28 @@ const Hero: React.FC = () => {
             {isMobile && <div className="h-8"></div>}
             
             <div>
-                <h1
-                  id="hero-heading"
-                  className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold mb-4 leading-tight"
-                >
-                  <span className="block">Crédito com Garantia de Imóvel</span>
-                  <span className="block">é mais simples na Libra!</span>
-                </h1>
-              <div className="space-y-3 md:space-y-3 lg:space-y-2">
-                <p className="text-sm md:text-base lg:text-base xl:text-lg text-[#003399] leading-relaxed font-medium">
+              <h1
+                id="hero-heading"
+                className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 leading-tight"
+              >
+                <span className="block">Crédito com Garantia de Imóvel</span>
+                <span className="block">é mais simples na Libra!</span>
+              </h1>
+              <div className="space-y-2 md:space-y-3 lg:space-y-2">
+                <p className="text-base md:text-lg lg:text-xl xl:text-2xl text-[#003399] leading-relaxed font-medium">
                   Crédito inteligente para quem construiu patrimônio.
                 </p>
-                <div className="flex items-center gap-3 justify-center lg:justify-start">
-                  <Shield className="w-5 h-5 lg:w-5 lg:h-5 text-[#003399] flex-shrink-0" aria-hidden="true" />
-                  <p className="text-xs md:text-sm lg:text-sm xl:text-base text-[#003399] leading-relaxed font-bold">
+                <div className="flex items-center gap-2 justify-center lg:justify-start">
+                  <Shield className="w-4 h-4 lg:w-5 lg:h-5 text-[#003399] flex-shrink-0" aria-hidden="true" />
+                  <p className="text-xs md:text-sm lg:text-base xl:text-lg text-[#003399] leading-relaxed font-bold">
                     Atendimento Personalizado, Segurança e Transparência!
                   </p>
                 </div>
-                <p className="text-sm md:text-base lg:text-base xl:text-lg text-[#003399] leading-relaxed font-bold">
+                <p className="text-sm md:text-base lg:text-lg xl:text-xl text-[#003399] leading-relaxed font-semibold">
                   Taxas a partir de 1,19% a.m. • Até 180 meses • 100% online
                 </p>
-                <p className="text-lg md:text-xl lg:text-xl xl:text-2xl font-bold leading-tight">
-                  Libere até 50% do valor do seu imóvel
+                <p className="text-base md:text-lg lg:text-xl xl:text-2xl font-bold leading-tight mt-2">
+                  Acesse até 50% do valor do seu imóvel como crédito
                 </p>
               </div>
             </div>
