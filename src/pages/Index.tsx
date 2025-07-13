@@ -6,7 +6,7 @@ import LoadingSpinner from '@/components/ui/loading-spinner';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 // Hero não deve ser lazy loaded pois contém o LCP
-import Hero from '@/components/Hero';
+import HeroPremium from '@/components/HeroPremium';
 import TrustBarMinimal from '@/components/TrustBarMinimal';
 import WaveSeparator from '@/components/ui/WaveSeparator';
 import LogoBand from '@/components/LogoBand';
@@ -49,7 +49,7 @@ const Index: React.FC = () => {
       {/* Faixa Separadora Superior Invertida - Ondas para baixo */}
       <WaveSeparator variant="hero" height="md" inverted />
       
-      <Hero />
+      <HeroPremium />
       
       {/* Faixa Separadora com Ondas - Apenas adicionada, sem alterar o resto */}
       <WaveSeparator variant="hero" height="md" />
