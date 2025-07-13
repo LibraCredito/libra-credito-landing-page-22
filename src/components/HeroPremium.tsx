@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import PremiumButton from '@/components/ui/PremiumButton';
+import HeroButton from '@/components/ui/HeroButton';
 import { ChevronDown, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import OptimizedYouTube from './OptimizedYouTube';
@@ -52,53 +52,51 @@ const HeroPremium: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10 flex-grow flex flex-col justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
           {/* Lado Esquerdo */}
-          <div className="text-[#003399] space-y-3 md:space-y-4 lg:space-y-3 xl:space-y-5 text-center lg:text-left flex flex-col items-center lg:items-start">
+          <div className="text-[#003399] space-y-4 md:space-y-5 text-center flex flex-col items-center animate-fade-in-up">
             {/* Espaçamento extra para mobile */}
-            {isMobile && <div className="h-8"></div>}
+            {isMobile && <div className="h-4"></div>}
             
             <div>
-                <h1
-                  id="hero-heading"
-                  className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold mb-4 leading-tight"
-                >
-                  <span className="block">Crédito com Garantia de Imóvel</span>
-                  <span className="block">é mais simples na Libra!</span>
-                </h1>
-              <div className="space-y-3 md:space-y-3 lg:space-y-2">
-                <p className="text-sm md:text-base lg:text-base xl:text-lg text-[#003399] leading-relaxed font-medium">
+              <h1
+                id="hero-heading"
+                className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight"
+              >
+                <span className="block">Crédito com Garantia de Imóvel</span>
+                <span className="block">é mais simples na Libra!</span>
+              </h1>
+              <div className="space-y-4">
+                <p className="text-base md:text-lg lg:text-xl text-[#003399] leading-relaxed font-medium">
                   Crédito inteligente para quem construiu patrimônio.
                 </p>
-                <div className="flex items-center gap-3 justify-center lg:justify-start">
-                  <Shield className="w-5 h-5 lg:w-5 lg:h-5 text-[#003399] flex-shrink-0" aria-hidden="true" />
-                  <p className="text-xs md:text-sm lg:text-sm xl:text-base text-[#003399] leading-relaxed font-bold">
+                <div className="flex items-center gap-3 justify-center">
+                  <Shield className="w-5 h-5 lg:w-6 lg:h-6 text-[#003399] flex-shrink-0" aria-hidden="true" />
+                  <p className="text-sm md:text-base lg:text-lg text-[#003399] leading-relaxed font-bold">
                     Atendimento Personalizado, Segurança e Transparência!
                   </p>
                 </div>
-                <p className="text-sm md:text-base lg:text-base xl:text-lg text-[#003399] leading-relaxed font-bold">
+                <p className="text-base md:text-lg lg:text-xl text-[#003399] leading-relaxed font-bold">
                   Taxas a partir de 1,19% a.m. • Até 180 meses • 100% online
                 </p>
-                <p className="text-lg md:text-xl lg:text-xl xl:text-2xl font-bold leading-tight">
+                <p className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight">
                   Libere até 50% do valor do seu imóvel
                 </p>
               </div>
             </div>
 
             {/* Botões */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-3 lg:gap-3 md:justify-center">
-              <PremiumButton
+            <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm mx-auto pt-4">
+              <HeroButton
                 onClick={scrollToSimulator}
                 variant="primary"
-                className="w-full sm:w-auto"
               >
                 Simular Agora
-              </PremiumButton>
-              <PremiumButton
+              </HeroButton>
+              <HeroButton
                 onClick={goToVantagens}
                 variant="secondary"
-                className="w-full sm:w-auto"
               >
                 Conheça as Vantagens
-              </PremiumButton>
+              </HeroButton>
             </div>
           </div>
 
