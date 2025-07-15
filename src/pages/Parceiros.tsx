@@ -10,7 +10,6 @@ import { useUserJourney } from '@/hooks/useUserJourney';
 import { validateEmail, validatePhone, formatPhone } from '@/utils/validations';
 import ValidatedInput from '@/components/ValidatedInput';
 import ValidatedSelect from '@/components/ValidatedSelect';
-import MaskedInput from '@/components/MaskedInput';
 
 const Parceiros = () => {
   const { sessionId } = useUserJourney();
@@ -256,7 +255,7 @@ const Parceiros = () => {
       };
       
       // Usar o serviço de parceiros
-      await PartnersService.createPartnership(formData);
+      const result = await PartnersService.createPartnership(formData);
       
       // Limpar formulário
       setNome('');
@@ -361,7 +360,7 @@ const Parceiros = () => {
                     touched={touched.nome}
                     required
                   />
-                  <MaskedInput
+                  <ValidatedInput
                     label="E-mail"
                     type="email"
                     placeholder="seu@email.com"
@@ -371,12 +370,11 @@ const Parceiros = () => {
                     error={errors.email}
                     touched={touched.email}
                     required
-                    mask={/^\S*@?\S*$/}
                   />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <MaskedInput
+                  <ValidatedInput
                     label="Telefone"
                     type="tel"
                     placeholder="(11) 99999-9999"
@@ -386,7 +384,6 @@ const Parceiros = () => {
                     error={errors.telefone}
                     touched={touched.telefone}
                     required
-                    mask={'(00) 00000-0000'}
                   />
                   <ValidatedInput
                     label="Cidade"
@@ -399,7 +396,7 @@ const Parceiros = () => {
                     touched={touched.cidade}
                     required
                   />
-                  <MaskedInput
+                  <ValidatedInput
                     label="CNPJ"
                     type="text"
                     placeholder="00.000.000/0000-00"
@@ -409,7 +406,6 @@ const Parceiros = () => {
                     error={errors.cnpj}
                     touched={touched.cnpj}
                     required
-                    mask={'00.000.000/0000-00'}
                   />
                 </div>
 
