@@ -8,7 +8,7 @@ const HeroButton = React.forwardRef<
   }
 >(({ className, variant = 'primary', ...props }, ref) => {
   const baseClasses =
-    'w-full rounded-lg px-8 py-4 text-base font-bold transition-all duration-300 ease-in-out transform focus:outline-none focus:ring-4 focus:ring-opacity-50';
+    'w-full rounded-lg px-6 py-3 text-sm sm:px-8 sm:py-4 sm:text-base font-bold transition-all duration-300 ease-in-out transform focus:outline-none focus:ring-4 focus:ring-opacity-50';
 
   const variantClasses = {
     primary:

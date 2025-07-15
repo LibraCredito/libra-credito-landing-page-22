@@ -82,7 +82,7 @@ const HeroPremium: React.FC = () => {
             </div>
 
             {/* Botões */}
-            <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm mx-auto pt-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-sm mx-auto pt-3 sm:pt-4">
               <HeroButton
                 onClick={scrollToSimulator}
                 variant="primary"
