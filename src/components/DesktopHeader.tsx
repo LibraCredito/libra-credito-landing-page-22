@@ -40,16 +40,26 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
   const [showBanner, setShowBanner] = useState(true);
   const headerRef = useRef<HTMLElement | null>(null);
 
-  // Atualiza o offset do header sempre que o banner é exibido ou ocultado
+  // Atualiza o offset do header reagindo a mudanças de tamanho
   useLayoutEffect(() => {
-    if (headerRef.current) {
-      const { offsetHeight } = headerRef.current;
+    const header = headerRef.current;
+    if (!header) return;
+
+    const updateOffset = () => {
+      const { offsetHeight } = header;
       document.documentElement.style.setProperty(
         '--header-offset-desktop',
         `${offsetHeight}px`
       );
-    }
-  }, [showBanner]);
+    };
+
+    updateOffset();
+
+    const resizeObs = new ResizeObserver(updateOffset);
+    resizeObs.observe(header);
+
+    return () => resizeObs.disconnect();
+  }, []);
 
   const navigationItems = [
     { name: 'Home', path: '/' },

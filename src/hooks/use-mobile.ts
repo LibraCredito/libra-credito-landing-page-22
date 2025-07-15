@@ -9,20 +9,16 @@ export const useIsMobile = (breakpoint: number = 768): boolean => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
-    // Função para verificar se é mobile
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < breakpoint);
+    const mql = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    const onChange = (e: MediaQueryListEvent) => {
+      setIsMobile(e.matches);
     };
 
-    // Verificar no primeiro render
-    checkIsMobile();
+    setIsMobile(mql.matches);
+    mql.addEventListener('change', onChange);
 
-    // Adicionar listener para mudanças de tamanho
-    window.addEventListener('resize', checkIsMobile);
-
-    // Limpar listener quando o componente desmontar
     return () => {
-      window.removeEventListener('resize', checkIsMobile);
+      mql.removeEventListener('change', onChange);
     };
   }, [breakpoint]);
 
