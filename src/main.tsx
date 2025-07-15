@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
+import './styles/overflow-fix.css';
 
 // Função para verificar necessidades de acessibilidade
 const setupAccessibility = () => {
