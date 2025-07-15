@@ -8,7 +8,7 @@ const LogoBand: React.FC = () => {
         <ImageOptimizer
           src="/images/logos/libra-logo.png"
           alt="Libra Crédito"
-          className="h-[90%] w-auto"
+          className="h-full w-auto"
           aspectRatio={1}
           priority={false}
         />
