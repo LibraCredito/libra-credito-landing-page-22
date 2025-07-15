@@ -62,7 +62,7 @@ const HeroPremium: React.FC = () => {
                 className="text-xl md:text-3xl lg:text-4xl font-extrabold mb-4 leading-tight"
               >
                 <span className="block whitespace-nowrap">Crédito com Garantia de Imóvel</span>
-                <span className="block text-green-600">é mais simples na Libra!</span>
+                <span className="block text-green-700">é mais simples na Libra!</span>
               </h1>
               <p className="text-lg md:text-xl lg:text-2xl text-[#003399] font-semibold">
                 Crédito inteligente para quem construiu patrimônio
@@ -73,7 +73,7 @@ const HeroPremium: React.FC = () => {
                   <span className="text-center">Atendimento Personalizado, Segurança e Transparência</span>
                 </li>
                 <li>
-                  Taxas a partir de <span className="font-bold text-green-600">1,19% a.m.</span> • Até 180 meses • 100% online
+                  Taxas a partir de <span className="font-bold text-green-700">1,19% a.m.</span> • Até 180 meses • 100% online
                 </li>
               </ul>
               <p className="text-lg md:text-xl lg:text-2xl font-bold text-[#003399] mt-3">
