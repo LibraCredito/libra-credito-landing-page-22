@@ -18,29 +18,39 @@ const Hero: React.FC = () => {
     navigate('/vantagens');
   };
 
-  const scrollToBenefits = () => {
+  const targetRef = React.useRef<number>(0);
+
+  const computeTarget = React.useCallback(() => {
     const card = document.getElementById('capital-giro-card');
     const trustbar = document.getElementById('trustbar');
-    if (card) {
-      const headerOffset = window.innerWidth < 768 ? 96 : 108;
-      const trustbarRect = trustbar?.getBoundingClientRect();
-      const cardRect = card.getBoundingClientRect();
-      const trustbarHeight = trustbarRect ? trustbarRect.height : 0;
-      const cardHeight = cardRect.height;
-      const centerOffset = (window.innerHeight - cardHeight) / 2;
-      const baseTarget =
-        cardRect.top +
-        window.pageYOffset -
-        headerOffset -
-        trustbarHeight -
-        centerOffset;
+    if (!card) return;
 
-      const isMobileView = window.innerWidth < 768;
-      const additionalScroll = window.innerHeight * (isMobileView ? 0.24 : 0.1);
-      const target = baseTarget + additionalScroll;
+    const headerOffset = window.innerWidth < 768 ? 96 : 108;
+    const trustbarRect = trustbar?.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    const trustbarHeight = trustbarRect ? trustbarRect.height : 0;
+    const cardHeight = cardRect.height;
+    const centerOffset = (window.innerHeight - cardHeight) / 2;
+    const baseTarget =
+      cardRect.top +
+      window.pageYOffset -
+      headerOffset -
+      trustbarHeight -
+      centerOffset;
 
-      window.scrollTo({ top: target, behavior: 'smooth' });
-    }
+    const isMobileView = window.innerWidth < 768;
+    const additionalScroll = window.innerHeight * (isMobileView ? 0.24 : 0.1);
+    targetRef.current = baseTarget + additionalScroll;
+  }, []);
+
+  React.useLayoutEffect(() => {
+    computeTarget();
+    window.addEventListener('resize', computeTarget);
+    return () => window.removeEventListener('resize', computeTarget);
+  }, [computeTarget]);
+
+  const scrollToBenefits = () => {
+    window.scrollTo({ top: targetRef.current, behavior: 'smooth' });
   };
 
   return (
