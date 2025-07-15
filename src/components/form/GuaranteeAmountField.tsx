@@ -15,15 +15,15 @@ const GuaranteeAmountField: React.FC<GuaranteeAmountFieldProps> = ({
   showError 
 }) => {
   return (
-    <div className="flex items-center gap-2">
-      <div className="bg-libra-light p-1.5 rounded-full flex-shrink-0">
-        <Home className="w-4 h-4 text-green-500" />
-      </div>
-      <div className="flex-1">
-        <label className="block text-xs font-medium text-green-500 mb-1">
-          Digite o valor do Imóvel em Garantia
-        </label>
-        <div className="relative">
+    <div className="flex flex-col gap-1">
+      <label className="text-xs font-medium text-green-500 mb-1">
+        Digite o valor do Imóvel em Garantia
+      </label>
+      <div className="flex items-center gap-2">
+        <div className="bg-libra-light p-1.5 rounded-full flex-shrink-0">
+          <Home className="w-4 h-4 text-green-500" />
+        </div>
+        <div className="flex-1">
           <Input
             value={value}
             onChange={(e) => onChange(e.target.value)}
@@ -32,12 +32,12 @@ const GuaranteeAmountField: React.FC<GuaranteeAmountFieldProps> = ({
             inputMode="numeric"
           />
         </div>
-        {showError && (
-          <p className="text-red-500 text-xs mt-1">
-            O valor da garantia deve ser pelo menos 2x o valor do empréstimo
-          </p>
-        )}
       </div>
+      {showError && (
+        <p className="text-red-500 text-xs mt-1">
+          O valor da garantia deve ser pelo menos 2x o valor do empréstimo
+        </p>
+      )}
     </div>
   );
 };
