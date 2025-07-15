@@ -37,12 +37,10 @@ const Footer: React.FC = () => {
 
           {/* Logo - Centro (centralizado horizontal e verticalmente) */}
           <div className="text-center flex items-center justify-center h-full">
-            <ImageOptimizer 
-              src="/images/logos/libra-logo.png" 
-              alt="Libra Crédito" 
+            <img
+              src="/logo-libra.png"
+              alt="Libra Crédito"
               className="h-24 md:h-20 lg:h-24 xl:h-32 w-auto max-w-full"
-              aspectRatio={1}
-              priority={false}
             />
           </div>
 
