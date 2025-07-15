@@ -258,8 +258,8 @@ const Vantagens: React.FC = () => {
                             item.destaque ? 'bg-libra-navy' : 'bg-red-400/70'
                           }`}
                           style={{
-                            width: `${animatedValues[index] || (isTableVisible ? ((item.taxa / maxTaxa) * 100) : 0)}%`,
-                            minWidth: animatedValues[index] || (isTableVisible ? '2px' : '0px')
+                            width: `${animatedValues[index] ?? 0}%`,
+                            minWidth: animatedValues[index] ? '2px' : '0px'
                           }}
                         />
                       </div>
