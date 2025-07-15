@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => ({
     minify: 'esbuild',
     // Inline all CSS into the JavaScript bundles to avoid
     // additional render‑blocking requests for CSS files
-    cssCodeSplit: false,
+    cssCodeSplit: true,
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
