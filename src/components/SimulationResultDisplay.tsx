@@ -37,7 +37,7 @@ const TooltipInfo: React.FC<{ children: React.ReactNode; content: string }> = ({
         {children}
       </div>
       {showTooltip && (
-        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-800 text-white text-sm rounded-lg whitespace-nowrap z-10 shadow-lg">
+        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 px-3 py-2 bg-gray-800 text-white text-center text-sm rounded-lg z-10 shadow-lg">
           {content}
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
         </div>
@@ -138,22 +138,22 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
           {amortizacao === 'SAC' && primeiraParcela ? (
             <div>
               <div className="text-xs font-medium mb-3 text-center">Sistema SAC - Parcelas Decrescentes</div>
-              <div className="grid grid-cols-2 gap-3">
-                {/* Primeira parcela - destaque maior */}
-                <div className="text-center bg-green-100 rounded-lg p-3 border-2 border-green-200">
+              <div className="grid grid-cols-2 gap-3 text-center">
+                {/* Primeira parcela */}
+                <div className="bg-green-100 rounded-lg p-3 border border-green-200">
                   <div className="text-xs font-medium mb-1">1ª Parcela</div>
                   <div className="text-lg font-bold">
                     R$ {primeiraParcela.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                   </div>
-                  <div className="text-xs mt-1">Maior valor</div>
+                  <div className="text-xs text-gray-500 mt-1">Maior valor</div>
                 </div>
                 {/* Última parcela */}
-                <div className="text-center bg-green-100 rounded-lg p-3 border border-green-200">
-                  <div className="text-xs font-medium mb-1">Última</div>
-                  <div className="text-base font-bold">
+                <div className="bg-green-100 rounded-lg p-3 border border-green-200">
+                  <div className="text-xs font-medium mb-1">Última Parcela</div>
+                  <div className="text-lg font-bold">
                     R$ {ultimaParcela?.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                   </div>
-                  <div className="text-xs mt-1">Menor valor</div>
+                  <div className="text-xs text-gray-500 mt-1">Menor valor</div>
                 </div>
               </div>
             </div>
