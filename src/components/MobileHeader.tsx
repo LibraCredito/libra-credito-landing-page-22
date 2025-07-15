@@ -70,7 +70,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ onPortalClientes, onSimulat
                 <img
                   src="/logo-libra.png"
                   alt="Libra Crédito"
-                  className="h-full w-auto"
+                  className="h-full w-auto pointer-events-none"
                 />
               </div>
             </Link>

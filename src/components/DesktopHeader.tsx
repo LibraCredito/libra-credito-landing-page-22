@@ -110,7 +110,7 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
                   <img
                     src="/logo-libra.png"
                     alt="Libra Crédito - Home Equity com garantia de imóvel"
-                    className="h-full w-auto"
+                    className="h-full w-auto pointer-events-none"
                   />
                 </div>
               </Link>

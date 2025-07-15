@@ -41,7 +41,7 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
             <ImageOptimizer
               src="/images/logos/libra-logo.png"
               alt="Libra Crédito - Simulação de crédito com garantia de imóvel"
-              className="h-20 w-auto transform scale-[1.25]"
+              className="h-20 w-auto transform scale-[1.25] pointer-events-none"
               aspectRatio={1}
               priority={true}
               style={{
