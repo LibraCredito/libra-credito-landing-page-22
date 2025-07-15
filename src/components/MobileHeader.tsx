@@ -67,15 +67,10 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ onPortalClientes, onSimulat
           <div className="flex items-center">
             <Link to="/" aria-label="Página inicial da Libra Crédito">
               <div className="h-12 overflow-hidden flex items-center">
-                <ImageOptimizer 
-                  src="/images/logos/libra-logo.png" 
-                  alt="Libra Crédito" 
-                  className="h-16 w-auto transform scale-[1.25]"
-                  aspectRatio={1}
-                  priority={true}
-                  style={{
-                    clipPath: 'inset(30% 0 30% 0)'
-                  }}
+                <img
+                  src="/images/logos/libra-logo.png"
+                  alt="Libra Crédito"
+                  className="h-full w-auto"
                 />
               </div>
             </Link>
