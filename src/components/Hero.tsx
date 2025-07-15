@@ -36,7 +36,7 @@ const Hero: React.FC = () => {
         centerOffset;
 
       const isMobileView = window.innerWidth < 768;
-      const additionalScroll = window.innerHeight * (isMobileView ? 0.24 : 0.2);
+      const additionalScroll = window.innerHeight * (isMobileView ? 0.24 : 0.1);
       const target = baseTarget + additionalScroll;
 
       window.scrollTo({ top: target, behavior: 'smooth' });
