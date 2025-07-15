@@ -129,75 +129,76 @@ const CityAutocomplete = ({ value = '', onCityChange }) => {
   const showSuggestions = isFocused && inputValue.length >= 2 && (isLoading || error || suggestions.length > 0);
 
   return (
-    <div ref={containerRef} className="flex items-center gap-2 relative">
-      {/* Icon */}
-      <div className="bg-libra-light p-1.5 rounded-full flex-shrink-0">
-        <MapPin className="w-4 h-4 text-green-500" />
-      </div>
-      <div className="flex-1 relative">
-        <label className="block text-xs font-medium text-green-500 mb-1">
-          Selecione a cidade do imóvel a ser utilizado como garantia
-        </label>
-        {/* Input with green border */}
-        <input
-          ref={inputRef}
-          type="text"
-          value={inputValue}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          placeholder={
-            inputValue.length < 2 ? 'Digite 2 ou mais caracteres' : 'Busque a cidade'
-          }
-          className="text-sm w-full px-3 py-2 rounded-md border-2 border-green-500 focus:outline-none focus:border-green-600 transition-colors"
-        />
-        
-        {/* Suggestion dropdown - Fixed positioning for mobile */}
-        {showSuggestions && (
-          <div className="absolute left-0 right-0 mt-1 z-50">
-            <ul className="max-h-60 overflow-auto rounded-md border border-gray-300 bg-white text-sm shadow-lg">
-              {isLoading && (
-                <li className="px-3 py-2 text-center text-gray-500">
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-libra-blue"></div>
-                    Buscando...
-                  </div>
-                </li>
-              )}
-              {error && !isLoading && (
-                <li className="px-3 py-2 text-red-500 text-center">{error}</li>
-              )}
-              {!isLoading && !error && suggestions.length === 0 && (
-                <li className="px-3 py-2 text-gray-500 text-center">Nenhuma cidade encontrada</li>
-              )}
-              {!isLoading && !error &&
-                suggestions.map((city, index) => (
-                  <li
-                    key={city}
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                      handleSelect(city);
-                    }}
-                    onTouchStart={(e) => {
-                      e.preventDefault();
-                      handleSelect(city);
-                    }}
-                    onMouseEnter={() => setHighlightIndex(index)}
-                    className={`cursor-pointer px-3 py-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors ${
-                      index === highlightIndex ? 'bg-libra-light text-libra-navy' : ''
-                    }`}
-                  >
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-3 h-3 text-green-500 flex-shrink-0" />
-                      <span className="truncate">{city}</span>
+    <div ref={containerRef} className="flex flex-col gap-1 relative">
+      <label className="text-xs font-medium text-green-500 mb-1">
+        Selecione a cidade do imóvel a ser utilizado como garantia
+      </label>
+      <div className="flex items-center gap-2">
+        {/* Icon */}
+        <div className="bg-libra-light p-1.5 rounded-full flex-shrink-0">
+          <MapPin className="w-4 h-4 text-green-500" />
+        </div>
+        <div className="flex-1 relative">
+          {/* Input with green border */}
+          <input
+            ref={inputRef}
+            type="text"
+            value={inputValue}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            placeholder={
+              inputValue.length < 2 ? 'Digite 2 ou mais caracteres' : 'Busque a cidade'
+            }
+            className="text-sm w-full px-3 py-2 rounded-md border-2 border-green-500 focus:outline-none focus:border-green-600 transition-colors"
+          />
+
+          {/* Suggestion dropdown - Fixed positioning for mobile */}
+          {showSuggestions && (
+            <div className="absolute left-0 right-0 mt-1 z-50">
+              <ul className="max-h-60 overflow-auto rounded-md border border-gray-300 bg-white text-sm shadow-lg">
+                {isLoading && (
+                  <li className="px-3 py-2 text-center text-gray-500">
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-libra-blue"></div>
+                      Buscando...
                     </div>
                   </li>
-                ))}
-            </ul>
-          </div>
-        )}
-        
+                )}
+                {error && !isLoading && (
+                  <li className="px-3 py-2 text-red-500 text-center">{error}</li>
+                )}
+                {!isLoading && !error && suggestions.length === 0 && (
+                  <li className="px-3 py-2 text-gray-500 text-center">Nenhuma cidade encontrada</li>
+                )}
+                {!isLoading && !error &&
+                  suggestions.map((city, index) => (
+                    <li
+                      key={city}
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        handleSelect(city);
+                      }}
+                      onTouchStart={(e) => {
+                        e.preventDefault();
+                        handleSelect(city);
+                      }}
+                      onMouseEnter={() => setHighlightIndex(index)}
+                      className={`cursor-pointer px-3 py-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors ${
+                        index === highlightIndex ? 'bg-libra-light text-libra-navy' : ''
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-3 h-3 text-green-500 flex-shrink-0" />
+                        <span className="truncate">{city}</span>
+                      </div>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
