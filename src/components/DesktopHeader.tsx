@@ -105,10 +105,10 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
           <div className="flex items-center justify-between h-[62px] lg:h-[82px]">
             {/* Logo e slogan */}
             <div className="flex items-center gap-6">
-              <Link to="/" className="flex items-center">
+              <Link to="/" className="flex items-center tap-transparent">
                 <div className="h-[62px] lg:h-[82px] overflow-hidden flex items-center">
                   <img
-                    src="/images/logos/libra-logo.png"
+                    src="/logo-libra.png"
                     alt="Libra Crédito - Home Equity com garantia de imóvel"
                     className="h-full w-auto"
                   />
