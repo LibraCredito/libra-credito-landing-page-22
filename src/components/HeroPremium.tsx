@@ -59,28 +59,26 @@ const HeroPremium: React.FC = () => {
             <div>
               <h1
                 id="hero-heading"
-                className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight"
+                className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 leading-tight"
               >
-                <span className="block">Crédito com Garantia de Imóvel</span>
-                <span className="block">é mais simples na Libra!</span>
+                Crédito com Garantia de Imóvel
+                <span className="text-green-600"> é mais simples na Libra!</span>
               </h1>
-              <div className="space-y-4">
-                <p className="text-base md:text-lg lg:text-xl text-[#003399] leading-relaxed font-medium">
-                  Crédito inteligente para quem construiu patrimônio.
-                </p>
-                <div className="flex items-center gap-3 justify-center">
-                  <Shield className="w-5 h-5 lg:w-6 lg:h-6 text-[#003399] flex-shrink-0" aria-hidden="true" />
-                  <p className="text-sm md:text-base lg:text-lg text-[#003399] leading-relaxed font-bold">
-                    Atendimento Personalizado, Segurança e Transparência!
-                  </p>
-                </div>
-                <p className="text-base md:text-lg lg:text-xl text-[#003399] leading-relaxed font-bold">
-                  Taxas a partir de 1,19% a.m. • Até 180 meses • 100% online
-                </p>
-                <p className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight">
-                  Libere até 50% do valor do seu imóvel
-                </p>
-              </div>
+              <p className="text-lg md:text-xl lg:text-2xl text-[#003399] font-semibold">
+                Crédito inteligente para quem construiu patrimônio
+              </p>
+              <ul className="mt-2 space-y-1 text-sm md:text-base lg:text-lg text-[#003399] font-medium">
+                <li className="flex items-center justify-center gap-2 bg-green-50 rounded-md py-1 px-2">
+                  <Shield className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" aria-hidden="true" />
+                  <span className="text-center">Atendimento Personalizado, Segurança e Transparência</span>
+                </li>
+                <li>
+                  Taxas a partir de <span className="font-bold text-green-600">1,19% a.m.</span> • Até 180 meses • 100% online
+                </li>
+              </ul>
+              <p className="text-lg md:text-xl lg:text-2xl font-bold text-[#003399] mt-3">
+                Libere até 50% do valor do seu imóvel
+              </p>
             </div>
 
             {/* Botões */}
