@@ -13,6 +13,20 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     mode === 'development' && componentTagger(),
+    // Convert render blocking CSS links to asynchronous
+    // ones during the build by injecting media="print" and
+    // onload handler.
+    {
+      name: 'async-css-loader',
+      apply: 'build',
+      transformIndexHtml(html) {
+        return html.replace(/<link rel="stylesheet" href="(.*?)">/g, (full, href) => {
+          return full.includes('media=') || full.includes('onload=')
+            ? full
+            : `<link rel="stylesheet" href="${href}" media="print" onload="this.media='all'">`;
+        });
+      }
+    }
   ].filter(Boolean),
   resolve: {
     alias: {
@@ -22,7 +36,9 @@ export default defineConfig(({ mode }) => ({
   build: {
     target: 'esnext',
     minify: 'esbuild',
-    cssCodeSplit: true,
+    // Inline all CSS into the JavaScript bundles to avoid
+    // additional render‑blocking requests for CSS files
+    cssCodeSplit: false,
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
