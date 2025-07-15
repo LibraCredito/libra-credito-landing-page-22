@@ -107,12 +107,10 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
             <div className="flex items-center gap-6">
               <Link to="/" className="flex items-center">
                 <div className="h-[62px] lg:h-[82px] overflow-hidden flex items-center">
-                  <ImageOptimizer
+                  <img
                     src="/images/logos/libra-logo.png"
                     alt="Libra Crédito - Home Equity com garantia de imóvel"
-                    className="h-full w-auto transform scale-[1.25]"
-                    aspectRatio={1}
-                    priority={true}
+                    className="h-full w-auto"
                   />
                 </div>
               </Link>
