@@ -42,6 +42,26 @@ const Parceiros = () => {
     }
   }, []);
 
+  // Máscaras de entrada
+  const formatPhoneInput = (value: string) => {
+    const numbers = value.replace(/\D/g, '');
+    if (numbers.length === 0) return '';
+    if (numbers.length <= 2) return `(${numbers}`;
+    if (numbers.length <= 6) return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+    if (numbers.length <= 10) return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 6)}-${numbers.slice(6)}`;
+    return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
+  };
+
+  const formatCNPJInput = (value: string) => {
+    const numbers = value.replace(/\D/g, '');
+    if (numbers.length === 0) return '';
+    if (numbers.length <= 2) return numbers;
+    if (numbers.length <= 5) return `${numbers.slice(0, 2)}.${numbers.slice(2)}`;
+    if (numbers.length <= 8) return `${numbers.slice(0, 2)}.${numbers.slice(2, 5)}.${numbers.slice(5)}`;
+    if (numbers.length <= 12) return `${numbers.slice(0, 2)}.${numbers.slice(2, 5)}.${numbers.slice(5, 8)}/${numbers.slice(8)}`;
+    return `${numbers.slice(0, 2)}.${numbers.slice(2, 5)}.${numbers.slice(5, 8)}/${numbers.slice(8, 12)}-${numbers.slice(12, 14)}`;
+  };
+
   // Funções de validação
   const validateField = (fieldName: string, value: string) => {
     const newErrors = { ...errors };
@@ -138,9 +158,9 @@ const Parceiros = () => {
     switch (fieldName) {
       case 'nome': setNome(value); break;
       case 'email': setEmail(value); break;
-      case 'telefone': setTelefone(value); break;
+      case 'telefone': setTelefone(formatPhoneInput(value)); break;
       case 'cidade': setCidade(value); break;
-      case 'cnpj': setCnpj(value); break;
+      case 'cnpj': setCnpj(formatCNPJInput(value)); break;
       case 'tempoHomeEquity': setTempoHomeEquity(value); break;
       case 'perfilCliente': setPerfilCliente(value); break;
       case 'ramoAtuacao': setRamoAtuacao(value); break;
