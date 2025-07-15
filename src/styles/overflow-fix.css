@@ -1,0 +1,7 @@
+/*
+  This file contains a fix for the "overflow: visible" issue on img, video, and canvas tags.
+  This is to address a warning from Page Speed Insights.
+*/
+img, video, canvas {
+  overflow: clip !important;
+}
