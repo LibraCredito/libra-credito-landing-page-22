@@ -59,7 +59,7 @@ const HeroPremium: React.FC = () => {
             <div>
               <h1
                 id="hero-heading"
-                className="text-2xl md:text-3xl lg:text-4xl font-extrabold mb-4 leading-tight"
+                className="text-xl md:text-3xl lg:text-4xl font-extrabold mb-4 leading-tight"
               >
                 <span className="block whitespace-nowrap">Crédito com Garantia de Imóvel</span>
                 <span className="block text-green-600">é mais simples na Libra!</span>
