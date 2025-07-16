@@ -36,17 +36,12 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
     >
       <div className="h-16 px-4 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center" aria-label="Ir para página inicial da Libra Crédito">
-          <div className="h-12 overflow-hidden flex items-center">
-            <ImageOptimizer
-              src="/images/logos/libra-logo.png"
+        <Link to="/" className="flex items-center tap-transparent" aria-label="Ir para página inicial da Libra Crédito">
+          <div className="h-16 overflow-hidden flex items-center">
+            <img
+              src="/images/media/logo-header.png?v=3"
               alt="Libra Crédito - Simulação de crédito com garantia de imóvel"
-              className="h-20 w-auto transform scale-[1.25] pointer-events-none"
-              aspectRatio={1}
-              priority={true}
-              style={{
-                clipPath: 'inset(30% 0 30% 0)'
-              }}
+              className="h-full w-auto pointer-events-none max-w-none"
             />
           </div>
         </Link>
