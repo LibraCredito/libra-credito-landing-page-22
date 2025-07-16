@@ -50,20 +50,20 @@ const MediaSection: React.FC = () => {
 
         {isMobile ? (
           // Layout Mobile - Grid 2x2 apenas com logos
-          <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+          <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
             {mediaLinks.map((media) => (
               <a 
                 key={media.name}
                 href={media.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 flex items-center justify-center aspect-video"
+                className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 flex items-center justify-center aspect-video"
                 aria-label={`Ver matéria da ${media.name}`}
               >
                 <img
                   src={media.logo}
                   alt={`${media.name} - acesse matéria sobre Libra Crédito`}
-                  className="max-w-full max-h-[40px] object-contain"
+                  className="max-w-full max-h-[80px] object-contain"
                   loading="lazy"
                 />
               </a>
@@ -73,8 +73,8 @@ const MediaSection: React.FC = () => {
           // Layout Desktop - 4 Cards horizontais
           <div className="grid grid-cols-4 gap-4 max-w-6xl mx-auto">
             {mediaLinks.map((media) => (
-              <div key={media.name} className="bg-white rounded-lg shadow-sm p-4 flex flex-col">
-                <div className="h-10 mb-3 flex items-center justify-center">
+              <div key={media.name} className="bg-white rounded-lg shadow-sm p-6 flex flex-col">
+                <div className="h-20 mb-4 flex items-center justify-center">
                   <img
                     src={media.logo}
                     alt={`${media.name} - veículo de mídia que destaca a Libra Crédito`}
@@ -82,7 +82,7 @@ const MediaSection: React.FC = () => {
                     loading="lazy"
                   />
                 </div>
-                <p className="text-[#003399] font-medium mb-3 flex-grow text-sm leading-tight" 
+                <p className="text-[#003399] font-medium mb-4 flex-grow text-sm leading-tight" 
                    style={{display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden'}}>
                   {media.title}
                 </p>
