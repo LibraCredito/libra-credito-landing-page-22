@@ -20,13 +20,14 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-// Configurações do Supabase - usando variáveis de ambiente
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Configurações do Supabase - usando variáveis de ambiente com fallback
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://wprkpdqnmibxphiofoqk.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_xjn_ruSWUfyiqoMIrQfcOw_-YVtj5lr';
 
-// Validação das variáveis de ambiente
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Variáveis de ambiente do Supabase não configuradas. Verifique VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY no arquivo .env');
+// Log para debug (apenas em development)
+if (typeof window !== 'undefined' && import.meta.env.DEV) {
+  console.log('Supabase URL:', supabaseUrl);
+  console.log('Supabase Key:', supabaseAnonKey?.substring(0, 20) + '...');
 }
 
 // Tipos TypeScript para as tabelas
@@ -169,7 +170,7 @@ export const supabaseApi = {
     try {
       const { data, error } = await supabase
         .from('parceiros')
-        .select('count')
+        .select('*')
         .limit(1);
       
       if (error) {
