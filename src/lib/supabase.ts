@@ -200,7 +200,7 @@ export const supabaseApi = {
     return result;
   },
 
-  async getSimulacoes(limit = 50) {
+  async getSimulacoes(limit = 1000) {
     const { data, error } = await supabase
       .from('simulacoes')
       .select('*')

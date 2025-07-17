@@ -337,7 +337,7 @@ const AdminDashboard: React.FC = () => {
   const loadSimulacoes = async () => {
     setLoading(true);
     try {
-      const data = await LocalSimulationService.getSimulacoes(100);
+      const data = await LocalSimulationService.getSimulacoes(1000);
       setSimulacoes(data);
       calculateStats(data);
     } catch (error) {

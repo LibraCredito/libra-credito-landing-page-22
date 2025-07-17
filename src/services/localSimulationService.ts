@@ -609,7 +609,7 @@ export class LocalSimulationService {
   /**
    * Buscar simulações para admin (compatibilidade com AdminDashboard)
    */
-  static async getSimulacoes(limit = 50) {
+  static async getSimulacoes(limit = 1000) {
     try {
       return await supabaseApi.getSimulacoes(limit);
     } catch (error) {
