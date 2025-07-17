@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
+const App = lazy(() => import('./App.tsx'))
 import './styles/overflow-fix.css';
 
 // Função para verificar necessidades de acessibilidade
@@ -20,11 +20,19 @@ const setupAccessibility = () => {
 const renderApp = () => {
   setupAccessibility();
   
-  const root = document.getElementById("root");
+  const root = document.getElementById('root');
   if (root) {
     createRoot(root).render(
       <React.StrictMode>
-        <App />
+        <Suspense
+          fallback={
+            <div className="page-loading">
+              <div className="loading-spinner" />
+            </div>
+          }
+        >
+          <App />
+        </Suspense>
       </React.StrictMode>
     );
   }
