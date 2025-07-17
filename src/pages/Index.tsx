@@ -82,25 +82,52 @@ const Index: React.FC = () => {
       {/* Wave separator acima do botão Conheça a Libra */}
       <WaveSeparator variant="hero" height="md" />
       
-      {/* Botão Conheça a Libra */}
-      <section 
-        className="py-8"
-        style={{ backgroundColor: '#003399' }}
-        aria-label="Conheça mais sobre a Libra Crédito"
-      >
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center items-center">
-            <Button 
-              onClick={goToQuemSomos}
-              className="min-h-[48px] min-w-[200px] bg-white text-[#003399] hover:bg-gray-50 border-0"
-              size="xl"
-              aria-label="Clique para conhecer mais sobre a Libra Crédito"
-            >
-              Conheça a Libra
-            </Button>
+      {/* Botão Conheça a Libra - Desktop / Faixa azul clicável - Mobile */}
+      {!isMobile ? (
+        <section 
+          className="py-8"
+          style={{ backgroundColor: '#003399' }}
+          aria-label="Conheça mais sobre a Libra Crédito"
+        >
+          <div className="container mx-auto px-4">
+            <div className="flex justify-center items-center">
+              <Button 
+                onClick={goToQuemSomos}
+                className="min-h-[48px] min-w-[200px] bg-white text-[#003399] hover:bg-gray-50 border-0"
+                size="xl"
+                aria-label="Clique para conhecer mais sobre a Libra Crédito"
+              >
+                Conheça a Libra
+              </Button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <section 
+          className="w-full bg-[#003399] flex justify-center py-8 cursor-pointer hover:bg-[#002277] transition-colors"
+          onClick={goToQuemSomos}
+          aria-label="Clique para conhecer mais sobre a Libra Crédito"
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              goToQuemSomos();
+            }
+          }}
+        >
+          <div className="flex items-center">
+            <img
+              src="/images/logos/libra-logo.png"
+              alt="Libra Crédito"
+              className="h-16 w-auto"
+            />
+            <span className="ml-4 text-white text-base font-semibold whitespace-nowrap">
+              Crédito justo, equilibrado e consciente!
+            </span>
+          </div>
+        </section>
+      )}
       
       <WaveSeparator variant="hero" height="md" inverted />
       
