@@ -116,13 +116,13 @@ const Index: React.FC = () => {
             }
           }}
         >
-          <div className="flex items-center">
+          <div className="flex items-center px-4 max-w-full">
             <img
               src="/images/logos/libra-logo.png"
               alt="Libra Crédito"
-              className="h-16 w-auto"
+              className="h-12 sm:h-16 w-auto flex-shrink-0"
             />
-            <span className="ml-4 text-white text-base font-semibold whitespace-nowrap">
+            <span className="ml-3 sm:ml-4 text-white text-sm sm:text-base font-semibold leading-tight text-center flex-1 min-w-0">
               Crédito justo, equilibrado e consciente!
             </span>
           </div>
