@@ -13,7 +13,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { validateCity, validateLTV, searchCities, CityValidationResult } from '@/utils/cityLtvService';
-import { calculateLoan, getInterestRate, validateLoanParameters } from '@/utils/loanCalculator';
 import { formatBRL, norm } from '@/utils/formatters';
 import { AlertCircle, CheckCircle, XCircle, Home } from 'lucide-react';
 
@@ -116,9 +115,17 @@ const LocalSimulationForm: React.FC = () => {
     setLoading(true);
     
     // Simular pequeno delay para UX
-    setTimeout(() => {
+    setTimeout(async () => {
       const empValue = norm(valorEmprestimo);
       const imValue = norm(valorImovel);
+
+      // Importa calculadora de forma dinâmica para reduzir bundle inicial
+      const {
+        calculateLoan,
+        getInterestRate,
+        validateLoanParameters
+      } = await import('@/utils/loanCalculator');
+
       const taxaJuros = getInterestRate();
 
       // Validar parâmetros
