@@ -79,6 +79,9 @@ const Index: React.FC = () => {
         <FAQ />
       </Suspense>
       
+      {/* Wave separator acima do botão Conheça a Libra */}
+      <WaveSeparator variant="hero" height="md" />
+      
       {/* Botão Conheça a Libra */}
       <section 
         className="py-8"
