@@ -15,7 +15,6 @@
  */
 
 import { validateCity, validateLTV } from '@/utils/cityLtvService';
-import { calculateLoan, getInterestRate, validateLoanParameters } from '@/utils/loanCalculator';
 import { validateEmail, validatePhone, formatPhone } from '@/utils/validations';
 import { supabaseApi, SimulacaoData, supabase } from '@/lib/supabase';
 
@@ -115,13 +114,20 @@ export class LocalSimulationService {
         }
       }
 
-      // 4. Validar parâmetros do empréstimo
+      // 4. Importar calculadora de forma dinâmica para otimizar bundle
+      const {
+        validateLoanParameters,
+        getInterestRate,
+        calculateLoan
+      } = await import('@/utils/loanCalculator');
+
+      // 5. Validar parâmetros do empréstimo
       const paramValidation = validateLoanParameters(input.valorEmprestimo, input.parcelas);
       if (!paramValidation.valid) {
         throw new Error(paramValidation.error || 'Parâmetros inválidos');
       }
 
-      // 5. Calcular empréstimo
+      // 6. Calcular empréstimo
       const taxaJuros = getInterestRate();
       const calculation = calculateLoan(
         input.valorEmprestimo,
