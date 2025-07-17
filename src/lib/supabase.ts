@@ -20,9 +20,14 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-// Configurações do Supabase
-const supabaseUrl = 'https://plqljbugvhrffmvdsmsb.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBscWxqYnVndmhyZmZtdmRzbXNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkyNDIyNjYsImV4cCI6MjA2NDgxODI2Nn0.D9n_r-aQeApj9fADGhiiOBKoaqV3rzuBvWCAx3g3exY';
+// Configurações do Supabase - usando variáveis de ambiente
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// Validação das variáveis de ambiente
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Variáveis de ambiente do Supabase não configuradas. Verifique VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY no arquivo .env');
+}
 
 // Tipos TypeScript para as tabelas
 export interface SimulacaoData {
