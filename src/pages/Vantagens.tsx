@@ -394,7 +394,7 @@ const Vantagens: React.FC = () => {
                 size="lg"
                 className="bg-libra-blue text-white hover:bg-libra-navy font-semibold px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5"
               >
-                Começar agora - É grátis
+                SIMULE GRÁTIS
               </Button>
             </div>
           </div>
