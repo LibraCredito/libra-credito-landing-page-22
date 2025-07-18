@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
+import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -25,6 +26,23 @@ export default defineConfig(({ mode }) => ({
             ? full
             : `<link rel="stylesheet" href="${href}" media="print" onload="this.media='all'">`;
         });
+      }
+    },
+    visualizer({ filename: './dist/stats.html', gzipSize: true }),
+    {
+      name: 'check-css-size',
+      enforce: 'post',
+      generateBundle(_, bundle) {
+        for (const file of Object.values(bundle)) {
+          if (file.type === 'asset' && file.fileName.endsWith('.css')) {
+            const size = Buffer.byteLength(file.source as string | Uint8Array);
+            if (size > 20 * 1024) {
+              this.error(`CSS asset ${file.fileName} is ${(size / 1024).toFixed(2)} KB, exceeding 20 KB`);
+            } else {
+              this.warn(`CSS asset ${file.fileName} size ${(size / 1024).toFixed(2)} KB`);
+            }
+          }
+        }
       }
     }
   ].filter(Boolean),
