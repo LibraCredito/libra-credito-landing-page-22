@@ -200,11 +200,18 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
 
-    <!-- Async CSS to reduce render blocking -->
-    <link rel="stylesheet" href="/src/index.css" media="print" onload="this.media='all'">
+    <!-- Critical CSS inlined during build -->
+    <style id="critical-css">
+      /* Critical CSS will be injected here by the build step */
+    </style>
+
+    <!-- Non‑blocking main stylesheet -->
+    <link rel="preload" as="style" href="/assets/index.css" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/assets/index.css"></noscript>
+
+    <!-- Remaining stylesheets -->
     <link rel="stylesheet" href="/src/styles/minimal-premium.css" media="print" onload="this.media='all'">
     <noscript>
-      <link rel="stylesheet" href="/src/index.css" />
       <link rel="stylesheet" href="/src/styles/minimal-premium.css" />
     </noscript>
     
