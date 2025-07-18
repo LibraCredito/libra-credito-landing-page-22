@@ -57,7 +57,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
   };
 
   return (
-    <div className={`relative w-full h-full overflow-hidden ${className}`}>
+    <div className={`relative w-full h-full overflow-hidden ${className} aspect-video`}>
       {!isLoaded ? (
         <div
           className="w-full h-full cursor-pointer relative bg-black flex items-center justify-center hero-video"
