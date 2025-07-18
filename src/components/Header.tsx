@@ -106,7 +106,6 @@ const Header: React.FC = memo(() => {
               size="sm"
               className="mt-2 self-end"
               onClick={handleClosePopup}
-              onTouchEnd={handleClosePopup}
             >
               Fechar
             </Button>

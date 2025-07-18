@@ -62,8 +62,6 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
         <div
           className="w-full h-full cursor-pointer relative bg-black flex items-center justify-center hero-video"
           onClick={loadVideo}
-          onTouchEnd={loadVideo}
-          onPointerUp={loadVideo}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
