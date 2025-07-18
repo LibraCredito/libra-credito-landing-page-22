@@ -51,12 +51,12 @@ const SimulacaoWizard = () => {
 
   const handleComplete = async (data: any) => {
     console.log('Simulação completa:', data);
-    
+
     setSimulationResult(data);
     setShowWizard(false);
-    
-    // Mostrar mensagem de sucesso
-    alert('Simulação enviada com sucesso! Entraremos em contato em breve.');
+
+    // Redirecionar para a página de confirmação
+    navigate('/confirmacao');
   };
 
   const handleClose = () => {
