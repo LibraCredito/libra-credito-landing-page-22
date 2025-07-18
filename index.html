@@ -9,6 +9,13 @@
     <!-- Performance Critical Resource Hints -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+          onload="this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    </noscript>
     <link rel="preconnect" href="https://img.youtube.com">
     <link rel="preconnect" href="https://api-calculos.vercel.app">
     <link rel="dns-prefetch" href="https://www.youtube-nocookie.com">
@@ -195,10 +202,6 @@
         white-space: normal;
       }
     </style>
-    
-    <!-- Font Display Optimized (Async) -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
 
     <!-- Async CSS to reduce render blocking -->
     <link rel="stylesheet" href="/src/index.css" media="print" onload="this.media='all'">
