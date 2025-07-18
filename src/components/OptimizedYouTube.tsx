@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Play } from 'lucide-react';
 
 interface OptimizedYouTubeProps {
@@ -38,6 +38,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
 
   const loadVideo = () => {
     setIsLoaded(true);
+
     if (playerReady) {
       play();
     } else {
@@ -60,22 +61,6 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
     }
 
   };
-
-  useEffect(() => {
-    if (shouldPlay && iframeRef.current) {
-      const message = JSON.stringify({ event: 'command', func: 'playVideo', args: '' });
-      const sendPlayCommand = () => {
-        iframeRef.current?.contentWindow?.postMessage(message, '*');
-        setShouldPlay(false);
-      };
-
-      if (iframeRef.current.complete) {
-        sendPlayCommand();
-      } else {
-        iframeRef.current.addEventListener('load', sendPlayCommand, { once: true });
-      }
-    }
-  }, [shouldPlay]);
 
   const handleImageError = () => {
     console.log('Erro ao carregar imagem local, usando YouTube fallback');
@@ -150,7 +135,6 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
 
       ) : (
         <iframe
-          ref={iframeRef}
           className="absolute inset-0 w-full h-full"
           src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1&preload=metadata`}
           title={title}

@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+# Ignore any accidentally built JS files in src
+src/**/*.js
 
 # Environment variables
 .env
