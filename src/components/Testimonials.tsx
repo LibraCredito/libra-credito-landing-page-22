@@ -36,18 +36,22 @@ const testimonials = [
   }
 ];
 
-const TestimonialCard = memo(({ name, age, text, isMobile, isActive, currentIndex, totalTestimonials, onNavigate }: {
-  name: string, 
-  age: string, 
-  text: string, 
-  isMobile: boolean, 
+const TestimonialCard = memo(({ name, age, text, isMobile, isActive, currentIndex, totalTestimonials, onNavigate, index }: {
+  name: string,
+  age: string,
+  text: string,
+  isMobile: boolean,
   isActive: boolean,
   currentIndex: number,
   totalTestimonials: number,
-  onNavigate: (index: number) => void
+  onNavigate: (index: number) => void,
+  index: number
 }) => {
   return (
-    <div className={`absolute inset-0 transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+    <div
+      className={`absolute inset-0 transition-opacity duration-500 ${isActive ? 'opacity-100 cursor-pointer' : 'opacity-0 pointer-events-none'}`}
+      onClick={() => onNavigate(index)}
+    >
       <div className="bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-100 h-full flex flex-col">
         <div className="flex items-start gap-3 mb-2">
           <div className="bg-gray-100 rounded-full p-2">
@@ -93,6 +97,29 @@ TestimonialCard.displayName = 'TestimonialCard';
 const Testimonials: React.FC = () => {
   const isMobile = useIsMobile();
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const touchStartX = React.useRef(0);
+  const touchEndX = React.useRef(0);
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const delta = touchEndX.current - touchStartX.current;
+    if (Math.abs(delta) > 50) {
+      if (delta < 0) {
+        setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+      } else {
+        setCurrentTestimonial(
+          (prev) => (prev - 1 + testimonials.length) % testimonials.length
+        );
+      }
+    }
+  };
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -127,9 +154,14 @@ const Testimonials: React.FC = () => {
           </div>
           
           <div className="relative h-full">
-            <div className="relative h-[260px] lg:h-full">
+            <div
+              className="relative h-[260px] lg:h-full"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               {testimonials.map((testimonial, index) => (
-                <TestimonialCard 
+                <TestimonialCard
                   key={index}
                   name={testimonial.name}
                   age={testimonial.age}
@@ -139,6 +171,7 @@ const Testimonials: React.FC = () => {
                   currentIndex={currentTestimonial}
                   totalTestimonials={testimonials.length}
                   onNavigate={setCurrentTestimonial}
+                  index={index}
                 />
               ))}
             </div>
