@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:critical": "vite build && node scripts/extract-critical.mjs",
     "build:dev": "vite build --mode development",
     "build:prod": "npm install && vite build",
     "lint": "eslint .",
@@ -46,6 +47,7 @@
     "@types/uuid": "^9.0.7",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "^10.4.20",
+    "critters": "^0.0.23",
     "cssnano": "^6.0.0",
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
