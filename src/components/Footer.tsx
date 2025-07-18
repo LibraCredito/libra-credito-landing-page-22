@@ -37,11 +37,12 @@ const Footer: React.FC = () => {
 
           {/* Logo - Centro (centralizado horizontal e verticalmente) */}
           <div className="text-center flex items-center justify-center h-full">
-            <img
-              src="/logo-libra.png"
-              alt="Libra Crédito"
-              className="h-24 md:h-20 lg:h-24 xl:h-32 w-auto max-w-full"
-            />
+        <img
+          src="/logo-libra.png"
+          alt="Libra Crédito"
+          className="h-24 md:h-20 lg:h-24 xl:h-32 w-auto max-w-full"
+          loading="lazy"
+        />
           </div>
 
           {/* Redes Sociais - Direita */}

@@ -9,6 +9,13 @@
     <!-- Performance Critical Resource Hints -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+          onload="this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    </noscript>
     <link rel="preconnect" href="https://img.youtube.com">
     <link rel="preconnect" href="https://api-calculos.vercel.app">
     <link rel="dns-prefetch" href="https://www.youtube-nocookie.com">
@@ -17,6 +24,7 @@
     <!-- Preload LCP Images -->
     <link rel="preload" href="/images/video-thumbnail.webp" as="image" fetchpriority="high">
     <link rel="preload" href="/images/logos/libra-logo.webp" as="image" fetchpriority="high">
+    <link rel="preload" as="image" href="/images/video-thumbnail.jpg" fetchpriority="high">
     
     <!-- Prefetch Important Pages -->
     <link rel="prefetch" href="/simulacao">
@@ -195,16 +203,19 @@
         white-space: normal;
       }
     </style>
-    
-    <!-- Font Display Optimized (Async) -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
 
-    <!-- Async CSS to reduce render blocking -->
-    <link rel="stylesheet" href="/src/index.css" media="print" onload="this.media='all'">
+    <!-- Critical CSS inlined during build -->
+    <style id="critical-css">
+      /* Critical CSS will be injected here by the build step */
+    </style>
+
+    <!-- Non‑blocking main stylesheet -->
+    <link rel="preload" as="style" href="/assets/index.css" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/assets/index.css"></noscript>
+
+    <!-- Remaining stylesheets -->
     <link rel="stylesheet" href="/src/styles/minimal-premium.css" media="print" onload="this.media='all'">
     <noscript>
-      <link rel="stylesheet" href="/src/index.css" />
       <link rel="stylesheet" href="/src/styles/minimal-premium.css" />
     </noscript>
     
@@ -257,6 +268,13 @@
         "reviewCount": "1250"
       }
     }
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-XXXXXX', { send_page_view: false });
     </script>
   </head>
 

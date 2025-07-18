@@ -80,11 +80,29 @@ const SimulationForm: React.FC = () => {
   const validation = validateForm(emprestimo, garantia, parcelas, amortizacao, cidade);
 
   const handleEmprestimoChange = (value: string) => {
-    setEmprestimo(formatBRL(value));
+    // aceitar somente números e limitar a 7 dígitos
+    let numeric = value.replace(/\D/g, '').slice(0, 7);
+    if (!numeric) return setEmprestimo('');
+
+    // limitar valor máximo permitido
+    let numValue = Number(numeric);
+    if (numValue > 5000000) {
+      numValue = 5000000;
+    }
+
+    setEmprestimo(formatBRL(numValue.toString()));
   };
 
   const handleGarantiaChange = (value: string) => {
-    setGarantia(formatBRL(value));
+    let numeric = value.replace(/\D/g, '').slice(0, 8);
+    if (!numeric) return setGarantia('');
+
+    let numValue = Number(numeric);
+    if (numValue > 25000000) {
+      numValue = 25000000;
+    }
+
+    setGarantia(formatBRL(numValue.toString()));
   };
 
   // Função para rolar para o resultado no mobile

@@ -55,7 +55,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ onPortalClientes, onSimulat
           <div className="flex items-center justify-center">
             <div className="flex items-center text-white text-xs font-semibold">
               <Info className="w-3 h-3 mr-1 text-white" />
-              A Libra não realiza cobrança até a liberação
+              A Libra não realiza cobrança até a liberação.
             </div>
           </div>
         </div>

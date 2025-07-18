@@ -48,10 +48,11 @@ const BenefitsSection2: React.FC = () => {
           {/* Professional Image */}
           <div className="mb-8 relative">
             <div className="w-32 h-40 mx-auto rounded-xl overflow-hidden shadow-lg">
-              <img 
-                src="/images/hero-professional.png" 
+              <img
+                src="/images/hero-professional.png"
                 alt="Consultor especialista em simulação de crédito com garantia de imóvel"
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             </div>
           </div>
@@ -115,10 +116,11 @@ const BenefitsSection2: React.FC = () => {
             >
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-8 flex items-center justify-center">
-                  <img 
+                  <img
                     src="/images/media/estadao-logo.png"
                     alt="Estadão"
                     className="max-w-full max-h-full object-contain"
+                    loading="lazy"
                   />
                 </div>
                 <div className="text-left flex-1">
@@ -140,10 +142,11 @@ const BenefitsSection2: React.FC = () => {
             >
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-8 flex items-center justify-center">
-                  <img 
+                  <img
                     src="/images/media/g1-logo.png"
                     alt="G1 Globo"
                     className="max-w-full max-h-full object-contain"
+                    loading="lazy"
                   />
                 </div>
                 <div className="text-left flex-1">
@@ -165,10 +168,11 @@ const BenefitsSection2: React.FC = () => {
             >
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-8 flex items-center justify-center">
-                  <img 
+                  <img
                     src="/images/media/acidadeon-logo.png"
                     alt="A Cidade ON"
                     className="max-w-full max-h-full object-contain"
+                    loading="lazy"
                   />
                 </div>
                 <div className="text-left flex-1">
@@ -190,10 +194,11 @@ const BenefitsSection2: React.FC = () => {
             >
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-8 flex items-center justify-center">
-                  <img 
+                  <img
                     src="/images/media/revide-logo.png"
                     alt="Revide"
                     className="max-w-full max-h-full object-contain"
+                    loading="lazy"
                   />
                 </div>
                 <div className="text-left flex-1">

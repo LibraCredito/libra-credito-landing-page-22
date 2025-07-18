@@ -7,6 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Link } from 'react-router-dom';
 import { LocalSimulationService } from '@/services/localSimulationService';
 import { useUserJourney } from '@/hooks/useUserJourney';
+import { Home, Building, ArrowRight } from 'lucide-react';
 
 interface ContactFormProps {
   simulationResult: {
@@ -168,7 +169,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
   // Versão compacta para uso no resultado visual
   if (compact) {
     return (
-      <form onSubmit={handleSubmit} className={`space-y-3 ${className}`}>
+      <form onSubmit={handleSubmit} className={`space-y-4 ${className}`}>
         <div>
           <label htmlFor="nome-compact" className="sr-only">
             Nome Completo
@@ -178,7 +179,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             placeholder="Nome Completo"
-            className={inputClassName}
+            className={`rounded-lg h-12 focus:shadow-md ${inputClassName}`}
             required
             aria-required="true"
           />
@@ -194,7 +195,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="E-mail"
-            className={inputClassName}
+            className={`rounded-lg h-12 focus:shadow-md ${inputClassName}`}
             required
             aria-required="true"
           />
@@ -210,7 +211,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             value={telefone}
             onChange={(e) => handlePhoneChange(e.target.value)}
             placeholder="Telefone (99) 99999-9999"
-            className={inputClassName}
+            className={`rounded-lg h-12 focus:shadow-md ${inputClassName}`}
             inputMode="numeric"
             required
             aria-required="true"
@@ -218,47 +219,49 @@ const ContactForm: React.FC<ContactFormProps> = ({
         </div>
         
         <fieldset className="space-y-2">
-          <legend className="text-xs text-white/90">
-            O imóvel que será utilizado como garantia é: *
+          <legend id="tipo-imovel-label" className="text-sm text-white font-medium mb-1">
+            O imóvel que será utilizado como garantia é:
           </legend>
-          <div className="flex gap-3">
-            <label className="flex items-center gap-1 text-xs text-white/90">
-              <input 
-                type="radio" 
-                name="imovelProprioCompact" 
-                value="proprio" 
+          <div className="flex gap-3" role="radiogroup" aria-labelledby="tipo-imovel-label">
+            <label className="flex-1 flex items-center justify-center gap-2 bg-white/10 px-3 py-3 rounded-lg text-sm font-medium text-white hover:bg-white/20 focus-within:ring-2 focus-within:ring-white cursor-pointer">
+              <input
+                type="radio"
+                name="imovelProprioCompact"
+                value="proprio"
                 checked={imovelProprio === 'proprio'}
                 onChange={(e) => setImovelProprio(e.target.value as 'proprio')}
-                className="text-white"
+                className="sr-only"
                 required
               />
+              <Home className="w-4 h-4" />
               Imóvel Próprio
             </label>
-            <label className="flex items-center gap-1 text-xs text-white/90">
-              <input 
-                type="radio" 
-                name="imovelProprioCompact" 
-                value="terceiro" 
+            <label className="flex-1 flex items-center justify-center gap-2 bg-white/10 px-3 py-3 rounded-lg text-sm font-medium text-white hover:bg-white/20 focus-within:ring-2 focus-within:ring-white cursor-pointer">
+              <input
+                type="radio"
+                name="imovelProprioCompact"
+                value="terceiro"
                 checked={imovelProprio === 'terceiro'}
                 onChange={(e) => setImovelProprio(e.target.value as 'terceiro')}
-                className="text-white"
+                className="sr-only"
                 required
               />
+              <Building className="w-4 h-4" />
               Imóvel de terceiro
             </label>
           </div>
         </fieldset>
 
-        <div className="flex items-start gap-2">
+        <div className="flex items-start gap-2 mt-4">
           <Checkbox
             id="aceite-compact"
             checked={aceitePrivacidade}
             onCheckedChange={(checked) => setAceitePrivacidade(checked as boolean)}
           />
-          <label htmlFor="aceite-compact" className="text-xs text-white/90 leading-tight">
+          <label htmlFor="aceite-compact" className="text-sm text-white leading-tight">
             Concordo com a{' '}
-            <Link 
-              to="/politica-privacidade" 
+            <Link
+              to="/politica-privacidade"
               className="underline hover:text-white"
               target="_blank"
             >
@@ -276,7 +279,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
               alert('Por favor, preencha todos os campos antes de solicitar a análise.');
             }
           }}
-          className={`w-full py-3 text-sm font-semibold ${buttonClassName}`}
+          className={`w-full h-14 text-base font-semibold bg-gradient-to-r from-yellow-400 to-yellow-500 text-libra-navy hover:from-yellow-500 hover:to-yellow-600 ${buttonClassName}`}
         >
           {loading ? (
             <div className="flex items-center gap-2">
@@ -284,7 +287,10 @@ const ContactForm: React.FC<ContactFormProps> = ({
               Enviando...
             </div>
           ) : (
-            'SOLICITAR ANÁLISE'
+            <span className="flex items-center gap-2">
+              Solicitar análise agora
+              <ArrowRight className="w-5 h-5" />
+            </span>
           )}
         </Button>
       </form>
@@ -384,11 +390,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 </div>
               </legend>
               <div className="flex gap-4" role="radiogroup" aria-labelledby="tipo-imovel-legend">
-                <label className="flex items-center gap-2 text-sm">
-                  <input 
-                    type="radio" 
-                    name="imovelProprio" 
-                    value="proprio" 
+                <label className="flex items-center gap-2 text-sm bg-libra-light/60 px-3 py-2 rounded-md shadow-sm hover:bg-libra-light focus-within:outline focus-within:outline-libra-blue">
+                  <input
+                    type="radio"
+                    name="imovelProprio"
+                    value="proprio"
                     checked={imovelProprio === 'proprio'}
                     onChange={(e) => setImovelProprio(e.target.value as 'proprio')}
                     className="text-libra-blue"
@@ -397,11 +403,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
                   />
                   Imóvel Próprio
                 </label>
-                <label className="flex items-center gap-2 text-sm">
-                  <input 
-                    type="radio" 
-                    name="imovelProprio" 
-                    value="terceiro" 
+                <label className="flex items-center gap-2 text-sm bg-libra-light/60 px-3 py-2 rounded-md shadow-sm hover:bg-libra-light focus-within:outline focus-within:outline-libra-blue">
+                  <input
+                    type="radio"
+                    name="imovelProprio"
+                    value="terceiro"
                     checked={imovelProprio === 'terceiro'}
                     onChange={(e) => setImovelProprio(e.target.value as 'terceiro')}
                     className="text-libra-blue"
@@ -416,17 +422,17 @@ const ContactForm: React.FC<ContactFormProps> = ({
               </div>
             </fieldset>
 
-            <div className="flex items-start gap-2">
+            <div className="flex items-start gap-2 mt-2">
               <Checkbox
                 id="aceite"
                 checked={aceitePrivacidade}
                 onCheckedChange={(checked) => setAceitePrivacidade(checked as boolean)}
               />
-              <label htmlFor="aceite" className="text-xs text-gray-600 leading-tight">
-                Tenho ciência e concordo que meus dados de contato aqui informados poderão ser 
+              <label htmlFor="aceite" className="text-sm text-gray-600 leading-tight bg-libra-light/60 px-3 py-2 rounded-md shadow-sm focus-within:outline focus-within:outline-libra-blue">
+                Tenho ciência e concordo que meus dados de contato aqui informados poderão ser
                 utilizados pela Libra Crédito de acordo com os termos da{' '}
-                <Link 
-                  to="/politica-privacidade" 
+                <Link
+                  to="/politica-privacidade"
                   className="text-libra-blue underline hover:text-libra-navy"
                   target="_blank"
                 >
@@ -444,7 +450,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                   alert('Por favor, preencha todos os campos antes de solicitar a análise.');
                 }
               }}
-              className="w-full bg-gray-400 hover:bg-gray-500 text-white py-3 text-sm font-semibold"
+              className="w-full h-14 text-base font-semibold bg-gradient-to-r from-yellow-400 to-yellow-500 text-libra-navy hover:from-yellow-500 hover:to-yellow-600"
             >
               {loading ? (
                 <div className="flex items-center gap-2">
@@ -452,7 +458,10 @@ const ContactForm: React.FC<ContactFormProps> = ({
                   Enviando...
                 </div>
               ) : (
-                'SOLICITAR ANÁLISE'
+                <span className="flex items-center gap-2">
+                  Solicitar análise agora
+                  <ArrowRight className="w-5 h-5" />
+                </span>
               )}
             </Button>
           </form>

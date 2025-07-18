@@ -186,9 +186,9 @@ const Vantagens: React.FC = () => {
             <h1 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold text-libra-navy text-center mb-3`}>
               Vantagens do Crédito com Garantia
             </h1>
-            <p className={`${isMobile ? 'text-base px-2' : 'text-lg'} text-libra-navy max-w-3xl mx-auto text-center`}>
-              As melhores condições do mercado para realizar seus projetos
-            </p>
+              <p className={`${isMobile ? 'text-base px-2' : 'text-lg'} text-libra-navy max-w-3xl mx-auto text-center`}>
+                As melhores condições do mercado para realizar seus projetos.
+              </p>
           </div>
         </section>
 
@@ -326,7 +326,7 @@ const Vantagens: React.FC = () => {
                       Fale com o consultor
                     </h3>
                     <p className={`text-white ${isMobile ? 'text-xs' : 'text-sm'} leading-relaxed`}>
-                      Converse com nosso especialista e envie sua documentação
+                      Converse com nosso especialista e envie sua documentação.
                     </p>
                   </div>
                 </div>
@@ -394,7 +394,7 @@ const Vantagens: React.FC = () => {
                 size="lg"
                 className="bg-libra-blue text-white hover:bg-libra-navy font-semibold px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5"
               >
-                Começar agora - É grátis
+                SIMULE GRÁTIS
               </Button>
             </div>
           </div>

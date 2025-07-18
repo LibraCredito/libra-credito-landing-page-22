@@ -71,13 +71,14 @@ const StepsSection: React.FC = () => {
               <div className="flex flex-col md:flex-row items-center gap-4">
                 {/* Image */}
                 <div className="flex-shrink-0">
-                  <div className="w-24 h-18 rounded-xl overflow-hidden shadow-sm">
-                    <img 
-                      src={step.image}
-                      alt={step.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                <div className="w-24 h-18 rounded-xl overflow-hidden shadow-sm">
+                  <img
+                    src={step.image}
+                    alt={step.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
                 </div>
 
                 {/* Text Content */}
