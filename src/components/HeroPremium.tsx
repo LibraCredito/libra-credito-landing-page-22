@@ -98,7 +98,7 @@ const HeroPremium: React.FC = () => {
             </div>
           </div>
 
-            <div className="w-full max-w-xl lg:max-w-lg xl:max-w-none mx-auto">
+            <div className="w-full max-w-xl lg:max-w-lg xl:max-w-none mx-auto aspect-video">
             <div className="hero-video">
               <OptimizedYouTube
                 videoId="E9lwL6R2l1s"
