@@ -136,7 +136,11 @@ export function useUserJourney(): UserJourneyHook {
     }
     
     setSessionId(currentSessionId);
-    initializeJourney(currentSessionId);
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => initializeJourney(currentSessionId!));
+    } else {
+      setTimeout(() => initializeJourney(currentSessionId!), 500);
+    }
   }, []);
   
   // Tracking de mudança de página

@@ -52,7 +52,7 @@ const HeroPremium: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10 flex-grow flex flex-col justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
           {/* Lado Esquerdo */}
-          <div className="text-[#003399] space-y-4 md:space-y-5 text-center flex flex-col items-center animate-fade-in-up">
+          <div className="text-[#003399] space-y-4 md:space-y-5 text-center flex flex-col items-center">
             {/* Espaçamento extra para mobile */}
             {isMobile && <div className="h-4"></div>}
             
