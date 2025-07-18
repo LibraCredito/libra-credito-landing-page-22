@@ -9,13 +9,14 @@ const TransparencySection: React.FC = () => {
           <div className="flex flex-col md:flex-row items-center gap-8">
             {/* Customer Image */}
             <div className="flex-shrink-0">
-              <div className="w-32 h-32 rounded-full overflow-hidden shadow-lg">
-                <img 
-                  src="/images/customer-testimonial.png" 
-                  alt="Cliente satisfeita"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            <div className="w-32 h-32 rounded-full overflow-hidden shadow-lg">
+              <img
+                src="/images/customer-testimonial.png"
+                alt="Cliente satisfeita"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
             </div>
 
             {/* Testimonial Content */}
