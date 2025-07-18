@@ -222,11 +222,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
             O imóvel que será utilizado como garantia é: *
           </legend>
           <div className="flex gap-3">
-            <label className="flex items-center gap-1 text-xs text-white/90">
-              <input 
-                type="radio" 
-                name="imovelProprioCompact" 
-                value="proprio" 
+            <label className="flex items-center gap-2 text-sm text-white/90 bg-white/10 px-2 py-1 rounded shadow-sm hover:bg-white/20 focus-within:outline focus-within:outline-white">
+              <input
+                type="radio"
+                name="imovelProprioCompact"
+                value="proprio"
                 checked={imovelProprio === 'proprio'}
                 onChange={(e) => setImovelProprio(e.target.value as 'proprio')}
                 className="text-white"
@@ -234,11 +234,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
               />
               Imóvel Próprio
             </label>
-            <label className="flex items-center gap-1 text-xs text-white/90">
-              <input 
-                type="radio" 
-                name="imovelProprioCompact" 
-                value="terceiro" 
+            <label className="flex items-center gap-2 text-sm text-white/90 bg-white/10 px-2 py-1 rounded shadow-sm hover:bg-white/20 focus-within:outline focus-within:outline-white">
+              <input
+                type="radio"
+                name="imovelProprioCompact"
+                value="terceiro"
                 checked={imovelProprio === 'terceiro'}
                 onChange={(e) => setImovelProprio(e.target.value as 'terceiro')}
                 className="text-white"
@@ -249,16 +249,16 @@ const ContactForm: React.FC<ContactFormProps> = ({
           </div>
         </fieldset>
 
-        <div className="flex items-start gap-2">
+        <div className="flex items-start gap-2 mt-2">
           <Checkbox
             id="aceite-compact"
             checked={aceitePrivacidade}
             onCheckedChange={(checked) => setAceitePrivacidade(checked as boolean)}
           />
-          <label htmlFor="aceite-compact" className="text-xs text-white/90 leading-tight">
+          <label htmlFor="aceite-compact" className="text-sm text-white/90 leading-tight bg-white/10 px-2 py-1 rounded shadow-sm focus-within:outline focus-within:outline-white">
             Concordo com a{' '}
-            <Link 
-              to="/politica-privacidade" 
+            <Link
+              to="/politica-privacidade"
               className="underline hover:text-white"
               target="_blank"
             >
@@ -384,11 +384,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 </div>
               </legend>
               <div className="flex gap-4" role="radiogroup" aria-labelledby="tipo-imovel-legend">
-                <label className="flex items-center gap-2 text-sm">
-                  <input 
-                    type="radio" 
-                    name="imovelProprio" 
-                    value="proprio" 
+                <label className="flex items-center gap-2 text-sm bg-libra-light/60 px-3 py-2 rounded-md shadow-sm hover:bg-libra-light focus-within:outline focus-within:outline-libra-blue">
+                  <input
+                    type="radio"
+                    name="imovelProprio"
+                    value="proprio"
                     checked={imovelProprio === 'proprio'}
                     onChange={(e) => setImovelProprio(e.target.value as 'proprio')}
                     className="text-libra-blue"
@@ -397,11 +397,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
                   />
                   Imóvel Próprio
                 </label>
-                <label className="flex items-center gap-2 text-sm">
-                  <input 
-                    type="radio" 
-                    name="imovelProprio" 
-                    value="terceiro" 
+                <label className="flex items-center gap-2 text-sm bg-libra-light/60 px-3 py-2 rounded-md shadow-sm hover:bg-libra-light focus-within:outline focus-within:outline-libra-blue">
+                  <input
+                    type="radio"
+                    name="imovelProprio"
+                    value="terceiro"
                     checked={imovelProprio === 'terceiro'}
                     onChange={(e) => setImovelProprio(e.target.value as 'terceiro')}
                     className="text-libra-blue"
@@ -416,17 +416,17 @@ const ContactForm: React.FC<ContactFormProps> = ({
               </div>
             </fieldset>
 
-            <div className="flex items-start gap-2">
+            <div className="flex items-start gap-2 mt-2">
               <Checkbox
                 id="aceite"
                 checked={aceitePrivacidade}
                 onCheckedChange={(checked) => setAceitePrivacidade(checked as boolean)}
               />
-              <label htmlFor="aceite" className="text-xs text-gray-600 leading-tight">
-                Tenho ciência e concordo que meus dados de contato aqui informados poderão ser 
+              <label htmlFor="aceite" className="text-sm text-gray-600 leading-tight bg-libra-light/60 px-3 py-2 rounded-md shadow-sm focus-within:outline focus-within:outline-libra-blue">
+                Tenho ciência e concordo que meus dados de contato aqui informados poderão ser
                 utilizados pela Libra Crédito de acordo com os termos da{' '}
-                <Link 
-                  to="/politica-privacidade" 
+                <Link
+                  to="/politica-privacidade"
                   className="text-libra-blue underline hover:text-libra-navy"
                   target="_blank"
                 >
