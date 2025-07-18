@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Play } from 'lucide-react';
 
 interface OptimizedYouTubeProps {
@@ -19,6 +19,8 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
   const [isLoaded, setIsLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [playerReady, setPlayerReady] = useState(false);
+  const [playOnReady, setPlayOnReady] = useState(false);
   
   // Determinar qual imagem usar
   const getImageSrc = () => {
@@ -29,8 +31,33 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
     return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
   };
 
+  const play = () => {
+    const message = JSON.stringify({ event: 'command', func: 'playVideo', args: '' });
+    iframeRef.current?.contentWindow?.postMessage(message, '*');
+  };
+
   const loadVideo = () => {
     setIsLoaded(true);
+    if (playerReady) {
+      play();
+    } else {
+      setPlayOnReady(true);
+    }
+  };
+
+  useEffect(() => {
+    if (playOnReady && playerReady) {
+      play();
+      setPlayOnReady(false);
+    }
+  }, [playOnReady, playerReady]);
+
+  const handleIframeLoad = () => {
+    setPlayerReady(true);
+    if (playOnReady) {
+      play();
+      setPlayOnReady(false);
+    }
   };
 
   const handleImageError = () => {
@@ -40,10 +67,24 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
 
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`}>
-      {!isLoaded ? (
-        <div 
-          className="w-full h-full cursor-pointer relative bg-black flex items-center justify-center hero-video" 
+      <iframe
+        ref={iframeRef}
+        onLoad={handleIframeLoad}
+        className="absolute inset-0 w-full h-full"
+        src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1&preload=metadata`}
+        title={title}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        loading="lazy"
+        style={{ opacity: isLoaded ? 1 : 0 }}
+      />
+      {!isLoaded && (
+        <div
+          className="w-full h-full cursor-pointer relative bg-black flex items-center justify-center hero-video"
           onClick={loadVideo}
+          onTouchEnd={loadVideo}
+          onPointerUp={loadVideo}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
@@ -58,12 +99,9 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
           <picture className="video-thumbnail">
             {/* WebP se disponível e não houve erro */}
             {thumbnailSrc && !imageError && (
-              <source 
-                srcSet="/images/video-thumbnail.webp" 
-                type="image/webp"
-              />
+              <source srcSet="/images/video-thumbnail.webp" type="image/webp" />
             )}
-            
+
             {/* Imagem principal */}
             <img
               src={getImageSrc()}
@@ -71,8 +109,8 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
               width={480}
               height={360}
               className="video-thumbnail"
-              loading={priority ? "eager" : "lazy"}
-              fetchpriority={priority ? "high" : "auto"}
+              loading={priority ? 'eager' : 'lazy'}
+              fetchpriority={priority ? 'high' : 'auto'}
               decoding="async"
               onError={handleImageError}
               style={{
@@ -84,24 +122,13 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
               }}
             />
           </picture>
-          
+
           <div className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/40 transition-colors">
             <div className="w-16 h-16 md:w-20 md:h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg hover:bg-red-700 transition-colors group">
               <Play className="w-8 h-8 md:w-10 md:h-10 text-white fill-white ml-1 group-hover:scale-110 transition-transform" fill="currentColor" />
             </div>
           </div>
         </div>
-      ) : (
-        <iframe
-          ref={iframeRef}
-          className="absolute inset-0 w-full h-full"
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&preload=metadata`}
-          title={title}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          loading="lazy"
-        />
       )}
     </div>
   );
