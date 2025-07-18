@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Play } from 'lucide-react';
 
 interface OptimizedYouTubeProps {
@@ -19,6 +19,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
   const [isLoaded, setIsLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [shouldPlay, setShouldPlay] = useState(false);
   
   // Determinar qual imagem usar
   const getImageSrc = () => {
@@ -31,7 +32,24 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
 
   const loadVideo = () => {
     setIsLoaded(true);
+    setShouldPlay(true);
   };
+
+  useEffect(() => {
+    if (shouldPlay && iframeRef.current) {
+      const message = JSON.stringify({ event: 'command', func: 'playVideo', args: '' });
+      const sendPlayCommand = () => {
+        iframeRef.current?.contentWindow?.postMessage(message, '*');
+        setShouldPlay(false);
+      };
+
+      if (iframeRef.current.complete) {
+        sendPlayCommand();
+      } else {
+        iframeRef.current.addEventListener('load', sendPlayCommand, { once: true });
+      }
+    }
+  }, [shouldPlay]);
 
   const handleImageError = () => {
     console.log('Erro ao carregar imagem local, usando YouTube fallback');
@@ -41,9 +59,11 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`}>
       {!isLoaded ? (
-        <div 
-          className="w-full h-full cursor-pointer relative bg-black flex items-center justify-center hero-video" 
+        <div
+          className="w-full h-full cursor-pointer relative bg-black flex items-center justify-center hero-video"
           onClick={loadVideo}
+          onTouchEnd={loadVideo}
+          onPointerUp={loadVideo}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
@@ -95,7 +115,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
         <iframe
           ref={iframeRef}
           className="absolute inset-0 w-full h-full"
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&preload=metadata`}
+          src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1&preload=metadata`}
           title={title}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
