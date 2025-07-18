@@ -62,7 +62,11 @@ const Header: React.FC = memo(() => {
     const currentPath = location.pathname;
     const storageKey = `popup_seen_${currentPath.replace('/', 'home')}`;
     localStorage.setItem(storageKey, 'true');
-    setIsInfoPopupOpen(false);
+    // iOS may delay removing fixed elements after a click.
+    // Schedule state update in the next frame to ensure proper cleanup.
+    requestAnimationFrame(() => {
+      setIsInfoPopupOpen(false);
+    });
   };
 
   const handleSimulateNow = () => {
@@ -97,11 +101,12 @@ const Header: React.FC = memo(() => {
             A Libra não realiza nenhum tipo de cobrança até a liberação do crédito
           </p>
           <DialogClose asChild>
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               className="mt-2 self-end"
               onClick={handleClosePopup}
+              onTouchEnd={handleClosePopup}
             >
               Fechar
             </Button>
