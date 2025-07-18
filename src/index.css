@@ -126,6 +126,29 @@
   .mobile-button-secondary {
     @apply mobile-button bg-gray-100 text-gray-900 active:bg-gray-200;
   }
+
+  /* Reusable CTA styles */
+  .cta-button {
+    @apply rounded-lg shadow-sm transition-colors transition-transform duration-200 ease-in-out focus-visible:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-libra-blue focus-visible:ring-offset-2;
+  }
+
+  .cta-button:hover {
+    @apply scale-105 shadow-md;
+  }
+
+  @media (max-width: 767px) {
+    .cta-button {
+      @apply min-h-[48px];
+    }
+  }
+
+  .cta-primary {
+    @apply cta-button bg-libra-blue text-white hover:bg-libra-blue/90;
+  }
+
+  .cta-secondary {
+    @apply cta-button bg-gray-100 text-gray-900 hover:bg-gray-200;
+  }
   
   /* Mobile Input Styles */
   .mobile-input {
@@ -297,13 +320,13 @@
   }
   
   /* Aumentar o espaçamento e tamanho mínimo para áreas de toque */
-  button, 
-  [role="button"], 
-  a, 
-  input[type="submit"], 
-  input[type="button"], 
+  button,
+  [role="button"],
+  a,
+  input[type="submit"],
+  input[type="button"],
   input[type="reset"] {
-    @apply min-h-[44px] min-w-[44px];
+    @apply min-h-[48px] min-w-[44px];
     -webkit-tap-highlight-color: transparent;
   }
   
