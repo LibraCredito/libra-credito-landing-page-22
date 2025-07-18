@@ -97,9 +97,9 @@ const Header: React.FC = memo(() => {
               Informação Importante
             </DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-libra-navy">
-            A Libra não realiza nenhum tipo de cobrança até a liberação do crédito
-          </p>
+            <p className="text-sm text-libra-navy">
+              A Libra não realiza nenhum tipo de cobrança até a liberação do crédito.
+            </p>
           <DialogClose asChild>
             <Button
               variant="outline"

@@ -84,7 +84,7 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
             <div className="relative flex items-center justify-center py-2">
               <div className="flex items-center text-white text-sm font-semibold">
                 <Info className="w-4 h-4 mr-2 text-white" />
-                A Libra não realiza nenhum tipo de cobrança até a liberação do crédito
+                A Libra não realiza nenhum tipo de cobrança até a liberação do crédito.
               </div>
               <button
                 className="absolute right-0 top-1/2 -translate-y-1/2 text-white hover:text-gray-200"
