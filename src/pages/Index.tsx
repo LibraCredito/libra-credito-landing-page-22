@@ -2,7 +2,6 @@ import React, { useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import MobileLayout from '@/components/MobileLayout';
-import LoadingSpinner from '@/components/ui/loading-spinner';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 // Hero não deve ser lazy loaded pois contém o LCP
@@ -18,12 +17,6 @@ const MediaSection = lazy(() => import('@/components/MediaSection'));
 const FAQ = lazy(() => import('@/components/FAQ'));
 const BlogSection = lazy(() => import('@/components/BlogSection'));
 
-// Componente de fallback para lazy loading
-const SectionLoader: React.FC = () => (
-  <div className="w-full h-[300px] flex items-center justify-center">
-    <LoadingSpinner />
-  </div>
-);
 
 const Index: React.FC = () => {
   const navigate = useNavigate();
@@ -56,26 +49,26 @@ const Index: React.FC = () => {
       
       <TrustBarMinimal />
       
-      <Suspense fallback={<SectionLoader />}>
+      <Suspense fallback={null}>
         <Benefits />
       </Suspense>
 
       {/* Faixa azul com logo - apenas para desktop */}
       {!isMobile && <LogoBand />}
 
-      <Suspense fallback={<SectionLoader />}>
+      <Suspense fallback={null}>
         <Testimonials />
       </Suspense>
       
       <WaveSeparator variant="hero" height="md" />
       
-      <Suspense fallback={<SectionLoader />}>
+      <Suspense fallback={null}>
         <MediaSection />
       </Suspense>
       
       <WaveSeparator variant="hero" height="md" inverted />
       
-      <Suspense fallback={<SectionLoader />}>
+      <Suspense fallback={null}>
         <FAQ />
       </Suspense>
       
@@ -131,7 +124,7 @@ const Index: React.FC = () => {
       
       <WaveSeparator variant="hero" height="md" inverted />
       
-      <Suspense fallback={<SectionLoader />}>
+      <Suspense fallback={null}>
         <BlogSection />
       </Suspense>
     </MobileLayout>
