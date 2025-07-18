@@ -119,6 +119,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           loading="lazy"
+          playsInline
         />
       )}
     </div>
