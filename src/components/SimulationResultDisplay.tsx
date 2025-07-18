@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calculator, CheckCircle, Users, Info, TrendingUp } from 'lucide-react';
+import { Calculator, CheckCircle, Users, Info, TrendingUp, Headphones } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ContactForm from './ContactForm';
@@ -196,8 +196,9 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         </div>
 
         {/* CTA e Formulário compacto */}
-        <div className="bg-libra-blue text-white rounded-lg p-3 mb-4 lg:mb-3 text-center">
-          <p className="font-bold">🎉 Gostou? Solicite uma consultoria gratuita!</p>
+        <div className="bg-libra-blue text-white rounded-lg p-4 mb-4 lg:mb-3 flex items-center justify-center gap-2">
+          <Headphones className="w-5 h-5" />
+          <p className="text-lg font-bold">Gostou? Solicite uma consultoria gratuita!</p>
         </div>
         
         <ContactForm
@@ -205,7 +206,6 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
           compact={true}
           className="space-y-3"
           inputClassName="bg-white/90 text-gray-800 placeholder-gray-500"
-          buttonClassName="bg-white text-libra-navy hover:bg-gray-100 font-bold py-3 w-full"
         />
       </div>
     );
@@ -305,8 +305,9 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
       </div>
 
       {/* CTA e Formulário compacto */}
-      <div className="bg-libra-blue text-white rounded-lg p-3 mb-4 lg:mb-3 text-center">
-        <p className="font-bold">🎉 Gostou? Solicite uma consultoria gratuita!</p>
+      <div className="bg-libra-blue text-white rounded-lg p-4 mb-4 lg:mb-3 flex items-center justify-center gap-2">
+        <Headphones className="w-5 h-5" />
+        <p className="text-lg font-bold">Gostou? Solicite uma consultoria gratuita!</p>
       </div>
       
       <ContactForm
@@ -314,7 +315,6 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         compact={true}
         className="space-y-3"
         inputClassName="bg-white/90 text-gray-800 placeholder-gray-500"
-        buttonClassName="bg-white text-libra-navy hover:bg-gray-100 font-bold py-3 w-full"
       />
     </div>
   );
