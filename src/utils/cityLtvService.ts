@@ -3,9 +3,49 @@
  * 
  * @description Gerencia a consulta ao arquivo LTV_Cidades.json
  * e implementa a lógica de validação por cidade
+ * 
+ * OTIMIZAÇÃO: JSON carregado dinamicamente para reduzir bundle inicial
  */
 
-import ltvCidades from '../../LTV_Cidades.json';
+// Cache para evitar múltiplas requisições
+let ltvCidadesCache: CityLtvData[] | null = null;
+let loadingPromise: Promise<CityLtvData[]> | null = null;
+
+/**
+ * Carrega dados das cidades dinamicamente
+ */
+async function loadCityData(): Promise<CityLtvData[]> {
+  // Se já está em cache, retorna imediatamente
+  if (ltvCidadesCache) {
+    return ltvCidadesCache;
+  }
+  
+  // Se já está carregando, retorna a mesma promise
+  if (loadingPromise) {
+    return loadingPromise;
+  }
+  
+  // Inicia o carregamento
+  loadingPromise = fetch('/data/ltv-cidades.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to load city data: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      ltvCidadesCache = data;
+      loadingPromise = null; // Limpa a promise após sucesso
+      return data;
+    })
+    .catch(error => {
+      loadingPromise = null; // Limpa a promise em caso de erro
+      console.error('Error loading city data:', error);
+      throw error;
+    });
+  
+  return loadingPromise;
+}
 
 export interface CityLtvData {
   'CIDADE - UF': string;
@@ -24,18 +64,20 @@ export interface CityValidationResult {
 /**
  * Lista todas as cidades disponíveis para autocomplete
  */
-export function getAllCities(): string[] {
-  return (ltvCidades as CityLtvData[]).map(item => item['CIDADE - UF']);
+export async function getAllCities(): Promise<string[]> {
+  const cities = await loadCityData();
+  return cities.map(item => item['CIDADE - UF']);
 }
 
 /**
  * Busca cidades que correspondem ao termo de pesquisa
  */
-export function searchCities(searchTerm: string): string[] {
+export async function searchCities(searchTerm: string): Promise<string[]> {
   if (!searchTerm || searchTerm.length < 2) return [];
   
   const term = searchTerm.toLowerCase();
-  return getAllCities().filter(city => 
+  const cities = await getAllCities();
+  return cities.filter(city => 
     city.toLowerCase().includes(term)
   ).slice(0, 10); // Limita a 10 resultados
 }
@@ -43,7 +85,7 @@ export function searchCities(searchTerm: string): string[] {
 /**
  * Valida uma cidade e retorna seu status de LTV
  */
-export function validateCity(cityName: string): CityValidationResult {
+export async function validateCity(cityName: string): Promise<CityValidationResult> {
   if (!cityName || cityName.trim() === '') {
     return {
       found: false,
@@ -54,7 +96,8 @@ export function validateCity(cityName: string): CityValidationResult {
   }
 
   // Buscar cidade no JSON
-  const cityData = (ltvCidades as CityLtvData[]).find(
+  const cities = await loadCityData();
+  const cityData = cities.find(
     item => item['CIDADE - UF'].toLowerCase() === cityName.toLowerCase()
   );
 
@@ -126,12 +169,12 @@ export function validateCity(cityName: string): CityValidationResult {
 /**
  * Valida se o LTV do empréstimo está dentro do limite da cidade
  */
-export function validateLTV(
+export async function validateLTV(
   valorEmprestimo: number,
   valorImovel: number,
   cityName: string
-): { valid: boolean; message: string; suggestedLoanAmount?: number } {
-  const cityValidation = validateCity(cityName);
+): Promise<{ valid: boolean; message: string; suggestedLoanAmount?: number }> {
+  const cityValidation = await validateCity(cityName);
   
   if (!cityValidation.found || !cityValidation.allowCalculation) {
     return {
@@ -162,8 +205,9 @@ export function validateLTV(
 /**
  * Obtém informações completas sobre uma cidade
  */
-export function getCityInfo(cityName: string): CityLtvData | null {
-  return (ltvCidades as CityLtvData[]).find(
+export async function getCityInfo(cityName: string): Promise<CityLtvData | null> {
+  const cities = await loadCityData();
+  return cities.find(
     item => item['CIDADE - UF'].toLowerCase() === cityName.toLowerCase()
   ) || null;
 }
@@ -171,8 +215,8 @@ export function getCityInfo(cityName: string): CityLtvData | null {
 /**
  * Estatísticas do arquivo de cidades
  */
-export function getCityStats() {
-  const cities = ltvCidades as CityLtvData[];
+export async function getCityStats() {
+  const cities = await loadCityData();
   const stats = {
     total: cities.length,
     notWorking: cities.filter(c => c.LTV === 0).length,

@@ -23,7 +23,8 @@ export default defineConfig(({ mode }) => ({
     target: 'esnext',
     minify: 'esbuild',
     cssCodeSplit: true,
-    // Otimizações para tree-shaking
+    chunkSizeWarningLimit: 600, // Reduzir limite para identificar chunks grandes
+    // Otimizações para tree-shaking e code splitting
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
@@ -39,10 +40,34 @@ export default defineConfig(({ mode }) => ({
           return `assets/${extType}/[name]-[hash][extname]`;
         },
         chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js'
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        // Manual chunks para melhor cache e performance
+        manualChunks: {
+          // Vendor chunks separados para melhor cache
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-router': ['react-router-dom'],
+          'vendor-query': ['@tanstack/react-query'],
+          'vendor-ui': [
+            '@radix-ui/react-dialog', 
+            '@radix-ui/react-select'
+          ],
+          'vendor-utils': ['axios', 'clsx', 'class-variance-authority'],
+          // Separar ícones para tree shaking
+          'vendor-icons': ['lucide-react'],
+        },
       }
-    },
-    // Otimizar tamanho do bundle
-    chunkSizeWarningLimit: 1000
+    }
+  },
+  // Otimizações de dependências para lazy loading
+  optimizeDeps: {
+    include: [
+      'react', 
+      'react-dom', 
+      'react-router-dom',
+      'clsx',
+      'class-variance-authority'
+    ],
+    // Excluir para lazy loading
+    exclude: ['@supabase/supabase-js']
   }
   }));
