@@ -1,15 +1,15 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import MobileLayout from '@/components/MobileLayout';
 import { useIsMobile } from '@/hooks/use-mobile';
-import LazySection from '@/components/LazySection';
 
-// Hero não deve ser lazy loaded pois contém o LCP
+// Critical components - NOT lazy loaded for LCP
 import HeroPremium from '@/components/HeroPremium';
 import TrustBarMinimal from '@/components/TrustBarMinimal';
 import WaveSeparator from '@/components/ui/WaveSeparator';
 import LogoBand from '@/components/LogoBand';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 // Lazy loading dos componentes pesados - com threshold otimizado
 const Benefits = lazy(() => import('@/components/Benefits'));
@@ -39,47 +39,42 @@ const Index: React.FC = () => {
   };
 
   return (
-    <MobileLayout>
-      {/* Faixa Separadora Superior Invertida - Ondas para baixo */}
-      <WaveSeparator variant="hero" height="md" inverted />
+    <div className="min-h-screen flex flex-col">
+      <Header />
       
-      <HeroPremium />
+      <main id="main-content" className="flex-grow">
+        {/* Faixa Separadora Superior Invertida - Ondas para baixo */}
+        <WaveSeparator variant="hero" height="md" inverted />
+        
+        <HeroPremium />
       
       {/* Faixa Separadora com Ondas - Apenas adicionada, sem alterar o resto */}
       <WaveSeparator variant="hero" height="md" />
       
       <TrustBarMinimal />
       
-      <LazySection rootMargin="150px">
-        <Suspense fallback={null}>
-          <Benefits />
-        </Suspense>
-      </LazySection>
+      <Suspense fallback={null}>
+        <Benefits />
+      </Suspense>
 
       {/* Faixa azul com logo - apenas para desktop */}
       {!isMobile && <LogoBand />}
 
-      <LazySection rootMargin="200px">
-        <Suspense fallback={null}>
-          <Testimonials />
-        </Suspense>
-      </LazySection>
+      <Suspense fallback={null}>
+        <Testimonials />
+      </Suspense>
       
       <WaveSeparator variant="hero" height="md" />
       
-      <LazySection rootMargin="250px">
-        <Suspense fallback={null}>
-          <MediaSection />
-        </Suspense>
-      </LazySection>
+      <Suspense fallback={null}>
+        <MediaSection />
+      </Suspense>
       
       <WaveSeparator variant="hero" height="md" inverted />
       
-      <LazySection rootMargin="300px">
-        <Suspense fallback={null}>
-          <FAQ />
-        </Suspense>
-      </LazySection>
+      <Suspense fallback={null}>
+        <FAQ />
+      </Suspense>
       
       {/* Wave separator acima do botão Conheça a Libra */}
       <WaveSeparator variant="hero" height="md" />
@@ -133,12 +128,13 @@ const Index: React.FC = () => {
       
       <WaveSeparator variant="hero" height="md" inverted />
       
-      <LazySection rootMargin="400px">
-        <Suspense fallback={null}>
-          <BlogSection />
-        </Suspense>
-      </LazySection>
-    </MobileLayout>
+      <Suspense fallback={null}>
+        <BlogSection />
+      </Suspense>
+      </main>
+      
+      <Footer />
+    </div>
   );
 };
 

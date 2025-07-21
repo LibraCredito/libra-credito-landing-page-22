@@ -1,17 +1,13 @@
-import { Suspense, lazy, useEffect } from 'react';
-import CriticalCssInjector from '@/components/CriticalCssInjector';
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { Suspense, lazy } from 'react';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from '@/components/ScrollToTop';
-import LazyGlobalTracker from '@/components/LazyGlobalTracker';
-import { MobileOptimized } from '@/components/MobileOptimized';
 import { MobileProvider } from '@/hooks/useMobileContext';
 
-// Lazy load components
-const Index = lazy(() => import("./pages/Index"));
+// Import homepage directly (not lazy) for faster LCP
+import Index from "./pages/Index";
+
+// Lazy load other components
 const Vantagens = lazy(() => import("./pages/Vantagens"));
 const QuemSomos = lazy(() => import("./pages/QuemSomos"));
 const Blog = lazy(() => import("./pages/Blog"));
@@ -42,23 +38,23 @@ const Loading = () => (
   </div>
 );
 
-// Configure query client
-const queryClient = new QueryClient();
+// Configure query client outside component to prevent re-initialization
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      cacheTime: 10 * 60 * 1000, // 10 minutes
+    },
+  },
+});
 
 const App = () => {
-
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <MobileProvider>
-          <CriticalCssInjector />
-          <MobileOptimized>
-            <BrowserRouter>
-              <ScrollToTop />
-              <LazyGlobalTracker />
-              <Toaster />
-              <Sonner />
-              <Suspense fallback={<Loading />}>
+      <MobileProvider>
+        <BrowserRouter>
+          <ScrollToTop />
+          <Suspense fallback={<Loading />}>
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/vantagens" element={<Vantagens />} />
@@ -84,10 +80,8 @@ const App = () => {
                 </Routes>
               </Suspense>
             </BrowserRouter>
-          </MobileOptimized>
         </MobileProvider>
-      </TooltipProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
   );
 };
 
