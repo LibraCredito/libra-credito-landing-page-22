@@ -20,9 +20,13 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-// Configurações do Supabase - usando variáveis de ambiente com fallback
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://wprkpdqnmibxphiofoqk.supabase.co';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_xjn_ruSWUfyiqoMIrQfcOw_-YVtj5lr';
+// Configurações do Supabase - requer variáveis de ambiente
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY devem estar definidos no ambiente');
+}
 
 // Log para debug (apenas em development)
 if (typeof window !== 'undefined' && import.meta.env.DEV) {
