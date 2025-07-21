@@ -8,7 +8,7 @@ interface DiagnosticResult {
   test: string;
   status: 'success' | 'error' | 'warning';
   message: string;
-  details?: any;
+  details?: unknown;
 }
 
 const SupabaseDiagnostics: React.FC = () => {

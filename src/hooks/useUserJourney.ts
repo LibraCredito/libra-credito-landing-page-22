@@ -24,7 +24,7 @@ import { v4 as uuidv4 } from 'uuid';
 import type { UserJourneyData, PageVisit, DeviceInfo } from '@/lib/supabase';
 
 // Lazy loader para evitar carregar Supabase na primeira pintura
-let cachedSupabase: any = null;
+let cachedSupabase: typeof import("@/lib/supabase").supabaseApi | null = null;
 async function getSupabaseApi() {
   if (!cachedSupabase) {
     cachedSupabase = (await import('@/lib/supabase')).supabaseApi;
@@ -41,7 +41,7 @@ interface UserJourneyHook {
   sessionId: string;
   isTracking: boolean;
   trackPageVisit: (url?: string) => void;
-  trackSimulation: (simulationData: any) => void;
+  trackSimulation: (simulationData: unknown) => void;
   getJourneyData: () => UserJourneyData | null;
   updateTimeOnSite: () => void;
 }
@@ -155,7 +155,7 @@ export function useUserJourney(): UserJourneyHook {
       const supabaseApi = await getSupabaseApi();
       try {
         existingJourney = await supabaseApi.getUserJourney(sessionId);
-      } catch (getError: any) {
+      } catch (getError: unknown) {
         // Apenas log em desenvolvimento, não desabilitar o tracking ainda
         if (process.env.NODE_ENV === 'development') {
           console.warn('Could not fetch existing journey:', getError?.message);
@@ -271,7 +271,7 @@ export function useUserJourney(): UserJourneyHook {
   }, [sessionId, isTracking]);
   
   // Função para rastrear simulação
-  const trackSimulation = useCallback((simulationData: any) => {
+  const trackSimulation = useCallback((simulationData: unknown) => {
     if (!sessionId) return;
     
     console.log('Tracking simulação:', { sessionId, simulationData });

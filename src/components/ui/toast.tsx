@@ -14,5 +14,5 @@ export const ToastDescription = ({ children }: { children: React.ReactNode }) =>
 export const ToastClose = () => null;
 export const ToastAction = () => null;
 
-export type ToastProps = any;
-export type ToastActionElement = any;
+export type ToastProps = import("./simple-toast").ToastProps;
+export type ToastActionElement = React.ReactElement;
