@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-interface ToastProps {
+export interface ToastProps {
   id: string;
   title?: string;
   description?: string;
