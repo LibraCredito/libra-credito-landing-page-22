@@ -15,7 +15,7 @@ interface NavItem {
 
 const BottomNavigation: React.FC = () => {
   const location = useLocation();
-  const navigate = useNavigate();
+  const _navigate = useNavigate();
   const { isMobile } = useDevice();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   

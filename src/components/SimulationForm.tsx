@@ -81,7 +81,7 @@ const SimulationForm: React.FC = () => {
 
   const handleEmprestimoChange = (value: string) => {
     // aceitar somente números e limitar a 7 dígitos
-    let numeric = value.replace(/\D/g, '').slice(0, 7);
+    const numeric = value.replace(/\D/g, '').slice(0, 7);
     if (!numeric) return setEmprestimo('');
 
     // limitar valor máximo permitido
@@ -94,7 +94,7 @@ const SimulationForm: React.FC = () => {
   };
 
   const handleGarantiaChange = (value: string) => {
-    let numeric = value.replace(/\D/g, '').slice(0, 8);
+    const numeric = value.replace(/\D/g, '').slice(0, 8);
     if (!numeric) return setGarantia('');
 
     let numValue = Number(numeric);

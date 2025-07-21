@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronUp, Phone, Mail, Facebook, Instagram, Linkedin, Youtube, ExternalLink } from 'lucide-react';
+import { ChevronUp, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 import RASeal from '@/components/RASeal';
 import WaveSeparator from '@/components/ui/WaveSeparator';
-import ImageOptimizer from '@/components/ImageOptimizer';
+// import ImageOptimizer from '@/components/ImageOptimizer';
 
 const Footer: React.FC = () => {
   const scrollToTop = () => {

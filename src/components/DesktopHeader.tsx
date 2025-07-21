@@ -27,7 +27,7 @@ import React, { useState, useRef, useLayoutEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Info, X } from 'lucide-react';
-import ImageOptimizer from '@/components/ImageOptimizer';
+// import ImageOptimizer from '@/components/ImageOptimizer';
 
 interface DesktopHeaderProps {
   onPortalClientes: () => void;
@@ -36,7 +36,7 @@ interface DesktopHeaderProps {
 
 const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimulateNow }) => {
   const location = useLocation();
-  const navigate = useNavigate();
+  const _navigate = useNavigate();
   const [showBanner, setShowBanner] = useState(true);
   const headerRef = useRef<HTMLElement | null>(null);
 
