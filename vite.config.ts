@@ -12,21 +12,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === 'development' && componentTagger(),
-    // Convert render blocking CSS links to asynchronous
-    // ones during the build by injecting media="print" and
-    // onload handler.
-    {
-      name: 'async-css-loader',
-      apply: 'build',
-      transformIndexHtml(html) {
-        return html.replace(/<link rel="stylesheet" href="(.*?)">/g, (full, href) => {
-          return full.includes('media=') || full.includes('onload=')
-            ? full
-            : `<link rel="stylesheet" href="${href}" media="print" onload="this.media='all'">`;
-        });
-      }
-    }
+    mode === 'development' && componentTagger()
   ].filter(Boolean),
   resolve: {
     alias: {
@@ -39,29 +25,7 @@ export default defineConfig(({ mode }) => ({
     cssCodeSplit: true,
     // Otimizações para tree-shaking
     rollupOptions: {
-      treeshake: {
-        moduleSideEffects: false
-      },
       output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            // Split large vendor libraries
-            if (id.includes('react-router-dom')) {
-              return 'react-router';
-            }
-            if (id.includes('@supabase')) {
-              return 'supabase';
-            }
-            if (id.includes('@tanstack/react-query')) {
-              return 'react-query';
-            }
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'react';
-            }
-            // Everything else goes to vendor
-            return 'vendor';
-          }
-        },
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name.split('.');
           let extType = info[info.length - 1];

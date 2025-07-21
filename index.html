@@ -185,13 +185,7 @@
       }
     </style>
 
-    <!-- Non‑blocking main stylesheet - defer para evitar render blocking -->
-    <link rel="preload" as="style" href="/src/index.css" onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/src/index.css"></noscript>
-
-    <!-- Non-critical stylesheets -->
-    <link rel="preload" as="style" href="/src/styles/minimal-premium.css" onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/src/styles/minimal-premium.css" /></noscript>
+    <!-- Main stylesheet will be injected by Vite -->
     
     <!-- Favicon - Libra Crédito -->
     <link rel="icon" href="/favicon.png" type="image/png" />

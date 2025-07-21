@@ -46,19 +46,6 @@ const Loading = () => (
 const queryClient = new QueryClient();
 
 const App = () => {
-  // Carrega o CSS não crítico de forma assíncrona após a montagem inicial
-  useEffect(() => {
-    const loadNonCriticalCss = () => {
-      // Importa os arquivos CSS completos de forma dinâmica
-      import('./index.css');
-      import('./styles/minimal-premium.css');
-    };
-
-    // Atraso para garantir que não interfira com a primeira pintura
-    const timer = setTimeout(loadNonCriticalCss, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

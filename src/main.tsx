@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { createRoot } from 'react-dom/client'
 const App = lazy(() => import('./App.tsx'))
+import './index.css';
 import './styles/overflow-fix.css';
 
 // Função para verificar necessidades de acessibilidade
