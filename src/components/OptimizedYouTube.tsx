@@ -100,7 +100,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
               className="video-thumbnail"
               loading={priority ? 'eager' : 'lazy'}
               fetchPriority={priority ? 'high' : 'auto'}
-              decoding="async"
+              decoding={priority ? 'sync' : 'async'}
               onError={handleImageError}
               style={{
                 position: 'absolute',
