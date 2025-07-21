@@ -37,9 +37,10 @@ Use o arquivo: `supabase-setup-complete.sql`
 # Copie o arquivo de exemplo
 cp .env.example .env
 
-# Configure suas variáveis no arquivo .env:
-# - VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY (obrigatório)
-# - VITE_WEBHOOK_URL (opcional - para webhook de simulações)
+# Configure suas variáveis no arquivo .env (obrigatório):
+# - `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`
+#   - **Sem valores válidos a aplicação não inicializa**
+# - `VITE_WEBHOOK_URL` (opcional - para webhook de simulações)
 # - Outras conforme necessário
 ```
 
@@ -285,7 +286,7 @@ npm install
 ```
 
 ### **❌ Erro de conexão Supabase**
-1. Verificar URL e API Key em `src/lib/supabase.ts`
+1. Verificar se `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` estão corretos no `.env`
 2. Verificar se tabelas existem no Supabase
 3. Verificar políticas RLS
 
