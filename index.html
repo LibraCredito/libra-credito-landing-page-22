@@ -21,10 +21,11 @@
     <link rel="dns-prefetch" href="https://www.youtube-nocookie.com">
     <link rel="dns-prefetch" href="https://vercel.app">
     
-    <!-- Preload LCP Images -->
-    <link rel="preload" href="/images/video-thumbnail.webp" as="image" fetchpriority="high">
+    <!-- Preload LCP Images - Otimizado para performance -->
+    <link rel="preload" href="/images/video-thumbnail.webp" as="image" fetchpriority="high" media="(min-width: 640px)">
     <link rel="preload" href="/images/logos/libra-logo.webp" as="image" fetchpriority="high">
-    <link rel="preload" as="image" href="/images/video-thumbnail.jpg" fetchpriority="high">
+    <!-- Fallback para browsers sem suporte WebP -->
+    <link rel="preload" href="/images/video-thumbnail.jpg" as="image" fetchpriority="low">
     
     <!-- Prefetch Important Pages -->
     <link rel="prefetch" href="/simulacao">
@@ -33,37 +34,33 @@
     <!-- Preload Critical Font -->
     <link rel="preload" href="https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw5aXp-obK4.woff2" as="font" type="font/woff2" crossorigin>
     
-    <!-- Critical CSS Inline for Above-the-fold -->
+    <!-- Critical CSS Inline - Otimizado para Above-the-fold -->
     <style>
-      /* Critical Above-the-fold CSS */
+      /* Critical Above-the-fold CSS - Apenas essencial */
       *, *::before, *::after { box-sizing: border-box; }
       * { margin: 0; }
+      
       body {
         line-height: 1.5;
         -webkit-font-smoothing: antialiased;
         font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
         font-weight: 300;
         background: #ffffff;
+        overflow-x: hidden;
       }
       
       :root {
         --libra-blue: #003399;
         --libra-navy: #001166;
         --libra-gold: #D4AF37;
-        /* Increased header height by 20% for desktop layout */
         --header-height: 96px;
+        --mobile-header-height: 64px;
       }
       
       html, body { height: 100%; }
       #root { height: 100%; }
-
-      h1, h2, h3, h4, h5, h6 {
-        font-weight: 700;
-      }
-
-      p {
-        font-weight: 300;
-      }
+      h1, h2, h3, h4, h5, h6 { font-weight: 700; }
+      p { font-weight: 300; }
       
       /* Header Critical */
       .header-fixed { 
@@ -77,6 +74,10 @@
         backdrop-filter: blur(10px);
       }
       
+      @media (max-width: 767px) {
+        .header-fixed { height: var(--mobile-header-height); }
+      }
+      
       /* Hero Critical */
       .hero-section {
         min-height: 100vh;
@@ -85,6 +86,10 @@
         color: white;
         display: flex;
         align-items: center;
+      }
+      
+      @media (max-width: 767px) {
+        .hero-section { padding-top: var(--mobile-header-height); }
       }
       
       .hero-container {
@@ -111,13 +116,8 @@
         margin-bottom: 1rem;
       }
       
-      @media (min-width: 768px) {
-        .hero-h1 { font-size: 3rem; }
-      }
-      
-      @media (min-width: 1024px) {
-        .hero-h1 { font-size: 3.5rem; }
-      }
+      @media (min-width: 768px) { .hero-h1 { font-size: 3rem; } }
+      @media (min-width: 1024px) { .hero-h1 { font-size: 3.5rem; } }
       
       .hero-video {
         aspect-ratio: 16/9;
@@ -136,7 +136,15 @@
         object-fit: cover;
       }
       
-      /* Loading States */
+      /* Loading State */
+      .page-loading {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f9fafb;
+      }
+      
       .loading-spinner {
         width: 3rem;
         height: 3rem;
@@ -146,40 +154,13 @@
         animation: spin 1s linear infinite;
       }
       
-      .page-loading {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #f9fafb;
-      }
+      @keyframes spin { to { transform: rotate(360deg); } }
       
-      @keyframes spin {
-        to { transform: rotate(360deg); }
-      }
+      /* Focus e Acessibilidade */
+      :focus { outline: 2px solid var(--libra-gold); outline-offset: 2px; }
+      :focus:not(:focus-visible) { outline: none; }
+      :focus-visible { outline: 2px solid var(--libra-gold); outline-offset: 2px; }
       
-      /* Content Visibility Optimization */
-      .content-auto {
-        content-visibility: auto;
-        contain-intrinsic-size: 300px;
-      }
-      
-      /* Enhanced Focus Styles for Accessibility */
-      :focus {
-        outline: 2px solid var(--libra-gold);
-        outline-offset: 2px;
-      }
-      
-      :focus:not(:focus-visible) {
-        outline: none;
-      }
-      
-      :focus-visible {
-        outline: 2px solid var(--libra-gold);
-        outline-offset: 2px;
-      }
-      
-      /* Screen Reader Only utility */
       .sr-only {
         position: absolute;
         width: 1px;
@@ -192,32 +173,25 @@
         border: 0;
       }
       
-      .focus\:not-sr-only:focus {
-        position: static;
-        width: auto;
-        height: auto;
-        padding: inherit;
-        margin: inherit;
-        overflow: visible;
-        clip: auto;
-        white-space: normal;
+      /* Performance */
+      @media (prefers-reduced-motion: reduce) {
+        *, ::before, ::after {
+          animation-delay: -1ms !important;
+          animation-duration: 1ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0s !important;
+          transition-delay: 0s !important;
+        }
       }
     </style>
 
-    <!-- Critical CSS inlined during build -->
-    <style id="critical-css">
-      /* Critical CSS will be injected here by the build step */
-    </style>
+    <!-- Non‑blocking main stylesheet - defer para evitar render blocking -->
+    <link rel="preload" as="style" href="/src/index.css" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/src/index.css"></noscript>
 
-    <!-- Non‑blocking main stylesheet -->
-    <link rel="preload" as="style" href="/assets/index.css" onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/assets/index.css"></noscript>
-
-    <!-- Remaining stylesheets -->
-    <link rel="stylesheet" href="/src/styles/minimal-premium.css" media="print" onload="this.media='all'">
-    <noscript>
-      <link rel="stylesheet" href="/src/styles/minimal-premium.css" />
-    </noscript>
+    <!-- Non-critical stylesheets -->
+    <link rel="preload" as="style" href="/src/styles/minimal-premium.css" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/src/styles/minimal-premium.css" /></noscript>
     
     <!-- Favicon - Libra Crédito -->
     <link rel="icon" href="/favicon.png" type="image/png" />

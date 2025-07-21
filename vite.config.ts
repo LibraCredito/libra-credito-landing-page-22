@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
-import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -27,8 +26,7 @@ export default defineConfig(({ mode }) => ({
             : `<link rel="stylesheet" href="${href}" media="print" onload="this.media='all'">`;
         });
       }
-    },
-    visualizer({ filename: './dist/stats.html', gzipSize: true })
+    }
   ].filter(Boolean),
   resolve: {
     alias: {
@@ -38,22 +36,30 @@ export default defineConfig(({ mode }) => ({
   build: {
     target: 'esnext',
     minify: 'esbuild',
-    // Inline all CSS into the JavaScript bundles to avoid
-    // additional render‑blocking requests for CSS files
     cssCodeSplit: true,
+    // Otimizações para tree-shaking
     rollupOptions: {
+      treeshake: {
+        moduleSideEffects: false
+      },
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            // Split large vendor libraries
             if (id.includes('react-router-dom')) {
-              return 'react-router'
+              return 'react-router';
             }
             if (id.includes('@supabase')) {
-              return 'supabase'
+              return 'supabase';
             }
-            if (id.includes('react')) {
-              return 'react'
+            if (id.includes('@tanstack/react-query')) {
+              return 'react-query';
             }
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react';
+            }
+            // Everything else goes to vendor
+            return 'vendor';
           }
         },
         assetFileNames: (assetInfo) => {
@@ -71,6 +77,8 @@ export default defineConfig(({ mode }) => ({
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js'
       }
-    }
+    },
+    // Otimizar tamanho do bundle
+    chunkSizeWarningLimit: 1000
   }
   }));

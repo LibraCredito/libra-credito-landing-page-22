@@ -98,14 +98,14 @@ const HeroPremium: React.FC = () => {
             </div>
           </div>
 
-            <div className="w-full max-w-xl lg:max-w-lg xl:max-w-none mx-auto aspect-video">
-            <div className="hero-video">
+            <div className="w-full max-w-xl lg:max-w-lg xl:max-w-none mx-auto">
+            <div className="hero-video aspect-video">
               <OptimizedYouTube
                 videoId="E9lwL6R2l1s"
                 title="Vídeo institucional Libra Crédito"
                 priority={true}
                 className="w-full h-full"
-                thumbnailSrc="/images/video-thumbnail.jpg"
+                thumbnailSrc="/images/video-thumbnail.webp"
               />
             </div>
           </div>

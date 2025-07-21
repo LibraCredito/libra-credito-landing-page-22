@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from '@/components/ScrollToTop';
 import LazyGlobalTracker from '@/components/LazyGlobalTracker';
 import { MobileOptimized } from '@/components/MobileOptimized';
+import { MobileProvider } from '@/hooks/useMobileContext';
 
 // Lazy load components
 const Index = lazy(() => import("./pages/Index"));
@@ -62,40 +63,42 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <CriticalCssInjector />
-        <MobileOptimized>
-          <BrowserRouter>
-            <ScrollToTop />
-            <LazyGlobalTracker />
-            <Toaster />
-            <Sonner />
-            <Suspense fallback={<Loading />}>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/vantagens" element={<Vantagens />} />
-                <Route path="/quem-somos" element={<QuemSomos />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="/parceiros" element={<Parceiros />} />
-                <Route path="/simulacao" element={<Simulacao />} />
-                <Route path="/simulacao/sapi" element={<SimulacaoSapi />} />
-                <Route path="/simulacao/local" element={<SimulacaoLocal />} />
-                <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
-                <Route path="/politica-cookies" element={<PoliticaCookies />} />
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/test-supabase" element={<SupabaseTestPage />} />
-                <Route path="/test-webhook" element={<TestWebhook />} />
-                <Route path="/mobile-demo" element={<MobileDemo />} />
-                <Route path="/mobile-nav" element={<MobileNavDemo />} />
-                <Route path="/simulacao-wizard" element={<SimulacaoWizard />} />
-                <Route path="/wizard-test" element={<SimpleWizardTest />} />
-                <Route path="/confirmacao" element={<Confirmacao />} />
-                <Route path="/home2" element={<Home2 />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
-        </MobileOptimized>
+        <MobileProvider>
+          <CriticalCssInjector />
+          <MobileOptimized>
+            <BrowserRouter>
+              <ScrollToTop />
+              <LazyGlobalTracker />
+              <Toaster />
+              <Sonner />
+              <Suspense fallback={<Loading />}>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/vantagens" element={<Vantagens />} />
+                  <Route path="/quem-somos" element={<QuemSomos />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<BlogPost />} />
+                  <Route path="/parceiros" element={<Parceiros />} />
+                  <Route path="/simulacao" element={<Simulacao />} />
+                  <Route path="/simulacao/sapi" element={<SimulacaoSapi />} />
+                  <Route path="/simulacao/local" element={<SimulacaoLocal />} />
+                  <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
+                  <Route path="/politica-cookies" element={<PoliticaCookies />} />
+                  <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/test-supabase" element={<SupabaseTestPage />} />
+                  <Route path="/test-webhook" element={<TestWebhook />} />
+                  <Route path="/mobile-demo" element={<MobileDemo />} />
+                  <Route path="/mobile-nav" element={<MobileNavDemo />} />
+                  <Route path="/simulacao-wizard" element={<SimulacaoWizard />} />
+                  <Route path="/wizard-test" element={<SimpleWizardTest />} />
+                  <Route path="/confirmacao" element={<Confirmacao />} />
+                  <Route path="/home2" element={<Home2 />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </BrowserRouter>
+          </MobileOptimized>
+        </MobileProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

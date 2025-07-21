@@ -1,0 +1,172 @@
+/* Critical Above-the-fold CSS - Apenas essencial para primeira pintura */
+
+/* Reset básico */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-weight: 300;
+  background: #ffffff;
+  overflow-x: hidden;
+}
+
+:root {
+  --libra-blue: #003399;
+  --libra-navy: #001166;
+  --libra-gold: #D4AF37;
+  --header-height: 96px;
+  --mobile-header-height: 64px;
+}
+
+html, body { height: 100%; }
+#root { height: 100%; }
+
+h1, h2, h3, h4, h5, h6 { font-weight: 700; }
+p { font-weight: 300; }
+
+/* Header Critical */
+.header-fixed { 
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: var(--header-height);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 767px) {
+  .header-fixed {
+    height: var(--mobile-header-height);
+  }
+}
+
+/* Hero Critical */
+.hero-section {
+  min-height: 100vh;
+  padding-top: var(--header-height);
+  background: linear-gradient(135deg, #003399 0%, #0066cc 50%, #00ccff 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .hero-section {
+    padding-top: var(--mobile-header-height);
+  }
+}
+
+.hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .hero-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+.hero-h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .hero-h1 { font-size: 3rem; }
+}
+
+@media (min-width: 1024px) {
+  .hero-h1 { font-size: 3.5rem; }
+}
+
+.hero-video {
+  aspect-ratio: 16/9;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  position: relative;
+  background: #000;
+}
+
+.video-thumbnail {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Loading States */
+.loading-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 3px solid rgba(0, 51, 153, 0.3);
+  border-top: 3px solid var(--libra-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.page-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9fafb;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Focus básico para acessibilidade */
+:focus {
+  outline: 2px solid var(--libra-gold);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--libra-gold);
+  outline-offset: 2px;
+}
+
+/* Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Animações reduzidas para performance */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}

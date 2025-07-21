@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Play } from 'lucide-react';
 
 interface OptimizedYouTubeProps {
@@ -18,8 +18,9 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
   const [playerReady, setPlayerReady] = useState(false);
+  const [playOnReady, setPlayOnReady] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   
   // Determinar qual imagem usar
@@ -69,25 +70,10 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
 
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`}>
-      <iframe
-        ref={iframeRef}
-        onLoad={handleIframeLoad}
-        className="absolute inset-0 w-full h-full"
-        src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1&preload=metadata`}
-        title={title}
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        loading="lazy"
-        style={{ opacity: isLoaded ? 1 : 0 }}
-      />
-      {!isLoaded && (
-
+      {!isLoaded ? (
         <div
           className="w-full h-full cursor-pointer relative bg-black flex items-center justify-center hero-video"
           onClick={loadVideo}
-          onTouchEnd={loadVideo}
-          onPointerUp={loadVideo}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
@@ -113,7 +99,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
               height={360}
               className="video-thumbnail"
               loading={priority ? 'eager' : 'lazy'}
-              fetchpriority={priority ? 'high' : 'auto'}
+              fetchPriority={priority ? 'high' : 'auto'}
               decoding="async"
               onError={handleImageError}
               style={{
@@ -132,9 +118,10 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
             </div>
           </div>
         </div>
-
       ) : (
         <iframe
+          ref={iframeRef}
+          onLoad={handleIframeLoad}
           className="absolute inset-0 w-full h-full"
           src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1&preload=metadata`}
           title={title}
@@ -144,7 +131,6 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
           loading="lazy"
           playsInline
         />
-
       )}
     </div>
   );
