@@ -27,5 +27,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "LTV_Cidades.json"]
+  "include": ["src"]
 }
