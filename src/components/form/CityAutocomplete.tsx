@@ -2,21 +2,26 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MapPin } from 'lucide-react';
 import { searchCities } from '@/utils/cityLtvService';
 
+interface CityAutocompleteProps {
+  value?: string;
+  onCityChange?: (city: string) => void;
+}
+
 /**
  * Autocomplete field for Brazilian cities using local JSON data.
  * Searches city suggestions from LTV_Cidades.json as user types 
  * and only allows selection of valid cities.
  */
-const CityAutocomplete = ({ value = '', onCityChange }) => {
-  const [inputValue, setInputValue] = useState(value);
-  const [suggestions, setSuggestions] = useState([]); // list of city strings
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [highlightIndex, setHighlightIndex] = useState(-1);
-  const [isFocused, setIsFocused] = useState(false);
-  const fetchTimeout = useRef(null);
-  const inputRef = useRef(null);
-  const containerRef = useRef(null);
+const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityChange }) => {
+  const [inputValue, setInputValue] = useState<string>(value);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+  const [highlightIndex, setHighlightIndex] = useState<number>(-1);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const fetchTimeout = useRef<NodeJS.Timeout | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Keep input in sync if parent resets the value
   useEffect(() => {
@@ -52,14 +57,17 @@ const CityAutocomplete = ({ value = '', onCityChange }) => {
     }, 300);
 
     return () => {
-      clearTimeout(fetchTimeout.current);
+      if (fetchTimeout.current) {
+        clearTimeout(fetchTimeout.current);
+      }
     };
   }, [inputValue]);
 
   // Function to scroll input to top of viewport
-  const scrollToInput = () => {
+  const scrollToInput = (): void => {
     if (inputRef.current && window.innerWidth < 768) { // Only on mobile
       setTimeout(() => {
+        if (!inputRef.current) return;
         const headerHeight = 80; // Approximate header height
         const rect = inputRef.current.getBoundingClientRect();
         const elementTop = rect.top + window.pageYOffset;
@@ -74,13 +82,13 @@ const CityAutocomplete = ({ value = '', onCityChange }) => {
   };
 
   // Handle focus
-  const handleFocus = () => {
+  const handleFocus = (): void => {
     setIsFocused(true);
     scrollToInput();
   };
 
   // Handle blur
-  const handleBlur = () => {
+  const handleBlur = (): void => {
     // Delay hiding suggestions to allow selection
     setTimeout(() => {
       setIsFocused(false);
@@ -89,7 +97,7 @@ const CityAutocomplete = ({ value = '', onCityChange }) => {
   };
 
   // Handle selection of a city
-  const handleSelect = (city) => {
+  const handleSelect = (city: string): void => {
     setInputValue(city);
     setSuggestions([]);
     setHighlightIndex(-1);
@@ -101,14 +109,14 @@ const CityAutocomplete = ({ value = '', onCityChange }) => {
   };
 
   // When typing, clear current selection until a suggestion is chosen
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputValue(e.target.value);
     setHighlightIndex(-1);
     if (onCityChange) onCityChange('');
   };
 
   // Keyboard navigation for the suggestion list
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       setHighlightIndex((prev) =>

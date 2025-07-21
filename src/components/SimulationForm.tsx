@@ -142,12 +142,10 @@ const SimulationForm: React.FC = () => {
         ipAddress: undefined
       };
 
-      console.log('🎯 Iniciando simulação:', simulationInput);
 
       // Usar o serviço local sem APIs
       const result = await LocalSimulationService.performSimulation(simulationInput);
 
-      console.log('✅ Simulação realizada com sucesso:', result);
 
       // Rastrear simulação na jornada do usuário
       trackSimulation({
@@ -164,7 +162,7 @@ const SimulationForm: React.FC = () => {
       scrollToResult();
 
     } catch (error) {
-      console.error('Erro na simulação:', error);
+      // Erro na simulação
       
       if (error instanceof Error) {
         // Analisar a mensagem usando analisador local
@@ -220,7 +218,6 @@ const SimulationForm: React.FC = () => {
     setTimeout(async () => {
       // Verificar se temos todos os dados necessários para simular
       if (!sessionId || !cidade || !amortizacao) {
-        console.log('⚠️ Dados insuficientes para simulação automática');
         return;
       }
 
@@ -234,7 +231,6 @@ const SimulationForm: React.FC = () => {
       );
 
       if (!newValidation.formularioValido) {
-        console.log('⚠️ Formulário inválido após ajuste');
         return;
       }
 
@@ -256,11 +252,9 @@ const SimulationForm: React.FC = () => {
           ipAddress: undefined
         };
 
-        console.log('🎯 Executando simulação automática após ajuste:', simulationInput);
 
         const result = await LocalSimulationService.performSimulation(simulationInput);
 
-        console.log('✅ Simulação automática realizada com sucesso:', result);
 
         // Rastrear simulação na jornada do usuário
         trackSimulation({
@@ -277,7 +271,7 @@ const SimulationForm: React.FC = () => {
         scrollToResult();
 
       } catch (error) {
-        console.error('Erro na simulação automática:', error);
+        // Erro na simulação automática
         
         if (error instanceof Error) {
           const analysis = analyzeLocalMessage(error.message);
@@ -350,11 +344,9 @@ const SimulationForm: React.FC = () => {
           ipAddress: undefined
         };
 
-        console.log('🔄 Refazendo simulação com tabela PRICE:', simulationInput);
 
         const result = await LocalSimulationService.performSimulation(simulationInput);
 
-        console.log('✅ Simulação PRICE realizada com sucesso:', result);
 
         // Rastrear simulação na jornada do usuário
         trackSimulation({
@@ -371,7 +363,7 @@ const SimulationForm: React.FC = () => {
         scrollToResult();
 
       } catch (error) {
-        console.error('Erro na simulação PRICE:', error);
+        // Erro na simulação PRICE
         
         if (error instanceof Error) {
           const analysis = analyzeLocalMessage(error.message);
