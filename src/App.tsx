@@ -17,16 +17,16 @@ const Simulacao = lazy(() => import("./pages/Simulacao"));
 const PoliticaPrivacidade = lazy(() => import("./pages/PoliticaPrivacidade"));
 const PoliticaCookies = lazy(() => import("./pages/PoliticaCookies"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
-const SupabaseTestPage = lazy(() => import("./pages/SupabaseTestPage"));
+const SupabaseTestPage = lazy(() => import("../temp-files/test-pages/SupabaseTestPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const MobileDemo = lazy(() => import("./pages/MobileDemo"));
+const MobileDemo = lazy(() => import("../temp-files/test-pages/MobileDemo"));
 const SimulacaoWizard = lazy(() => import("./pages/SimulacaoWizard"));
-const SimpleWizardTest = lazy(() => import("./pages/SimpleWizardTest"));
-const MobileNavDemo = lazy(() => import("./pages/MobileNavDemo"));
+const SimpleWizardTest = lazy(() => import("../temp-files/test-pages/SimpleWizardTest"));
+const MobileNavDemo = lazy(() => import("../temp-files/test-pages/MobileNavDemo"));
 const SimulacaoSapi = lazy(() => import("./pages/SimulacaoSapi"));
 const SimulacaoLocal = lazy(() => import("./pages/SimulacaoLocal"));
-const Home2 = lazy(() => import("./pages/Home2"));
-const TestWebhook = lazy(() => import("./pages/TestWebhook"));
+const Home2 = lazy(() => import("../temp-files/experimental-pages/Home2"));
+const TestWebhook = lazy(() => import("../temp-files/test-pages/TestWebhook"));
 const Confirmacao = lazy(() => import("./pages/Confirmacao"));
 
 const Loading = () => (

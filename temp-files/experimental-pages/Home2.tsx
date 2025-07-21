@@ -3,10 +3,10 @@ import MobileLayout from '@/components/MobileLayout';
 import PremiumLoading from '@/components/ui/PremiumLoading';
 
 // Lazy loading dos componentes do novo design
-const Hero2 = lazy(() => import('@/components/Hero2'));
-const BenefitsSection2 = lazy(() => import('@/components/BenefitsSection2'));
+const Hero2 = lazy(() => import('./Hero2'));
+const BenefitsSection2 = lazy(() => import('./BenefitsSection2'));
 const TransparencySection = lazy(() => import('@/components/TransparencySection'));
-const FAQSection2 = lazy(() => import('@/components/FAQSection2'));
+const FAQSection2 = lazy(() => import('./FAQSection2'));
 const CGISection = lazy(() => import('@/components/CGISection'));
 const StepsSection = lazy(() => import('@/components/StepsSection'));
 
