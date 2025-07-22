@@ -20,12 +20,16 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-// Configurações do Supabase - requer variáveis de ambiente
+// Configurações do Supabase - opcionais para desenvolvimento
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY devem estar definidos no ambiente');
+// Variáveis de fallback para desenvolvimento quando Supabase não está configurado
+const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey);
+
+if (!isSupabaseConfigured) {
+  console.warn('⚠️ Supabase não configurado: VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY não definidas');
+  console.log('🔧 Aplicação funcionará em modo local (sem salvamento de dados)');
 }
 
 // Log para debug (apenas em development)
@@ -154,23 +158,37 @@ export interface Database {
   };
 }
 
-// Cliente Supabase tipado
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    persistSession: false // Não precisamos de autenticação de usuário
-  },
-  global: {
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
+// Cliente Supabase tipado com fallback para desenvolvimento
+export const supabase = createClient<Database>(
+  supabaseUrl || 'https://placeholder.supabase.co', 
+  supabaseAnonKey || 'placeholder-key',
+  {
+    auth: {
+      persistSession: false // Não precisamos de autenticação de usuário
+    },
+    global: {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
     }
   }
-});
+);
+
+// Flag para verificar se Supabase está funcionando
+export { isSupabaseConfigured };
 
 // Funções auxiliares para operações no banco
 export const supabaseApi = {
   // Teste de conexão
   async testConnection() {
+    if (!isSupabaseConfigured) {
+      if (import.meta.env.DEV) {
+        console.log('🔧 Supabase em modo fallback - conexão simulada');
+      }
+      return false;
+    }
+
     try {
       const { data, error } = await supabase
         .from('parceiros')
@@ -179,19 +197,19 @@ export const supabaseApi = {
       
       if (error) {
         // Log silencioso para evitar poluição do console
-        if (process.env.NODE_ENV === 'development') {
+        if (import.meta.env.DEV) {
           console.warn('Supabase connection issue:', error.message);
         }
         return false;
       }
       
-      if (process.env.NODE_ENV === 'development') {
+      if (import.meta.env.DEV) {
         console.log('✅ Conexão Supabase OK');
       }
       return true;
     } catch (error) {
       // Evitar console errors em produção
-      if (process.env.NODE_ENV === 'development') {
+      if (import.meta.env.DEV) {
         console.warn('Supabase connection failed:', error);
       }
       return false;
@@ -200,6 +218,11 @@ export const supabaseApi = {
 
   // Simulações
   async createSimulacao(data: Database['public']['Tables']['simulacoes']['Insert']) {
+    if (!isSupabaseConfigured) {
+      console.log('📝 Simulação salva em modo local:', data);
+      return { ...data, id: 'local-' + Date.now() } as any;
+    }
+
     const { data: result, error } = await supabase
       .from('simulacoes')
       .insert(data)
