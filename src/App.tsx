@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from '@/components/ScrollToTop';
 import { MobileProvider } from '@/hooks/useMobileContext';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 // Import homepage directly (not lazy) for faster LCP
 import Index from "./pages/Index";
@@ -52,9 +53,10 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <MobileProvider>
-        <BrowserRouter>
-          <ScrollToTop />
-          <Suspense fallback={<Loading />}>
+        <TooltipProvider>
+          <BrowserRouter>
+            <ScrollToTop />
+            <Suspense fallback={<Loading />}>
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/vantagens" element={<Vantagens />} />
@@ -80,6 +82,7 @@ const App = () => {
                 </Routes>
               </Suspense>
             </BrowserRouter>
+          </TooltipProvider>
         </MobileProvider>
       </QueryClientProvider>
   );
