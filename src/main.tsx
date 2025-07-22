@@ -1,6 +1,6 @@
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom/client'
-const App = lazy(() => import('./App.tsx'))
+import App from './App.tsx'
 import './index.css';
 import './styles/overflow-fix.css';
 
@@ -17,25 +17,13 @@ const setupAccessibility = () => {
   document.documentElement.lang = 'pt-BR';
 };
 
-// Renderização rápida
+// Renderização simplificada - removendo StrictMode temporariamente
 const renderApp = () => {
   setupAccessibility();
   
   const root = document.getElementById('root');
   if (root) {
-    createRoot(root).render(
-      <React.StrictMode>
-        <Suspense
-          fallback={
-            <div className="page-loading">
-              <div className="loading-spinner" />
-            </div>
-          }
-        >
-          <App />
-        </Suspense>
-      </React.StrictMode>
-    );
+    createRoot(root).render(<App />);
   }
 };
 

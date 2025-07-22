@@ -69,7 +69,12 @@ export const useMobileOptimized = (): MobileContextType => {
   const context = useContext(MobileContext);
   
   if (context === undefined) {
-    throw new Error('useMobileOptimized must be used within a MobileProvider');
+    // Ao invés de lançar erro, retorna valores padrão
+    console.warn('useMobileOptimized used outside MobileProvider, using defaults');
+    return {
+      isMobile: false,
+      isLoading: false
+    };
   }
   
   return context;
@@ -77,6 +82,11 @@ export const useMobileOptimized = (): MobileContextType => {
 
 // Hook de compatibilidade para migração gradual
 export const useIsMobile = (): boolean => {
-  const { isMobile } = useMobileOptimized();
-  return isMobile;
+  try {
+    const { isMobile } = useMobileOptimized();
+    return isMobile;
+  } catch (error) {
+    console.warn('useIsMobile error, defaulting to false:', error);
+    return false;
+  }
 };

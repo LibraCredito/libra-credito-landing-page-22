@@ -1,7 +1,7 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/hooks/useMobileContext';
 
 // Critical components - NOT lazy loaded for LCP
 import HeroPremium from '@/components/HeroPremium';
