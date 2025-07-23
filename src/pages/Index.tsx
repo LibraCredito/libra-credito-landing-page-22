@@ -44,7 +44,7 @@ const Index: React.FC = () => {
       
       <main id="main-content" className="flex-grow">
         {/* Faixa Separadora Superior Invertida - Ondas para baixo */}
-        <WaveSeparator variant="hero" height="md" inverted />
+        <WaveSeparator variant="inverted" height="md" inverted />
         
         <HeroPremium />
       
