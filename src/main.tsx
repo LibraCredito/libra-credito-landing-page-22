@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot, hydrateRoot } from 'react-dom/client'
+import { hydrateRoot } from 'react-dom/client';
 import App from './App.tsx'
 import './index.css';
 import './styles/overflow-fix.css';
@@ -22,16 +22,8 @@ const renderApp = () => {
   setupAccessibility();
   
   const root = document.getElementById('root');
-  const placeholder = document.getElementById('hero-placeholder');
   if (root) {
-    if (root.hasChildNodes()) {
-      hydrateRoot(root, <App />);
-    } else {
-      createRoot(root).render(<App />);
-    }
-    if (placeholder) {
-      placeholder.remove();
-    }
+    hydrateRoot(root, <App />);
   }
 };
 
