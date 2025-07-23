@@ -142,8 +142,8 @@ const BenefitsSection2: React.FC = () => {
             >
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-8 flex items-center justify-center">
-                  <img
-                    src="/images/media/g1-logo.png"
+                  <img 
+                    src="/images/media/g1-logo (1).webp"
                     alt="G1 Globo"
                     className="max-w-full max-h-full object-contain"
                     loading="lazy"
@@ -194,8 +194,8 @@ const BenefitsSection2: React.FC = () => {
             >
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-8 flex items-center justify-center">
-                  <img
-                    src="/images/media/revide-logo.png"
+                  <img 
+                    src="/images/media/revide-logo.webp"
                     alt="Revide"
                     className="max-w-full max-h-full object-contain"
                     loading="lazy"

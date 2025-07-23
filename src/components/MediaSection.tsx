@@ -6,7 +6,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 const mediaLinks = [
   {
     name: 'G1 Globo',
-    logo: '/images/media/g1-logo.png',
+    logo: '/images/media/g1-logo (1).webp',
     title: 'A Libra Crédito tem soluções financeiras com as menores taxas no pós-pandemia',
     url: 'https://g1.globo.com/sp/ribeirao-preto-franca/especial-publicitario/libra-credito-solucoes-financeiras/noticia/2022/10/28/a-libra-credito-tem-solucoes-financeiras-com-as-menores-taxas-no-pos-pandemia.ghtml'
   },
@@ -24,7 +24,7 @@ const mediaLinks = [
   },
   {
     name: 'Revide',
-    logo: '/images/media/revide-logo.png',
+    logo: '/images/media/revide-logo.webp',
     title: 'A revolução do crédito',
     url: 'https://www.revide.com.br/noticias/revista/a-revolucao-do-credito/'
   }
