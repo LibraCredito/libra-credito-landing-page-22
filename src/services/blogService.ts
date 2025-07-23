@@ -308,7 +308,7 @@ const EXISTING_POSTS: BlogPost[] = [
     title: 'Capital de giro para o agronegócio: utilize sua fazenda como garantia e alcance seus objetivos',
     description: 'Descubra como produtores rurais em Ribeirão Preto podem obter capital de giro usando sua propriedade rural como garantia.',
     category: 'credito-rural',
-    imageUrl: 'https://www.libracredito.com.br/image/posts/1000/500/uMycX6hJNj7fPDTbntXg76kH85sTNGRcSRQPTCKq.png',
+    imageUrl: '/images/blog/capital-giro.jpg',
     slug: 'capital-de-giro-agronegocio-fazenda-garantia',
     content: `
       <h2>A Importância do Capital de Giro no Agronegócio</h2>
