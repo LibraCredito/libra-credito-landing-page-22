@@ -24,10 +24,15 @@
     <link rel="dns-prefetch" href="https://vercel.app">
     
     <!-- Preload LCP Images - CRITICAL para performance -->
-    <link rel="preload" href="/images/thumbnail-libra.webp" as="image" fetchpriority="high">
+    <link rel="preload" href="/images/thumbnail-libra.webp" as="image" fetchpriority="high" crossorigin="anonymous">
     <link rel="preload" href="/images/logos/libra-logo.webp" as="image" fetchpriority="high">
-    <!-- Fallback para browsers sem suporte WebP -->
-    <link rel="preload" href="/images/video-thumbnail.jpg" as="image" fetchpriority="auto">
+    
+    <!-- Modernizr-style WebP detection preload -->
+    <link rel="preload" href="/images/thumbnail-libra.webp" as="image" type="image/webp" fetchpriority="high">
+    
+    <!-- Early connection hints for critical resources -->
+    <link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin>
+    <link rel="dns-prefetch" href="https://i.ytimg.com">
     
     <!-- Prefetch Important Pages -->
     <link rel="prefetch" href="/simulacao">
@@ -137,9 +142,37 @@
         height: 100%;
         object-fit: cover;
         /* Otimizações críticas para LCP */
-        contain: layout style paint;
+        contain: strict;
         will-change: auto;
         transform: translateZ(0);
+        /* Eliminação de layout shifts */
+        display: block;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+      }
+      
+      /* Hero video container otimizado */
+      .hero-video {
+        contain: strict;
+        content-visibility: visible;
+        /* Força aceleração por hardware */
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+        /* Otimização de paint */
+        isolation: isolate;
+        /* Prevenção de layout shifts */
+        overflow: hidden;
+        /* Renderização otimizada */
+        -webkit-transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        -webkit-perspective: 1000;
+      }
+      
+      /* Otimizações para transições */
+      .group:hover .group-hover\\:bg-red-700,
+      .group:hover .group-hover\\:scale-105,
+      .group:hover .group-hover\\:bg-black\\/40 {
+        will-change: transform, background-color;
       }
       
       /* Loading State */

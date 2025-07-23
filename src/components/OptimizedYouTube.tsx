@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { Play } from 'lucide-react';
 
 interface OptimizedYouTubeProps {
@@ -17,111 +17,47 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
   thumbnailSrc
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
-  const [playerReady, setPlayerReady] = useState(false);
-  const [playOnReady, setPlayOnReady] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  
-  // Determinar qual imagem usar
-  const getImageSrc = () => {
-    if (thumbnailSrc && !imageError) {
-      return thumbnailSrc;
-    }
-    // Fallback para YouTube se a imagem local falhar
-    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-  };
-
-  const play = () => {
-    const message = JSON.stringify({ event: 'command', func: 'playVideo', args: '' });
-    iframeRef.current?.contentWindow?.postMessage(message, '*');
-  };
-
-  const loadVideo = () => {
+  // Função simplificada para carregamento
+  const loadVideo = useCallback(() => {
     setIsLoaded(true);
+  }, []);
 
-    if (playerReady) {
-      play();
-    } else {
-      setPlayOnReady(true);
-    }
-  };
-
-  useEffect(() => {
-    if (playOnReady && playerReady) {
-      play();
-      setPlayOnReady(false);
-    }
-  }, [playOnReady, playerReady]);
-
-  const handleIframeLoad = () => {
-    setPlayerReady(true);
-    if (playOnReady) {
-      play();
-      setPlayOnReady(false);
-    }
-
-  };
-
-  const handleImageError = () => {
-    console.log('Erro ao carregar imagem local, usando YouTube fallback');
-    setImageError(true);
-  };
+  // Usar apenas thumbnail local - sem fallback complexo
+  const thumbnailImage = thumbnailSrc || `/images/thumbnail-libra.webp`;
 
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`}>
       {!isLoaded ? (
-        <div
-          className="w-full h-full cursor-pointer relative bg-black flex items-center justify-center hero-video"
+        <button
+          className="w-full h-full cursor-pointer relative bg-black flex items-center justify-center hero-video group"
           onClick={loadVideo}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              loadVideo();
-            }
-          }}
-          role="button"
-          tabIndex={0}
           aria-label={`Reproduzir vídeo: ${title}`}
+          type="button"
         >
-          {/* Usar picture element para melhor suporte */}
-          <picture className="video-thumbnail">
-            {/* WebP se disponível e não houve erro */}
-            {thumbnailSrc && !imageError && (
-              <source srcSet={thumbnailSrc} type="image/webp" />
-            )}
+          {/* Thumbnail otimizada - sem picture element complexo */}
+          <img
+            src={thumbnailImage}
+            alt={`Miniatura do ${title}`}
+            width="480"
+            height="360"
+            className="video-thumbnail"
+            loading="eager"
+            fetchPriority="high"
+            decoding="sync"
+          />
 
-            {/* Imagem principal */}
-            <img
-              src={getImageSrc()}
-              alt={`Miniatura do ${title}`}
-              width={480}
-              height={360}
-              className="video-thumbnail"
-              loading={priority ? 'eager' : 'lazy'}
-              fetchPriority={priority ? 'high' : 'auto'}
-              decoding={priority ? 'sync' : 'async'}
-              onError={handleImageError}
-              style={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover'
-              }}
-            />
-          </picture>
-
-          <div className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/40 transition-colors">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg hover:bg-red-700 transition-colors group">
-              <Play className="w-8 h-8 md:w-10 md:h-10 text-white fill-white ml-1 group-hover:scale-110 transition-transform" fill="currentColor" />
+          {/* Overlay simplificado - usando apenas CSS */}
+          <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors duration-200">
+            <div className="w-16 h-16 md:w-20 md:h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:bg-red-700 transition-all duration-200 group-hover:scale-105">
+              <Play className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" fill="currentColor" />
             </div>
           </div>
-        </div>
+        </button>
       ) : (
         <iframe
           ref={iframeRef}
-          onLoad={handleIframeLoad}
           className="absolute inset-0 w-full h-full"
           src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1&preload=metadata`}
           title={title}

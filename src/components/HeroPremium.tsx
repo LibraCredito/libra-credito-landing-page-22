@@ -99,7 +99,15 @@ const HeroPremium: React.FC = () => {
           </div>
 
             <div className="w-full max-w-xl lg:max-w-lg xl:max-w-none mx-auto">
-            <div className="hero-video aspect-video" style={{ containIntrinsicSize: '480px 360px', contain: 'layout style paint' }}>
+            <div 
+              className="hero-video aspect-video" 
+              style={{ 
+                containIntrinsicSize: '480px 360px', 
+                contain: 'strict',
+                willChange: 'auto',
+                transform: 'translateZ(0)'
+              }}
+            >
               <OptimizedYouTube
                 videoId="E9lwL6R2l1s"
                 title="Vídeo institucional Libra Crédito"
