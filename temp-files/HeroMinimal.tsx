@@ -135,7 +135,7 @@ const HeroMinimal: React.FC = () => {
                       title="Vídeo institucional Libra Crédito"
                       priority={true}
                       className="w-full aspect-video"
-                      thumbnailSrc="/images/thumbnail-libra.webp"
+                      thumbnailSrc="/images/video-thumbnail.webp"
                     />
                   </div>
 
