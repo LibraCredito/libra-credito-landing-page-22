@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Play } from 'lucide-react';
 
 interface OptimizedYouTubeProps {
@@ -17,6 +17,8 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
   thumbnailSrc
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [thumbSrc, setThumbSrc] = useState<string>('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAAAAAAD/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAALABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEC/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/EABUBAQEAAAAAAAAAAAAAAAAAAAAF/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AyIKaICAP/9k=');
+  const [loadedFull, setLoadedFull] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   // Função simplificada para carregamento
@@ -26,6 +28,16 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
 
   // Usar apenas thumbnail local - sem fallback complexo
   const thumbnailImage = thumbnailSrc || `/images/thumbnail-libra.webp`;
+
+  // Carrega thumbnail em alta resolução assim que possível
+  useEffect(() => {
+    const img = new Image();
+    img.src = thumbnailImage;
+    img.onload = () => {
+      setThumbSrc(thumbnailImage);
+      setLoadedFull(true);
+    };
+  }, [thumbnailImage]);
 
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`}>
@@ -38,14 +50,14 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
         >
           {/* Thumbnail otimizada - sem picture element complexo */}
           <img
-            src={thumbnailImage}
+            src={thumbSrc}
             alt={`Miniatura do ${title}`}
             width="480"
             height="360"
-            className="video-thumbnail"
-            loading="eager"
-            fetchPriority="high"
-            decoding="sync"
+            className={`video-thumbnail blur-up${loadedFull ? ' loaded' : ''}`}
+            loading={priority ? 'eager' : 'lazy'}
+            fetchPriority={priority ? 'high' : 'auto'}
+            decoding="async"
           />
 
           {/* Overlay simplificado - usando apenas CSS */}
