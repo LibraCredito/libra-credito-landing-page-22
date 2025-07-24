@@ -101,6 +101,11 @@ const Footer: React.FC = () => {
               </a>
             </div>
 
+            {/* Selo Reclame Aqui - apenas desktop */}
+            <div className="hidden md:flex justify-center mt-4">
+              <RASeal id="ra-seal-desktop" />
+            </div>
+
             {/* Botão Voltar ao Topo - apenas desktop */}
             <button
               onClick={scrollToTop}
@@ -111,10 +116,9 @@ const Footer: React.FC = () => {
               <span className="hidden md:inline">Voltar ao topo</span>
             </button>
           </div>
-
-          {/* Selo Reclame Aqui - posicionado à direita no desktop e centralizado no mobile */}
-          <div className="col-span-3 md:col-span-1 md:col-start-3 flex justify-center md:justify-end mt-4">
-            <RASeal />
+          {/* Selo Reclame Aqui - mobile */}
+          <div className="col-span-3 md:hidden flex justify-center mt-4">
+            <RASeal id="ra-seal-mobile" />
           </div>
         </div>
 
