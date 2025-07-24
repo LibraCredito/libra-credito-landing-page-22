@@ -27,7 +27,8 @@ const ApiDebugger: React.FC = () => {
     try {
       console.log('🔍 Debug: Testando API com', cidade);
       
-      const response = await fetch('https://api-calculos.vercel.app/simulacao', {
+      const apiUrl = import.meta.env.VITE_SIMULATION_API_URL || 'https://api-calculos.vercel.app/simulacao';
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json'

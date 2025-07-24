@@ -890,7 +890,7 @@ export class BlogService {
         carencia: 1,
         
         // URL da API
-        apiUrl: 'https://api-calculos.vercel.app/simulacao',
+        apiUrl: import.meta.env.VITE_SIMULATION_API_URL || 'https://api-calculos.vercel.app/simulacao',
         
         // Configurações gerais
         custoOperacional: 0.5

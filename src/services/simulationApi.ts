@@ -138,6 +138,7 @@ export const getErrorMessage = (response: any): string => {
  * ```
  */
 export const simulateCredit = async (payload: SimulationPayload): Promise<SimulationResponse> => {
+  const apiUrl = import.meta.env.VITE_SIMULATION_API_URL || 'https://api-calculos.vercel.app/simulacao';
   console.log('Payload enviado:', payload);
   
   // Formatar dados como números simples, não strings
@@ -154,7 +155,7 @@ export const simulateCredit = async (payload: SimulationPayload): Promise<Simula
   console.log('Dados formatados para envio:', formattedData);
 
   try {
-    const response = await fetch('https://api-calculos.vercel.app/simulacao', {
+    const response = await fetch(apiUrl, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json'
