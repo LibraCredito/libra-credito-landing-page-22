@@ -1,0 +1,92 @@
+.hero {
+  background: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  color: #003399;
+  padding: 4rem 1rem;
+}
+.hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.hero-left,
+.hero-right {
+  flex: 1 1 300px;
+}
+.hero-left {
+  max-width: 520px;
+}
+.hero h1 {
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+.hero-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+.hero-benefits li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.btn-primary {
+  background: #003399;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-secondary {
+  background: transparent;
+  color: #003399;
+  border: 2px solid #003399;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.video-placeholder {
+  width: 100%;
+  padding-top: 56.25%;
+  background: #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+  border-radius: 8px;
+}
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-right {
+    margin-top: 2rem;
+  }
+}
+.fade-in {
+  animation: fadeIn 0.5s forwards;
+}
+.fade-out {
+  animation: fadeOut 0.5s forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
