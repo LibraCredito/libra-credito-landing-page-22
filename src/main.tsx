@@ -1,5 +1,5 @@
 import React from 'react';
-import { hydrateRoot } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import App from './App.tsx'
 import './index.css';
 import './styles/overflow-fix.css';
@@ -21,9 +21,9 @@ const setupAccessibility = () => {
 const renderApp = () => {
   setupAccessibility();
   
-  const root = document.getElementById('root');
-  if (root) {
-    hydrateRoot(root, <App />);
+  const rootEl = document.getElementById('root');
+  if (rootEl) {
+    createRoot(rootEl).render(<App />);
   }
 };
 
