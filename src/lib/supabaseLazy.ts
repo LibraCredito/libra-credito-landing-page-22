@@ -9,6 +9,7 @@
  */
 
 import type { Database, SimulacaoData, ParceiroData, UserJourneyData, BlogPostData } from './supabase';
+import { SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_OPTIONS } from './supabaseConfig';
 
 // Cache do cliente para evitar múltiplas inicializações
 let supabaseClient: any = null;
@@ -32,28 +33,18 @@ async function loadSupabaseClient() {
   // Inicia o carregamento
   loadingPromise = import('@supabase/supabase-js')
     .then(async ({ createClient }) => {
-      // Configurações do Supabase
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://wprkpdqnmibxphiofoqk.supabase.co';
-      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_xjn_ruSWUfyiqoMIrQfcOw_-YVtj5lr';
-
       // Criar cliente
-      const client = createClient<Database>(supabaseUrl, supabaseAnonKey, {
-        auth: {
-          persistSession: false // Não precisamos de autenticação de usuário
-        },
-        global: {
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          }
-        }
-      });
+      const client = createClient<Database>(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY,
+        SUPABASE_OPTIONS
+      );
 
       // Debug apenas em development
       if (typeof window !== 'undefined' && import.meta.env.DEV) {
         console.log('Supabase client loaded lazily');
-        console.log('Supabase URL:', supabaseUrl);
-        console.log('Supabase Key:', supabaseAnonKey?.substring(0, 20) + '...');
+        console.log('Supabase URL:', SUPABASE_URL);
+        console.log('Supabase Key:', SUPABASE_ANON_KEY?.substring(0, 20) + '...');
       }
 
       // Cache do cliente

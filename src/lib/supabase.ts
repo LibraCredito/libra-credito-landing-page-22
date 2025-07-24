@@ -19,13 +19,15 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
+import {
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY,
+  SUPABASE_OPTIONS,
+  IS_SUPABASE_CONFIGURED
+} from './supabaseConfig';
 
-// Configurações do Supabase - opcionais para desenvolvimento
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-// Variáveis de fallback para desenvolvimento quando Supabase não está configurado
-const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey);
+// Configurações do Supabase
+const isSupabaseConfigured = IS_SUPABASE_CONFIGURED;
 
 if (!isSupabaseConfigured) {
   console.warn('⚠️ Supabase não configurado: VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY não definidas');
@@ -34,8 +36,8 @@ if (!isSupabaseConfigured) {
 
 // Log para debug (apenas em development)
 if (typeof window !== 'undefined' && import.meta.env.DEV) {
-  console.log('Supabase URL:', supabaseUrl);
-  console.log('Supabase Key:', supabaseAnonKey?.substring(0, 20) + '...');
+  console.log('Supabase URL:', SUPABASE_URL);
+  console.log('Supabase Key:', SUPABASE_ANON_KEY?.substring(0, 20) + '...');
 }
 
 // Tipos TypeScript para as tabelas
@@ -160,19 +162,9 @@ export interface Database {
 
 // Cliente Supabase tipado com fallback para desenvolvimento
 export const supabase = createClient<Database>(
-  supabaseUrl || 'https://wprkpdqnmibxphiofoqk.supabase.co', 
-  supabaseAnonKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndwcmtwZHFubWlieHBoaW9mb3FrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk4NTA0ODMsImV4cCI6MjAyNTQyNjQ4M30.sb_publishable_xjn_ruSWUfyiqoMIrQfcOw_-YVtj5lr',
-  {
-    auth: {
-      persistSession: false // Não precisamos de autenticação de usuário
-    },
-    global: {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    }
-  }
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY,
+  SUPABASE_OPTIONS
 );
 
 // Flag para verificar se Supabase está funcionando
