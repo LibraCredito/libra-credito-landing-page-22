@@ -80,7 +80,7 @@ const QuemSomos = () => {
               </div>
               <div className="relative">
                 <ImageOptimizer
-                    src="/images/media/timelibra.png"
+                    src="/images/media/timelibra.webp"
                     alt="Equipe especialista Libra Crédito em home equity e garantia de imóvel"
                     className="rounded-lg shadow-xl"
                     aspectRatio={16/9}
@@ -129,7 +129,7 @@ const QuemSomos = () => {
               {/* Imagem Institucional */}
               <div className="relative">
                 <ImageOptimizer
-                  src="/images/media/quemsomos.png"
+                  src="/images/media/quemsomos.webp"
                   alt="Libra Crédito - Quem Somos"
                   className="rounded-xl shadow-lg w-full"
                   aspectRatio={16/9}
