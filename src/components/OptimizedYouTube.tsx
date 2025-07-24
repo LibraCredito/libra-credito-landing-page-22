@@ -27,7 +27,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
   }, []);
 
   // Usar apenas thumbnail local - sem fallback complexo
-  const thumbnailImage = thumbnailSrc || `/images/thumbnail-libra.webp`;
+  const thumbnailImage = thumbnailSrc || `/images/video-thumbnail.webp`;
 
   // Carrega thumbnail em alta resolução assim que possível
   useEffect(() => {

@@ -12,7 +12,7 @@ const mediaLinks = [
   },
   {
     name: 'Estadão',
-    logo: '/images/media/estadao-logo.png',
+    logo: '/images/media/estadao-logo.webp',
     title: 'Libra simplifica processo para empréstimo com garantia de imóvel',
     url: 'https://bluestudioexpress.estadao.com.br/conteudo/2023/08/24/libra-simplifica-processo-para-emprestimo-com-garantia-de-imovel/'
   },
