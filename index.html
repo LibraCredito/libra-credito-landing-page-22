@@ -167,7 +167,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        /* Real image loads async after LCP measurement */
+          /* Real image loads asynchronously */
         contain: strict;
         will-change: auto;
         transform: translateZ(0);
@@ -491,21 +491,18 @@
           // Force GPU layer creation
           placeholder.style.transform = 'translateZ(0)';
           
-          // Load real image only after LCP period (3+ seconds)
-          if (realImg) {
-            setTimeout(() => {
-              const realSrc = realImg.getAttribute('data-src');
-              if (realSrc) {
-                realImg.src = realSrc;
-                realImg.onload = () => {
-                  realImg.style.opacity = '1';
-                  setTimeout(() => {
-                    placeholder.style.opacity = '0';
-                    setTimeout(() => placeholder.style.display = 'none', 500);
-                  }, 100);
-                };
-              }
-            }, 3000); // Load after LCP measurement window
+          if (placeholder && realImg) {
+            const realSrc = realImg.getAttribute('data-src');
+            if (realSrc) {
+              realImg.src = realSrc;
+              realImg.onload = () => {
+                realImg.style.opacity = '1';
+                setTimeout(() => {
+                  placeholder.style.opacity = '0';
+                  setTimeout(() => placeholder.style.display = 'none', 500);
+                }, 100);
+              };
+            }
           }
         }
       })();
