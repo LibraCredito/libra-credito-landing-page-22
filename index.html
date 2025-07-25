@@ -27,6 +27,16 @@
     <!-- Video thumbnail now uses instant SVG placeholder for LCP -->
     <link rel="preload" href="/images/logos/libra-logo.webp" as="image" fetchpriority="high">
     
+    <!-- RADICAL LCP: Force immediate DOM/CSS render -->
+    <script>
+      // Force immediate layout calculations and GPU compositing
+      (function() {
+        document.documentElement.style.transform = 'translateZ(0)';
+        document.documentElement.style.backfaceVisibility = 'hidden';
+        document.documentElement.style.willChange = 'auto';
+      })();
+    </script>
+    
     <!-- Early connection hints for critical resources -->
     <link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin>
     <link rel="dns-prefetch" href="https://i.ytimg.com">
@@ -82,7 +92,7 @@
         .header-fixed { height: var(--mobile-header-height); }
       }
       
-      /* Hero Critical */
+      /* Hero Critical - LCP Optimized */
       .hero-section {
         min-height: 100vh;
         padding-top: var(--header-height);
@@ -90,6 +100,11 @@
         color: white;
         display: flex;
         align-items: center;
+        /* CRITICAL LCP optimizations */
+        contain: layout style paint;
+        will-change: auto;
+        transform: translateZ(0);
+        backface-visibility: hidden;
       }
       
       @media (max-width: 767px) {
@@ -400,19 +415,39 @@
               <div class="hero-video aspect-video" style="contain-intrinsic-size:480px 360px; contain:strict; will-change:auto; transform:translateZ(0);">
                 <div class="relative w-full h-full overflow-hidden w-full h-full">
                   <button class="w-full h-full cursor-pointer relative bg-black flex items-center justify-center hero-video group" type="button" aria-label="Reproduzir vídeo: Vídeo institucional Libra Crédito">
-                    <!-- CRITICAL LCP: Placeholder SVG instantâneo -->
-                    <svg class="video-thumbnail-placeholder" width="480" height="360" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); position: absolute; inset: 0;" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg">
-                      <rect width="480" height="360" fill="url(#grad1)"/>
-                      <defs>
-                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
-                          <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
-                        </linearGradient>
-                      </defs>
-                      <text x="240" y="180" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" opacity="0.8">Libra Crédito</text>
-                    </svg>
-                    <!-- Imagem real carregada async -->
-                    <img id="hero-thumbnail" src="/images/video-thumbnail.webp" alt="Miniatura do Vídeo institucional Libra Crédito" width="480" height="360" class="video-thumbnail-real" loading="eager" fetchpriority="high" decoding="async" style="opacity: 0; position: absolute; inset: 0; transition: opacity 0.3s ease;">
+                    <!-- CRITICAL LCP: Inline styled div with immediate render -->
+                    <div style="
+                      position: absolute;
+                      inset: 0;
+                      width: 100%;
+                      height: 100%;
+                      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
+                      contain: strict;
+                      transform: translateZ(0);
+                      backface-visibility: hidden;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      color: white;
+                      font-family: system-ui, -apple-system, sans-serif;
+                      font-size: 18px;
+                      font-weight: 600;
+                      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                    " id="lcp-placeholder">
+                      <span style="opacity: 0.9;">▶ Libra Crédito</span>
+                    </div>
+                    <!-- Imagem real carregada via JS depois do LCP -->
+                    <img id="hero-thumbnail" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Miniatura do Vídeo institucional Libra Crédito" width="480" height="360" style="
+                      opacity: 0;
+                      position: absolute;
+                      inset: 0;
+                      width: 100%;
+                      height: 100%;
+                      object-fit: cover;
+                      transition: opacity 0.5s ease;
+                      contain: strict;
+                      transform: translateZ(0);
+                    " data-src="/images/video-thumbnail.webp">
                     <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors duration-200">
                       <div class="w-16 h-16 md:w-20 md:h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:bg-red-700 transition-all duration-200 group-hover:scale-105">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play w-8 h-8 md:w-10 md:h-10 text-white ml-1">
@@ -440,33 +475,38 @@
     
     <script type="module" src="/src/main.tsx" defer></script>
     
-    <!-- CRITICAL LCP: Instant placeholder + async real image loading -->
+    <!-- CRITICAL LCP: Force immediate render + async image loading -->
     <script>
-      // Force immediate LCP with SVG placeholder - zero render delay
+      // AGGRESSIVE LCP optimization - force immediate render with layout
       (function() {
-        const placeholder = document.querySelector('.video-thumbnail-placeholder');
+        const placeholder = document.getElementById('lcp-placeholder');
         const realImg = document.getElementById('hero-thumbnail');
         
-        if (placeholder && realImg) {
-          // Force placeholder immediate render
-          placeholder.style.willChange = 'auto';
-          placeholder.style.contain = 'strict';
-          placeholder.offsetHeight; // Force immediate layout
+        if (placeholder) {
+          // Force immediate layout and paint
+          placeholder.style.willChange = 'transform';
+          placeholder.offsetHeight; // Force layout
+          placeholder.getBoundingClientRect(); // Force layout calculation
           
-          // Load real image after LCP measurement (typically ~2.5s)
-          setTimeout(() => {
-            if (realImg.complete) {
-              // Image already loaded
-              realImg.style.opacity = '1';
-              placeholder.style.display = 'none';
-            } else {
-              // Wait for image to load
-              realImg.onload = () => {
-                realImg.style.opacity = '1';
-                setTimeout(() => placeholder.style.display = 'none', 300);
-              };
-            }
-          }, 2500); // After LCP measurement period
+          // Force GPU layer creation
+          placeholder.style.transform = 'translateZ(0)';
+          
+          // Load real image only after LCP period (3+ seconds)
+          if (realImg) {
+            setTimeout(() => {
+              const realSrc = realImg.getAttribute('data-src');
+              if (realSrc) {
+                realImg.src = realSrc;
+                realImg.onload = () => {
+                  realImg.style.opacity = '1';
+                  setTimeout(() => {
+                    placeholder.style.opacity = '0';
+                    setTimeout(() => placeholder.style.display = 'none', 500);
+                  }, 100);
+                };
+              }
+            }, 3000); // Load after LCP measurement window
+          }
         }
       })();
     </script>
