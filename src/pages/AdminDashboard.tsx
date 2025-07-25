@@ -29,6 +29,8 @@ import { BlogService, type BlogPost } from '@/services/blogService';
 import { AuthService, type LoginCredentials, type AuthUser } from '@/services/authService';
 import AdminLogin from '@/components/AdminLogin';
 import ImageUploader from '@/components/ImageUploader';
+import StorageStats from '@/components/StorageStats';
+import SupabaseDiagnostics from '@/components/SupabaseDiagnostics';
 import { SimulacaoData, ParceiroData } from '@/lib/supabase';
 import { Eye, Download, RefreshCw, Users, Calculator, TrendingUp, Clock, Handshake, UserCheck, Building, FileText, Settings, Plus, Edit, Trash2, Save, LogOut } from 'lucide-react';
 import { formatBRL } from '@/utils/formatters';
@@ -1657,6 +1659,12 @@ Escreva seu conteúdo aqui...
                 </Button>
               </CardContent>
             </Card>
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium text-gray-900">Diagnóstico/Cache</h3>
+              <StorageStats />
+              <SupabaseDiagnostics />
+            </div>
           </div>
         </div>
       )}
