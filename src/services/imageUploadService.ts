@@ -228,26 +228,45 @@ export class ImageUploadService {
   }
 
   /**
-   * Limpar imagens antigas do localStorage (manter apenas últimas 50)
+   * Limpar imagens antigas do localStorage
+   * Mantém o total armazenado abaixo de aproximadamente 8MB
    */
   static cleanupLocalImages(): void {
     try {
       const localImages = this.getLocalImages();
       const entries = Object.entries(localImages);
 
-      if (entries.length > 50) {
-        // Ordenar por data de upload e manter apenas as 50 mais recentes
-        const sorted = entries.sort((a, b) => {
-          const dateA = new Date((a[1] as any).uploadedAt || 0).getTime();
-          const dateB = new Date((b[1] as any).uploadedAt || 0).getTime();
-          return dateB - dateA;
-        });
+      if (entries.length === 0) {
+        return;
+      }
 
-        const toKeep = sorted.slice(0, 50);
-        const cleaned = Object.fromEntries(toKeep);
-        
-        localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(cleaned));
-        console.log(`Limpeza concluída: ${entries.length - 50} imagens removidas`);
+      // Ordenar por data de upload (mais antigo primeiro)
+      const sorted = entries.sort((a, b) => {
+        const dateA = new Date((a[1] as any).uploadedAt || 0).getTime();
+        const dateB = new Date((b[1] as any).uploadedAt || 0).getTime();
+        return dateA - dateB;
+      });
+
+      const MAX_BYTES = 8 * 1024 * 1024; // ~8MB
+      let totalSize = sorted.reduce(
+        (sum, [, img]) => sum + ((img as any).size || 0),
+        0
+      );
+
+      let removed = 0;
+      while (totalSize > MAX_BYTES && sorted.length > 0) {
+        const [fileName, data] = sorted.shift() as [string, any];
+        totalSize -= (data.size as number) || 0;
+        delete localImages[fileName];
+        removed += 1;
+      }
+
+      if (removed > 0) {
+        localStorage.setItem(
+          this.LOCAL_STORAGE_KEY,
+          JSON.stringify(localImages)
+        );
+        console.log(`Limpeza concluída: ${removed} imagens removidas`);
       }
     } catch (error) {
       console.error('Erro na limpeza de imagens:', error);
