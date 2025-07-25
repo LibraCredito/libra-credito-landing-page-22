@@ -149,6 +149,7 @@ const Testimonials: React.FC = () => {
                 title="Depoimento Cliente - Libra Crédito"
                 priority={false}
                 className="w-full h-full"
+                thumbnailSrc="/images/timelibra2.webp"
               />
             </div>
           </div>
