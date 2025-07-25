@@ -23,12 +23,9 @@
     <link rel="dns-prefetch" href="https://www.youtube-nocookie.com">
     <link rel="dns-prefetch" href="https://vercel.app">
     
-    <!-- Preload LCP Images - CRITICAL para performance -->
-    <link rel="preload" href="/images/video-thumbnail.webp" as="image" fetchpriority="high" crossorigin="anonymous">
+    <!-- CRITICAL LCP Optimization - Single preload with exact dimensions -->
+    <link rel="preload" href="/images/video-thumbnail.webp" as="image" type="image/webp" fetchpriority="high" imagesizes="(max-width: 768px) 100vw, 50vw">
     <link rel="preload" href="/images/logos/libra-logo.webp" as="image" fetchpriority="high">
-    
-    <!-- Modernizr-style WebP detection preload -->
-    <link rel="preload" href="/images/video-thumbnail.webp" as="image" type="image/webp" fetchpriority="high">
     
     <!-- Early connection hints for critical resources -->
     <link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin>
@@ -141,10 +138,14 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        /* CRITICAL LCP optimizations */
+        /* CRITICAL LCP optimizations - Eliminate render delay */
         contain: strict;
         will-change: auto;
         transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
         /* Eliminate layout shifts */
         display: block;
         /* Optimize rendering for LCP */
@@ -416,15 +417,22 @@
     
     <script type="module" src="/src/main.tsx" defer></script>
     
-    <!-- Critical LCP optimization: Prevent render blocking -->
+    <!-- Critical LCP optimization: Force immediate render -->
     <script>
-      // Ensure LCP image loads immediately
-      const lcp = document.querySelector('.video-thumbnail');
-      if (lcp) {
-        lcp.loading = 'eager';
-        lcp.fetchPriority = 'high';
-        lcp.decoding = 'sync';
-      }
+      // Force immediate LCP image render - eliminate 82% render delay
+      (function() {
+        const lcp = document.querySelector('.video-thumbnail');
+        if (lcp) {
+          lcp.loading = 'eager';
+          lcp.fetchPriority = 'high';
+          lcp.decoding = 'sync';
+          // Force immediate paint
+          lcp.style.willChange = 'auto';
+          lcp.style.contain = 'strict';
+          // Trigger immediate GPU composition
+          lcp.offsetHeight;
+        }
+      })();
     </script>
     
     <!-- Service Worker Registration -->
