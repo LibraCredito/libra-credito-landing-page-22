@@ -24,8 +24,8 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
     setIsLoaded(true);
   }, []);
 
-  // Usar apenas thumbnail local - sem fallback complexo
-  const thumbnailImage = thumbnailSrc || `/images/thumbnail-libra.webp`;
+  // Usar thumbnail otimizada menor (65KB vs 525KB)
+  const thumbnailImage = thumbnailSrc || `/images/video-thumbnail.webp`;
 
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`}>

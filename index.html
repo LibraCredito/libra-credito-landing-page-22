@@ -24,11 +24,11 @@
     <link rel="dns-prefetch" href="https://vercel.app">
     
     <!-- Preload LCP Images - CRITICAL para performance -->
-    <link rel="preload" href="/images/thumbnail-libra.webp" as="image" fetchpriority="high" crossorigin="anonymous">
+    <link rel="preload" href="/images/video-thumbnail.webp" as="image" fetchpriority="high" crossorigin="anonymous">
     <link rel="preload" href="/images/logos/libra-logo.webp" as="image" fetchpriority="high">
     
     <!-- Modernizr-style WebP detection preload -->
-    <link rel="preload" href="/images/thumbnail-libra.webp" as="image" type="image/webp" fetchpriority="high">
+    <link rel="preload" href="/images/video-thumbnail.webp" as="image" type="image/webp" fetchpriority="high">
     
     <!-- Early connection hints for critical resources -->
     <link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin>
@@ -141,14 +141,23 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        /* Otimizações críticas para LCP */
+        /* CRITICAL LCP optimizations */
         contain: strict;
         will-change: auto;
         transform: translateZ(0);
-        /* Eliminação de layout shifts */
+        /* Eliminate layout shifts */
         display: block;
+        /* Optimize rendering for LCP */
+        image-rendering: optimizeSpeed;
         image-rendering: -webkit-optimize-contrast;
-        image-rendering: crisp-edges;
+        /* Force hardware acceleration */
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        /* Optimize paint performance */
+        isolation: isolate;
+        /* Critical: Prevent any delays */
+        opacity: 1;
+        visibility: visible;
       }
       
       /* Hero video container otimizado */
@@ -319,7 +328,7 @@
               <div class="hero-video aspect-video" style="contain-intrinsic-size:480px 360px; contain:strict; will-change:auto; transform:translateZ(0);">
                 <div class="relative w-full h-full overflow-hidden w-full h-full">
                   <button class="w-full h-full cursor-pointer relative bg-black flex items-center justify-center hero-video group" type="button" aria-label="Reproduzir vídeo: Vídeo institucional Libra Crédito">
-                    <img src="/images/thumbnail-libra.webp" alt="Miniatura do Vídeo institucional Libra Crédito" width="480" height="360" class="video-thumbnail" loading="eager" fetchpriority="high" decoding="sync">
+                    <img src="/images/video-thumbnail.webp" alt="Miniatura do Vídeo institucional Libra Crédito" width="480" height="360" class="video-thumbnail" loading="eager" fetchpriority="high" decoding="sync">
                     <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors duration-200">
                       <div class="w-16 h-16 md:w-20 md:h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:bg-red-700 transition-all duration-200 group-hover:scale-105">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play w-8 h-8 md:w-10 md:h-10 text-white ml-1">
@@ -346,6 +355,17 @@
     
     
     <script type="module" src="/src/main.tsx" defer></script>
+    
+    <!-- Critical LCP optimization: Prevent render blocking -->
+    <script>
+      // Ensure LCP image loads immediately
+      const lcp = document.querySelector('.video-thumbnail');
+      if (lcp) {
+        lcp.loading = 'eager';
+        lcp.fetchPriority = 'high';
+        lcp.decoding = 'sync';
+      }
+    </script>
     
     <!-- Service Worker Registration -->
     <script defer>
