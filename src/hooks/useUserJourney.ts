@@ -124,6 +124,22 @@ export function useUserJourney(): UserJourneyHook {
   const [journeyData, setJourneyData] = useState<UserJourneyData | null>(null);
   const pageStartTime = useRef<number>(Date.now());
   const sessionStartTime = useRef<number>(Date.now());
+  const ipFetchedRef = useRef<boolean>(false);
+
+  const fetchAndStoreIP = useCallback(async () => {
+    if (ipFetchedRef.current || !sessionId) return;
+    ipFetchedRef.current = true;
+
+    try {
+      const ip = await getUserIP();
+      const api = await getSupabaseApi();
+      await api.updateUserJourney(sessionId, { ip_address: ip });
+    } catch (error) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Failed to update IP address:', error);
+      }
+    }
+  }, [sessionId]);
   
   // Inicialização da sessão
   useEffect(() => {
@@ -149,6 +165,38 @@ export function useUserJourney(): UserJourneyHook {
       trackPageVisit();
     }
   }, [location.pathname, sessionId, isTracking]);
+
+  // Obter IP após primeira interação ou quando o navegador estiver ocioso
+  useEffect(() => {
+    if (!sessionId || !isTracking) return;
+
+    const run = () => fetchAndStoreIP();
+
+    const onInteract = () => run();
+    window.addEventListener('pointerdown', onInteract, { once: true });
+    window.addEventListener('keydown', onInteract, { once: true });
+
+    let idleId: number;
+    if ('requestIdleCallback' in window) {
+      idleId = (window as any).requestIdleCallback(run, { timeout: 10000 });
+    } else {
+      idleId = window.setTimeout(run, 5000);
+    }
+
+    return () => {
+      window.removeEventListener('pointerdown', onInteract);
+      window.removeEventListener('keydown', onInteract);
+      if ('cancelIdleCallback' in window) {
+        try {
+          (window as any).cancelIdleCallback(idleId);
+        } catch {
+          /* noop */
+        }
+      } else {
+        clearTimeout(idleId);
+      }
+    };
+  }, [sessionId, isTracking, fetchAndStoreIP]);
   
   // Inicializar jornada do usuário
   const initializeJourney = useCallback(async (sessionId: string) => {
@@ -189,15 +237,6 @@ export function useUserJourney(): UserJourneyHook {
 
           existingJourney = await supabaseApi.createUserJourney(newJourney);
 
-          getUserIP()
-            .then(ip =>
-              supabaseApi.updateUserJourney(sessionId, { ip_address: ip })
-            )
-            .catch(error => {
-              if (process.env.NODE_ENV === 'development') {
-                console.warn('Failed to update IP address:', error);
-              }
-            });
           if (process.env.NODE_ENV === 'development') {
             console.log('Nova jornada criada:', existingJourney);
           }
