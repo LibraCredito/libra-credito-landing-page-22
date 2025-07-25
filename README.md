@@ -303,6 +303,10 @@ npm run lint       # Verificar ESLint
    SELECT COUNT(*) FROM simulacoes;
    ```
 
+### **❌ Aviso de cota do localStorage**
+Se o navegador exibir `QuotaExceededError`, o espaço do localStorage esgotou com posts e imagens salvos.
+Acesse `/clear-localstorage.html` para limpar os dados armazenados e liberar espaço.
+
 ---
 
 ## 🔒 Segurança e LGPD
