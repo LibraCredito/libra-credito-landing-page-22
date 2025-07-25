@@ -7,7 +7,7 @@
  * - Configuração via painel admin
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -53,9 +53,10 @@ const LocalSimulationForm: React.FC = () => {
   // Buscar cidades conforme o usuário digita
   useEffect(() => {
     if (cidade.length >= 2) {
-      const suggestions = searchCities(cidade);
-      setCitySuggestions(suggestions);
-      setShowSuggestions(suggestions.length > 0);
+      searchCities(cidade).then(suggestions => {
+        setCitySuggestions(suggestions);
+        setShowSuggestions(suggestions.length > 0);
+      });
     } else {
       setCitySuggestions([]);
       setShowSuggestions(false);
@@ -78,25 +79,26 @@ const LocalSimulationForm: React.FC = () => {
     const imValue = norm(valorImovel);
     
     if (empValue > 0 && imValue > 0 && cidade) {
-      const validation = validateLTV(empValue, imValue, cidade);
-      setLtvValidation(validation);
+      validateLTV(empValue, imValue, cidade).then(validation => {
+        setLtvValidation(validation);
+      });
     } else {
       setLtvValidation(null);
     }
   }, [valorEmprestimo, valorImovel, cidade]);
 
-  const handleCitySelect = (selectedCity: string) => {
+  const handleCitySelect = useCallback((selectedCity: string) => {
     setCidade(selectedCity);
     setShowSuggestions(false);
-  };
+  }, []);
 
-  const handleValorEmprestimoChange = (value: string) => {
+  const handleValorEmprestimoChange = useCallback((value: string) => {
     setValorEmprestimo(formatBRL(value));
-  };
+  }, []);
 
-  const handleValorImovelChange = (value: string) => {
+  const handleValorImovelChange = useCallback((value: string) => {
     setValorImovel(formatBRL(value));
-  };
+  }, []);
 
   const canCalculate = () => {
     return (
@@ -457,4 +459,4 @@ const LocalSimulationForm: React.FC = () => {
   );
 };
 
-export default LocalSimulationForm;
+export default memo(LocalSimulationForm);

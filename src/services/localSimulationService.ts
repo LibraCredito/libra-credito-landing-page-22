@@ -71,7 +71,7 @@ export class LocalSimulationService {
       this.validateSimulationInput(input);
       
       // 2. Validar cidade e LTV
-      const cityValidation = validateCity(input.cidade);
+      const cityValidation = await validateCity(input.cidade);
       console.log('🏘️ Validação da cidade:', cityValidation);
       
       if (!cityValidation.found) {
@@ -94,7 +94,7 @@ export class LocalSimulationService {
       let ltvValidation = { valid: true, message: 'OK' };
       
       if (cityValidation.status !== 'rural_only') {
-        ltvValidation = validateLTV(input.valorEmprestimo, input.valorImovel, input.cidade);
+        ltvValidation = await validateLTV(input.valorEmprestimo, input.valorImovel, input.cidade);
         console.log('📊 Validação de LTV:', ltvValidation);
         
         if (!ltvValidation.valid) {

@@ -7,44 +7,15 @@
  * OTIMIZAÇÃO: JSON carregado dinamicamente para reduzir bundle inicial
  */
 
-// Cache para evitar múltiplas requisições
-let ltvCidadesCache: CityLtvData[] | null = null;
-let loadingPromise: Promise<CityLtvData[]> | null = null;
+// Lazy loading do arquivo JSON para reduzir bundle inicial
+let ltvCidades: CityLtvData[] | null = null;
 
-/**
- * Carrega dados das cidades dinamicamente
- */
 async function loadCityData(): Promise<CityLtvData[]> {
-  // Se já está em cache, retorna imediatamente
-  if (ltvCidadesCache) {
-    return ltvCidadesCache;
+  if (!ltvCidades) {
+    const { default: data } = await import('../../LTV_Cidades.json');
+    ltvCidades = data as CityLtvData[];
   }
-  
-  // Se já está carregando, retorna a mesma promise
-  if (loadingPromise) {
-    return loadingPromise;
-  }
-  
-  // Inicia o carregamento
-  loadingPromise = fetch('/data/ltv-cidades.json')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Failed to load city data: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      ltvCidadesCache = data;
-      loadingPromise = null; // Limpa a promise após sucesso
-      return data;
-    })
-    .catch(error => {
-      loadingPromise = null; // Limpa a promise em caso de erro
-      console.error('Error loading city data:', error);
-      throw error;
-    });
-  
-  return loadingPromise;
+  return ltvCidades;
 }
 
 export interface CityLtvData {
@@ -76,8 +47,8 @@ export async function searchCities(searchTerm: string): Promise<string[]> {
   if (!searchTerm || searchTerm.length < 2) return [];
   
   const term = searchTerm.toLowerCase();
-  const cities = await getAllCities();
-  return cities.filter(city => 
+  const allCities = await getAllCities();
+  return allCities.filter(city => 
     city.toLowerCase().includes(term)
   ).slice(0, 10); // Limita a 10 resultados
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 // import { Button } from '@/components/ui/button';
 import HeroButton from '@/components/ui/HeroButton';
 import { ChevronDown, Shield } from 'lucide-react';
@@ -10,13 +10,13 @@ const HeroPremium: React.FC = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
-  const scrollToSimulator = () => {
+  const scrollToSimulator = useCallback(() => {
     navigate('/simulacao');
-  };
+  }, [navigate]);
 
-  const goToVantagens = () => {
+  const goToVantagens = useCallback(() => {
     navigate('/vantagens');
-  };
+  }, [navigate]);
 
   const scrollToBenefits = () => {
     const card = document.getElementById('capital-giro-card');
@@ -135,4 +135,4 @@ const HeroPremium: React.FC = () => {
   );
 };
 
-export default HeroPremium;
+export default memo(HeroPremium);
