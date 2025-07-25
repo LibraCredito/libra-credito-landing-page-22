@@ -3,34 +3,44 @@ import { Shield, MapPin, Clock } from 'lucide-react';
 
 const TrustBarMinimal: React.FC = () => {
   const [counters, setCounters] = useState({
-    cities: 0,
-    satisfaction: 0,
-    years: 0
+    cities: 3000,
+    satisfaction: 24,
+    years: 5
   });
 
   const [isVisible, setIsVisible] = useState(false);
 
-  // Animação de contador
+  // Lazy load counter animation após LCP
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
+    const initAnimation = () => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.3 }
+      );
 
-    const element = document.getElementById('trustbar');
-    if (element) {
-      observer.observe(element);
-    }
+      const element = document.getElementById('trustbar');
+      if (element) {
+        observer.observe(element);
+      }
 
-    return () => observer.disconnect();
+      return () => observer.disconnect();
+    };
+
+    // Defer até após LCP period
+    const timer = setTimeout(initAnimation, 1500);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     if (!isVisible) return;
+
+    // Reset to 0 and start animation
+    setCounters({ cities: 0, satisfaction: 0, years: 0 });
 
     const targets = {
       cities: 3000,
@@ -38,29 +48,28 @@ const TrustBarMinimal: React.FC = () => {
       years: 5
     };
 
-    const duration = 2000;
-    const steps = 60;
-    const stepDuration = duration / steps;
+    requestAnimationFrame(() => {
+      const duration = 2000;
+      const steps = 60;
+      const stepDuration = duration / steps;
+      let currentStep = 0;
 
-    let currentStep = 0;
+      const timer = setInterval(() => {
+        currentStep++;
+        const progress = currentStep / steps;
 
-    const timer = setInterval(() => {
-      currentStep++;
-      const progress = currentStep / steps;
+        setCounters({
+          cities: Math.round(targets.cities * progress),
+          satisfaction: Math.round(targets.satisfaction * progress),
+          years: Math.round(targets.years * progress)
+        });
 
-      setCounters({
-        cities: Math.round(targets.cities * progress),
-        satisfaction: Math.round(targets.satisfaction * progress),
-        years: Math.round(targets.years * progress)
-      });
-
-      if (currentStep >= steps) {
-        clearInterval(timer);
-        setCounters(targets);
-      }
-    }, stepDuration);
-
-    return () => clearInterval(timer);
+        if (currentStep >= steps) {
+          clearInterval(timer);
+          setCounters(targets);
+        }
+      }, stepDuration);
+    });
   }, [isVisible]);
 
   const trustStats = [

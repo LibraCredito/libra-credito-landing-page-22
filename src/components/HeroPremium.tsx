@@ -1,5 +1,4 @@
-import React, { memo, useCallback } from 'react';
-// import { Button } from '@/components/ui/button';
+import React from 'react';
 import HeroButton from '@/components/ui/HeroButton';
 import { ChevronDown, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -10,13 +9,13 @@ const HeroPremium: React.FC = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
-  const scrollToSimulator = useCallback(() => {
+  const scrollToSimulator = () => {
     navigate('/simulacao');
-  }, [navigate]);
+  };
 
-  const goToVantagens = useCallback(() => {
+  const goToVantagens = () => {
     navigate('/vantagens');
-  }, [navigate]);
+  };
 
   const scrollToBenefits = () => {
     const card = document.getElementById('capital-giro-card');
@@ -99,15 +98,7 @@ const HeroPremium: React.FC = () => {
           </div>
 
             <div className="w-full max-w-xl lg:max-w-lg xl:max-w-none mx-auto">
-            <div 
-              className="hero-video aspect-video" 
-              style={{ 
-                containIntrinsicSize: '480px 360px', 
-                contain: 'strict',
-                willChange: 'auto',
-                transform: 'translateZ(0)'
-              }}
-            >
+            <div className="hero-video aspect-video">
               <OptimizedYouTube
                 videoId="E9lwL6R2l1s"
                 title="Vídeo institucional Libra Crédito"
@@ -135,4 +126,4 @@ const HeroPremium: React.FC = () => {
   );
 };
 
-export default memo(HeroPremium);
+export default HeroPremium;
