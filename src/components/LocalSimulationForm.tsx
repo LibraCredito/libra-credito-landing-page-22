@@ -66,8 +66,17 @@ const LocalSimulationForm: React.FC = () => {
   // Validar cidade quando selecionada
   useEffect(() => {
     if (cidade) {
-      const validation = validateCity(cidade);
-      setCityValidation(validation);
+      validateCity(cidade).then(validation => {
+        setCityValidation(validation);
+      }).catch(error => {
+        console.error('Erro ao validar cidade:', error);
+        setCityValidation({
+          found: false,
+          status: 'not_found',
+          message: 'Erro ao carregar dados da cidade',
+          allowCalculation: false
+        });
+      });
     } else {
       setCityValidation(null);
     }

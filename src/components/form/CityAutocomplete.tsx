@@ -44,9 +44,9 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
     setIsLoading(true);
     setError('');
 
-    fetchTimeout.current = setTimeout(() => {
+    fetchTimeout.current = setTimeout(async () => {
       try {
-        const results = searchCities(inputValue);
+        const results = await searchCities(inputValue);
         setSuggestions(results);
         setIsLoading(false);
       } catch (err) {
