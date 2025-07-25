@@ -36,13 +36,20 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
           aria-label={`Reproduzir vídeo: ${title}`}
           type="button"
         >
-          {/* Thumbnail otimizada - sem picture element complexo */}
+          {/* Thumbnail otimizada - ocupando todo o espaço do container */}
           <img
             src={thumbnailImage}
             alt={`Miniatura do ${title}`}
             width="480"
             height="360"
-            className="video-thumbnail"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block'
+            }}
             loading="eager"
             fetchPriority="high"
             decoding="sync"

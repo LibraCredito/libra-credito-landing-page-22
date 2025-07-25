@@ -147,6 +147,19 @@
         background: #000;
       }
       
+      /* Garantir que thumbnails ocupem todo o espaço */
+      .hero-video img,
+      .hero-video .video-thumbnail {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+        border-radius: 0.75rem;
+      }
+      
       .video-thumbnail-placeholder {
         /* CRITICAL LCP: SVG placeholder renders instantly - no network delay */
         position: absolute;
