@@ -221,7 +221,7 @@
         border: 0;
       }
       
-      /* Performance */
+      /* Performance optimizations for Style & Layout */
       @media (prefers-reduced-motion: reduce) {
         *, ::before, ::after {
           animation-delay: -1ms !important;
@@ -230,6 +230,42 @@
           transition-duration: 0s !important;
           transition-delay: 0s !important;
         }
+      }
+      
+      /* Critical: Minimize layout calculations */
+      .no-layout-shift {
+        contain: layout style;
+        content-visibility: auto;
+      }
+      
+      /* Optimize expensive selectors */
+      [class*="group-hover"] {
+        will-change: transform, background-color;
+      }
+      
+      /* Reduce DOM complexity for calculations */
+      .simple-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      
+      .simple-grid > * {
+        flex: 1 1 300px;
+        min-width: 0;
+      }
+      
+      /* Force GPU acceleration for animations */
+      .animate-bounce,
+      .animate-spin,
+      .animate-fade-in-up {
+        transform: translateZ(0);
+        will-change: transform;
+      }
+      
+      /* Minimize repaint areas */
+      .contain-paint {
+        contain: paint;
       }
     </style>
 
@@ -285,12 +321,36 @@
       }
     }
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXX"></script>
+    <!-- Lazy load analytics after critical content -->
     <script>
+      // Defer analytics until after LCP
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-XXXXXX', { send_page_view: false });
+      
+      // Load analytics after page interaction or 3 seconds
+      let analyticsLoaded = false;
+      const loadAnalytics = () => {
+        if (analyticsLoaded) return;
+        analyticsLoaded = true;
+        
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=UA-XXXXXX';
+        document.head.appendChild(script);
+        
+        script.onload = () => {
+          gtag('js', new Date());
+          gtag('config', 'UA-XXXXXX', { send_page_view: false });
+        };
+      };
+      
+      // Load on first interaction
+      ['mousedown', 'touchstart', 'keydown', 'scroll'].forEach(event => {
+        document.addEventListener(event, loadAnalytics, { once: true, passive: true });
+      });
+      
+      // Fallback: load after 3 seconds
+      setTimeout(loadAnalytics, 3000);
     </script>
   </head>
 

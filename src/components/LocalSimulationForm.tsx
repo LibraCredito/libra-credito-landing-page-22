@@ -8,6 +8,7 @@
  */
 
 import React, { useState, useEffect, useCallback, memo } from 'react';
+import { useOptimizedDebounce } from '@/hooks/useOptimizedDebounce';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -101,13 +102,22 @@ const LocalSimulationForm: React.FC = () => {
     setShowSuggestions(false);
   }, []);
 
-  const handleValorEmprestimoChange = useCallback((value: string) => {
+  // Debounced handlers para reduzir trabalho da main thread
+  const debouncedEmprestimoChange = useOptimizedDebounce((value: string) => {
     setValorEmprestimo(formatBRL(value));
-  }, []);
+  }, 300);
+
+  const debouncedImovelChange = useOptimizedDebounce((value: string) => {
+    setValorImovel(formatBRL(value));
+  }, 300);
+
+  const handleValorEmprestimoChange = useCallback((value: string) => {
+    debouncedEmprestimoChange(value);
+  }, [debouncedEmprestimoChange]);
 
   const handleValorImovelChange = useCallback((value: string) => {
-    setValorImovel(formatBRL(value));
-  }, []);
+    debouncedImovelChange(value);
+  }, [debouncedImovelChange]);
 
   const canCalculate = () => {
     return (
