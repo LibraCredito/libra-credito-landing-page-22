@@ -14,13 +14,8 @@ const STATIC_ASSETS = [
   '/manifest.json'
 ];
 
-// Recursos para precache (importantes)
-const PRECACHE_ASSETS = [
-  '/vantagens',
-  '/quem-somos',
-  '/blog',
-  '/simulacao'
-];
+// Precache desativado para reduzir requisições iniciais
+const PRECACHE_ASSETS = [];
 
 // Estratégias de cache
 const CACHE_STRATEGIES = {
@@ -37,32 +32,12 @@ self.addEventListener('install', (event) => {
   console.log('SW: Install event');
   
   event.waitUntil(
-    Promise.all([
-      // Cache estático
-      caches.open(STATIC_CACHE_NAME).then((cache) => {
+    caches.open(STATIC_CACHE_NAME)
+      .then((cache) => {
         console.log('SW: Caching static assets');
         return cache.addAll(STATIC_ASSETS);
-      }),
-      // Precache páginas importantes
-      caches.open(DYNAMIC_CACHE_NAME).then((cache) => {
-        console.log('SW: Precaching important pages');
-        return Promise.all(
-          PRECACHE_ASSETS.map(url => 
-            fetch(url).then(response => {
-              if (response.ok) {
-                return cache.put(url, response);
-              }
-            }).catch(() => {
-              // Falha silenciosa para precache
-              console.log(`SW: Failed to precache ${url}`);
-            })
-          )
-        );
       })
-    ]).then(() => {
-      // Force activate
-      return self.skipWaiting();
-    })
+      .then(() => self.skipWaiting())
   );
 });
 
