@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDevice } from '@/hooks/useDevice';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import ImageOptimizer from '@/components/ImageOptimizer';
 
 interface SimpleMobileHeaderProps {
   onPortalClientes?: () => void;
@@ -41,7 +40,7 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
             <img
               src="/images/media/logo-header.png?v=3"
               alt="Libra Crédito - Simulação de crédito com garantia de imóvel"
-              className="h-full w-auto pointer-events-none max-w-none"
+              className="h-[85%] w-auto pointer-events-none max-w-none"
               width="150"
               height="150"
             />

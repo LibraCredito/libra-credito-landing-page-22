@@ -27,7 +27,6 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Info } from 'lucide-react';
-import ImageOptimizer from '@/components/ImageOptimizer';
 
 interface MobileHeaderProps {
   onPortalClientes: () => void;
@@ -70,7 +69,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ onPortalClientes, onSimulat
                 <img
                   src="/images/media/logo-header.png?v=3"
                   alt="Libra Crédito"
-                  className="h-full w-auto pointer-events-none max-w-none"
+                  className="h-[85%] w-auto pointer-events-none max-w-none"
                 />
               </div>
             </Link>
