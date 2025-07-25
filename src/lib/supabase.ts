@@ -161,7 +161,7 @@ export interface Database {
 // Cliente Supabase tipado com fallback para desenvolvimento
 export const supabase = createClient<Database>(
   supabaseUrl || 'https://wprkpdqnmibxphiofoqk.supabase.co', 
-  supabaseAnonKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndwcmtwZHFubWlieHBoaW9mb3FrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk4NTA0ODMsImV4cCI6MjAyNTQyNjQ4M30.sb_publishable_xjn_ruSWUfyiqoMIrQfcOw_-YVtj5lr',
+  supabaseAnonKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndwcmtwZHFubWlieHBoaW9mb3FrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI2NzM4NjAsImV4cCI6MjA2ODI0OTg2MH0.OABg1mnBBFxceEHRIdDrGbFo4m0yau6bN91HxnMkazw',
   {
     auth: {
       persistSession: false // Não precisamos de autenticação de usuário
