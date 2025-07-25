@@ -52,7 +52,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
             }}
             loading="eager"
             fetchPriority="high"
-            decoding="sync"
+            decoding="async"
           />
 
           {/* Overlay simplificado - usando apenas CSS */}
