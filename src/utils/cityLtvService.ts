@@ -9,13 +9,39 @@
 
 // Lazy loading do arquivo JSON para reduzir bundle inicial
 let ltvCidades: CityLtvData[] | null = null;
+let loadingPromise: Promise<CityLtvData[]> | null = null;
 
 async function loadCityData(): Promise<CityLtvData[]> {
-  if (!ltvCidades) {
-    const { default: data } = await import('../../LTV_Cidades.json');
-    ltvCidades = data as CityLtvData[];
+  // Se já está em cache, retorna imediatamente
+  if (ltvCidades) {
+    return ltvCidades;
   }
-  return ltvCidades;
+  
+  // Se já está carregando, retorna a mesma promise
+  if (loadingPromise) {
+    return loadingPromise;
+  }
+  
+  // Inicia o carregamento
+  loadingPromise = fetch('/data/ltv-cidades.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to load city data: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      ltvCidades = data as CityLtvData[];
+      loadingPromise = null; // Limpa a promise após sucesso
+      return ltvCidades;
+    })
+    .catch(error => {
+      loadingPromise = null; // Limpa a promise em caso de erro
+      console.error('Error loading city data:', error);
+      throw error;
+    });
+  
+  return loadingPromise;
 }
 
 export interface CityLtvData {
