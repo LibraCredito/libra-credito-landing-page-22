@@ -67,7 +67,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ onPortalClientes, onSimulat
             <Link to="/" aria-label="Página inicial da Libra Crédito" className="tap-transparent">
               <div className="h-16 overflow-hidden flex items-center">
                 <img
-                  src="/images/media/logo-header.png?v=3"
+                  src="/images/logo-header.webp"
                   alt="Libra Crédito"
                   className="h-[85%] w-auto pointer-events-none max-w-none"
                 />
