@@ -38,7 +38,7 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
         <Link to="/" className="flex items-center tap-transparent" aria-label="Ir para página inicial da Libra Crédito">
           <div className="h-16 overflow-hidden flex items-center">
             <img
-              src="/images/media/logo-header.png?v=3"
+              src="/images/logo-header.webp"
               alt="Libra Crédito - Simulação de crédito com garantia de imóvel"
               className="h-[85%] w-auto pointer-events-none max-w-none"
               width="150"
