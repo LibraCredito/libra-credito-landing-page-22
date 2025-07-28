@@ -165,6 +165,13 @@ npm run typecheck       # TypeScript check
 npm run build && npm run preview  # Teste completo
 ```
 
+### Ativar compressão
+O build de produção gera arquivos `.gz` e `.br` para JavaScript e CSS. No Vercel,
+essas versões são servidas automaticamente quando presentes. Se utilizar outro
+provedor, verifique a documentação para habilitar o uso de arquivos
+pré-comprimidos e garanta que os cabeçalhos `Content-Encoding` sejam enviados
+corretamente.
+
 ---
 
 ## 📊 URLs do Sistema
