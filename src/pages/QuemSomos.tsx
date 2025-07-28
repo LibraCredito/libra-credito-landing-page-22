@@ -84,6 +84,8 @@ const QuemSomos = () => {
                     alt="Equipe especialista Libra Crédito em home equity e garantia de imóvel"
                     className="rounded-lg shadow-xl"
                     aspectRatio={16/9}
+                    width={2048}
+                    height={1106}
                   />
               </div>
             </div>
@@ -133,6 +135,8 @@ const QuemSomos = () => {
                   alt="Libra Crédito - Quem Somos"
                   className="rounded-xl shadow-lg w-full"
                   aspectRatio={16/9}
+                  width={480}
+                  height={320}
                 />
               </div>
             </div>
