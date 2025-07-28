@@ -1,14 +1,13 @@
 
-const CACHE_NAME = 'libra-credito-cache-v2';
-const STATIC_CACHE = 'static-cache-v2';
-const DYNAMIC_CACHE = 'dynamic-cache-v2';
+const CACHE_VERSION = 'v3';
+const CACHE_NAME = `libra-credito-cache-${CACHE_VERSION}`;
+const STATIC_CACHE = `static-cache-${CACHE_VERSION}`;
+const DYNAMIC_CACHE = `dynamic-cache-${CACHE_VERSION}`;
 
 // Critical resources to cache immediately
 const urlsToCache = [
   '/',
   '/index.html',
-  '/src/main.tsx',
-  '/src/App.tsx',
   '/assets/css/index.css',
   '/lovable-uploads/0be9e819-3b36-4075-944b-cf4835a76b3c.png'
 ];
@@ -96,8 +95,8 @@ self.addEventListener('fetch', event => {
           }
           
           const responseToCache = fetchResponse.clone();
-          const cacheName = request.url.includes('/src/') || request.url.includes('/lovable-uploads/') 
-            ? STATIC_CACHE 
+          const cacheName = request.url.includes('/dist/') || request.url.includes('/lovable-uploads/')
+            ? STATIC_CACHE
             : DYNAMIC_CACHE;
           
           caches.open(cacheName).then(cache => {
