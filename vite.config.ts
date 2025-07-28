@@ -1,17 +1,28 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import compression from "vite-plugin-compression";
 
 // https://vitejs.dev/config/
-export default defineConfig(() => ({
+export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
     historyApiFallback: true,
   },
   plugins: [
-    react()
-  ],
+    react(),
+    mode === 'production' && compression({
+      algorithm: 'gzip',
+      ext: '.gz',
+      filter: /\.(js|css)$/i,
+    }),
+    mode === 'production' && compression({
+      algorithm: 'brotliCompress',
+      ext: '.br',
+      filter: /\.(js|css)$/i,
+    })
+  ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
