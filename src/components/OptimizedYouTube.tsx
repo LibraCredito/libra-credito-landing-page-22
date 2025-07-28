@@ -50,9 +50,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
               objectFit: 'cover',
               display: 'block'
             }}
-            loading="eager"
-            fetchPriority="high"
-            decoding="async"
+            loading="lazy"
           />
 
           {/* Overlay simplificado - usando apenas CSS */}
