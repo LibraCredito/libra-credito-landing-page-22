@@ -11,6 +11,8 @@ const LogoBand: React.FC = () => {
           className="h-24 w-auto"
           aspectRatio={1}
           priority={false}
+          width={80}
+          height={80}
         />
         <span className="ml-4 text-white text-lg font-semibold whitespace-nowrap">
           Crédito justo, equilibrado e consciente!

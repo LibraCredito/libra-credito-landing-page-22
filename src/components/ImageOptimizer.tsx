@@ -17,6 +17,8 @@
  * @param {string} [props.className] - Classes CSS opcionais
  * @param {number} [props.aspectRatio=16/9] - Proporção da imagem (width/height)
  * @param {boolean} [props.priority=false] - Se true, carrega a imagem com prioridade alta
+ * @param {number} [props.width] - Largura da imagem em pixels
+ * @param {number} [props.height] - Altura da imagem em pixels
  * 
  * @example
  * ```tsx
@@ -54,14 +56,18 @@ interface ImageOptimizerProps {
   className?: string;
   aspectRatio?: number;
   priority?: boolean;
+  width?: number;
+  height?: number;
 }
 
-const ImageOptimizer: React.FC<ImageOptimizerProps> = ({ 
-  src, 
-  alt, 
-  className = "", 
+const ImageOptimizer: React.FC<ImageOptimizerProps> = ({
+  src,
+  alt,
+  className = "",
   aspectRatio = 16/9,
-  priority = false
+  priority = false,
+  width,
+  height
 }) => {
   const imageElement = (
     <img
@@ -69,6 +75,8 @@ const ImageOptimizer: React.FC<ImageOptimizerProps> = ({
       alt={alt}
       loading={priority ? "eager" : "lazy"}
       className={`object-cover w-full h-full ${className}`}
+      width={width}
+      height={height}
       decoding="async"
     />
   );
