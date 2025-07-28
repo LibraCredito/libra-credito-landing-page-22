@@ -9,7 +9,7 @@ const urlsToCache = [
   '/index.html',
   '/src/main.tsx',
   '/src/App.tsx',
-  '/src/index.css',
+  '/assets/css/index.css',
   '/lovable-uploads/0be9e819-3b36-4075-944b-cf4835a76b3c.png'
 ];
 

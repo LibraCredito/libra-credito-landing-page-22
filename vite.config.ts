@@ -28,6 +28,7 @@ export default defineConfig(() => ({
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name.split('.');
           let extType = info[info.length - 1];
+
           if (/png|jpe?g|svg|gif|tiff|bmp|ico|webp|avif/i.test(extType)) {
             extType = 'images';
           } else if (/woff2?|eot|ttf|otf/i.test(extType)) {
@@ -35,6 +36,12 @@ export default defineConfig(() => ({
           } else if (/css/i.test(extType)) {
             extType = 'css';
           }
+
+          // Preserve deterministic name for main stylesheet
+          if (extType === 'css' && assetInfo.name === 'index.css') {
+            return 'assets/css/index.css';
+          }
+
           return `assets/${extType}/[name]-[hash][extname]`;
         },
         chunkFileNames: 'assets/js/[name]-[hash].js',
