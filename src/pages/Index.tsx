@@ -41,8 +41,12 @@ const Index: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      
-      <main id="main-content" className="flex-grow pt-header">
+
+      <main
+        id="main-content"
+        data-has-header="true"
+        className="flex-grow pt-header"
+      >
         {/* Faixa Separadora Superior Invertida - Ondas para baixo */}
         <WaveSeparator variant="hero" height="md" inverted />
         
