@@ -51,7 +51,6 @@ export default defineConfig(() => ({
           ],
           'vendor-utils': ['axios', 'clsx', 'class-variance-authority'],
           // Separar ícones para tree shaking
-          'vendor-icons': ['lucide-react'],
         },
       }
     }

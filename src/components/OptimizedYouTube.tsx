@@ -25,7 +25,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
   }, []);
 
   // Usar thumbnail otimizada menor (65KB vs 525KB)
-  const thumbnailImage = thumbnailSrc || `/images/video-thumbnail.webp`;
+  const thumbnailImage = thumbnailSrc || `/images/optimized/video-thumbnail.webp`;
 
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`}>
