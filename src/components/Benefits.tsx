@@ -4,6 +4,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 import WaveSeparator from '@/components/ui/WaveSeparator';
+import scrollToTarget from '@/utils/scrollToTarget';
 
 const usageOptions = [
   {
@@ -130,28 +131,19 @@ const Benefits: React.FC = () => {
                 onClick={() => {
                   const testimonialsSection = document.getElementById('testimonials');
                   if (testimonialsSection) {
-                    const videoContainer = testimonialsSection.querySelector('.aspect-video');
+                    const videoContainer = testimonialsSection.querySelector('.aspect-video') as HTMLElement | null;
                     const extraOffset = window.innerHeight * 0.15; // Deslocamento adicional de 15%
+
                     if (videoContainer) {
-                      const rect = videoContainer.getBoundingClientRect();
                       const windowHeight = window.innerHeight;
                       const headerOffset = 120;
-                      const centerOffset = (windowHeight - rect.height) / 2;
-                      const targetPosition = rect.top + window.pageYOffset - centerOffset - headerOffset + extraOffset;
-
-                      window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                      });
+                      const centerOffset =
+                        (windowHeight - videoContainer.getBoundingClientRect().height) / 2;
+                      const offset = -centerOffset - headerOffset + extraOffset;
+                      scrollToTarget(videoContainer, offset);
                     } else {
                       const headerOffset = 120;
-                      const rect = testimonialsSection.getBoundingClientRect();
-                      const offsetPosition = rect.top + window.pageYOffset - headerOffset + extraOffset;
-
-                      window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                      });
+                      scrollToTarget(testimonialsSection as HTMLElement, -headerOffset + extraOffset);
                     }
                   }
                 }}

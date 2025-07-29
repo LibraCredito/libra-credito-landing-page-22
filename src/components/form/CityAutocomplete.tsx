@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MapPin } from 'lucide-react';
 import { searchCities } from '@/utils/cityLtvService';
+import scrollToTarget from '@/utils/scrollToTarget';
 
 interface CityAutocompleteProps {
   value?: string;
@@ -65,19 +66,12 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
 
   // Function to scroll input to top of viewport
   const scrollToInput = (): void => {
-    if (inputRef.current && window.innerWidth < 768) { // Only on mobile
+    if (inputRef.current && window.innerWidth < 768) {
       setTimeout(() => {
         if (!inputRef.current) return;
-        const headerHeight = 80; // Approximate header height
-        const rect = inputRef.current.getBoundingClientRect();
-        const elementTop = rect.top + window.pageYOffset;
-        const targetPosition = elementTop - headerHeight;
-        
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
-      }, 300); // Delay to allow keyboard to appear
+        const headerHeight = 80;
+        scrollToTarget(inputRef.current as HTMLElement, -headerHeight);
+      }, 300);
     }
   };
 
