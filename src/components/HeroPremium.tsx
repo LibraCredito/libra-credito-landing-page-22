@@ -42,7 +42,7 @@ const HeroPremium: React.FC = () => {
 
   return (
     <section
-      className="min-h-[60vh] md:min-h-[65vh] lg:min-h-[70vh] xl:min-h-[calc(100vh-280px)] py-4 md:py-8 bg-white relative flex flex-col justify-center"
+      className="min-h-[60vh] md:min-h-[55vh] lg:min-h-[60vh] xl:min-h-[calc(100vh-320px)] py-4 md:py-8 bg-white relative flex flex-col justify-center"
       aria-labelledby="hero-heading"
       role="banner"
     >
@@ -60,7 +60,7 @@ const HeroPremium: React.FC = () => {
                   é mais simples na Libra!
                 </span>
               </h1>
-              <ul className="mt-2 space-y-2 md:space-y-3 text-sm md:text-base lg:text-lg text-[#003399] font-medium">
+              <ul className="mt-2 space-y-2 md:space-y-3 text-sm md:text-base lg:text-base text-[#003399] font-medium lg:scale-[0.85]">
                 <li className="flex items-center justify-center gap-2 bg-green-50 rounded-md py-1 px-2">
                   <Shield
                     className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0"
@@ -71,13 +71,13 @@ const HeroPremium: React.FC = () => {
                   </span>
                 </li>
                 <li className="list-none">
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-sm mx-auto pt-2 sm:pt-3">
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-sm mx-auto pt-2 sm:pt-3 lg:scale-[0.85]">
                     <HeroButton onClick={scrollToSimulator} variant="primary">
                       Simular Agora
                     </HeroButton>
                   </div>
                 </li>
-                <li className="mt-2 lg:mt-4 text-sm md:text-lg lg:text-2xl">
+                <li className="mt-2 lg:mt-4 text-sm md:text-lg lg:text-xl">
                   Taxas a partir de{' '}
                   <span className="font-bold text-green-700">1,19% a.m.</span> •
                   Até 180 meses • 100% online
@@ -87,7 +87,7 @@ const HeroPremium: React.FC = () => {
           </div>
 
           {/* Vídeo reduzido para exibir as ondas seguintes na dobra inicial */}
-          <div className="w-full max-w-md lg:w-[85%] lg:max-w-lg mx-auto">
+          <div className="w-full max-w-md lg:w-[85%] lg:max-w-lg mx-auto lg:scale-[0.85]">
             <div className="hero-video aspect-video">
               <OptimizedYouTube
                 videoId="E9lwL6R2l1s"
@@ -97,14 +97,14 @@ const HeroPremium: React.FC = () => {
                 thumbnailSrc="/images/optimized/video-thumbnail.webp"
               />
             </div>
-            <p className="text-lg md:text-xl lg:text-2xl text-[#003399] font-semibold mt-3 text-center">
+            <p className="text-lg md:text-xl lg:text-xl text-[#003399] font-semibold mt-3 text-center lg:scale-[0.85]">
               Crédito inteligente para quem construiu patrimônio.
             </p>
           </div>
         </div>
 
         {/* Botão Saiba Mais */}
-        <div className="flex justify-center mt-5 md:mt-7">
+        <div className="flex justify-center mt-5 md:mt-7 lg:scale-[0.85]">
           <button
             onClick={scrollToBenefits}
             className="text-[#003399] flex flex-col items-center gap-1 opacity-90 hover:opacity-100 transition-opacity"
