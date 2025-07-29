@@ -25,20 +25,11 @@ const HeroPremium: React.FC = () => {
 
   const scrollToBenefits = () => {
     const card = document.getElementById('capital-giro-card');
-    const trustbar = document.getElementById('trustbar');
     if (card) {
-      const headerOffset = window.innerWidth < 768 ? 96 : 108;
-      const trustbarRect = trustbar?.getBoundingClientRect();
-      const trustbarHeight = trustbarRect ? trustbarRect.height : 0;
-      const centerOffset =
-        (window.innerHeight - card.getBoundingClientRect().height) / 2;
-      const isMobileView = window.innerWidth < 768;
-      const additionalScroll =
-        window.innerHeight * (isMobileView ? 0.22 : 0.18);
-      const target = baseTarget + additionalScroll;
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const additionalScroll = window.innerHeight * (window.innerWidth < 768 ? 0.22 : 0.18);
+      window.scrollBy({ top: additionalScroll, behavior: 'smooth' });
 
-
-      scrollToTarget(card as HTMLElement, offset);
     }
   };
 

@@ -35,7 +35,7 @@ const UsageCard: React.FC<{
   return (
     <div
       id={id}
-      className={`bg-white rounded-lg shadow-lg border border-gray-100 hover:shadow-xl hover:border-green-500/30 transition-all duration-300 cursor-pointer transform hover:scale-105 ${isMobile ? 'p-3' : 'p-4'}`}
+      className={`bg-white rounded-lg shadow-lg border border-gray-100 hover:shadow-xl hover:border-green-500/30 transition-all duration-300 cursor-pointer transform hover:scale-105 ${isMobile ? 'p-3' : 'p-4'} ${id ? 'scroll-mt-header' : ''}`}
       onClick={onClick}
       role="button"
       tabIndex={0}
@@ -130,22 +130,8 @@ const Benefits: React.FC = () => {
                 className="border-green-500 text-green-500 hover:bg-green-500 hover:text-white px-8 py-3"
                 onClick={() => {
                   const testimonialsSection = document.getElementById('testimonials');
-                  if (testimonialsSection) {
-                    const videoContainer = testimonialsSection.querySelector('.aspect-video') as HTMLElement | null;
-                    const extraOffset = window.innerHeight * 0.15; // Deslocamento adicional de 15%
+                  testimonialsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-                    if (videoContainer) {
-                      const windowHeight = window.innerHeight;
-                      const headerOffset = 120;
-                      const centerOffset =
-                        (windowHeight - videoContainer.getBoundingClientRect().height) / 2;
-                      const offset = -centerOffset - headerOffset + extraOffset;
-                      scrollToTarget(videoContainer, offset);
-                    } else {
-                      const headerOffset = 120;
-                      scrollToTarget(testimonialsSection as HTMLElement, -headerOffset + extraOffset);
-                    }
-                  }
                 }}
               >
                 O que Falam da Libra
