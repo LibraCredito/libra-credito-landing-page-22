@@ -22,9 +22,6 @@ const HeroPremium: React.FC = () => {
     navigate('/simulacao');
   };
 
-  const goToVantagens = () => {
-    navigate('/vantagens');
-  };
 
   const scrollToBenefits = () => {
     const card = document.getElementById('capital-giro-card');
@@ -84,12 +81,6 @@ const HeroPremium: React.FC = () => {
                       variant="primary"
                     >
                       Simular Agora
-                    </HeroButton>
-                    <HeroButton
-                      onClick={goToVantagens}
-                      variant="secondary"
-                    >
-                      Conheça as Vantagens
                     </HeroButton>
                   </div>
                 </li>
