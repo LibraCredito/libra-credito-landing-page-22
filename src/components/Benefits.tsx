@@ -130,7 +130,22 @@ const Benefits: React.FC = () => {
                 className="border-green-500 text-green-500 hover:bg-green-500 hover:text-white px-8 py-3"
                 onClick={() => {
                   const testimonialsSection = document.getElementById('testimonials');
-                  testimonialsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  if (testimonialsSection) {
+                    const videoContainer = testimonialsSection.querySelector('.aspect-video') as HTMLElement | null;
+                    const extraOffset = window.innerHeight * 0.15; // Deslocamento adicional de 15%
+
+                    if (videoContainer) {
+                      const windowHeight = window.innerHeight;
+                      const headerOffset = 120;
+                      const centerOffset =
+                        (windowHeight - videoContainer.getBoundingClientRect().height) / 2;
+                      const offset = -centerOffset - headerOffset + extraOffset;
+                      scrollToTarget(videoContainer, offset);
+                    } else {
+                      const headerOffset = 120;
+                      scrollToTarget(testimonialsSection as HTMLElement, -headerOffset + extraOffset);
+                    }
+                  }
 
                 }}
               >

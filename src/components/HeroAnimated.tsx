@@ -32,9 +32,16 @@ const HeroAnimated: React.FC = () => {
   const scrollToBenefits = () => {
     const card = document.getElementById('capital-giro-card');
     if (card) {
-      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      const additionalScroll = window.innerHeight * (window.innerWidth < 768 ? 0.22 : 0.18);
-      window.scrollBy({ top: additionalScroll, behavior: 'smooth' });
+      const headerOffset = window.innerWidth < 768 ? 96 : 108;
+      const trustbarRect = trustbar?.getBoundingClientRect();
+      const trustbarHeight = trustbarRect ? trustbarRect.height : 0;
+      const centerOffset =
+        (window.innerHeight - card.getBoundingClientRect().height) / 2;
+      const isMobileView = window.innerWidth < 768;
+      const additionalScroll = window.innerHeight * (isMobileView ? 0.22 : 0.18);
+      const offset = -headerOffset - trustbarHeight - centerOffset + additionalScroll;
+
+      scrollToTarget(card as HTMLElement, offset);
 
     }
   };

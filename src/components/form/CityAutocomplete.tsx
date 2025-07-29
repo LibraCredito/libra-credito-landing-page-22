@@ -68,7 +68,9 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
   const scrollToInput = (): void => {
     if (inputRef.current && window.innerWidth < 768) {
       setTimeout(() => {
-        inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (!inputRef.current) return;
+        const headerHeight = 80;
+        scrollToTarget(inputRef.current as HTMLElement, -headerHeight);
 
       }, 300);
     }
