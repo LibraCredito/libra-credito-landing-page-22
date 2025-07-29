@@ -5,6 +5,7 @@ import { ChevronDown, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import OptimizedYouTube from './OptimizedYouTube';
 import { useIsMobile } from '@/hooks/use-mobile';
+import scrollToTarget from '@/utils/scrollToTarget';
 
 const HeroPremium: React.FC = () => {
   const navigate = useNavigate();
@@ -28,23 +29,15 @@ const HeroPremium: React.FC = () => {
     if (card) {
       const headerOffset = window.innerWidth < 768 ? 96 : 108;
       const trustbarRect = trustbar?.getBoundingClientRect();
-      const cardRect = card.getBoundingClientRect();
       const trustbarHeight = trustbarRect ? trustbarRect.height : 0;
-      const cardHeight = cardRect.height;
-      const centerOffset = (window.innerHeight - cardHeight) / 2;
-      const baseTarget =
-        cardRect.top +
-        window.pageYOffset -
-        headerOffset -
-        trustbarHeight -
-        centerOffset;
-
+      const centerOffset =
+        (window.innerHeight - card.getBoundingClientRect().height) / 2;
       const isMobileView = window.innerWidth < 768;
-      const additionalScroll =
-        window.innerHeight * (isMobileView ? 0.22 : 0.18);
-      const target = baseTarget + additionalScroll;
+      const additionalScroll = window.innerHeight * (isMobileView ? 0.22 : 0.18);
+      const offset = -headerOffset - trustbarHeight - centerOffset + additionalScroll;
 
-      window.scrollTo({ top: target, behavior: 'smooth' });
+
+      scrollToTarget(card as HTMLElement, offset);
     }
   };
 
