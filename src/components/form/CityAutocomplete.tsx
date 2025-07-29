@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MapPin } from 'lucide-react';
 import { searchCities } from '@/utils/cityLtvService';
+import scrollToTarget from '@/utils/scrollToTarget';
 
 interface CityAutocompleteProps {
   value?: string;
@@ -68,6 +69,7 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
     if (inputRef.current && window.innerWidth < 768) {
       setTimeout(() => {
         inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
       }, 300);
     }
   };

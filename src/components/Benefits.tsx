@@ -4,6 +4,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 import WaveSeparator from '@/components/ui/WaveSeparator';
+import scrollToTarget from '@/utils/scrollToTarget';
 
 const usageOptions = [
   {
@@ -130,6 +131,7 @@ const Benefits: React.FC = () => {
                 onClick={() => {
                   const testimonialsSection = document.getElementById('testimonials');
                   testimonialsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
                 }}
               >
                 O que Falam da Libra

@@ -5,6 +5,7 @@ import { ChevronDown, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import OptimizedYouTube from './OptimizedYouTube';
 import { useIsMobile } from '@/hooks/use-mobile';
+import scrollToTarget from '@/utils/scrollToTarget';
 
 const HeroAnimated: React.FC = () => {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ const HeroAnimated: React.FC = () => {
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
       const additionalScroll = window.innerHeight * (window.innerWidth < 768 ? 0.22 : 0.18);
       window.scrollBy({ top: additionalScroll, behavior: 'smooth' });
+
     }
   };
 
