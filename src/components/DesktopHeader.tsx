@@ -39,6 +39,7 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
   const _navigate = useNavigate();
   const [showBanner, setShowBanner] = useState(true);
   const headerRef = useRef<HTMLElement | null>(null);
+  const headerHeightRef = useRef(0);
 
   // Atualiza o offset do header reagindo a mudanças de tamanho
   useLayoutEffect(() => {
@@ -46,11 +47,13 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
     if (!header) return;
 
     const updateOffset = () => {
-      const { offsetHeight } = header;
-      document.documentElement.style.setProperty(
-        '--header-offset-desktop',
-        `${offsetHeight}px`
-      );
+      headerHeightRef.current = header.offsetHeight;
+      requestAnimationFrame(() => {
+        document.documentElement.style.setProperty(
+          '--header-offset-desktop',
+          `${headerHeightRef.current}px`
+        );
+      });
     };
 
     updateOffset();
