@@ -35,7 +35,7 @@ const UsageCard: React.FC<{
   return (
     <div
       id={id}
-      className={`bg-white rounded-lg shadow-lg border border-gray-100 hover:shadow-xl hover:border-green-500/30 transition-all duration-300 cursor-pointer transform hover:scale-105 ${isMobile ? 'p-3' : 'p-4'}`}
+      className={`bg-white rounded-lg shadow-lg border border-gray-100 hover:shadow-xl hover:border-green-500/30 transition-all duration-300 cursor-pointer transform hover:scale-105 ${isMobile ? 'p-3' : 'p-4'} ${id ? 'scroll-mt-header' : ''}`}
       onClick={onClick}
       role="button"
       tabIndex={0}
@@ -146,6 +146,7 @@ const Benefits: React.FC = () => {
                       scrollToTarget(testimonialsSection as HTMLElement, -headerOffset + extraOffset);
                     }
                   }
+
                 }}
               >
                 O que Falam da Libra

@@ -71,6 +71,7 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
         if (!inputRef.current) return;
         const headerHeight = 80;
         scrollToTarget(inputRef.current as HTMLElement, -headerHeight);
+
       }, 300);
     }
   };
@@ -153,7 +154,7 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
             placeholder={
               inputValue.length < 2 ? 'Digite 2 ou mais caracteres' : 'Busque a cidade'
             }
-            className="text-sm w-full px-3 py-2 rounded-md border-2 border-green-500 focus:outline-none focus:border-green-600 transition-colors"
+            className="text-sm w-full px-3 py-2 rounded-md border-2 border-green-500 focus:outline-none focus:border-green-600 transition-colors scroll-mt-header"
           />
 
           {/* Suggestion dropdown - Fixed positioning for mobile */}

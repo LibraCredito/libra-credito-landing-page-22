@@ -31,7 +31,6 @@ const HeroAnimated: React.FC = () => {
 
   const scrollToBenefits = () => {
     const card = document.getElementById('capital-giro-card');
-    const trustbar = document.getElementById('trustbar');
     if (card) {
       const headerOffset = window.innerWidth < 768 ? 96 : 108;
       const trustbarRect = trustbar?.getBoundingClientRect();
@@ -43,6 +42,7 @@ const HeroAnimated: React.FC = () => {
       const offset = -headerOffset - trustbarHeight - centerOffset + additionalScroll;
 
       scrollToTarget(card as HTMLElement, offset);
+
     }
   };
 
