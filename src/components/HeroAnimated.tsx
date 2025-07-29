@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import TypewriterText from './TypewriterText';
 import HeroButton from '@/components/ui/HeroButton';
 import { ChevronDown, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -18,38 +19,6 @@ const HeroAnimated: React.FC = () => {
     "Consolidação Estratégica de Débitos"
   ];
 
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  const [fadeClass, setFadeClass] = useState('opacity-100');
-
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-    let timeoutId: NodeJS.Timeout;
-    
-    const animateText = () => {
-      // Fade out
-      setFadeClass('opacity-0');
-      
-      // Após fade out, trocar texto e fazer fade in
-      timeoutId = setTimeout(() => {
-        setCurrentTextIndex((prev) => {
-          const nextIndex = (prev + 1) % alternatingTexts.length;
-          return nextIndex;
-        });
-        // Pequeno delay para garantir que o texto mudou antes do fade in
-        setTimeout(() => {
-          setFadeClass('opacity-100');
-        }, 50);
-      }, 400);
-    };
-
-    // Começar animação após 3 segundos da montagem
-    intervalId = setInterval(animateText, 3000);
-
-    return () => {
-      if (intervalId) clearInterval(intervalId);
-      if (timeoutId) clearTimeout(timeoutId);
-    };
-  }, []);
 
   const scrollToSimulator = () => {
     navigate('/simulacao');
@@ -102,11 +71,7 @@ const HeroAnimated: React.FC = () => {
                 id="hero-heading"
                 className="text-xl md:text-3xl lg:text-4xl font-extrabold mb-4 leading-tight"
               >
-                <span 
-                  className={`block whitespace-nowrap transition-opacity duration-500 ${fadeClass}`}
-                >
-                  {alternatingTexts[currentTextIndex]}
-                </span>
+                <TypewriterText strings={alternatingTexts} />
                 <span className="block text-green-700">é na Libra!</span>
               </h1>
               
