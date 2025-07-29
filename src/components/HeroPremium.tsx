@@ -1,4 +1,5 @@
 import React from 'react';
+import TypewriterText from './TypewriterText';
 import HeroButton from '@/components/ui/HeroButton';
 import { ChevronDown, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +9,14 @@ import { useIsMobile } from '@/hooks/use-mobile';
 const HeroPremium: React.FC = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+
+  const alternatingTexts = [
+    'Crédito com Garantia de Imóvel',
+    'Home Equity',
+    'Capital de Giro Inteligente',
+    'Empréstimo com Garantia de Imóvel',
+    'Consolidação Estratégica de Débitos',
+  ];
 
   const scrollToSimulator = () => {
     navigate('/simulacao');
@@ -60,7 +69,7 @@ const HeroPremium: React.FC = () => {
                 id="hero-heading"
                 className="text-xl md:text-3xl lg:text-4xl font-extrabold mb-4 leading-tight"
               >
-                <span className="block whitespace-nowrap">Crédito com Garantia de Imóvel</span>
+                <TypewriterText strings={alternatingTexts} />
                 <span className="block text-green-700">é mais simples na Libra!</span>
               </h1>
               <ul className="mt-2 space-y-1 text-sm md:text-base lg:text-lg text-[#003399] font-medium">
