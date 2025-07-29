@@ -22,7 +22,7 @@ const Simulacao = () => {
   return (
     <MobileLayout>
       <WaveSeparator variant="hero" height="md" inverted />
-      <div className="bg-white">
+      <div className="bg-[#33cc99]">
         <SimulationForm />
       </div>
     </MobileLayout>
