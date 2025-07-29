@@ -28,9 +28,9 @@ export default {
                         '2xl': '1536px',  // Desktop grande
                 },
 		extend: {
-			fontFamily: {
-				sans: ['Montserrat', 'sans-serif'],
-			},
+                        fontFamily: {
+                                sans: ['Comfortaa', 'sans-serif'],
+                        },
 			// Tamanhos de fonte otimizados para mobile
 			fontSize: {
 				'xs': ['0.75rem', { lineHeight: '1rem' }],

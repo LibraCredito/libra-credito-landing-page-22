@@ -62,14 +62,14 @@ const ModernCTA: React.FC<ModernCTAProps> = ({
               </div>
             </div>
 
-            {/* Título com efeito usando Montserrat */}
+            {/* Título com efeito usando Comfortaa */}
             <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl lg:text-4xl'} font-bold mb-4 text-white relative font-sans`}>
               <span className="bg-gradient-to-r from-white via-[#00ccff]/80 to-white bg-clip-text text-transparent">
                 {title}
               </span>
             </h2>
 
-            {/* Subtítulo usando Montserrat */}
+            {/* Subtítulo usando Comfortaa */}
             <p className={`${isMobile ? 'text-base px-2' : 'text-lg'} mb-8 text-gray-300 max-w-2xl mx-auto leading-relaxed font-sans`}>
               {subtitle}
             </p>
@@ -119,7 +119,7 @@ const ModernCTA: React.FC<ModernCTAProps> = ({
               </Button>
             </div>
 
-            {/* Texto de segurança usando Montserrat */}
+            {/* Texto de segurança usando Comfortaa */}
             <p className="mt-6 text-sm text-gray-400 font-sans">
               🔒 Simulação gratuita e sem compromisso • Dados protegidos
             </p>
