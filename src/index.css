@@ -207,22 +207,6 @@
     padding-top: var(--header-offset-mobile);
   }
   
-  /* Safe Area Classes */
-  .pt-safe-top {
-    padding-top: var(--safe-area-top);
-  }
-  
-  .pb-safe-bottom {
-    padding-bottom: var(--safe-area-bottom);
-  }
-  
-  .pl-safe-left {
-    padding-left: var(--safe-area-left);
-  }
-  
-  .pr-safe-right {
-    padding-right: var(--safe-area-right);
-  }
   
   @media (min-width: 768px) {
     .pt-header {
@@ -494,22 +478,11 @@
   height: 100dvh;
 }
 
-/* Bottom Navigation Safe Area */
-.bottom-nav-padding {
-  padding-bottom: calc(var(--touch-target-comfortable, 56px) + var(--safe-area-bottom, 0px));
-}
-
 /* Bottom Navigation Styles */
 @layer components {
-  /* Safe padding for bottom navigation */
-  .pb-safe-nav {
-    padding-bottom: calc(80px + env(safe-area-inset-bottom));
-  }
-  
   /* Bottom Navigation Bar */
   .bottom-nav {
     @apply fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200;
-    padding-bottom: env(safe-area-inset-bottom);
   }
   
   /* Special center button */

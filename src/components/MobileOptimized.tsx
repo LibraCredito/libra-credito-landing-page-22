@@ -6,7 +6,7 @@ interface MobileOptimizedProps {
 }
 
 export const MobileOptimized: React.FC<MobileOptimizedProps> = ({ children }) => {
-  const { isMobile, isIOS, hasNotch } = useDevice();
+  const { isMobile, isIOS } = useDevice();
 
   useEffect(() => {
     if (!isMobile) return;
@@ -23,7 +23,6 @@ export const MobileOptimized: React.FC<MobileOptimizedProps> = ({ children }) =>
     const bodyClasses = [];
     if (isMobile) bodyClasses.push('is-mobile');
     if (isIOS) bodyClasses.push('is-ios');
-    if (hasNotch) bodyClasses.push('has-notch');
     
     document.body.classList.add(...bodyClasses);
 
@@ -95,7 +94,7 @@ export const MobileOptimized: React.FC<MobileOptimizedProps> = ({ children }) =>
       }
       document.removeEventListener('touchmove', preventPullToRefresh);
     };
-  }, [isMobile, isIOS, hasNotch]);
+  }, [isMobile, isIOS]);
 
   // Adicionar meta tags para PWA
   useEffect(() => {
