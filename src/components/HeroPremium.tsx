@@ -77,26 +77,26 @@ const HeroPremium: React.FC = () => {
                   <Shield className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" aria-hidden="true" />
                   <span className="text-center">Atendimento Premium, Segurança e Velocidade!</span>
                 </li>
+                <li className="list-none">
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-sm mx-auto pt-3 sm:pt-4">
+                    <HeroButton
+                      onClick={scrollToSimulator}
+                      variant="primary"
+                    >
+                      Simular Agora
+                    </HeroButton>
+                    <HeroButton
+                      onClick={goToVantagens}
+                      variant="secondary"
+                    >
+                      Conheça as Vantagens
+                    </HeroButton>
+                  </div>
+                </li>
                 <li>
                   Taxas a partir de <span className="font-bold text-green-700">1,19% a.m.</span> • Até 180 meses • 100% online
                 </li>
               </ul>
-            </div>
-
-            {/* Botões */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-sm mx-auto pt-3 sm:pt-4">
-              <HeroButton
-                onClick={scrollToSimulator}
-                variant="primary"
-              >
-                Simular Agora
-              </HeroButton>
-              <HeroButton
-                onClick={goToVantagens}
-                variant="secondary"
-              >
-                Conheça as Vantagens
-              </HeroButton>
             </div>
           </div>
 
