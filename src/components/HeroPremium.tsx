@@ -33,8 +33,9 @@ const HeroPremium: React.FC = () => {
       const centerOffset =
         (window.innerHeight - card.getBoundingClientRect().height) / 2;
       const isMobileView = window.innerWidth < 768;
-      const additionalScroll = window.innerHeight * (isMobileView ? 0.22 : 0.18);
-      const offset = -headerOffset - trustbarHeight - centerOffset + additionalScroll;
+      const additionalScroll =
+        window.innerHeight * (isMobileView ? 0.22 : 0.18);
+      const target = baseTarget + additionalScroll;
 
 
       scrollToTarget(card as HTMLElement, offset);
