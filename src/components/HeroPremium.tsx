@@ -22,7 +22,6 @@ const HeroPremium: React.FC = () => {
     navigate('/simulacao');
   };
 
-
   const scrollToBenefits = () => {
     const card = document.getElementById('capital-giro-card');
     const trustbar = document.getElementById('trustbar');
@@ -41,7 +40,8 @@ const HeroPremium: React.FC = () => {
         centerOffset;
 
       const isMobileView = window.innerWidth < 768;
-      const additionalScroll = window.innerHeight * (isMobileView ? 0.22 : 0.18);
+      const additionalScroll =
+        window.innerHeight * (isMobileView ? 0.22 : 0.18);
       const target = baseTarget + additionalScroll;
 
       window.scrollTo({ top: target, behavior: 'smooth' });
@@ -49,50 +49,53 @@ const HeroPremium: React.FC = () => {
   };
 
   return (
-    <section 
-      className="min-h-[60vh] md:min-h-[65vh] lg:min-h-[65vh] xl:min-h-[calc(100vh-280px)] pb-2 bg-white relative flex flex-col justify-center"
+    <section
+      className="min-h-[60vh] md:min-h-[65vh] lg:min-h-[70vh] xl:min-h-[calc(100vh-280px)] py-4 md:py-8 bg-white relative flex flex-col justify-center"
       aria-labelledby="hero-heading"
       role="banner"
     >
-      <div className="container mx-auto px-4 relative z-10 flex-grow flex flex-col justify-center">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+      <div className="container mx-auto px-4 md:px-6 relative z-10 flex-grow flex flex-col justify-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-8 items-center">
           {/* Lado Esquerdo */}
-          <div className="text-[#003399] space-y-4 md:space-y-5 text-center flex flex-col items-center">
-            {/* Espaçamento extra para mobile */}
-            {isMobile && <div className="h-4"></div>}
-            
+          <div className="text-[#003399] max-w-lg mx-auto space-y-4 md:space-y-5 text-center flex flex-col items-center">
             <div>
               <h1
                 id="hero-heading"
                 className="text-xl md:text-3xl lg:text-4xl font-extrabold mb-4 leading-tight"
               >
                 <TypewriterText strings={alternatingTexts} />
-                <span className="block text-green-700">é mais simples na Libra!</span>
+                <span className="block text-green-700">
+                  é mais simples na Libra!
+                </span>
               </h1>
-              <ul className="mt-2 space-y-1 text-sm md:text-base lg:text-lg text-[#003399] font-medium">
+              <ul className="mt-2 space-y-2 md:space-y-3 text-sm md:text-base lg:text-lg text-[#003399] font-medium">
                 <li className="flex items-center justify-center gap-2 bg-green-50 rounded-md py-1 px-2">
-                  <Shield className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" aria-hidden="true" />
-                  <span className="text-center">Atendimento Premium, Segurança e Velocidade!</span>
+                  <Shield
+                    className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0"
+                    aria-hidden="true"
+                  />
+                  <span className="text-center">
+                    Atendimento Premium, Segurança e Velocidade!
+                  </span>
                 </li>
                 <li className="list-none">
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-sm mx-auto pt-3 sm:pt-4">
-                    <HeroButton
-                      onClick={scrollToSimulator}
-                      variant="primary"
-                    >
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-sm mx-auto pt-2 sm:pt-3">
+                    <HeroButton onClick={scrollToSimulator} variant="primary">
                       Simular Agora
                     </HeroButton>
                   </div>
                 </li>
-                <li>
-                  Taxas a partir de <span className="font-bold text-green-700">1,19% a.m.</span> • Até 180 meses • 100% online
+                <li className="mt-2 lg:mt-4 text-sm md:text-lg lg:text-2xl">
+                  Taxas a partir de{' '}
+                  <span className="font-bold text-green-700">1,19% a.m.</span> •
+                  Até 180 meses • 100% online
                 </li>
               </ul>
             </div>
           </div>
 
-            {/* Vídeo reduzido para exibir as ondas seguintes na dobra inicial */}
-            <div className="w-full max-w-md mx-auto">
+          {/* Vídeo reduzido para exibir as ondas seguintes na dobra inicial */}
+          <div className="w-full max-w-md lg:w-[85%] lg:max-w-lg mx-auto">
             <div className="hero-video aspect-video">
               <OptimizedYouTube
                 videoId="E9lwL6R2l1s"
@@ -102,20 +105,22 @@ const HeroPremium: React.FC = () => {
                 thumbnailSrc="/images/optimized/video-thumbnail.webp"
               />
             </div>
-            <p className="text-lg md:text-xl lg:text-2xl text-[#003399] font-semibold mt-2 text-center">
-              Crédito inteligente para quem construiu patrimonio.
+            <p className="text-lg md:text-xl lg:text-2xl text-[#003399] font-semibold mt-3 text-center">
+              Crédito inteligente para quem construiu patrimônio.
             </p>
           </div>
         </div>
 
         {/* Botão Saiba Mais */}
-        <div className="flex justify-center mt-4 md:mt-4 lg:mt-2">
+        <div className="flex justify-center mt-5 md:mt-7">
           <button
             onClick={scrollToBenefits}
             className="text-[#003399] flex flex-col items-center gap-1 opacity-90 hover:opacity-100 transition-opacity"
             aria-label="Rolar para benefícios"
           >
-            <span className="text-sm md:text-sm lg:text-xs font-medium">Saiba mais</span>
+            <span className="text-sm md:text-sm lg:text-xs font-medium">
+              Saiba mais
+            </span>
             <ChevronDown className="w-5 h-5 md:w-5 md:h-5 lg:w-4 lg:h-4 animate-bounce" />
           </button>
         </div>
