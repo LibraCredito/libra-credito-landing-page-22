@@ -235,7 +235,7 @@ export const MobileWizard: React.FC<MobileWizardProps> = ({
       </div>
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 p-4 safe-bottom">
+      <div className="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 p-4">
         <div className="flex gap-3">
           {currentStep > 0 && (
             <button
