@@ -34,7 +34,7 @@ const UsageCard: React.FC<{
   return (
     <div
       id={id}
-      className={`bg-white rounded-lg shadow-lg border border-gray-100 hover:shadow-xl hover:border-green-500/30 transition-all duration-300 cursor-pointer transform hover:scale-105 ${isMobile ? 'p-3' : 'p-4'}`}
+      className={`bg-white rounded-lg shadow-lg border border-gray-100 hover:shadow-xl hover:border-green-500/30 transition-all duration-300 cursor-pointer transform hover:scale-105 ${isMobile ? 'p-3' : 'p-4'} ${id ? 'scroll-mt-header' : ''}`}
       onClick={onClick}
       role="button"
       tabIndex={0}
@@ -129,31 +129,7 @@ const Benefits: React.FC = () => {
                 className="border-green-500 text-green-500 hover:bg-green-500 hover:text-white px-8 py-3"
                 onClick={() => {
                   const testimonialsSection = document.getElementById('testimonials');
-                  if (testimonialsSection) {
-                    const videoContainer = testimonialsSection.querySelector('.aspect-video');
-                    const extraOffset = window.innerHeight * 0.15; // Deslocamento adicional de 15%
-                    if (videoContainer) {
-                      const rect = videoContainer.getBoundingClientRect();
-                      const windowHeight = window.innerHeight;
-                      const headerOffset = 120;
-                      const centerOffset = (windowHeight - rect.height) / 2;
-                      const targetPosition = rect.top + window.pageYOffset - centerOffset - headerOffset + extraOffset;
-
-                      window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                      });
-                    } else {
-                      const headerOffset = 120;
-                      const rect = testimonialsSection.getBoundingClientRect();
-                      const offsetPosition = rect.top + window.pageYOffset - headerOffset + extraOffset;
-
-                      window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                      });
-                    }
-                  }
+                  testimonialsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
               >
                 O que Falam da Libra

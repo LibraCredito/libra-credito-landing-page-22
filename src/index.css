@@ -219,13 +219,14 @@
     }
   }
 
+  /* Offset for anchors when using fixed header */
   .scroll-mt-header {
-    scroll-margin-top: var(--header-offset-mobile);
+    scroll-margin-top: var(--header-height-mobile);
   }
 
   @media (min-width: 768px) {
     .scroll-mt-header {
-      scroll-margin-top: var(--header-offset-desktop);
+      scroll-margin-top: var(--header-height-desktop);
     }
   }
   

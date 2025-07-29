@@ -65,19 +65,10 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
 
   // Function to scroll input to top of viewport
   const scrollToInput = (): void => {
-    if (inputRef.current && window.innerWidth < 768) { // Only on mobile
+    if (inputRef.current && window.innerWidth < 768) {
       setTimeout(() => {
-        if (!inputRef.current) return;
-        const headerHeight = 80; // Approximate header height
-        const rect = inputRef.current.getBoundingClientRect();
-        const elementTop = rect.top + window.pageYOffset;
-        const targetPosition = elementTop - headerHeight;
-        
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
-      }, 300); // Delay to allow keyboard to appear
+        inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
     }
   };
 
@@ -159,7 +150,7 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
             placeholder={
               inputValue.length < 2 ? 'Digite 2 ou mais caracteres' : 'Busque a cidade'
             }
-            className="text-sm w-full px-3 py-2 rounded-md border-2 border-green-500 focus:outline-none focus:border-green-600 transition-colors"
+            className="text-sm w-full px-3 py-2 rounded-md border-2 border-green-500 focus:outline-none focus:border-green-600 transition-colors scroll-mt-header"
           />
 
           {/* Suggestion dropdown - Fixed positioning for mobile */}
