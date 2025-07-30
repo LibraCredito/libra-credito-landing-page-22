@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LocalSimulationService } from '@/services/localSimulationService';
 import { useUserJourney } from '@/hooks/useUserJourney';
 import Home from 'lucide-react/dist/esm/icons/home';
@@ -31,9 +31,10 @@ const ContactForm: React.FC<ContactFormProps> = ({
   className = '',
   inputClassName = '',
   buttonClassName = '',
-  compact = false 
+  compact = false
 }) => {
   const { sessionId } = useUserJourney();
+  const navigate = useNavigate();
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [telefone, setTelefone] = useState('');
@@ -131,6 +132,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
       const mensagemSucesso = `🎉 Solicitação enviada com sucesso!\n\n✅ Seus dados foram registrados\n✅ Nossa equipe entrará em contato em breve\n📞 Fique atento ao telefone e e-mail cadastrados`;
       
       alert(mensagemSucesso);
+      navigate('/quem-somos');
       
       // Limpar formulário
       setNome('');
