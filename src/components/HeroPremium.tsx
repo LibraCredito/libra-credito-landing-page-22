@@ -91,7 +91,7 @@ const HeroPremium: React.FC = () => {
           </div>
 
           {/* Vídeo reduzido para exibir as ondas seguintes na dobra inicial */}
-          <div className="w-full max-w-md lg:w-[85%] lg:max-w-lg mx-auto flex flex-col items-center">
+          <div className="w-full max-w-md lg:w-[85%] lg:max-w-lg mx-auto">
             <div className="hero-video aspect-video">
               <OptimizedYouTube
                 videoId="E9lwL6R2l1s"
