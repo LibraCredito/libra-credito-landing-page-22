@@ -155,6 +155,7 @@ Altere esses campos na seção **"DFI, Prestamista e Taxa Administrativa"** e cl
 # Desenvolvimento
 npm run dev              # Servidor de desenvolvimento
 npm run build           # Build para produção
+npm run build:stats     # Gera stats.html com visualização do bundle
 npm run preview         # Preview do build
 
 # Qualidade de código

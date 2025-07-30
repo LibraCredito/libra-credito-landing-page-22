@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import compression from "vite-plugin-compression";
+import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -21,6 +22,11 @@ export default defineConfig(({ mode }) => ({
       algorithm: 'brotliCompress',
       ext: '.br',
       filter: /\.(js|css)$/i,
+    }),
+    process.env.STATS && visualizer({
+      filename: 'stats.html',
+      template: 'treemap',
+      open: true,
     })
   ].filter(Boolean),
   resolve: {
