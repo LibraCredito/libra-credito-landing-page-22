@@ -42,7 +42,7 @@ const HeroPremium: React.FC = () => {
 
   return (
     <section
-      className="min-h-[50vh] md:min-h-[55vh] lg:min-h-[60vh] xl:min-h-[calc(100vh-280px)] pb-2 bg-white relative flex flex-col justify-center"
+      className="min-h-[50vh] md:min-h-[55vh] lg:min-h-[60vh] xl:min-h-[calc(100vh-280px)] pb-0 bg-white relative flex flex-col justify-center"
       aria-labelledby="hero-heading"
       role="banner"
     >
