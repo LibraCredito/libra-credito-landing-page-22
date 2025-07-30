@@ -103,16 +103,13 @@ const HeroPremium: React.FC = () => {
           </div>
         </div>
 
-        {/* Botão Saiba Mais */}
+        {/* Botão de rolagem para a seção de benefícios */}
         <div className="flex justify-center mt-5 md:mt-7">
           <button
             onClick={scrollToBenefits}
-            className="text-[#003399] flex flex-col items-center gap-1 opacity-90 hover:opacity-100 transition-opacity"
+            className="text-[#003399] flex flex-col items-center opacity-90 hover:opacity-100 transition-opacity"
             aria-label="Rolar para benefícios"
           >
-            <span className="text-sm md:text-sm lg:text-xs font-medium">
-              Saiba mais
-            </span>
             <ChevronDown className="w-5 h-5 md:w-5 md:h-5 lg:w-4 lg:h-4 animate-bounce" />
           </button>
         </div>
