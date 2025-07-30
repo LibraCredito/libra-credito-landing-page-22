@@ -225,7 +225,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
             O imóvel que será utilizado como garantia é:
           </legend>
           <div className="flex gap-3" role="radiogroup" aria-labelledby="tipo-imovel-label">
-            <label className="flex-1 flex items-center justify-center gap-2 bg-white/10 px-3 py-3 rounded-lg text-sm font-medium text-white hover:bg-white/20 focus-within:ring-2 focus-within:ring-white cursor-pointer">
+            <label className="flex-1 flex items-center justify-center gap-2 bg-white/10 px-3 py-3 rounded-lg text-sm font-medium text-libra-navy hover:bg-white/20 focus-within:ring-2 focus-within:ring-white cursor-pointer">
               <input
                 type="radio"
                 name="imovelProprioCompact"
@@ -238,7 +238,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
               <Home className="w-4 h-4" />
               Imóvel Próprio
             </label>
-            <label className="flex-1 flex items-center justify-center gap-2 bg-white/10 px-3 py-3 rounded-lg text-sm font-medium text-white hover:bg-white/20 focus-within:ring-2 focus-within:ring-white cursor-pointer">
+            <label className="flex-1 flex items-center justify-center gap-2 bg-white/10 px-3 py-3 rounded-lg text-sm font-medium text-libra-navy hover:bg-white/20 focus-within:ring-2 focus-within:ring-white cursor-pointer">
               <input
                 type="radio"
                 name="imovelProprioCompact"
@@ -392,7 +392,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 </div>
               </legend>
               <div className="flex gap-4" role="radiogroup" aria-labelledby="tipo-imovel-legend">
-                <label className="flex items-center gap-2 text-sm bg-libra-light/60 px-3 py-2 rounded-md shadow-sm hover:bg-libra-light focus-within:outline focus-within:outline-libra-blue">
+                <label className="flex items-center gap-2 text-sm bg-libra-light/60 px-3 py-2 rounded-md shadow-sm hover:bg-libra-light focus-within:outline focus-within:outline-libra-blue text-libra-navy">
                   <input
                     type="radio"
                     name="imovelProprio"
@@ -405,7 +405,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                   />
                   Imóvel Próprio
                 </label>
-                <label className="flex items-center gap-2 text-sm bg-libra-light/60 px-3 py-2 rounded-md shadow-sm hover:bg-libra-light focus-within:outline focus-within:outline-libra-blue">
+                <label className="flex items-center gap-2 text-sm bg-libra-light/60 px-3 py-2 rounded-md shadow-sm hover:bg-libra-light focus-within:outline focus-within:outline-libra-blue text-libra-navy">
                   <input
                     type="radio"
                     name="imovelProprio"
