@@ -97,9 +97,6 @@ const HeroPremium: React.FC = () => {
                 thumbnailSrc="/images/optimized/video-thumbnail.webp"
               />
             </div>
-            <p className="text-lg md:text-xl lg:text-2xl text-[#003399] font-semibold mt-3 text-center">
-              Crédito inteligente para quem construiu patrimônio.
-            </p>
           </div>
         </div>
 
