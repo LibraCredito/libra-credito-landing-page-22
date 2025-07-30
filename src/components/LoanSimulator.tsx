@@ -44,6 +44,7 @@ import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import InfoTooltip from './InfoTooltip';
 import HelpCircle from 'lucide-react/dist/esm/icons/help-circle';
 import AlertCircle from 'lucide-react/dist/esm/icons/alert-circle';
 import Info from 'lucide-react/dist/esm/icons/info';
@@ -253,16 +254,9 @@ const LoanSimulator: React.FC = () => {
                   <div className={`bg-libra-light ${isMobile ? 'p-4' : 'p-6'} rounded-lg text-center`}>
                     <div className="flex items-center justify-center gap-1 mb-2">
                       <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-700`} id="requiredIncomeLabel">Renda familiar necessária:</p>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <button type="button" aria-label="Mais informações sobre renda necessária">
-                            <HelpCircle className="w-3 h-3 md:w-4 md:h-4 text-gray-600" aria-hidden="true" />
-                          </button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className={`${isMobile ? 'text-xs' : 'text-sm'}`}>A renda familiar necessária é calculada com base no comprometimento máximo de 30% da renda com a parcela, para evitar o superendividamento.</p>
-                        </TooltipContent>
-                      </Tooltip>
+                      <InfoTooltip
+                        content={<p className={`${isMobile ? 'text-xs' : 'text-sm'}`}>A renda familiar necessária é calculada com base no comprometimento máximo de 30% da renda com a parcela, para evitar o superendividamento.</p>}
+                      />
                     </div>
                     <p className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-bold text-libra-navy`} aria-labelledby="requiredIncomeLabel">{formatCurrency(requiredIncome)}</p>
                     <p className={`${isMobile ? 'text-xs' : 'text-xs'} text-gray-700 mt-2`}>*Valores aproximados, sujeitos à análise de crédito</p>
@@ -271,16 +265,9 @@ const LoanSimulator: React.FC = () => {
                   <div className={`bg-libra-light ${isMobile ? 'p-4' : 'p-6'} rounded-lg text-center`}>
                     <div className="flex items-center justify-center gap-1 mb-2">
                       <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-700`} id="propertyValueLabel">Avaliação do imóvel mínima necessária:</p>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <button type="button" aria-label="Mais informações sobre avaliação do imóvel">
-                            <Info className="w-3 h-3 md:w-4 md:h-4 text-gray-600" aria-hidden="true" />
-                          </button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className={`${isMobile ? 'text-xs' : 'text-sm'}`}>Dependendo das características do imóvel (tipo, região e documentação), a avaliação mínima necessária pode ser até {formatCurrency(maxPropertyValue)}.</p>
-                        </TooltipContent>
-                      </Tooltip>
+                      <InfoTooltip
+                        content={<p className={`${isMobile ? 'text-xs' : 'text-sm'}`}>Dependendo das características do imóvel (tipo, região e documentação), a avaliação mínima necessária pode ser até {formatCurrency(maxPropertyValue)}.</p>}
+                      />
                     </div>
                     <p className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-bold text-libra-navy`} aria-labelledby="propertyValueLabel">{formatCurrency(minPropertyValue)}</p>
                     <p className={`${isMobile ? 'text-xs' : 'text-xs'} text-gray-700 mt-2`}>*Dependendo das características do imóvel (tipo, região e documentação), pode ser necessário até {formatCurrency(maxPropertyValue)}</p>

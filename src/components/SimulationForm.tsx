@@ -61,6 +61,7 @@ import SimulationResultDisplay from './SimulationResultDisplay';
 import { analyzeApiMessage, ApiMessageAnalysis } from '@/utils/apiMessageAnalyzer';
 import { analyzeLocalMessage } from '@/utils/localMessageAnalyzer';
 import { formatBRL, norm } from '@/utils/formatters';
+import { toast } from '@/components/ui/sonner';
 
 const SimulationForm: React.FC = () => {
   const { sessionId, trackSimulation } = useUserJourney();
@@ -119,8 +120,13 @@ const SimulationForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!validation.formularioValido || !sessionId) return;
+    if (!validation.formularioValido || !sessionId) {
+      toast({
+        title: 'Preencha todos os campos para prosseguir',
+        variant: 'warning'
+      });
+      return;
+    }
 
     setLoading(true);
     setErro('');
@@ -429,9 +435,9 @@ const SimulationForm: React.FC = () => {
               {/* Botões */}
               <div className="flex gap-2 pt-2">
                 <Button
-                type="submit"
-                disabled={!validation.formularioValido || loading}
-                className="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 text-sm font-semibold min-h-[44px]"
+                  type="submit"
+                  disabled={loading}
+                  className="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 text-sm font-semibold min-h-[44px]"
                 >
                   {loading ? (
                     <div className="flex items-center gap-2">
