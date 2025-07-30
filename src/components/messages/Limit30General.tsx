@@ -1,5 +1,7 @@
 import React from 'react';
-import { Info, Calculator, MapPin } from 'lucide-react';
+import Info from 'lucide-react/dist/esm/icons/info';
+import Calculator from 'lucide-react/dist/esm/icons/calculator';
+import MapPin from 'lucide-react/dist/esm/icons/map-pin';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 

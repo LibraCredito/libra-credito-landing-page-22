@@ -3,7 +3,11 @@ import MobileLayout from '@/components/MobileLayout';
 import ImageOptimizer from '@/components/ImageOptimizer';
 import WaveSeparator from '@/components/ui/WaveSeparator';
 import { Button } from '@/components/ui/button';
-import { Users, Target, Award, Shield, TrendingUp } from 'lucide-react';
+import Users from 'lucide-react/dist/esm/icons/users';
+import Target from 'lucide-react/dist/esm/icons/target';
+import Award from 'lucide-react/dist/esm/icons/award';
+import Shield from 'lucide-react/dist/esm/icons/shield';
+import TrendingUp from 'lucide-react/dist/esm/icons/trending-up';
 import { Link, useNavigate } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 

@@ -7,7 +7,9 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Link } from 'react-router-dom';
 import { LocalSimulationService } from '@/services/localSimulationService';
 import { useUserJourney } from '@/hooks/useUserJourney';
-import { Home, Building, ArrowRight } from 'lucide-react';
+import Home from 'lucide-react/dist/esm/icons/home';
+import Building from 'lucide-react/dist/esm/icons/building';
+import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right';
 
 interface ContactFormProps {
   simulationResult: {

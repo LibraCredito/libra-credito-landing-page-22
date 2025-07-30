@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { MapPin } from 'lucide-react';
+import MapPin from 'lucide-react/dist/esm/icons/map-pin';
 import { searchCities } from '@/utils/cityLtvService';
 import scrollToTarget from '@/utils/scrollToTarget';
 

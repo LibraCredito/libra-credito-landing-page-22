@@ -26,7 +26,9 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Info } from 'lucide-react';
+import Menu from 'lucide-react/dist/esm/icons/menu';
+import X from 'lucide-react/dist/esm/icons/x';
+import Info from 'lucide-react/dist/esm/icons/info';
 
 interface MobileHeaderProps {
   onPortalClientes: () => void;

@@ -1,5 +1,11 @@
 import React from 'react';
-import { Phone, Mail, Facebook, Instagram, Linkedin, Youtube, ExternalLink } from 'lucide-react';
+import Phone from 'lucide-react/dist/esm/icons/phone';
+import Mail from 'lucide-react/dist/esm/icons/mail';
+import Facebook from 'lucide-react/dist/esm/icons/facebook';
+import Instagram from 'lucide-react/dist/esm/icons/instagram';
+import Linkedin from 'lucide-react/dist/esm/icons/linkedin';
+import Youtube from 'lucide-react/dist/esm/icons/youtube';
+import ExternalLink from 'lucide-react/dist/esm/icons/external-link';
 const ContactSection: React.FC = () => {
   return <section className="py-16 md:py-24 bg-libra-navy text-white">
       <div className="container mx-auto">

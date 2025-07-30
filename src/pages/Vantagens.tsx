@@ -2,7 +2,16 @@ import React, { useEffect, useState, useMemo } from 'react';
 import MobileLayout from '@/components/MobileLayout';
 import WaveSeparator from '@/components/ui/WaveSeparator';
 import { Button } from '@/components/ui/button';
-import { TrendingDown, Clock, Calculator, ShieldCheck, Wallet, BadgeCheck, FileText, MessageCircle, CheckCircle, CreditCard } from 'lucide-react';
+import TrendingDown from 'lucide-react/dist/esm/icons/trending-down';
+import Clock from 'lucide-react/dist/esm/icons/clock';
+import Calculator from 'lucide-react/dist/esm/icons/calculator';
+import ShieldCheck from 'lucide-react/dist/esm/icons/shield-check';
+import Wallet from 'lucide-react/dist/esm/icons/wallet';
+import BadgeCheck from 'lucide-react/dist/esm/icons/badge-check';
+import FileText from 'lucide-react/dist/esm/icons/file-text';
+import MessageCircle from 'lucide-react/dist/esm/icons/message-circle';
+import CheckCircle from 'lucide-react/dist/esm/icons/check-circle';
+import CreditCard from 'lucide-react/dist/esm/icons/credit-card';
 import { useNavigate } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 

@@ -33,7 +33,7 @@ const DialogHeader = lazy(() => import('@/components/ui/dialog').then(m => ({ de
 const DialogTitle = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.DialogTitle })));
 const DialogClose = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.DialogClose })));
 const Button = lazy(() => import('@/components/ui/button').then(m => ({ default: m.Button })));
-const Info = lazy(() => import('lucide-react').then(m => ({ default: m.Info })));
+const Info = lazy(() => import('lucide-react/dist/esm/icons/info').then(m => ({ default: m.default })));
 
 const Header: React.FC = () => {
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);

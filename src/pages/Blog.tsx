@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, TrendingUp, Wallet, Home, Building, FileText, CreditCard, BookOpen } from 'lucide-react';
+import Search from 'lucide-react/dist/esm/icons/search';
+import TrendingUp from 'lucide-react/dist/esm/icons/trending-up';
+import Wallet from 'lucide-react/dist/esm/icons/wallet';
+import Home from 'lucide-react/dist/esm/icons/home';
+import Building from 'lucide-react/dist/esm/icons/building';
+import FileText from 'lucide-react/dist/esm/icons/file-text';
+import CreditCard from 'lucide-react/dist/esm/icons/credit-card';
+import BookOpen from 'lucide-react/dist/esm/icons/book-open';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import MobileLayout from '@/components/MobileLayout';

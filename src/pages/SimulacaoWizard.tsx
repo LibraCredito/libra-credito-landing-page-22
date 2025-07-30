@@ -6,7 +6,9 @@ import { useDevice } from '@/hooks/useDevice';
 import { AdaptiveView } from '@/components/AdaptiveView';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Calculator, Smartphone, Monitor } from 'lucide-react';
+import Calculator from 'lucide-react/dist/esm/icons/calculator';
+import Smartphone from 'lucide-react/dist/esm/icons/smartphone';
+import Monitor from 'lucide-react/dist/esm/icons/monitor';
 
 // Validações dos steps
 const validateValue = (data: any) => !!data.loanAmount;

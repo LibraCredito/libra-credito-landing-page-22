@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Calculator, MessageCircle, Menu, X } from 'lucide-react';
+import Home from 'lucide-react/dist/esm/icons/home';
+import Calculator from 'lucide-react/dist/esm/icons/calculator';
+import MessageCircle from 'lucide-react/dist/esm/icons/message-circle';
+import Menu from 'lucide-react/dist/esm/icons/menu';
+import X from 'lucide-react/dist/esm/icons/x';
 import { useDevice } from '@/hooks/useDevice';
 import { cn } from '@/lib/utils';
 

@@ -1,5 +1,7 @@
 import React from 'react';
-import { XCircle, MapPin, Search } from 'lucide-react';
+import XCircle from 'lucide-react/dist/esm/icons/x-circle';
+import MapPin from 'lucide-react/dist/esm/icons/map-pin';
+import Search from 'lucide-react/dist/esm/icons/search';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 
