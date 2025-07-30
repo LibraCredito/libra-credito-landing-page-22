@@ -96,6 +96,7 @@ const HeroPremium: React.FC = () => {
             <div className="flex lg:hidden items-center justify-center gap-2 bg-green-50 rounded-md py-1 px-2 mt-2">
               <Shield className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" aria-hidden="true" />
               <span className="text-center text-[#003399]">
+
                 Atendimento Premium, Segurança e Velocidade!
               </span>
             </div>
