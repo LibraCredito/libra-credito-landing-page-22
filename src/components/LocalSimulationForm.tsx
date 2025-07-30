@@ -86,19 +86,24 @@ const LocalSimulationForm: React.FC = () => {
     }
   }, [cidade]);
 
-  // Validar LTV quando valores mudarem
+  // Validar LTV quando valores ou cidade validada mudarem
   useEffect(() => {
     const empValue = norm(valorEmprestimo);
     const imValue = norm(valorImovel);
-    
-    if (empValue > 0 && imValue > 0 && cidade) {
+
+    if (
+      empValue > 0 &&
+      imValue > 0 &&
+      cidade &&
+      cityValidation?.allowCalculation
+    ) {
       validateLTV(empValue, imValue, cidade).then(validation => {
         setLtvValidation(validation);
       });
     } else {
       setLtvValidation(null);
     }
-  }, [valorEmprestimo, valorImovel, cidade]);
+  }, [valorEmprestimo, valorImovel, cidade, cityValidation]);
 
   const handleCitySelect = useCallback((selectedCity: string) => {
     setCidade(selectedCity);
