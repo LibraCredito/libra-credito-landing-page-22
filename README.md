@@ -172,6 +172,18 @@ provedor, verifique a documentação para habilitar o uso de arquivos
 pré-comprimidos e garanta que os cabeçalhos `Content-Encoding` sejam enviados
 corretamente.
 
+### Teste de performance (Lighthouse)
+Após rodar `npm run preview`, execute o Lighthouse para checar a performance:
+
+```bash
+npx lighthouse http://localhost:4173 --only-categories=performance --preset=desktop
+```
+
+Metas recomendadas:
+- **FCP ≤ 2.5 s**
+- **LCP ≤ 10 s**
+- **Speed Index ≤ 5 s**
+
 ---
 
 ## 📊 URLs do Sistema
