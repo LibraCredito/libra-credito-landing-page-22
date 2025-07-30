@@ -91,7 +91,7 @@ const SwitchPriceTip: React.FC<{ onSwitchToPrice?: () => void }> = ({
               className="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs py-1"
               size="sm"
             >
-              <TrendingUp className="w-3 h-3 mr-1" />
+              <TrendingUp className="w-3 h-3 mr-1 text-[#003399]" />
               Ver simulação PRICE
             </Button>
           )}
@@ -132,9 +132,9 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
       <div className="bg-[#33cc99] rounded-xl p-4 text-libra-navy shadow-xl">
         {/* Header compacto */}
         <div className="flex items-center gap-2 mb-4">
-          <CheckCircle className="w-5 h-5 text-green-600" />
+          <CheckCircle className="w-5 h-5 text-[#003399]" />
           <div>
-            <h3 className="font-bold text-white">Simulação Pronta!</h3>
+            <h3 className="font-bold text-[#003399]">Simulação Pronta!</h3>
           </div>
         </div>
 
@@ -177,7 +177,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
           <div className="text-sm mb-1 flex items-center justify-center gap-1">
             <span className="font-bold">Renda necessária</span>
             <TooltipInfo content="Renda familiar podendo ser composta por até 4 pessoas">
-              <Users className="w-3 h-3" />
+              <Users className="w-3 h-3 text-[#003399]" />
             </TooltipInfo>
           </div>
           <div className="text-lg font-bold whitespace-nowrap">
@@ -191,7 +191,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         </div>
 
         {/* Informações sobre taxa e custos */}
-        <div className="bg-green-100 rounded-lg p-3 mb-4 lg:mb-3 text-xs text-green-700">
+        <div className="bg-green-100 rounded-lg p-3 mb-4 lg:mb-3 text-xs text-[#003399]">
           <p className="mb-1">
             <strong>Parcelas calculadas</strong> pelo sistema {amortizacao} com taxa de juros de 1,19% a.m. + IPCA.
           </p>
@@ -202,7 +202,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
 
         {/* CTA e Formulário compacto */}
         <div className="bg-libra-blue text-white rounded-lg p-4 mb-4 lg:mb-3 flex items-center justify-center gap-2">
-          <Headphones className="w-5 h-5" />
+          <Headphones className="w-5 h-5 text-[#003399]" />
           <p className="text-lg font-bold">Gostou? Solicite uma consultoria gratuita!</p>
         </div>
         
@@ -222,16 +222,16 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
       {/* Header compacto */}
       <div className="flex items-center justify-between mb-3">
       <div className="flex items-center gap-2">
-          <CheckCircle className="w-5 h-5 text-green-600" />
-          <h3 className="text-lg font-bold text-white">Simulação Pronta!</h3>
+          <CheckCircle className="w-5 h-5 text-[#003399]" />
+          <h3 className="text-lg font-bold text-[#003399]">Simulação Pronta!</h3>
         </div>
         <Button
           onClick={onNewSimulation}
           variant="outline"
-          className="bg-white/10 border-white/30 text-white hover:bg-white/20 text-xs px-3 py-2"
+          className="bg-white/10 border-white/30 text-[#003399] hover:bg-white/20 text-xs px-3 py-2"
           size="sm"
         >
-          <Calculator className="w-3 h-3 mr-1" />
+          <Calculator className="w-3 h-3 mr-1 text-[#003399]" />
           Nova Simulação
         </Button>
       </div>
@@ -263,7 +263,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
                 <div className="text-xs mb-1 flex items-center justify-center gap-1">
                   <span className="font-bold">Renda necessária</span>
                   <TooltipInfo content="Renda familiar podendo ser composta por até 4 pessoas">
-                    <Users className="w-3 h-3" />
+                    <Users className="w-3 h-3 text-[#003399]" />
                   </TooltipInfo>
                 </div>
                 <div className="text-base font-bold">
@@ -287,7 +287,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
               <div className="text-xs mb-1 flex items-center justify-center gap-1">
                 <span className="font-bold">Renda necessária</span>
                 <TooltipInfo content="Renda familiar podendo ser composta por até 4 pessoas">
-                  <Users className="w-3 h-3" />
+                  <Users className="w-3 h-3 text-[#003399]" />
                 </TooltipInfo>
               </div>
               <div className="text-xl lg:text-2xl font-bold">
@@ -300,7 +300,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
 
 
       {/* Informações sobre taxa e custos */}
-      <div className="bg-green-100 rounded-lg p-3 mb-4 lg:mb-3 text-xs text-green-700">
+      <div className="bg-green-100 rounded-lg p-3 mb-4 lg:mb-3 text-xs text-[#003399]">
         <p className="mb-1">
           <strong>Parcelas calculadas</strong> pelo sistema {amortizacao} com taxa de juros de 1,19% a.m. + IPCA.
         </p>
@@ -311,7 +311,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
 
       {/* CTA e Formulário compacto */}
       <div className="bg-libra-blue text-white rounded-lg p-4 mb-4 lg:mb-3 flex items-center justify-center gap-2">
-        <Headphones className="w-5 h-5" />
+        <Headphones className="w-5 h-5 text-[#003399]" />
         <p className="text-lg font-bold">Gostou? Solicite uma consultoria gratuita!</p>
       </div>
       
