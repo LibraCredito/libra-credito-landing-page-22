@@ -51,6 +51,7 @@ const HeroPremium: React.FC = () => {
           {/* Lado Esquerdo */}
           <div className="text-[#003399] max-w-lg mx-auto space-y-4 md:space-y-5 text-center flex flex-col items-center">
             <div>
+              {isMobile && <p className="mb-2">&nbsp;</p>}
               <h1
                 id="hero-heading"
                 className="text-xl md:text-3xl lg:text-4xl font-extrabold mb-4 leading-tight"
@@ -61,14 +62,10 @@ const HeroPremium: React.FC = () => {
                 </span>
               </h1>
               <ul className="mt-2 space-y-2 md:space-y-3 text-sm md:text-base lg:text-lg text-[#003399] font-medium">
-                <li className="flex items-center justify-center gap-2 bg-green-50 rounded-md py-1 px-2">
-                  <Shield
-                    className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0"
-                    aria-hidden="true"
-                  />
-                  <span className="text-center">
-                    Atendimento Premium, Segurança e Velocidade!
-                  </span>
+                <li className="mt-2 lg:mt-4 text-xs md:text-sm lg:text-lg">
+                  Taxas a partir de{' '}
+                  <span className="font-bold text-green-700">1,19% a.m.</span> •
+                  Até 180 meses • 100% online
                 </li>
                 <li className="list-none">
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-sm mx-auto pt-2 sm:pt-3">
@@ -77,10 +74,17 @@ const HeroPremium: React.FC = () => {
                     </HeroButton>
                   </div>
                 </li>
-                <li className="mt-2 lg:mt-4 text-sm md:text-lg lg:text-2xl">
-                  Taxas a partir de{' '}
-                  <span className="font-bold text-green-700">1,19% a.m.</span> •
-                  Até 180 meses • 100% online
+                <li className="text-lg md:text-xl lg:text-2xl">
+                  Crédito inteligente para quem construiu patrimônio!
+                </li>
+                <li className="flex items-center justify-center gap-2 bg-green-50 rounded-md py-1 px-2 lg:hidden">
+                  <Shield
+                    className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0"
+                    aria-hidden="true"
+                  />
+                  <span className="text-center">
+                    Atendimento Premium, Segurança e Velocidade!
+                  </span>
                 </li>
               </ul>
             </div>
@@ -96,6 +100,12 @@ const HeroPremium: React.FC = () => {
                 className="w-full h-full"
                 thumbnailSrc="/images/optimized/video-thumbnail.webp"
               />
+            </div>
+            <div className="hidden lg:flex items-center justify-center gap-2 bg-green-50 rounded-md py-1 px-2 mt-2">
+              <Shield className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
+              <span className="text-center">
+                Atendimento Premium, Segurança e Velocidade!
+              </span>
             </div>
           </div>
         </div>

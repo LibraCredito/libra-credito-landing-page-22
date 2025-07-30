@@ -28,10 +28,10 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
   const thumbnailImage = thumbnailSrc || `/images/optimized/video-thumbnail.webp`;
 
   return (
-    <div className={`relative w-full h-full overflow-hidden ${className}`}>
+    <div className={`hero-video relative w-full h-full overflow-hidden ${className}`}>
       {!isLoaded ? (
         <button
-          className="w-full h-full cursor-pointer relative bg-black flex items-center justify-center hero-video group"
+          className="w-full h-full cursor-pointer relative bg-black flex items-center justify-center group"
           onClick={loadVideo}
           aria-label={`Reproduzir vídeo: ${title}`}
           type="button"
