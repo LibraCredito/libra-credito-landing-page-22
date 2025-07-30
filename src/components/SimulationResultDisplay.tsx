@@ -139,7 +139,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         </div>
 
         {/* Valor da parcela destacado */}
-        <div className="bg-green-50 rounded-lg p-4 mb-4 text-green-700">
+        <div className="bg-green-50 rounded-lg p-4 mb-4 text-libra-navy">
           {amortizacao === 'SAC' && primeiraParcela ? (
             <div>
               <div className="text-xs font-medium mb-3 text-center">Sistema SAC - Parcelas Decrescentes</div>
@@ -173,7 +173,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         </div>
 
         {/* Renda mínima */}
-        <div className="bg-green-50 rounded-lg p-3 mb-4 text-center relative text-green-700">
+        <div className="bg-green-50 rounded-lg p-3 mb-4 text-center relative text-libra-navy">
           <div className="text-sm mb-1 flex items-center justify-center gap-1">
             <span className="font-bold">Renda necessária</span>
             <TooltipInfo content="Renda familiar podendo ser composta por até 4 pessoas">
@@ -237,7 +237,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
       </div>
 
       {/* Valor da parcela e renda mínima em layout compacto */}
-      <div className="mb-3 text-green-700">
+      <div className="mb-3 text-libra-navy">
         {amortizacao === 'SAC' && primeiraParcela ? (
           <div className="bg-green-50 rounded-lg p-3">
             <div className="text-xs font-medium mb-2 text-center">Sistema SAC - Parcelas Decrescentes</div>
