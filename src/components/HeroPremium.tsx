@@ -77,15 +77,6 @@ const HeroPremium: React.FC = () => {
                 <li className="text-lg md:text-xl lg:text-2xl">
                   Crédito inteligente para quem construiu patrimônio!
                 </li>
-                <li className="flex items-center justify-center gap-2 bg-green-50 rounded-md py-1 px-2 lg:hidden">
-                  <Shield
-                    className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0"
-                    aria-hidden="true"
-                  />
-                  <span className="text-center">
-                    Atendimento Premium, Segurança e Velocidade!
-                  </span>
-                </li>
               </ul>
             </div>
           </div>
@@ -100,6 +91,13 @@ const HeroPremium: React.FC = () => {
                 className="w-full h-full"
                 thumbnailSrc="/images/optimized/video-thumbnail.webp"
               />
+            </div>
+            {/* Texto abaixo do vídeo em telas mobile */}
+            <div className="flex lg:hidden items-center justify-center gap-2 bg-green-50 rounded-md py-1 px-2 mt-2">
+              <Shield className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" aria-hidden="true" />
+              <span className="text-center">
+                Atendimento Premium, Segurança e Velocidade!
+              </span>
             </div>
             <div className="hidden lg:flex items-center justify-center gap-2 bg-green-50 rounded-md py-1 px-2 mt-2">
               <Shield className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
