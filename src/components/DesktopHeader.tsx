@@ -113,9 +113,9 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
                   <img
                     src="/images/optimized/logo-header.webp"
                     alt="Libra Crédito - Home Equity com garantia de imóvel"
-                    className="h-[85%] w-auto pointer-events-none max-w-none"
-                    width="150"
-                    height="150"
+                    className="h-[68%] w-auto pointer-events-none max-w-none"
+                    width="120"
+                    height="120"
                   />
                 </div>
               </Link>
