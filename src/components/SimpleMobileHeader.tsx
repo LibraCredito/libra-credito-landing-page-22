@@ -50,10 +50,10 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
         {/* Right side buttons */}
         <div className="flex items-center gap-2">
           {/* Simular Button - destaque principal */}
-          <Button 
+          <Button
             onClick={handleSimulate}
             size="sm"
-            className="bg-red-600 text-white hover:bg-red-700 text-sm px-4 py-3 h-11 min-h-[44px]"
+            className="bg-[#33cc99] text-white hover:bg-[#33cc99]/90 font-bold text-sm px-4 py-3 h-11 min-h-[44px]"
             aria-label="Ir para simulação de empréstimo"
           >
             Simular
