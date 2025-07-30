@@ -485,7 +485,7 @@ const SimulationForm: React.FC = () => {
         </Card>
 
         {/* Resultado ou Complemento */}
-        {(resultado || (isLtvMessage && apiMessage)) && (
+        {(resultado || (!isMobile && isLtvMessage && apiMessage)) && (
           <div data-result-section="true" className={`${showSideComplement ? '' : 'mt-4'} scroll-mt-header`}>
             {resultado ? (
               <SimulationResultDisplay
