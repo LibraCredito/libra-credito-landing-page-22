@@ -42,7 +42,7 @@ const HeroPremium: React.FC = () => {
 
   return (
     <section
-      className="min-h-[60vh] md:min-h-[65vh] lg:min-h-[70vh] xl:min-h-[calc(100vh-280px)] py-4 md:py-8 bg-white relative flex flex-col justify-center"
+      className="min-h-[55vh] md:min-h-[60vh] lg:min-h-[65vh] xl:min-h-[calc(100vh-280px)] py-4 md:py-8 bg-white relative flex flex-col justify-center"
       aria-labelledby="hero-heading"
       role="banner"
     >
@@ -104,7 +104,7 @@ const HeroPremium: React.FC = () => {
         </div>
 
         {/* Botão de rolagem para a seção de benefícios */}
-        <div className="flex justify-center mt-5 md:mt-7">
+        <div className="flex justify-center mt-3 md:mt-5">
           <button
             onClick={scrollToBenefits}
             className="text-[#003399] flex flex-col items-center opacity-90 hover:opacity-100 transition-opacity"
