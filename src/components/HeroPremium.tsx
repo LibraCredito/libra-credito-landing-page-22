@@ -42,7 +42,7 @@ const HeroPremium: React.FC = () => {
 
   return (
     <section
-      className="min-h-[60vh] md:min-h-[65vh] lg:min-h-[70vh] xl:min-h-[calc(100vh-280px)] py-4 md:py-8 bg-white relative flex flex-col justify-center"
+      className="min-h-[50vh] md:min-h-[55vh] lg:min-h-[60vh] xl:min-h-[calc(100vh-280px)] pb-0 bg-white relative flex flex-col justify-center"
       aria-labelledby="hero-heading"
       role="banner"
     >
@@ -97,22 +97,16 @@ const HeroPremium: React.FC = () => {
                 thumbnailSrc="/images/optimized/video-thumbnail.webp"
               />
             </div>
-            <p className="text-lg md:text-xl lg:text-2xl text-[#003399] font-semibold mt-3 text-center">
-              Crédito inteligente para quem construiu patrimônio.
-            </p>
           </div>
         </div>
 
-        {/* Botão Saiba Mais */}
-        <div className="flex justify-center mt-5 md:mt-7">
+        {/* Botão de rolagem para a seção de benefícios */}
+        <div className="flex justify-center mt-2 md:mt-3">
           <button
             onClick={scrollToBenefits}
-            className="text-[#003399] flex flex-col items-center gap-1 opacity-90 hover:opacity-100 transition-opacity"
+            className="text-[#003399] flex flex-col items-center opacity-90 hover:opacity-100 transition-opacity"
             aria-label="Rolar para benefícios"
           >
-            <span className="text-sm md:text-sm lg:text-xs font-medium">
-              Saiba mais
-            </span>
             <ChevronDown className="w-5 h-5 md:w-5 md:h-5 lg:w-4 lg:h-4 animate-bounce" />
           </button>
         </div>
