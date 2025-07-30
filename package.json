@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:analyze": "vite build --mode production",
+    "build:stats": "STATS=1 vite build",
     "build:critical": "vite build && node scripts/async-css.mjs",
     "build:critters": "vite build && node scripts/extract-critical.mjs",
     "build:dev": "vite build --mode development",
