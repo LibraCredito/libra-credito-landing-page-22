@@ -26,7 +26,8 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Info, X } from 'lucide-react';
+import Info from 'lucide-react/dist/esm/icons/info';
+import X from 'lucide-react/dist/esm/icons/x';
 // import ImageOptimizer from '@/components/ImageOptimizer';
 
 interface DesktopHeaderProps {

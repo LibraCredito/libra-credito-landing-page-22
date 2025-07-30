@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, Calendar, Tag } from 'lucide-react';
+import ArrowLeft from 'lucide-react/dist/esm/icons/arrow-left';
+import Clock from 'lucide-react/dist/esm/icons/clock';
+import Calendar from 'lucide-react/dist/esm/icons/calendar';
+import Tag from 'lucide-react/dist/esm/icons/tag';
 import { Button } from '@/components/ui/button';
 import MobileLayout from '@/components/MobileLayout';
 import WaveSeparator from '@/components/ui/WaveSeparator';

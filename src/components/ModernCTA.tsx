@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Zap, TrendingUp } from 'lucide-react';
+import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right';
+import Zap from 'lucide-react/dist/esm/icons/zap';
+import TrendingUp from 'lucide-react/dist/esm/icons/trending-up';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ModernCTAProps {

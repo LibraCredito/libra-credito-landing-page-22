@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { Input } from '@/components/ui/input';
-import { Home, Info } from 'lucide-react';
+import Home from 'lucide-react/dist/esm/icons/home';
+import Info from 'lucide-react/dist/esm/icons/info';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface GuaranteeAmountFieldProps {

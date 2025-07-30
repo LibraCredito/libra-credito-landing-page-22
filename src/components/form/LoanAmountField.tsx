@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { Input } from '@/components/ui/input';
-import { DollarSign, Info } from 'lucide-react';
+import DollarSign from 'lucide-react/dist/esm/icons/dollar-sign';
+import Info from 'lucide-react/dist/esm/icons/info';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface LoanAmountFieldProps {

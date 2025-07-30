@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, Check, X } from 'lucide-react';
+import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
+import Check from 'lucide-react/dist/esm/icons/check';
+import X from 'lucide-react/dist/esm/icons/x';
 import { useDevice } from '@/hooks/useDevice';
 import { cn } from '@/lib/utils';
 

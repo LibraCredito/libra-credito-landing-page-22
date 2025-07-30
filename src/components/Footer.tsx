@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronUp, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
+import ChevronUp from 'lucide-react/dist/esm/icons/chevron-up';
+import Facebook from 'lucide-react/dist/esm/icons/facebook';
+import Instagram from 'lucide-react/dist/esm/icons/instagram';
+import Linkedin from 'lucide-react/dist/esm/icons/linkedin';
+import Youtube from 'lucide-react/dist/esm/icons/youtube';
 import RASeal from '@/components/RASeal';
 import WaveSeparator from '@/components/ui/WaveSeparator';
 // import ImageOptimizer from '@/components/ImageOptimizer';

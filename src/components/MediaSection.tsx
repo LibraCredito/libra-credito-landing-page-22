@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Newspaper } from 'lucide-react';
+import Newspaper from 'lucide-react/dist/esm/icons/newspaper';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const mediaLinks = [

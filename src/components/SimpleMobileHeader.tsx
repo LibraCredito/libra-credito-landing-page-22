@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDevice } from '@/hooks/useDevice';
-import { Menu, X } from 'lucide-react';
+import Menu from 'lucide-react/dist/esm/icons/menu';
+import X from 'lucide-react/dist/esm/icons/x';
 import { Button } from '@/components/ui/button';
 
 interface SimpleMobileHeaderProps {

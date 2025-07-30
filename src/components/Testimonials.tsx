@@ -1,5 +1,6 @@
 import React, { memo, useEffect, useState } from 'react';
-import { MessageSquare, User } from 'lucide-react';
+import MessageSquare from 'lucide-react/dist/esm/icons/message-square';
+import User from 'lucide-react/dist/esm/icons/user';
 import { useIsMobile } from '@/hooks/use-mobile';
 import OptimizedYouTube from './OptimizedYouTube';
 

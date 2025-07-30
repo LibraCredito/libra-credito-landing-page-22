@@ -15,7 +15,10 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { validateCity, validateLTV, searchCities, CityValidationResult } from '@/utils/cityLtvService';
 import { formatBRL, norm } from '@/utils/formatters';
-import { AlertCircle, CheckCircle, XCircle, Home } from 'lucide-react';
+import AlertCircle from 'lucide-react/dist/esm/icons/alert-circle';
+import CheckCircle from 'lucide-react/dist/esm/icons/check-circle';
+import XCircle from 'lucide-react/dist/esm/icons/x-circle';
+import Home from 'lucide-react/dist/esm/icons/home';
 
 interface LtvValidationResult {
   valid: boolean;

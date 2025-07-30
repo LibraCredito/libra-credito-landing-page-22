@@ -1,5 +1,7 @@
 import React from 'react';
-import { TrendingUp, Building, Home } from 'lucide-react';
+import TrendingUp from 'lucide-react/dist/esm/icons/trending-up';
+import Building from 'lucide-react/dist/esm/icons/building';
+import Home from 'lucide-react/dist/esm/icons/home';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';

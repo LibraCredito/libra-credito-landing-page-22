@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { Calculator, Info } from 'lucide-react';
+import Calculator from 'lucide-react/dist/esm/icons/calculator';
+import Info from 'lucide-react/dist/esm/icons/info';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 
 interface AmortizationFieldProps {

@@ -1,7 +1,8 @@
 import React from 'react';
 import TypewriterText from './TypewriterText';
 import HeroButton from '@/components/ui/HeroButton';
-import { ChevronDown, Shield } from 'lucide-react';
+import ChevronDown from 'lucide-react/dist/esm/icons/chevron-down';
+import Shield from 'lucide-react/dist/esm/icons/shield';
 import { useNavigate } from 'react-router-dom';
 import OptimizedYouTube from './OptimizedYouTube';
 import { useIsMobile } from '@/hooks/use-mobile';

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input } from '@/components/ui/input';
-import { AlertCircle, CheckCircle } from 'lucide-react';
+import AlertCircle from 'lucide-react/dist/esm/icons/alert-circle';
+import CheckCircle from 'lucide-react/dist/esm/icons/check-circle';
 import { cn } from '@/lib/utils';
 
 interface ValidatedInputProps {

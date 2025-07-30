@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { MapPin } from 'lucide-react';
+import MapPin from 'lucide-react/dist/esm/icons/map-pin';
 
 interface CityFieldProps {
   value: string;

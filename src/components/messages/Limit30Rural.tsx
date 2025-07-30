@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Wheat, Calculator, MapPin, CheckCircle } from 'lucide-react';
+import Wheat from 'lucide-react/dist/esm/icons/wheat';
+import Calculator from 'lucide-react/dist/esm/icons/calculator';
+import MapPin from 'lucide-react/dist/esm/icons/map-pin';
+import CheckCircle from 'lucide-react/dist/esm/icons/check-circle';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 

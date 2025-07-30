@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { Calculator, CheckCircle, Users, Info, TrendingUp, Headphones } from 'lucide-react';
+import Calculator from 'lucide-react/dist/esm/icons/calculator';
+import CheckCircle from 'lucide-react/dist/esm/icons/check-circle';
+import Users from 'lucide-react/dist/esm/icons/users';
+import Info from 'lucide-react/dist/esm/icons/info';
+import TrendingUp from 'lucide-react/dist/esm/icons/trending-up';
+import Headphones from 'lucide-react/dist/esm/icons/headphones';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ContactForm from './ContactForm';

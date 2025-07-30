@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Calendar, ArrowRight, Clock } from 'lucide-react';
+import Calendar from 'lucide-react/dist/esm/icons/calendar';
+import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right';
+import Clock from 'lucide-react/dist/esm/icons/clock';
 import { useNavigate, Link } from 'react-router-dom';
 import { BlogService, type BlogPost } from '@/services/blogService';
 import { useIsMobile } from '@/hooks/use-mobile';

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { HandshakeIcon, LockKeyhole } from 'lucide-react';
+import HandshakeIcon from 'lucide-react/dist/esm/icons/handshake';
+import LockKeyhole from 'lucide-react/dist/esm/icons/lock-keyhole';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { SelectItem } from "@/components/ui/select";
