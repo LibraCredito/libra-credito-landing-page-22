@@ -21,13 +21,13 @@ async function asyncCss() {
     const preloadLink = `<link rel="preload" href="${cssPath}" as="style" onload="this.onload=null;this.rel='stylesheet'">`;
     const noscriptLink = `<noscript><link rel="stylesheet" href="${cssPath}"></noscript>`;
 
+    // Remove any existing stylesheet link tags before injecting preload
+    indexHtml = indexHtml.replace(/<link[^>]*rel="stylesheet"[^>]*>/g, '');
+
     indexHtml = indexHtml.replace(
       /<\/head>/,
       `  ${preloadLink}\n  ${noscriptLink}\n</head>`
     );
-
-    // Remove the original link tag
-    indexHtml = indexHtml.replace(/<link rel="stylesheet" href=".*">/, '');
 
     await fs.writeFile(indexPath, indexHtml);
     console.log('Successfully added async CSS loading to index.html');
