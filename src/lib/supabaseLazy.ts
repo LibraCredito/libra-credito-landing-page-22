@@ -308,33 +308,15 @@ async function loadSupabaseClient() {
 
         async ensureBlogImagesBucketExists(): Promise<void> {
           try {
-            const { data: buckets, error: listError } = await client.storage.listBuckets();
-            
-            if (listError) {
-              console.warn('Erro ao listar buckets:', listError);
-              return;
-            }
+            const { error } = await client.storage.from('blog-images').list('', { limit: 1 });
 
-            const bucketExists = buckets?.some(bucket => bucket.name === 'blog-images');
-            
-            if (!bucketExists) {
-              console.log('Bucket blog-images não existe, criando...');
-              
-              const { data: createData, error: createError } = await client.storage.createBucket('blog-images', {
-                public: true,
-                allowedMimeTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
-                fileSizeLimit: 5242880
-              });
-
-              if (createError) {
-                console.error('Erro ao criar bucket blog-images:', createError);
-                throw new Error(`Falha ao criar bucket de imagens: ${createError.message}`);
-              }
-
-              console.log('Bucket blog-images criado com sucesso:', createData);
+            if (error) {
+              console.warn(
+                'Bucket blog-images ausente ou sem permissão. Crie manualmente no Dashboard Supabase.'
+              );
             }
           } catch (error) {
-            console.error('Erro ao verificar/criar bucket:', error);
+            console.error('Erro ao verificar bucket blog-images:', error);
           }
         }
       };

@@ -479,37 +479,16 @@ export const supabaseApi = {
   // Garantir que o bucket blog-images existe
   async ensureBlogImagesBucketExists(): Promise<void> {
     try {
-      // Verificar se o bucket já existe
-      const { data: buckets, error: listError } = await supabase.storage.listBuckets();
-      
-      if (listError) {
-        console.warn('Erro ao listar buckets:', listError);
-        return; // Se não conseguir listar, assume que existe
-      }
+      // Apenas verifica acesso; criação deve ser feita manualmente via dashboard
+      const { error } = await supabase.storage.from('blog-images').list('', { limit: 1 });
 
-      const bucketExists = buckets?.some(bucket => bucket.name === 'blog-images');
-      
-      if (!bucketExists) {
-        console.log('Bucket blog-images não existe, criando...');
-        
-        // Criar o bucket
-        const { data: createData, error: createError } = await supabase.storage.createBucket('blog-images', {
-          public: true,
-          allowedMimeTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
-          fileSizeLimit: 5242880 // 5MB
-        });
-
-        if (createError) {
-          console.error('Erro ao criar bucket blog-images:', createError);
-          throw new Error(`Falha ao criar bucket de imagens: ${createError.message}`);
-        }
-
-        console.log('Bucket blog-images criado com sucesso:', createData);
+      if (error) {
+        console.warn(
+          'Bucket blog-images ausente ou sem permissão. Crie manualmente no Dashboard Supabase.'
+        );
       }
     } catch (error) {
-      console.error('Erro ao verificar/criar bucket:', error);
-      // Não fazer throw aqui para não quebrar o upload se for um erro de permissão
-      // O upload vai tentar e se falhar, vai para o fallback local
+      console.error('Erro ao verificar bucket blog-images:', error);
     }
   },
 
