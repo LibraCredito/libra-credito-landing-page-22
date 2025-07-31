@@ -168,7 +168,6 @@ export const supabase = createClient<Database>(
     },
     global: {
       headers: {
-        'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
     }
@@ -463,7 +462,8 @@ export const supabaseApi = {
       .from('blog-images')
       .upload(filePath, file, {
         cacheControl: '3600',
-        upsert: false
+        upsert: false,
+        contentType: file.type
       });
 
     if (error) throw error;
