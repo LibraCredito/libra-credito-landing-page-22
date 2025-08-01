@@ -344,6 +344,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
       {/* Formulário de contato */}
       <Card className="bg-libra-green">
+
         <CardHeader className="pb-3">
           <CardTitle className="text-lg text-libra-navy text-center">
             Gostou? Preencha os campos abaixo e solicite uma análise de crédito! Em breve a 
@@ -455,6 +456,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 className="bg-white"
               />
               <label htmlFor="aceite" className="text-sm font-bold text-white leading-tight bg-libra-light/60 px-3 py-2 rounded-md shadow-sm focus-within:outline focus-within:outline-libra-blue">
+
                 Tenho ciência e concordo que meus dados de contato aqui informados poderão ser
                 utilizados pela Libra Crédito de acordo com os termos da{' '}
                 <Link
