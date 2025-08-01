@@ -80,6 +80,11 @@ const SimulationForm: React.FC = () => {
   // Validações
   const validation = validateForm(emprestimo, garantia, parcelas, amortizacao, cidade);
 
+  const invalidCity = !cidade;
+  const invalidLoan = !emprestimo || validation.emprestimoForaRange;
+  const invalidGuarantee = !garantia || validation.emprestimoExcedeGarantia || norm(garantia) <= 0;
+  const invalidAmortization = !amortizacao;
+
   const handleEmprestimoChange = (value: string) => {
     // aceitar somente números e limitar a 7 dígitos
     const numeric = value.replace(/\D/g, '').slice(0, 7);
@@ -421,19 +426,32 @@ const SimulationForm: React.FC = () => {
           <CardContent className="p-3 md:p-4">
             <form onSubmit={handleSubmit} className="space-y-2">
               
-              <CityAutocomplete value={cidade} onCityChange={setCidade} />
+              <CityAutocomplete
+                value={cidade}
+                onCityChange={setCidade}
+                isInvalid={invalidCity}
+              />
 
-              <LoanAmountField value={emprestimo} onChange={handleEmprestimoChange} />
+              <LoanAmountField
+                value={emprestimo}
+                onChange={handleEmprestimoChange}
+                isInvalid={invalidLoan}
+              />
 
-              <GuaranteeAmountField 
-                value={garantia} 
+              <GuaranteeAmountField
+                value={garantia}
                 onChange={handleGarantiaChange}
                 showError={validation.emprestimoExcedeGarantia}
+                isInvalid={invalidGuarantee}
               />
 
               <InstallmentsField value={parcelas} onChange={setParcelas} />
 
-              <AmortizationField value={amortizacao} onChange={setAmortizacao} />
+              <AmortizationField
+                value={amortizacao}
+                onChange={setAmortizacao}
+                isInvalid={invalidAmortization}
+              />
 
               {/* Botões */}
               <div className="flex gap-2 pt-2">

@@ -3,9 +3,12 @@ import MapPin from 'lucide-react/dist/esm/icons/map-pin';
 import { searchCities } from '@/utils/cityLtvService';
 import scrollToTarget from '@/utils/scrollToTarget';
 
+import { cn } from '@/lib/utils';
+
 interface CityAutocompleteProps {
   value?: string;
   onCityChange?: (city: string) => void;
+  isInvalid?: boolean;
 }
 
 /**
@@ -13,7 +16,7 @@ interface CityAutocompleteProps {
  * Searches city suggestions from LTV_Cidades.json as user types 
  * and only allows selection of valid cities.
  */
-const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityChange }) => {
+const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityChange, isInvalid = false }) => {
   const [inputValue, setInputValue] = useState<string>(value);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -154,7 +157,12 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
             placeholder={
               inputValue.length < 2 ? 'Digite 2 ou mais caracteres' : 'Busque a cidade'
             }
-            className="text-sm w-full px-3 py-2 rounded-md border-2 border-green-500 focus:outline-none focus:border-green-600 transition-colors scroll-mt-header"
+            className={cn(
+              'text-sm w-full px-3 py-2 rounded-md border-2 focus:outline-none transition-colors scroll-mt-header',
+              isInvalid
+                ? 'border-red-500 focus:border-red-500'
+                : 'border-green-500 focus:border-green-600'
+            )}
           />
 
           {/* Suggestion dropdown - Fixed positioning for mobile */}
