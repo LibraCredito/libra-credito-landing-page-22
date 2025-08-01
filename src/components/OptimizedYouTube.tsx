@@ -17,14 +17,22 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
   thumbnailSrc
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [iframeSrc, setIframeSrc] = useState("");
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const shouldPlayRef = useRef(false);
 
-  // Função simplificada para carregamento
+  // Carrega o vídeo definindo o src em resposta ao clique do usuário
   const loadVideo = useCallback(() => {
-    shouldPlayRef.current = true;
-    setIsLoaded(true);
-  }, []);
+    if (!iframeSrc) {
+      const url = `https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+      if (iframeRef.current) {
+        iframeRef.current.src = url;
+      }
+      setIframeSrc(url);
+      shouldPlayRef.current = true;
+      setIsLoaded(true);
+    }
+  }, [iframeSrc, videoId]);
 
   const handleIframeLoad = useCallback(() => {
     if (shouldPlayRef.current && iframeRef.current?.contentWindow) {
@@ -51,7 +59,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
 
   return (
     <div className={`hero-video relative w-full h-full overflow-hidden ${className}`}>
-      {!isLoaded ? (
+      {!isLoaded && (
         <button
           className="w-full h-full cursor-pointer relative bg-black flex items-center justify-center group"
           onClick={loadVideo}
@@ -82,20 +90,20 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
             </div>
           </div>
         </button>
-      ) : (
-        <iframe
-          ref={iframeRef}
-          onLoad={handleIframeLoad}
-          className="absolute inset-0 w-full h-full"
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=1&rel=0&modestbranding=1&preload=metadata`}
-          title={title}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          loading="lazy"
-          playsInline
-        />
       )}
+      <iframe
+        ref={iframeRef}
+        onLoad={handleIframeLoad}
+        className="absolute inset-0 w-full h-full"
+        src={iframeSrc || undefined}
+        title={title}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        loading="lazy"
+        playsInline
+        style={{ display: isLoaded ? 'block' : 'none' }}
+      />
     </div>
   );
 };
