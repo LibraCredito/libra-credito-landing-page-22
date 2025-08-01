@@ -90,6 +90,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
             </div>
           </div>
         </button>
+
       )}
       <iframe
         ref={iframeRef}
