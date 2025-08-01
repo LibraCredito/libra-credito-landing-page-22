@@ -61,6 +61,7 @@ import SimulationResultDisplay from './SimulationResultDisplay';
 import { analyzeApiMessage, ApiMessageAnalysis } from '@/utils/apiMessageAnalyzer';
 import { analyzeLocalMessage } from '@/utils/localMessageAnalyzer';
 import { formatBRL, norm } from '@/utils/formatters';
+import { toast } from '@/components/ui/use-toast';
 
 const SimulationForm: React.FC = () => {
   const { sessionId, trackSimulation } = useUserJourney();
@@ -119,8 +120,16 @@ const SimulationForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!validation.formularioValido || !sessionId) return;
+
+    if (!validation.formularioValido) {
+      toast({
+        description: 'Preencha todos os campos primeiro para receber a sua simulação',
+        variant: 'warning'
+      });
+      return;
+    }
+
+    if (!sessionId) return;
 
     setLoading(true);
     setErro('');

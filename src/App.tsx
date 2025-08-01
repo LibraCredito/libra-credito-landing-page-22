@@ -9,6 +9,7 @@ const TooltipProvider = lazy(() => import('@/components/ui/tooltip').then(m => (
 
 // Import homepage directly (not lazy) for faster LCP
 import Index from "./pages/Index";
+import { Toaster } from '@/components/ui/toast';
 
 // Lazy load other components
 const Vantagens = lazy(() => import("./pages/Vantagens"));
@@ -95,6 +96,7 @@ const App = () => {
             </Routes>
           </Suspense>
         </BrowserRouter>
+        <Toaster />
       </MobileProvider>
     </QueryClientProvider>
   );
