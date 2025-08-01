@@ -53,6 +53,18 @@
   }
 }
 
+@layer base {
+  h1 {
+    @apply text-2xl;
+  }
+  article h1,
+  aside h1,
+  nav h1,
+  section h1 {
+    @apply text-2xl;
+  }
+}
+
 @layer components {
   /* Mobile Performance Optimizations */
   @media (max-width: 767px) {
