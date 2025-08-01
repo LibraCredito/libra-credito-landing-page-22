@@ -52,20 +52,22 @@ const MediaSection: React.FC = () => {
           // Layout Mobile - Grid 2x2 apenas com logos
           <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
             {mediaLinks.map((media) => (
-              <a 
+              <a
                 key={media.name}
                 href={media.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 flex items-center justify-center aspect-video"
+                className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 flex items-center justify-center"
                 aria-label={`Ver matéria da ${media.name}`}
               >
-                <img
-                  src={media.logo}
-                  alt={`${media.name} - acesse matéria sobre Libra Crédito`}
-                  className="h-12 w-auto object-contain"
-                  loading="lazy"
-                />
+                <div className="h-12 w-full flex items-center justify-center">
+                  <img
+                    src={media.logo}
+                    alt={`${media.name} - acesse matéria sobre Libra Crédito`}
+                    className="h-full w-auto object-contain"
+                    loading="lazy"
+                  />
+                </div>
               </a>
             ))}
           </div>
