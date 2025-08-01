@@ -99,8 +99,8 @@ const SimulationForm: React.FC = () => {
     if (!numeric) return setGarantia('');
 
     let numValue = Number(numeric);
-    if (numValue > 25000000) {
-      numValue = 25000000;
+    if (numValue > 50000000) {
+      numValue = 50000000;
     }
 
     setGarantia(formatBRL(numValue.toString()));
