@@ -264,7 +264,7 @@ const Vantagens: React.FC = () => {
                       <div className={`${isMobile ? 'h-2' : 'h-3'} rounded-full bg-gray-100 overflow-hidden`}>
                         <div
                           className={`h-full transition-all duration-500 ease-out ${
-                            item.destaque ? 'bg-libra-navy' : 'bg-red-400/70'
+                            item.destaque ? 'bg-libra-navy' : 'bg-red-600'
                           }`}
                           style={{
                             width: `${animatedValues[index] ?? 0}%`,
