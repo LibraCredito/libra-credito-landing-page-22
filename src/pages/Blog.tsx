@@ -155,7 +155,7 @@ const Blog = () => {
                     <CarouselItem key={category.id} className="basis-1/3 pl-2">
                       <Button
                         variant="outline"
-                        className={`h-auto p-3 flex flex-col items-center gap-1 hover:bg-libra-blue/5 ${
+                        className={`h-auto p-3 flex flex-col items-center gap-1 whitespace-normal hover:bg-libra-blue/5 ${
                           selectedCategory === category.id ? 'border-libra-blue text-libra-blue' : ''
                         }`}
                         onClick={() =>
@@ -165,7 +165,7 @@ const Blog = () => {
                         }
                       >
                         <Icon className="w-4 h-4" />
-                        <span className="text-xs font-semibold text-center leading-tight">
+                        <span className="text-xs font-semibold text-center leading-tight break-words">
                           {category.name}
                         </span>
                       </Button>
@@ -184,7 +184,7 @@ const Blog = () => {
                   <Button
                     key={category.id}
                     variant="outline"
-                    className={`h-auto p-2 flex flex-col items-center gap-1 hover:bg-libra-blue/5 ${
+                    className={`h-auto p-2 flex flex-col items-center gap-1 whitespace-normal hover:bg-libra-blue/5 ${
                       selectedCategory === category.id ? 'border-libra-blue text-libra-blue' : ''
                     }`}
                     onClick={() =>
@@ -194,7 +194,7 @@ const Blog = () => {
                     }
                   >
                     <Icon className="w-4 h-4" />
-                    <span className="text-xs font-semibold text-center leading-tight">
+                    <span className="text-xs font-semibold text-center leading-tight break-words">
                       {category.name}
                     </span>
                   </Button>
