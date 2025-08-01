@@ -1,8 +1,7 @@
 
 import React from 'react';
 import Calculator from 'lucide-react/dist/esm/icons/calculator';
-import Info from 'lucide-react/dist/esm/icons/info';
-import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import ResponsiveInfo from '@/components/ui/ResponsiveInfo';
 
 interface AmortizationFieldProps {
   value: string;
@@ -14,12 +13,7 @@ const AmortizationField: React.FC<AmortizationFieldProps> = ({ value, onChange }
     <div className="flex flex-col gap-1">
       <label className="text-xs font-medium text-green-500 mb-1 flex items-center gap-1">
         Escolha a Amortização
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Info className="w-3 h-3 text-gray-500 cursor-pointer" />
-          </TooltipTrigger>
-          <TooltipContent>SAC: parcelas maiores no início e que vão diminuindo com o tempo. PRICE: parcelas fixas ao longo do contrato.</TooltipContent>
-        </Tooltip>
+        <ResponsiveInfo content="SAC: parcelas maiores no início e que vão diminuindo com o tempo. PRICE: parcelas fixas ao longo do contrato." />
       </label>
       <div className="flex items-center gap-2">
         <div className="bg-libra-light p-1.5 rounded-full flex-shrink-0">
