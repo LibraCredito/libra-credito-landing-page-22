@@ -18,10 +18,32 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const shouldPlayRef = useRef(false);
 
   // Função simplificada para carregamento
   const loadVideo = useCallback(() => {
+    shouldPlayRef.current = true;
     setIsLoaded(true);
+  }, []);
+
+  const handleIframeLoad = useCallback(() => {
+    if (shouldPlayRef.current && iframeRef.current?.contentWindow) {
+      const { contentWindow } = iframeRef.current;
+      contentWindow.postMessage(
+        JSON.stringify({ event: "command", func: "playVideo", args: [] }),
+        "*"
+      );
+      contentWindow.postMessage(
+        JSON.stringify({ event: "command", func: "unMute", args: [] }),
+        "*"
+      );
+      contentWindow.postMessage(
+
+        JSON.stringify({ event: "command", func: "setVolume", args: [100] }),
+        "*"
+      );
+      shouldPlayRef.current = false;
+    }
   }, []);
 
   // Usar thumbnail otimizada menor (65KB vs 525KB)
@@ -63,8 +85,9 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
       ) : (
         <iframe
           ref={iframeRef}
+          onLoad={handleIframeLoad}
           className="absolute inset-0 w-full h-full"
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1&preload=metadata`}
+          src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=1&rel=0&modestbranding=1&preload=metadata`}
           title={title}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

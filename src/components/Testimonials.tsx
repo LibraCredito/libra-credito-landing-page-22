@@ -161,6 +161,7 @@ const Testimonials: React.FC = () => {
             {!isMobile && (
               <button
                 className="absolute -left-6 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-6 h-6 bg-white rounded-full shadow-md hover:bg-gray-50"
+
                 onClick={() =>
                   setCurrentTestimonial(
                     (prev) => (prev - 1 + testimonials.length) % testimonials.length
@@ -195,6 +196,7 @@ const Testimonials: React.FC = () => {
             {!isMobile && (
               <button
                 className="absolute -right-6 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-6 h-6 bg-white rounded-full shadow-md hover:bg-gray-50"
+
                 onClick={() =>
                   setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
                 }

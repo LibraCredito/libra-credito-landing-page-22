@@ -128,11 +128,8 @@ const ContactForm: React.FC<ContactFormProps> = ({
         aceitaPolitica: aceitePrivacidade
       });
       
-      // Mensagem de sucesso mais detalhada
-      const mensagemSucesso = `🎉 Solicitação enviada com sucesso!\n\n✅ Seus dados foram registrados\n✅ Nossa equipe entrará em contato em breve\n📞 Fique atento ao telefone e e-mail cadastrados`;
-      
-      alert(mensagemSucesso);
-      navigate('/sucesso');
+      // Redirecionar diretamente para a página de confirmação
+      navigate('/confirmacao');
       
       // Limpar formulário
       setNome('');

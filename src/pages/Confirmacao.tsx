@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import MobileLayout from '@/components/MobileLayout';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const Confirmacao = () => {
   useEffect(() => {
@@ -19,17 +21,16 @@ const Confirmacao = () => {
         <h1 className="text-2xl font-bold text-libra-navy">✅ Simulação enviada com sucesso!</h1>
         <p className="text-base text-gray-700">Recebemos seus dados e já estamos analisando sua solicitação.</p>
         <p className="text-base text-gray-700">Em breve, um de nossos especialistas entrará em contato com você.</p>
-        <p className="text-base text-gray-700">Você também pode falar com a gente agora mesmo pelo WhatsApp:</p>
-        <a
-          href="https://wa.me/5516996360424?text=Olá,%20acabei%20de%20fazer%20uma%20simulação%20no%20site%20e%20gostaria%20de%20falar%20com%20um%20especialista"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="botao-principal bg-libra-blue text-white font-semibold rounded-full px-8 py-3 hover:bg-libra-blue/90 transition-colors"
-        >
-          Falar com um especialista no WhatsApp
-        </a>
+        <div className="flex flex-col sm:flex-row gap-4 mt-4">
+          <Button asChild variant="white" className="px-6">
+            <Link to="/quem-somos">Conheça a Libra</Link>
+          </Button>
+          <Button asChild variant="goldContrast" className="px-6">
+            <Link to="/atendimento">Iniciar atendimento automatizado</Link>
+          </Button>
+        </div>
         <p className="text-sm text-gray-600 mt-4">
-          📞 Importante: você receberá tentativas de contato pelo número (16) 3600-7956. Fique atento!
+          📞 Fique atento ao telefone (16) 3600-7956 para nosso contato.
         </p>
       </div>
     </MobileLayout>
