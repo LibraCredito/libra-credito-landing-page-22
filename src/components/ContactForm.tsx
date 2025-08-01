@@ -343,7 +343,8 @@ const ContactForm: React.FC<ContactFormProps> = ({
       </Card>
 
       {/* Formulário de contato */}
-      <Card className="bg-[#22c55e]">
+      <Card className="bg-libra-green">
+
         <CardHeader className="pb-3">
           <CardTitle className="text-lg text-libra-navy text-center">
             Gostou? Preencha os campos abaixo e solicite uma análise de crédito! Em breve a 
