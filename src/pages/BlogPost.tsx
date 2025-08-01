@@ -203,17 +203,17 @@ const BlogPost = () => {
 
           {/* Call to Action */}
           <div className="mt-16 text-center">
-            <div className="bg-gradient-to-br from-libra-blue to-libra-navy rounded-2xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
-              <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-20"></div>
+            <div className="bg-white rounded-2xl p-8 md:p-12 text-libra-navy shadow-xl relative overflow-hidden">
+              <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
               <div className="relative z-10">
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                <h2 className="text-2xl md:text-3xl font-bold mb-4 text-libra-navy">
                   Precisa de crédito com garantia de imóvel?
                 </h2>
-                <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+                <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto text-libra-navy">
                   Simule agora e descubra as melhores condições para você. Processo 100% digital e sem complicações.
                 </p>
                 <Link to="/simulacao">
-                  <Button variant="secondary" size="lg" className="bg-white text-libra-navy hover:bg-gray-50 font-semibold px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-300">
+                  <Button size="lg" className="bg-red-600 text-white hover:bg-red-700 font-semibold px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-300">
                     Fazer Simulação Gratuita
                   </Button>
                 </Link>
