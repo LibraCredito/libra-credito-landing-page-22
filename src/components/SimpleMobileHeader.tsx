@@ -51,7 +51,7 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
         {/* Right side buttons */}
         <div className="flex items-center gap-2">
           {/* Simular Button - destaque principal */}
-          <Button 
+          <Button
             onClick={handleSimulate}
             size="sm"
             className="bg-red-600 text-white hover:bg-red-700 text-sm px-4 py-3 h-11 min-h-[44px]"

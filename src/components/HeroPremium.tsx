@@ -71,7 +71,11 @@ const HeroPremium: React.FC = () => {
                 </li>
                 <li className="list-none">
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-sm mx-auto pt-2 sm:pt-3">
-                    <HeroButton onClick={scrollToSimulator} variant="primary">
+                    <HeroButton
+                      onClick={scrollToSimulator}
+                      variant="primary"
+                      className="bg-red-600 hover:bg-red-700"
+                    >
                       Simular Agora
                     </HeroButton>
                   </div>

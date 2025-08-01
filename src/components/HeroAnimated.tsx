@@ -92,6 +92,7 @@ const HeroAnimated: React.FC = () => {
               <HeroButton
                 onClick={scrollToSimulator}
                 variant="primary"
+                className="bg-red-600 hover:bg-red-700"
               >
                 Simular Agora
               </HeroButton>

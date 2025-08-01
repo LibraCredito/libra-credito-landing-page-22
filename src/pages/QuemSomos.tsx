@@ -158,10 +158,10 @@ const QuemSomos = () => {
               <p className={`${isMobile ? 'text-base' : 'text-lg'} text-gray-600 mb-6`}>
                 Junte-se aos milhares de clientes que já transformaram suas vidas conosco
               </p>
-              <Button 
+              <Button
                 onClick={handleSimular}
                 size="lg"
-                className="bg-libra-blue text-white hover:bg-libra-navy font-semibold px-8 py-3 text-lg"
+                className="bg-red-600 text-white hover:bg-red-700 font-semibold px-8 py-3 text-lg"
               >
                 Simular Agora
               </Button>

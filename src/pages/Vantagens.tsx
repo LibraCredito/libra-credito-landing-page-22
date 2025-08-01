@@ -398,10 +398,10 @@ const Vantagens: React.FC = () => {
 
             {/* Call to action dentro da seção de passos */}
             <div className={`text-center ${isMobile ? 'mt-6' : 'mt-8'}`}>
-              <Button 
+              <Button
                 onClick={handleSimular}
                 size="lg"
-                className="bg-libra-blue text-white hover:bg-libra-navy font-semibold px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5"
+                className="bg-red-600 text-white hover:bg-red-700 font-semibold px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5"
               >
                 SIMULE GRÁTIS
               </Button>

@@ -151,7 +151,7 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
                 Portal de Clientes
               </Button>
               
-              <Button 
+              <Button
                 onClick={onSimulateNow}
                 size="sm"
                 aria-label="Simular crédito agora"
