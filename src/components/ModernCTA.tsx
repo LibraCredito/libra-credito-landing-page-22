@@ -100,14 +100,13 @@ const ModernCTA: React.FC<ModernCTAProps> = ({
                 size={isMobile ? "default" : "lg"}
                 className={`
                   relative font-sans
-                  ${isMobile ? 'min-h-[48px] px-8' : 'min-h-[56px] px-12'} 
-                  bg-gradient-to-r from-[#00ccff] via-[#0099dd] to-[#003399]
-                  hover:from-[#00ddff] hover:via-[#00aaee] hover:to-[#0044aa]
+                  ${isMobile ? 'min-h-[48px] px-8' : 'min-h-[56px] px-12'}
+                  bg-red-600 hover:bg-red-700
                   text-white font-semibold
                   border-0 rounded-xl
                   shadow-2xl
                   transform transition-all duration-300
-                  hover:scale-105 hover:shadow-[#00ccff]/25
+                  hover:scale-105 hover:shadow-red-600/25
                   group
                 `}
               >

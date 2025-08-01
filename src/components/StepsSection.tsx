@@ -128,7 +128,7 @@ const StepsSection: React.FC = () => {
             </p>
             <button
               onClick={handleSimulate}
-              className="bg-green-500 hover:bg-green-600 text-white font-bold text-lg px-10 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+              className="bg-red-600 hover:bg-red-700 text-white font-bold text-lg px-10 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
             >
               Começar Simulação
             </button>
