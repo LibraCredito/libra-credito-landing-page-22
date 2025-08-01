@@ -95,13 +95,14 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
               
               {/* Portal de Clientes */}
               {onPortalClientes && (
-                <li className="pt-2 border-t border-gray-100">
+                <li role="none">
                   <button
                     onClick={() => {
                       onPortalClientes();
                       setIsMenuOpen(false);
                     }}
-                    className="w-full text-left py-3 px-2 text-sm font-medium text-libra-blue hover:bg-blue-50 rounded-md transition-colors"
+                    className="w-full text-left py-3 px-2 text-[1.0938rem] font-medium text-libra-navy hover:text-libra-blue hover:bg-gray-50 rounded-md transition-colors flex items-center min-h-[44px]"
+                    role="menuitem"
                   >
                     Portal de Clientes
                   </button>
