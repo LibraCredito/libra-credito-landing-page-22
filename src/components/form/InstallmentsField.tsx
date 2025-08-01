@@ -11,7 +11,7 @@ const InstallmentsField: React.FC<InstallmentsFieldProps> = ({ value, onChange }
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-center justify-between mb-1">
-        <label className="text-xs font-medium text-green-500">
+        <label className="text-xs font-medium text-green-700">
           Em quantas parcelas?
         </label>
         <span className="bg-libra-blue text-white px-2 py-0.5 rounded text-xs font-bold">
@@ -20,7 +20,7 @@ const InstallmentsField: React.FC<InstallmentsFieldProps> = ({ value, onChange }
       </div>
       <div className="flex items-center gap-2">
         <div className="bg-libra-light p-1.5 rounded-full flex-shrink-0">
-          <Calendar className="w-4 h-4 text-green-500" />
+          <Calendar className="w-4 h-4 text-green-700" />
         </div>
         <div className="flex-1">
           <input

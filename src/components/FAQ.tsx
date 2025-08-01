@@ -81,7 +81,7 @@ const FAQ: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Perguntas <span className="text-green-500">frequentes:</span>
+            Perguntas <span className="text-green-700">frequentes:</span>
           </h2>
           <p className={`${isMobile ? 'text-base px-2' : 'text-lg'} text-gray-600 max-w-2xl mx-auto`}>
             Esclarecemos as principais dúvidas sobre crédito com garantia de imóvel

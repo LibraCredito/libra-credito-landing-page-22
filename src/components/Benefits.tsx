@@ -90,11 +90,11 @@ const Benefits: React.FC = () => {
       <section id="benefits" className={`${isMobile ? 'pt-4 pb-6' : 'pt-6 md:pt-8 lg:pt-8 xl:pt-10 pb-6 md:pb-8 lg:pb-8 xl:pb-10'} bg-white scroll-mt-header`}>
         <div className="container mx-auto px-4">
           <div className="text-center mb-6 md:mb-8 lg:mb-8 xl:mb-10">
-            <p className={`${isMobile ? 'text-sm' : 'text-lg'} text-green-500 font-semibold uppercase tracking-wider mb-4`}>
+            <p className={`${isMobile ? 'text-sm' : 'text-lg'} text-green-700 font-semibold uppercase tracking-wider mb-4`}>
               Soluções para cada necessidade
             </p>
             <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold text-gray-800 mb-3`}>
-              Como usar o <span className="text-green-500">Crédito com Garantia de Imóvel</span>
+              Como usar o <span className="text-green-700">Crédito com Garantia de Imóvel</span>
             </h2>
           </div>
           
@@ -121,7 +121,7 @@ const Benefits: React.FC = () => {
               <Link to="/vantagens">
                 <Button
                   size="lg"
-                  className="bg-green-500 hover:bg-green-600 text-white px-8 py-3"
+                  className="bg-green-700 hover:bg-green-800 text-white px-8 py-3"
                 >
                   Conheça Mais Vantagens
                 </Button>
@@ -129,7 +129,7 @@ const Benefits: React.FC = () => {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-green-500 text-green-500 hover:bg-green-500 hover:text-white px-8 py-3"
+                className="border-green-700 text-green-700 hover:bg-green-700 hover:text-white px-8 py-3"
                 onClick={() => {
                   const testimonialsSection = document.getElementById('testimonials');
                   if (testimonialsSection) {
