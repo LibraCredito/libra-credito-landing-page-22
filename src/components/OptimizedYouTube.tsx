@@ -87,7 +87,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
           ref={iframeRef}
           onLoad={handleIframeLoad}
           className="absolute inset-0 w-full h-full"
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=1&rel=0&modestbranding=1&preload=metadata`}
+          src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1&preload=metadata`}
           title={title}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
