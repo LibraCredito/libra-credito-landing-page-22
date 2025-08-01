@@ -293,7 +293,10 @@ const Parceiros = () => {
       setTouched({});
       
       setSuccess(true);
-      
+
+      // Scrollar para o topo para exibir a mensagem de sucesso
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
       // Exibir mensagem de sucesso temporária
       setTimeout(() => {
         setSuccess(false);
