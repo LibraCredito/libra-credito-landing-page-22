@@ -34,10 +34,10 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
       data-mobile="true"
       className={`fixed top-0 left-0 right-0 z-[9999] bg-white border-b border-gray-200 shadow-sm ${hasNotch ? 'pt-safe-top' : ''}`}
     >
-      <div className="h-[52px] px-4 flex items-center justify-between">
+      <div className="h-[64px] px-4 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center tap-transparent" aria-label="Ir para página inicial da Libra Crédito">
-          <div className="h-[52px] overflow-hidden flex items-center">
+          <div className="h-[64px] overflow-hidden flex items-center">
             <img
               src="/images/optimized/logo-header.webp"
               alt="Libra Crédito - Simulação de crédito com garantia de imóvel"
