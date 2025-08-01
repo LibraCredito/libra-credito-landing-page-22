@@ -64,10 +64,10 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ onPortalClientes, onSimulat
 
       {/* Header principal */}
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-[52px]">
           <div className="flex items-center">
             <Link to="/" aria-label="Página inicial da Libra Crédito" className="tap-transparent">
-              <div className="h-16 overflow-hidden flex items-center">
+              <div className="h-[52px] overflow-hidden flex items-center">
                 <img
                   src="/images/optimized/logo-header.webp"
                   alt="Libra Crédito"
