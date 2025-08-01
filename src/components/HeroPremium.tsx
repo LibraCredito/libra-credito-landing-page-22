@@ -17,7 +17,7 @@ const HeroPremium: React.FC = () => {
     'Home Equity',
     'Capital de Giro Inteligente',
     'Empréstimo com Garantia de Imóvel',
-    'Consolidação Estratégica de Débitos',
+    'Quitação de dívidas.',
   ];
 
   const scrollToSimulator = () => {
