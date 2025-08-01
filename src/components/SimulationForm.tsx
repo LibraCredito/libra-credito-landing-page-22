@@ -415,7 +415,7 @@ const SimulationForm: React.FC = () => {
         {/* Formulário de Simulação */}
         <Card className="shadow-lg">
           <CardHeader className="text-center pb-2">
-            <CardTitle className="text-lg md:text-xl font-bold text-green-500 mb-1">
+            <CardTitle className="text-lg md:text-xl font-bold text-green-700 mb-1">
               Sua simulação em um clique!
             </CardTitle>
             <p className="text-gray-600 text-xs">

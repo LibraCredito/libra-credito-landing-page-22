@@ -22,8 +22,8 @@ const TransparencySection: React.FC = () => {
             {/* Testimonial Content */}
             <div className="flex-1 text-center md:text-left">
               <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
-                Quem <span className="text-green-500">conhece</span>{' '}
-                <span className="text-green-500">confia</span>
+                Quem <span className="text-green-700">conhece</span>{' '}
+                <span className="text-green-700">confia</span>
               </h2>
               
               <div className="bg-white rounded-2xl p-6 shadow-sm">

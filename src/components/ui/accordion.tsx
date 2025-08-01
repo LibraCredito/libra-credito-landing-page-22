@@ -112,7 +112,7 @@ const AccordionTrigger: React.FC<AccordionTriggerProps> = ({ children, className
       {children}
       <ChevronDown
         className={cn(
-          'w-5 h-5 transition-transform duration-200 text-green-500',
+          'w-5 h-5 transition-transform duration-200 text-green-700',
           isOpen && 'transform rotate-180'
         )}
       />

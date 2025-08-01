@@ -136,13 +136,13 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
 
   return (
     <div ref={containerRef} className="flex flex-col gap-1 relative">
-      <label className="text-xs font-medium text-green-500 mb-1">
+      <label className="text-xs font-medium text-green-700 mb-1">
         Selecione a cidade do imóvel a ser utilizado como garantia
       </label>
       <div className="flex items-center gap-2">
         {/* Icon */}
         <div className="bg-libra-light p-1.5 rounded-full flex-shrink-0">
-          <MapPin className="w-4 h-4 text-green-500" />
+          <MapPin className="w-4 h-4 text-green-700" />
         </div>
         <div className="flex-1 relative">
           {/* Input with green border */}
@@ -161,7 +161,7 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
               'text-sm w-full px-3 py-2 rounded-md border-2 focus:outline-none transition-colors scroll-mt-header',
               isInvalid
                 ? 'border-red-500 focus:border-red-500'
-                : 'border-green-500 focus:border-green-600'
+                : 'border-green-700 focus:border-green-800'
             )}
           />
 
@@ -201,7 +201,7 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
                       }`}
                     >
                       <div className="flex items-center gap-2">
-                        <MapPin className="w-3 h-3 text-green-500 flex-shrink-0" />
+                        <MapPin className="w-3 h-3 text-green-700 flex-shrink-0" />
                         <span className="truncate">{city}</span>
                       </div>
                     </li>
