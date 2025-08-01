@@ -9,7 +9,7 @@ const imagesToOptimize = [
   { name: 'timelibra2.webp', width: 480 },
   { name: 'media/estadao-logo.png', width: 200 },
   { name: 'logo-header.webp', width: 150 },
-  { name: 'media/g1-logo (1).webp', width: 200 },
+  { name: 'media/G1-logo-1.png', width: 200 },
   { name: 'video-thumbnail.webp', width: 480 },
   { name: 'media/revide-logo.webp', width: 200 },
 ];
