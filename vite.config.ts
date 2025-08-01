@@ -70,11 +70,12 @@ export default defineConfig(({ mode }) => ({
           'vendor-router': ['react-router-dom'],
           'vendor-query': ['@tanstack/react-query'],
           'vendor-ui': [
-            '@radix-ui/react-dialog', 
+            '@radix-ui/react-dialog',
             '@radix-ui/react-select'
           ],
           'vendor-utils': ['axios', 'clsx', 'class-variance-authority'],
-          // Separar ícones para tree shaking
+          // Separar ícones para melhor tree shaking e parse mais rápido
+          'vendor-icons': ['lucide-react']
         },
       }
     }
@@ -86,7 +87,8 @@ export default defineConfig(({ mode }) => ({
       'react-dom', 
       'react-router-dom',
       'clsx',
-      'class-variance-authority'
+      'class-variance-authority',
+      'lucide-react'
     ],
     // Excluir para lazy loading
     exclude: ['@supabase/supabase-js']
