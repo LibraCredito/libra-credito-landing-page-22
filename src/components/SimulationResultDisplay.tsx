@@ -204,7 +204,9 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         {/* CTA e Formulário compacto */}
         <div className="bg-libra-blue text-white rounded-lg p-4 mb-4 lg:mb-3 flex items-center justify-center gap-2">
           <Headphones className="w-5 h-5 text-[#003399]" />
-          <p className="text-lg font-bold">Gostou? Solicite uma consultoria gratuita!</p>
+        <p className="text-lg font-bold">
+          Gostou? <span className="block sm:inline">Solicite uma consultoria gratuita!</span>
+        </p>
         </div>
         
         <ContactForm
@@ -314,7 +316,9 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
       {/* CTA e Formulário compacto */}
       <div className="bg-libra-blue text-white rounded-lg p-4 mb-4 lg:mb-3 flex items-center justify-center gap-2">
         <Headphones className="w-5 h-5 text-[#003399]" />
-        <p className="text-lg font-bold">Gostou? Solicite uma consultoria gratuita!</p>
+        <p className="text-lg font-bold">
+          Gostou? <span className="block sm:inline">Solicite uma consultoria gratuita!</span>
+        </p>
       </div>
       
       <ContactForm
