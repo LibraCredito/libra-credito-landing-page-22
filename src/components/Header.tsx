@@ -42,24 +42,20 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const { isMobile } = useDevice();
 
-  // Lazy load popup apenas após 2 segundos (post-LCP)
+  // Carrega o popup assim que o componente é montado
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const currentPath = location.pathname;
-      const allowedPaths = ['/', '/simulacao'];
-      
-      if (allowedPaths.includes(currentPath)) {
-        const storageKey = `popup_seen_${currentPath.replace('/', 'home')}`;
-        const hasSeenPopup = localStorage.getItem(storageKey);
-        
-        if (!hasSeenPopup) {
-          setShouldShowDialog(true);
-          setIsInfoPopupOpen(true);
-        }
-      }
-    }, 2000);
+    const currentPath = location.pathname;
+    const allowedPaths = ['/', '/simulacao'];
 
-    return () => clearTimeout(timer);
+    if (allowedPaths.includes(currentPath)) {
+      const storageKey = `popup_seen_${currentPath.replace('/', 'home')}`;
+      const hasSeenPopup = localStorage.getItem(storageKey);
+
+      if (!hasSeenPopup) {
+        setShouldShowDialog(true);
+        setIsInfoPopupOpen(true);
+      }
+    }
   }, [location.pathname]);
 
   const handleClosePopup = (e: React.MouseEvent<HTMLButtonElement>) => {
