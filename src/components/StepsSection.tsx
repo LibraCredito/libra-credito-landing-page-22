@@ -14,12 +14,12 @@ const StepsSection: React.FC = () => {
       textColor: "text-blue-600"
     },
     {
-      number: "2", 
+      number: "2",
       title: "Análise de crédito",
       description: "Nossa equipe analisa seu perfil e documenta o processo",
       image: "/images/customer-testimonial.png",
       bgColor: "bg-green-50",
-      textColor: "text-green-600"
+      textColor: "text-green-700"
     },
     {
       number: "3",

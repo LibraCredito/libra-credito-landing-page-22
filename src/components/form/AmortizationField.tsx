@@ -13,7 +13,7 @@ interface AmortizationFieldProps {
 const AmortizationField: React.FC<AmortizationFieldProps> = ({ value, onChange, isInvalid = false }) => {
   return (
     <div className="flex flex-col gap-1">
-      <label className="text-xs font-medium text-green-500 mb-1 flex items-center gap-1">
+      <label className="text-xs font-medium text-green-700 mb-1 flex items-center gap-1">
         Escolha a Amortização
         <ResponsiveInfo
           content={
@@ -26,7 +26,7 @@ const AmortizationField: React.FC<AmortizationFieldProps> = ({ value, onChange, 
       </label>
       <div className={cn('flex items-center gap-2', isInvalid && 'border border-red-500 rounded-md p-2')}>
         <div className="bg-libra-light p-1.5 rounded-full flex-shrink-0">
-          <Calculator className="w-4 h-4 text-green-500" />
+          <Calculator className="w-4 h-4 text-green-700" />
         </div>
         <div className="flex-1">
           <div className="flex gap-4">
@@ -36,7 +36,7 @@ const AmortizationField: React.FC<AmortizationFieldProps> = ({ value, onChange, 
                 value="PRICE"
                 checked={value === 'PRICE'}
                 onChange={(e) => onChange(e.target.value)}
-                className="text-green-500"
+                className="text-green-700"
               />
               <span className="text-xs">PRICE</span>
             </label>
@@ -46,7 +46,7 @@ const AmortizationField: React.FC<AmortizationFieldProps> = ({ value, onChange, 
                 value="SAC"
                 checked={value === 'SAC'}
                 onChange={(e) => onChange(e.target.value)}
-                className="text-green-500"
+                className="text-green-700"
               />
               <span className="text-xs">SAC</span>
             </label>

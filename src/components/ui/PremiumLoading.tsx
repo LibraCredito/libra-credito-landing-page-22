@@ -25,7 +25,7 @@ const PremiumLoading: React.FC<PremiumLoadingProps> = ({
   const colorClasses = {
     blue: 'text-blue-500',
     purple: 'text-purple-500',
-    green: 'text-green-500',
+    green: 'text-green-700',
     yellow: 'text-yellow-500',
     white: 'text-white'
   };

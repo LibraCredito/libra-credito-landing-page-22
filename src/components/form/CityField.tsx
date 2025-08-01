@@ -16,7 +16,7 @@ const CityField: React.FC<CityFieldProps> = ({ value, onChange }) => {
       </label>
       <div className="flex items-center gap-2">
         <div className="bg-libra-light p-1.5 rounded-full flex-shrink-0">
-          <MapPin className="w-4 h-4 text-green-500" />
+          <MapPin className="w-4 h-4 text-green-700" />
         </div>
         <div className="flex-1">
           <Select value={value} onValueChange={onChange}>

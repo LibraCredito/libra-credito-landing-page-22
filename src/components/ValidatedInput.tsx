@@ -61,7 +61,7 @@ export const ValidatedInput: React.FC<ValidatedInputProps> = ({
             {hasError ? (
               <AlertCircle className="h-4 w-4 text-red-500" />
             ) : (
-              <CheckCircle className="h-4 w-4 text-green-500" />
+              <CheckCircle className="h-4 w-4 text-green-700" />
             )}
           </div>
         )}
