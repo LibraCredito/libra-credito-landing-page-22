@@ -28,11 +28,17 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
 
   const handleIframeLoad = useCallback(() => {
     if (shouldPlayRef.current && iframeRef.current?.contentWindow) {
-      iframeRef.current.contentWindow.postMessage(
+      const { contentWindow } = iframeRef.current;
+      contentWindow.postMessage(
         JSON.stringify({ event: "command", func: "playVideo", args: [] }),
         "*"
       );
-      iframeRef.current.contentWindow.postMessage(
+      contentWindow.postMessage(
+        JSON.stringify({ event: "command", func: "unMute", args: [] }),
+        "*"
+      );
+      contentWindow.postMessage(
+
         JSON.stringify({ event: "command", func: "setVolume", args: [100] }),
         "*"
       );
