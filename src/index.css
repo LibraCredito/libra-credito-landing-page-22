@@ -337,6 +337,13 @@
     @apply min-h-[48px] min-w-[44px];
     -webkit-tap-highlight-color: transparent;
   }
+
+  /* Prevent logo resizing on tap in iOS */
+  .header-logo {
+    @apply h-full w-auto pointer-events-none;
+    max-width: none;
+    -webkit-user-drag: none;
+  }
   
   /* Garantir que textos secundários tenham contraste suficiente */
   .text-gray-500, 

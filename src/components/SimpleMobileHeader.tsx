@@ -41,7 +41,7 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
             <img
               src="/images/optimized/logo-header.webp"
               alt="Libra Crédito - Simulação de crédito com garantia de imóvel"
-              className="h-[68%] w-auto pointer-events-none max-w-none"
+              className="header-logo"
               width="120"
               height="120"
             />
