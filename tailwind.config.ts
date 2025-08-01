@@ -1,5 +1,6 @@
 
 import type { Config } from "tailwindcss";
+import animatePlugin from "tailwindcss-animate";
 
 export default {
         content: [
@@ -101,13 +102,14 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				libra: {
-					navy: '#003399', // Cor principal
-					gold: '#D4AF37',
-					silver: '#F0F0F0',
-					blue: '#003399', // Cor de enfase alterada
-					light: '#F8F9FA'
-				}
+                                libra: {
+                                        navy: '#003399', // Cor principal
+                                        gold: '#D4AF37',
+                                        silver: '#F0F0F0',
+                                        blue: '#003399', // Cor de enfase alterada
+                                        light: '#F8F9FA',
+                                        green: '#22c55e'
+                                }
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -152,5 +154,5 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+        plugins: [animatePlugin],
 } satisfies Config;
