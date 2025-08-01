@@ -9,8 +9,9 @@
     <!-- Preload local Comfortaa font -->
     <link rel="preload" as="font" href="/fonts/Comfortaa.woff2" type="font/woff2" crossorigin>
 
-    <!-- Main stylesheet -->
-    <link rel="stylesheet" href="/assets/css/index.css">
+    <!-- Preload main stylesheet -->
+    <link rel="preload" href="/assets/css/index.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/assets/css/index.css"></noscript>
 
     <!-- Early hints for critical resources -->
     <link rel="dns-prefetch" href="https://img.youtube.com">
