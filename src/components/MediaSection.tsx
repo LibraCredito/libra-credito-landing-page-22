@@ -63,7 +63,7 @@ const MediaSection: React.FC = () => {
                 <img
                   src={media.logo}
                   alt={`${media.name} - acesse matéria sobre Libra Crédito`}
-                  className="max-w-full max-h-[80px] object-contain"
+                  className="h-12 w-auto object-contain"
                   loading="lazy"
                 />
               </a>
