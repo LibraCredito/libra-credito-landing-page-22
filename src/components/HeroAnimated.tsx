@@ -19,6 +19,7 @@ const HeroAnimated: React.FC = () => {
     "Capital de Giro Inteligente",
     "Empréstimo Imobiliário",
     "Quitação de dívidas"
+
   ];
 
 

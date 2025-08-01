@@ -18,6 +18,7 @@ const HeroPremium: React.FC = () => {
     'Capital de Giro Inteligente',
     'Empréstimo Imobiliário',
     'Quitação de dívidas',
+
   ];
 
   const scrollToSimulator = () => {
