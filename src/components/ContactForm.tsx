@@ -224,7 +224,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
             O imóvel que será utilizado como garantia é:
           </legend>
           <div className="flex gap-3" role="radiogroup" aria-labelledby="tipo-imovel-label">
-            <label className="flex-1 flex items-center justify-center gap-2 bg-white/10 px-3 py-3 rounded-lg text-sm font-medium text-libra-navy hover:bg-white/20 focus-within:ring-2 focus-within:ring-white cursor-pointer">
+            <label
+              className={`flex-1 flex items-center justify-center gap-2 rounded-lg text-sm font-medium cursor-pointer ${
+                imovelProprio === 'proprio' ? 'bg-white text-libra-blue' : 'bg-white/50 text-libra-navy'
+              }`}
+            >
               <input
                 type="radio"
                 name="imovelProprioCompact"
@@ -237,7 +241,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
               <Home className="w-4 h-4" />
               Imóvel Próprio
             </label>
-            <label className="flex-1 flex items-center justify-center gap-2 bg-white/10 px-3 py-3 rounded-lg text-sm font-medium text-libra-navy hover:bg-white/20 focus-within:ring-2 focus-within:ring-white cursor-pointer">
+            <label
+              className={`flex-1 flex items-center justify-center gap-2 rounded-lg text-sm font-medium cursor-pointer ${
+                imovelProprio === 'terceiro' ? 'bg-white text-libra-blue' : 'bg-white/50 text-libra-navy'
+              }`}
+            >
               <input
                 type="radio"
                 name="imovelProprioCompact"
@@ -258,8 +266,9 @@ const ContactForm: React.FC<ContactFormProps> = ({
             id="aceite-compact"
             checked={aceitePrivacidade}
             onCheckedChange={(checked) => setAceitePrivacidade(checked as boolean)}
+            className="bg-white"
           />
-          <label htmlFor="aceite-compact" className="text-sm text-white leading-tight">
+          <label htmlFor="aceite-compact" className="text-sm text-white font-bold leading-tight">
             Concordo com a{' '}
             <Link
               to="/politica-privacidade"
@@ -273,11 +282,18 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
         <Button
           type="submit"
-          disabled={loading || !aceitePrivacidade}
+          disabled={
+            loading ||
+            !nome ||
+            !email ||
+            !telefone ||
+            !imovelProprio ||
+            !aceitePrivacidade
+          }
           onClick={(e) => {
-            if (!nome || !email || !telefone || !imovelProprio) {
+            if (!nome || !email || !telefone || !imovelProprio || !aceitePrivacidade) {
               e.preventDefault();
-              alert('Por favor, preencha todos os campos antes de solicitar a análise.');
+              alert('Por favor, preencha todos os campos para prosseguir.');
             }
           }}
           className={`w-full h-14 text-base font-semibold bg-gradient-to-r from-yellow-400 to-yellow-500 text-libra-navy hover:from-yellow-500 hover:to-yellow-600 ${buttonClassName}`}
@@ -327,7 +343,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
       </Card>
 
       {/* Formulário de contato */}
-      <Card>
+      <Card className="bg-[#22c55e]">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg text-libra-navy text-center">
             Gostou? Preencha os campos abaixo e solicite uma análise de crédito! Em breve a 
@@ -391,7 +407,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 </div>
               </legend>
               <div className="flex gap-4" role="radiogroup" aria-labelledby="tipo-imovel-legend">
-                <label className="flex items-center gap-2 text-sm bg-libra-light/60 px-3 py-2 rounded-md shadow-sm hover:bg-libra-light focus-within:outline focus-within:outline-libra-blue text-libra-navy">
+                <label
+                  className={`flex items-center gap-2 text-sm px-3 py-2 rounded-md shadow-sm cursor-pointer ${
+                    imovelProprio === 'proprio' ? 'bg-white text-libra-blue' : 'bg-libra-light/60 text-libra-navy'
+                  }`}
+                >
                   <input
                     type="radio"
                     name="imovelProprio"
@@ -404,7 +424,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
                   />
                   Imóvel Próprio
                 </label>
-                <label className="flex items-center gap-2 text-sm bg-libra-light/60 px-3 py-2 rounded-md shadow-sm hover:bg-libra-light focus-within:outline focus-within:outline-libra-blue text-libra-navy">
+                <label
+                  className={`flex items-center gap-2 text-sm px-3 py-2 rounded-md shadow-sm cursor-pointer ${
+                    imovelProprio === 'terceiro' ? 'bg-white text-libra-blue' : 'bg-libra-light/60 text-libra-navy'
+                  }`}
+                >
                   <input
                     type="radio"
                     name="imovelProprio"
@@ -428,8 +452,10 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 id="aceite"
                 checked={aceitePrivacidade}
                 onCheckedChange={(checked) => setAceitePrivacidade(checked as boolean)}
+                className="bg-white"
               />
-              <label htmlFor="aceite" className="text-sm text-gray-600 leading-tight bg-libra-light/60 px-3 py-2 rounded-md shadow-sm focus-within:outline focus-within:outline-libra-blue">
+              <label htmlFor="aceite" className="text-sm font-bold text-white leading-tight bg-libra-light/60 px-3 py-2 rounded-md shadow-sm focus-within:outline focus-within:outline-libra-blue">
+
                 Tenho ciência e concordo que meus dados de contato aqui informados poderão ser
                 utilizados pela Libra Crédito de acordo com os termos da{' '}
                 <Link
@@ -444,11 +470,18 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
             <Button
               type="submit"
-              disabled={loading || !aceitePrivacidade}
+              disabled={
+                loading ||
+                !nome ||
+                !email ||
+                !telefone ||
+                !imovelProprio ||
+                !aceitePrivacidade
+              }
               onClick={(e) => {
-                if (!nome || !email || !telefone || !imovelProprio) {
+                if (!nome || !email || !telefone || !imovelProprio || !aceitePrivacidade) {
                   e.preventDefault();
-                  alert('Por favor, preencha todos os campos antes de solicitar a análise.');
+                  alert('Por favor, preencha todos os campos para prosseguir.');
                 }
               }}
               className="w-full h-14 text-base font-semibold bg-gradient-to-r from-yellow-400 to-yellow-500 text-libra-navy hover:from-yellow-500 hover:to-yellow-600"
