@@ -6,7 +6,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 const mediaLinks = [
   {
     name: 'G1 Globo',
-    logo: '/images/optimized/media/g1-logo (1).webp',
+    logo: '/images/optimized/media/G1-logo-1.webp',
     title: 'A Libra Crédito tem soluções financeiras com as menores taxas no pós-pandemia',
     url: 'https://g1.globo.com/sp/ribeirao-preto-franca/especial-publicitario/libra-credito-solucoes-financeiras/noticia/2022/10/28/a-libra-credito-tem-solucoes-financeiras-com-as-menores-taxas-no-pos-pandemia.ghtml'
   },
