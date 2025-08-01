@@ -1,6 +1,8 @@
 import React, { memo, useEffect, useState } from 'react';
 import MessageSquare from 'lucide-react/dist/esm/icons/message-square';
 import User from 'lucide-react/dist/esm/icons/user';
+import ArrowLeft from 'lucide-react/dist/esm/icons/arrow-left';
+import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right';
 import { useIsMobile } from '@/hooks/use-mobile';
 import OptimizedYouTube from './OptimizedYouTube';
 
@@ -155,7 +157,20 @@ const Testimonials: React.FC = () => {
             </div>
           </div>
           
-          <div className="relative h-full">
+          <div className="relative h-full overflow-visible">
+            {!isMobile && (
+              <button
+                className="absolute -left-6 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-6 h-6 bg-white rounded-full shadow-md hover:bg-gray-50"
+                onClick={() =>
+                  setCurrentTestimonial(
+                    (prev) => (prev - 1 + testimonials.length) % testimonials.length
+                  )
+                }
+                aria-label="Ver depoimento anterior"
+              >
+                <ArrowLeft className="w-4 h-4" />
+              </button>
+            )}
             <div
               className="relative h-[260px] lg:h-full"
               onTouchStart={handleTouchStart}
@@ -177,6 +192,17 @@ const Testimonials: React.FC = () => {
                 />
               ))}
             </div>
+            {!isMobile && (
+              <button
+                className="absolute -right-6 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-6 h-6 bg-white rounded-full shadow-md hover:bg-gray-50"
+                onClick={() =>
+                  setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
+                }
+                aria-label="Ver próximo depoimento"
+              >
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            )}
           </div>
         </div>
       </div>
