@@ -129,12 +129,13 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
   if (isMobile) {
     // Layout Mobile - Sucinto e direto
     return (
-      <div className="bg-[#33cc99] rounded-xl p-4 text-libra-navy shadow-xl">
+      <div className="bg-libra-green rounded-xl p-4 text-libra-navy shadow-xl">
+
         {/* Header compacto */}
         <div className="flex items-center gap-2 mb-4">
-          <CheckCircle className="w-5 h-5 text-[#003399]" />
+          <CheckCircle className="w-5 h-5 text-white" />
           <div>
-            <h3 className="font-bold text-[#003399]">Simulação Pronta!</h3>
+            <h3 className="font-bold text-white">Simulação Pronta!</h3>
           </div>
         </div>
 
@@ -203,7 +204,9 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         {/* CTA e Formulário compacto */}
         <div className="bg-libra-blue text-white rounded-lg p-4 mb-4 lg:mb-3 flex items-center justify-center gap-2">
           <Headphones className="w-5 h-5 text-[#003399]" />
-          <p className="text-lg font-bold">Gostou? Solicite uma consultoria gratuita!</p>
+        <p className="text-lg font-bold">
+          Gostou? <span className="block sm:inline">Solicite uma consultoria gratuita!</span>
+        </p>
         </div>
         
         <ContactForm
@@ -218,21 +221,22 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
   
   // Layout Desktop - Adaptação do Mobile na Lateral
   return (
-    <div className="bg-[#33cc99] rounded-xl p-4 text-libra-navy shadow-xl">
+    <div className="bg-libra-green rounded-xl p-4 text-libra-navy shadow-xl">
+
       {/* Header compacto */}
       <div className="flex items-center justify-between mb-3">
       <div className="flex items-center gap-2">
-          <CheckCircle className="w-5 h-5 text-[#003399]" />
-          <h3 className="text-lg font-bold text-[#003399]">Simulação Pronta!</h3>
+          <CheckCircle className="w-5 h-5 text-white" />
+          <h3 className="text-lg font-bold text-white">Simulação Pronta!</h3>
         </div>
         <Button
           onClick={onNewSimulation}
           variant="outline"
-          className="bg-white/10 border-white/30 text-[#003399] hover:bg-white/20 text-xs px-3 py-2"
+          className="bg-white/10 border-white/30 text-white hover:bg-white/20 text-xs px-3 py-2"
           size="sm"
         >
-          <Calculator className="w-3 h-3 mr-1 text-[#003399]" />
-          Nova Simulação
+          <Calculator className="w-3 h-3 mr-1 text-white" />
+          <span className="font-bold">Nova Simulação</span>
         </Button>
       </div>
 
@@ -312,7 +316,9 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
       {/* CTA e Formulário compacto */}
       <div className="bg-libra-blue text-white rounded-lg p-4 mb-4 lg:mb-3 flex items-center justify-center gap-2">
         <Headphones className="w-5 h-5 text-[#003399]" />
-        <p className="text-lg font-bold">Gostou? Solicite uma consultoria gratuita!</p>
+        <p className="text-lg font-bold">
+          Gostou? <span className="block sm:inline">Solicite uma consultoria gratuita!</span>
+        </p>
       </div>
       
       <ContactForm

@@ -227,7 +227,7 @@ export function getValorLimits(): { min: number; max: number } {
     if (config) {
       const parsed = JSON.parse(config);
       return {
-        min: parsed.valorMinimo || 100000,
+        min: parsed.valorMinimo || 75000,
         max: parsed.valorMaximo || 5000000
       };
     }
@@ -235,7 +235,7 @@ export function getValorLimits(): { min: number; max: number } {
     console.warn('Erro ao obter limites de valor:', error);
   }
   
-  return { min: 100000, max: 5000000 };
+  return { min: 75000, max: 5000000 };
 }
 
 /**

@@ -27,11 +27,13 @@ const ResponsiveInfo: React.FC<ResponsiveInfoProps> = ({ content }) => {
           hideCloseButton
           className="p-4 text-sm max-w-xs mx-auto flex flex-col gap-4"
         >
+
           {typeof content === 'string' ? <p>{content}</p> : content}
           <div className="flex justify-end">
             <DialogClose
               aria-label="Fechar"
               className="flex h-11 w-11 items-center justify-center rounded-full border bg-white text-gray-700 shadow"
+
             >
               <X className="h-4 w-4" />
             </DialogClose>

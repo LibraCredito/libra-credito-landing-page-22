@@ -2,20 +2,22 @@
 import React from 'react';
 import Calculator from 'lucide-react/dist/esm/icons/calculator';
 import ResponsiveInfo from '@/components/ui/ResponsiveInfo';
+import { cn } from '@/lib/utils';
 
 interface AmortizationFieldProps {
   value: string;
   onChange: (value: string) => void;
+  isInvalid?: boolean;
 }
 
-const AmortizationField: React.FC<AmortizationFieldProps> = ({ value, onChange }) => {
+const AmortizationField: React.FC<AmortizationFieldProps> = ({ value, onChange, isInvalid = false }) => {
   return (
     <div className="flex flex-col gap-1">
       <label className="text-xs font-medium text-green-500 mb-1 flex items-center gap-1">
         Escolha a Amortização
         <ResponsiveInfo content="SAC: parcelas maiores no início e que vão diminuindo com o tempo. PRICE: parcelas fixas ao longo do contrato." />
       </label>
-      <div className="flex items-center gap-2">
+      <div className={cn('flex items-center gap-2', isInvalid && 'border border-red-500 rounded-md p-2')}>
         <div className="bg-libra-light p-1.5 rounded-full flex-shrink-0">
           <Calculator className="w-4 h-4 text-green-500" />
         </div>

@@ -34,10 +34,10 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
       data-mobile="true"
       className={`fixed top-0 left-0 right-0 z-[9999] bg-white border-b border-gray-200 shadow-sm ${hasNotch ? 'pt-safe-top' : ''}`}
     >
-      <div className="h-[52px] px-4 flex items-center justify-between">
+      <div className="h-[64px] px-4 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center tap-transparent" aria-label="Ir para página inicial da Libra Crédito">
-          <div className="h-[52px] overflow-hidden flex items-center">
+          <div className="h-[64px] overflow-hidden flex items-center">
             <img
               src="/images/optimized/logo-header.webp"
               alt="Libra Crédito - Simulação de crédito com garantia de imóvel"
@@ -95,13 +95,14 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
               
               {/* Portal de Clientes */}
               {onPortalClientes && (
-                <li className="pt-2 border-t border-gray-100">
+                <li role="none">
                   <button
                     onClick={() => {
                       onPortalClientes();
                       setIsMenuOpen(false);
                     }}
-                    className="w-full text-left py-3 px-2 text-sm font-medium text-libra-blue hover:bg-blue-50 rounded-md transition-colors"
+                    className="w-full text-left py-3 px-2 text-[1.0938rem] font-medium text-libra-navy hover:text-libra-blue hover:bg-gray-50 rounded-md transition-colors flex items-center min-h-[44px]"
+                    role="menuitem"
                   >
                     Portal de Clientes
                   </button>

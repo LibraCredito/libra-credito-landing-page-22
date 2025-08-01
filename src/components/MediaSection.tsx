@@ -60,7 +60,9 @@ const MediaSection: React.FC = () => {
                 className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 flex items-center justify-center"
                 aria-label={`Ver matéria da ${media.name}`}
               >
-                <div className="h-12 w-full flex items-center justify-center">
+                <div
+                  className={`w-full flex items-center justify-center ${media.name === 'G1 Globo' ? 'h-14' : 'h-12'}`}
+                >
                   <img
                     src={media.logo}
                     alt={`${media.name} - acesse matéria sobre Libra Crédito`}

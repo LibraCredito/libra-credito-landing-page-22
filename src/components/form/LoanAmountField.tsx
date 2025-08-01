@@ -4,12 +4,15 @@ import { Input } from '@/components/ui/input';
 import DollarSign from 'lucide-react/dist/esm/icons/dollar-sign';
 import ResponsiveInfo from '@/components/ui/ResponsiveInfo';
 
+import { cn } from '@/lib/utils';
+
 interface LoanAmountFieldProps {
   value: string;
   onChange: (value: string) => void;
+  isInvalid?: boolean;
 }
 
-const LoanAmountField: React.FC<LoanAmountFieldProps> = ({ value, onChange }) => {
+const LoanAmountField: React.FC<LoanAmountFieldProps> = ({ value, onChange, isInvalid = false }) => {
   return (
     <div className="flex flex-col gap-1">
       <label className="text-xs font-medium text-green-500 mb-1 flex items-center gap-1">
@@ -25,7 +28,7 @@ const LoanAmountField: React.FC<LoanAmountFieldProps> = ({ value, onChange }) =>
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder="entre 75 mil e 5 milhões"
-            className="text-sm"
+            className={cn('text-sm', isInvalid && 'border-red-500 focus:border-red-500 focus:ring-red-500')}
             inputMode="numeric"
           />
         </div>

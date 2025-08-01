@@ -16,7 +16,6 @@ export interface ApiMessageAnalysis {
  * Analisa a mensagem da API e determina o tipo de resposta
  */
 export const analyzeApiMessage = (message: string): ApiMessageAnalysis => {
-  const lowerMessage = message.toLowerCase();
   
   // Padrão 1: Limite 30% geral
   // "Em Guaxupé - MG, o valor máximo de empréstimo deverá corresponder a no máximo 30 % do valor do imóvel. Ajuste o montante solicitado para R$ 60000.0."

@@ -1,6 +1,35 @@
 import React, { useState, useRef, useCallback } from 'react';
 import Play from 'lucide-react/dist/esm/icons/play';
 
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: () => void;
+  }
+}
+
+// Carrega dinamicamente a YouTube Iframe API quando necessário
+const loadYouTubeIframeAPI = (): Promise<any> => {
+  return new Promise((resolve) => {
+    if (window.YT && window.YT.Player) {
+      resolve(window.YT);
+      return;
+    }
+
+    const existing = document.getElementById('youtube-iframe-api');
+    if (!existing) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      tag.id = 'youtube-iframe-api';
+      document.head.appendChild(tag);
+    }
+
+    window.onYouTubeIframeAPIReady = () => {
+      resolve(window.YT);
+    };
+  });
+};
+
 interface OptimizedYouTubeProps {
   videoId: string;
   title: string;
@@ -17,41 +46,39 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
   thumbnailSrc
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const shouldPlayRef = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<any>(null);
 
-  // Função simplificada para carregamento
-  const loadVideo = useCallback(() => {
-    shouldPlayRef.current = true;
+  // Instancia o player da YouTube API na primeira interação
+  const loadVideo = useCallback(async () => {
+    if (playerRef.current || !containerRef.current) return;
+
     setIsLoaded(true);
-  }, []);
 
-  const handleIframeLoad = useCallback(() => {
-    if (shouldPlayRef.current && iframeRef.current?.contentWindow) {
-      const { contentWindow } = iframeRef.current;
-      contentWindow.postMessage(
-        JSON.stringify({ event: "command", func: "playVideo", args: [] }),
-        "*"
-      );
-      contentWindow.postMessage(
-        JSON.stringify({ event: "command", func: "unMute", args: [] }),
-        "*"
-      );
-      contentWindow.postMessage(
-
-        JSON.stringify({ event: "command", func: "setVolume", args: [100] }),
-        "*"
-      );
-      shouldPlayRef.current = false;
-    }
-  }, []);
+    const YT = await loadYouTubeIframeAPI();
+    playerRef.current = new YT.Player(containerRef.current, {
+      videoId,
+      playerVars: {
+        autoplay: 1,
+        playsinline: 1,
+        modestbranding: 1,
+        rel: 0,
+      },
+      events: {
+        onReady: (event: any) => {
+          event.target.unMute();
+          event.target.playVideo();
+        },
+      },
+    });
+  }, [videoId]);
 
   // Usar thumbnail otimizada menor (65KB vs 525KB)
   const thumbnailImage = thumbnailSrc || `/images/optimized/video-thumbnail.webp`;
 
   return (
     <div className={`hero-video relative w-full h-full overflow-hidden ${className}`}>
-      {!isLoaded ? (
+      {!isLoaded && (
         <button
           className="w-full h-full cursor-pointer relative bg-black flex items-center justify-center group"
           onClick={loadVideo}
@@ -82,20 +109,13 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
             </div>
           </div>
         </button>
-      ) : (
-        <iframe
-          ref={iframeRef}
-          onLoad={handleIframeLoad}
-          className="absolute inset-0 w-full h-full"
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=1&rel=0&modestbranding=1&preload=metadata`}
-          title={title}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          loading="lazy"
-          playsInline
-        />
+
       )}
+      <div
+        ref={containerRef}
+        className="absolute inset-0 w-full h-full"
+        style={{ display: isLoaded ? 'block' : 'none' }}
+      />
     </div>
   );
 };
