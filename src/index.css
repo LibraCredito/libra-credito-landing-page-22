@@ -340,7 +340,7 @@
 
   /* Prevent logo resizing on tap in iOS */
   .header-logo {
-    @apply h-full w-auto pointer-events-none;
+    @apply h-[80%] w-auto pointer-events-none;
     max-width: none;
     -webkit-user-drag: none;
   }
