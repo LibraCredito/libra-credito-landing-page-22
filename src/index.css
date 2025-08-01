@@ -121,7 +121,7 @@
   
   /* Mobile Button Styles */
   .mobile-button {
-    @apply touch-target font-semibold rounded-lg px-6 transition-colors;
+    @apply touch-target font-semibold rounded-full px-6 transition-colors;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
@@ -136,7 +136,7 @@
 
   /* Reusable CTA styles */
   .cta-button {
-    @apply rounded-lg shadow-sm transition-colors transition-transform duration-200 ease-in-out focus-visible:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-libra-blue focus-visible:ring-offset-2;
+    @apply rounded-full shadow-sm transition-colors transition-transform duration-200 ease-in-out focus-visible:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-libra-blue focus-visible:ring-offset-2;
   }
 
   .cta-button:hover {
@@ -336,6 +336,13 @@
   input[type="reset"] {
     @apply min-h-[48px] min-w-[44px];
     -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent logo resizing on tap in iOS */
+  .header-logo {
+    @apply h-full w-auto pointer-events-none;
+    max-width: none;
+    -webkit-user-drag: none;
   }
   
   /* Garantir que textos secundários tenham contraste suficiente */

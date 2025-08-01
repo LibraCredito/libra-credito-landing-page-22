@@ -38,6 +38,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
         "*"
       );
       contentWindow.postMessage(
+
         JSON.stringify({ event: "command", func: "setVolume", args: [100] }),
         "*"
       );

@@ -33,6 +33,7 @@ const Home2 = lazy(() => import("../temp-files/experimental-pages/Home2"));
 const TestWebhook = lazy(() => import("../temp-files/test-pages/TestWebhook"));
 const Confirmacao = lazy(() => import("./pages/Confirmacao"));
 const Sucesso = lazy(() => import("./pages/Sucesso"));
+const Atendimento = lazy(() => import("./pages/Atendimento"));
 
 const Loading = () => (
   <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -92,6 +93,7 @@ const App = () => {
               <Route path="/simulacao-wizard" element={<SimulacaoWizard />} />
               <Route path="/wizard-test" element={<SimpleWizardTest />} />
               <Route path="/confirmacao" element={<Confirmacao />} />
+              <Route path="/atendimento" element={<Atendimento />} />
               <Route path="/sucesso" element={<Sucesso />} />
               <Route path="/home2" element={<Home2 />} />
               <Route path="*" element={<NotFound />} />
