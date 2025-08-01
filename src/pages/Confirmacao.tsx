@@ -22,11 +22,8 @@ const Confirmacao = () => {
         <p className="text-base text-gray-700">Recebemos seus dados e já estamos analisando sua solicitação.</p>
         <p className="text-base text-gray-700">Em breve, um de nossos especialistas entrará em contato com você.</p>
         <div className="flex flex-col sm:flex-row gap-4 mt-4">
-          <Button asChild variant="white" className="px-6">
+          <Button asChild variant="default" className="px-6">
             <Link to="/quem-somos">Conheça a Libra</Link>
-          </Button>
-          <Button asChild variant="goldContrast" className="px-6">
-            <Link to="/atendimento">Iniciar atendimento automatizado</Link>
           </Button>
         </div>
         <p className="text-sm text-gray-600 mt-4">
