@@ -3,17 +3,20 @@ import React from 'react';
 import { Input } from '@/components/ui/input';
 import Home from 'lucide-react/dist/esm/icons/home';
 import ResponsiveInfo from '@/components/ui/ResponsiveInfo';
+import { cn } from '@/lib/utils';
 
 interface GuaranteeAmountFieldProps {
   value: string;
   onChange: (value: string) => void;
   showError: boolean;
+  isInvalid?: boolean;
 }
 
-const GuaranteeAmountField: React.FC<GuaranteeAmountFieldProps> = ({ 
-  value, 
-  onChange, 
-  showError 
+const GuaranteeAmountField: React.FC<GuaranteeAmountFieldProps> = ({
+  value,
+  onChange,
+  showError,
+  isInvalid = false
 }) => {
   return (
     <div className="flex flex-col gap-1">
@@ -30,7 +33,7 @@ const GuaranteeAmountField: React.FC<GuaranteeAmountFieldProps> = ({
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder="Mínimo 2x o valor do empréstimo"
-            className="text-sm"
+            className={cn('text-sm', isInvalid && 'border-red-500 focus:border-red-500 focus:ring-red-500')}
             inputMode="numeric"
           />
         </div>
