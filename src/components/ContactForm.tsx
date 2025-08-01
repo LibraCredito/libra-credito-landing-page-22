@@ -10,6 +10,7 @@ import { useUserJourney } from '@/hooks/useUserJourney';
 import Home from 'lucide-react/dist/esm/icons/home';
 import Building from 'lucide-react/dist/esm/icons/building';
 import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right';
+import { cn } from '@/lib/utils';
 
 interface ContactFormProps {
   simulationResult: {
@@ -41,6 +42,12 @@ const ContactForm: React.FC<ContactFormProps> = ({
   const [imovelProprio, setImovelProprio] = useState<'proprio' | 'terceiro' | ''>('');
   const [aceitePrivacidade, setAceitePrivacidade] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const invalidNome = nome.trim() === '';
+  const invalidEmail = email.trim() === '';
+  const invalidTelefone = telefone.trim() === '';
+  const invalidImovelProprio = imovelProprio === '';
+  const invalidAceite = !aceitePrivacidade;
 
   // Função para aplicar máscara de telefone
   const formatPhoneNumber = (value: string) => {
@@ -180,7 +187,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             placeholder="Nome Completo"
-            className={`rounded-lg h-12 focus:shadow-md ${inputClassName}`}
+            className={cn(
+              'rounded-lg h-12 focus:shadow-md',
+              inputClassName,
+              invalidNome && 'border-red-500 focus:border-red-500 focus:ring-red-500'
+            )}
             required
             aria-required="true"
           />
@@ -196,7 +207,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="E-mail"
-            className={`rounded-lg h-12 focus:shadow-md ${inputClassName}`}
+            className={cn(
+              'rounded-lg h-12 focus:shadow-md',
+              inputClassName,
+              invalidEmail && 'border-red-500 focus:border-red-500 focus:ring-red-500'
+            )}
             required
             aria-required="true"
           />
@@ -212,14 +227,18 @@ const ContactForm: React.FC<ContactFormProps> = ({
             value={telefone}
             onChange={(e) => handlePhoneChange(e.target.value)}
             placeholder="Telefone (99) 99999-9999"
-            className={`rounded-lg h-12 focus:shadow-md ${inputClassName}`}
+            className={cn(
+              'rounded-lg h-12 focus:shadow-md',
+              inputClassName,
+              invalidTelefone && 'border-red-500 focus:border-red-500 focus:ring-red-500'
+            )}
             inputMode="numeric"
             required
             aria-required="true"
           />
         </div>
         
-        <fieldset className="space-y-2">
+        <fieldset className={cn('space-y-2', invalidImovelProprio && 'border border-red-500 rounded-md p-2')}>
           <legend id="tipo-imovel-label" className="text-sm text-white font-medium mb-1">
             O imóvel que será utilizado como garantia é:
           </legend>
@@ -261,7 +280,12 @@ const ContactForm: React.FC<ContactFormProps> = ({
           </div>
         </fieldset>
 
-        <div className="flex items-start gap-2 mt-4">
+        <div
+          className={cn(
+            'flex items-start gap-2 mt-4',
+            invalidAceite && 'border border-red-500 rounded-md p-2'
+          )}
+        >
           <Checkbox
             id="aceite-compact"
             checked={aceitePrivacidade}
@@ -364,6 +388,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
                 placeholder="Digite seu nome completo"
+                className={cn(invalidNome && 'border-red-500 focus:border-red-500 focus:ring-red-500')}
                 required
                 aria-required="true"
               />
@@ -379,6 +404,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Digite seu e-mail"
+                className={cn(invalidEmail && 'border-red-500 focus:border-red-500 focus:ring-red-500')}
                 required
                 aria-required="true"
               />
@@ -395,12 +421,13 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 onChange={(e) => handlePhoneChange(e.target.value)}
                 placeholder="(99) 99999-9999"
                 inputMode="numeric"
+                className={cn(invalidTelefone && 'border-red-500 focus:border-red-500 focus:ring-red-500')}
                 required
                 aria-required="true"
               />
             </div>
 
-            <fieldset className="space-y-3">
+            <fieldset className={cn('space-y-3', invalidImovelProprio && 'border border-red-500 rounded-md p-2')}>
               <legend id="tipo-imovel-legend" className="text-sm font-medium text-libra-navy">
                 O imóvel que será utilizado como garantia é: *
                 <div className="text-xs text-gray-500 font-normal mt-1" title="A matrícula/escritura do imóvel está no seu nome próprio ou de um terceiro?">
@@ -448,7 +475,12 @@ const ContactForm: React.FC<ContactFormProps> = ({
               </div>
             </fieldset>
 
-            <div className="flex items-start gap-2 mt-2">
+            <div
+              className={cn(
+                'flex items-start gap-2 mt-2',
+                invalidAceite && 'border border-red-500 rounded-md p-2'
+              )}
+            >
               <Checkbox
                 id="aceite"
                 checked={aceitePrivacidade}
