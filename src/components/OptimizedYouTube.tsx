@@ -28,11 +28,16 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
 
   const handleIframeLoad = useCallback(() => {
     if (shouldPlayRef.current && iframeRef.current?.contentWindow) {
-      iframeRef.current.contentWindow.postMessage(
+      const { contentWindow } = iframeRef.current;
+      contentWindow.postMessage(
         JSON.stringify({ event: "command", func: "playVideo", args: [] }),
         "*"
       );
-      iframeRef.current.contentWindow.postMessage(
+      contentWindow.postMessage(
+        JSON.stringify({ event: "command", func: "unMute", args: [] }),
+        "*"
+      );
+      contentWindow.postMessage(
         JSON.stringify({ event: "command", func: "setVolume", args: [100] }),
         "*"
       );
@@ -81,7 +86,7 @@ const OptimizedYouTube: React.FC<OptimizedYouTubeProps> = ({
           ref={iframeRef}
           onLoad={handleIframeLoad}
           className="absolute inset-0 w-full h-full"
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1&preload=metadata`}
+          src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=1&rel=0&modestbranding=1&preload=metadata`}
           title={title}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
