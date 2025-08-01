@@ -85,7 +85,7 @@ const SimpleWizardTest = () => {
                 <div>
                   <p className="mb-4">Selecione o valor desejado:</p>
                   <div className="grid grid-cols-2 gap-2">
-                    {['R$ 100 mil', 'R$ 300 mil', 'R$ 500 mil', 'R$ 1 milhão'].map((value) => (
+                    {['R$ 75 mil', 'R$ 300 mil', 'R$ 500 mil', 'R$ 1 milhão'].map((value) => (
                       <button
                         key={value}
                         onClick={() => setData({ ...data, value })}

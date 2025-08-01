@@ -13,7 +13,7 @@
  * - Integração com WhatsApp para contato
  * 
  * @businessRules
- * - Valor mínimo do empréstimo: R$ 100.000
+ * - Valor mínimo do empréstimo: R$ 75.000
  * - Valor máximo do empréstimo: R$ 5.000.000
  * - Taxa de juros: 1.09% a.m.
  * - Prazo máximo: 180 meses (15 anos)
@@ -168,7 +168,7 @@ const LoanSimulator: React.FC = () => {
                     </label>
                     <Slider 
                       value={[loanAmount]} 
-                      min={100000} 
+                      min={75000}
                       max={5000000} 
                       step={50000} 
                       onValueChange={handleLoanAmountChange} 
@@ -176,7 +176,7 @@ const LoanSimulator: React.FC = () => {
                       aria-labelledby={loanAmountLabelId}
                     />
                     <div className="flex justify-between text-sm text-gray-700">
-                      <span>R$ 100 mil</span>
+                      <span>R$ 75 mil</span>
                       <span>R$ 5 milhões</span>
                     </div>
                   </div>

@@ -90,7 +90,7 @@ const AdminDashboard: React.FC = () => {
   
   // Estados para configurações do simulador interno
   const [simulationConfig, setSimulationConfig] = useState({
-    valorMinimo: 100000,
+    valorMinimo: 75000,
     valorMaximo: 5000000,
     parcelasMin: 36,
     parcelasMax: 180,
@@ -181,7 +181,7 @@ const AdminDashboard: React.FC = () => {
       if (storedConfig) {
         const config = JSON.parse(storedConfig);
         setSimulationConfig({
-          valorMinimo: config.valorMinimo || 100000,
+          valorMinimo: config.valorMinimo || 75000,
           valorMaximo: config.valorMaximo || 5000000,
           parcelasMin: config.parcelasMin || 36,
           parcelasMax: config.parcelasMax || 180,

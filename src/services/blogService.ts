@@ -876,7 +876,7 @@ export class BlogService {
       const stored = localStorage.getItem(this.CONFIG_KEY);
       return stored ? JSON.parse(stored) : {
         // Limites de valor (baseado na API atual)
-        valorMinimo: 100000,
+        valorMinimo: 75000,
         valorMaximo: 5000000,
         
         // Limites de parcelas

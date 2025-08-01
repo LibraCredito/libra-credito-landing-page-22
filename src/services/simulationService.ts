@@ -326,8 +326,8 @@ export class SimulationService {
       throw new Error('Telefone inválido');
     }
     if (!input.cidade) throw new Error('Cidade é obrigatória');
-    if (input.valorEmprestimo < 100000 || input.valorEmprestimo > 5000000) {
-      throw new Error('Valor do empréstimo deve estar entre R$ 100.000 e R$ 5.000.000');
+    if (input.valorEmprestimo < 75000 || input.valorEmprestimo > 5000000) {
+      throw new Error('Valor do empréstimo deve estar entre R$ 75.000 e R$ 5.000.000');
     }
     if (input.valorImovel < input.valorEmprestimo * 2) {
       throw new Error('Valor do imóvel deve ser pelo menos 2x o valor do empréstimo');
