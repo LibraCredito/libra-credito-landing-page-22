@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 // Step 1: Valor necessário
 export const ValueStep: React.FC<WizardStepProps> = ({ data, updateData, errors }) => {
   const values = [
-    { label: 'R$ 100 mil', value: 100000 },
+    { label: 'R$ 75 mil', value: 75000 },
     { label: 'R$ 300 mil', value: 300000 },
     { label: 'R$ 500 mil', value: 500000 },
     { label: 'R$ 750 mil', value: 750000 },
