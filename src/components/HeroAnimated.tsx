@@ -17,8 +17,9 @@ const HeroAnimated: React.FC = () => {
     "Crédito com Garantia de Imóvel",
     "Home Equity",
     "Capital de Giro Inteligente",
-    "Empréstimo com Garantia de Imóvel",
-    "Quitação de dívidas."
+    "Empréstimo Imobiliário",
+    "Quitação de dívidas"
+
   ];
 
 
