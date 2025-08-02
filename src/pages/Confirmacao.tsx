@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import MobileLayout from '@/components/MobileLayout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import WaveSeparator from '@/components/ui/WaveSeparator';
 
 const Confirmacao = () => {
   useEffect(() => {
@@ -17,6 +18,7 @@ const Confirmacao = () => {
 
   return (
     <MobileLayout>
+      <WaveSeparator variant="hero" height="md" inverted />
       <div className="flex flex-col items-center justify-center py-12 px-4 text-center space-y-6 bg-white">
         <h1 className="text-2xl font-bold text-libra-navy">✅ Simulação enviada com sucesso!</h1>
         <p className="text-base text-gray-700">Recebemos seus dados e já estamos analisando sua solicitação.</p>
