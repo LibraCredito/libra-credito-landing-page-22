@@ -429,9 +429,9 @@ const SimulationForm: React.FC = () => {
         isMobile ? 'py-2 pb-4' : 'py-2 min-h-[calc(100vh-4rem)]'
       } ${showSideComplement ? 'max-w-6xl' : 'max-w-xl'}`}
     >
-      <div className={`${showSideComplement ? 'grid grid-cols-1 lg:grid-cols-2 gap-6' : ''}`}>
+      <div className={`${showSideComplement ? 'grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch justify-center' : ''}`}> 
         {/* Formulário de Simulação */}
-        <Card className="shadow-lg" id="simulation-card">
+        <Card className="shadow-lg h-full" id="simulation-card">
           <CardHeader data-sim-card-header="true" className="text-center pb-2">
             <CardTitle className="text-lg md:text-xl font-bold text-green-700 mb-1">
               Sua simulação em um clique!
@@ -531,7 +531,10 @@ const SimulationForm: React.FC = () => {
 
         {/* Resultado ou Complemento */}
         {(resultado || (!isMobile && isLtvMessage && apiMessage)) && (
-          <div data-result-section="true" className={`${showSideComplement ? '' : 'mt-4'} scroll-mt-header`}>
+          <div
+            data-result-section="true"
+            className={`scroll-mt-header h-full ${showSideComplement ? '' : 'mt-4'}`}
+          >
             {resultado ? (
               <SimulationResultDisplay
                 resultado={resultado}
