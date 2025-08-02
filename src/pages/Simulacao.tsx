@@ -28,6 +28,7 @@ const Simulacao = () => {
         const cardHeader = card?.querySelector('[data-sim-card-header="true"]') as HTMLElement | null;
         if (cardHeader) {
           scrollToTarget(cardHeader, -headerHeight);
+
         }
       });
       return () => cancelAnimationFrame(frame);
