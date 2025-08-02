@@ -242,11 +242,11 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
       {/* Valor da parcela e renda mínima em layout compacto */}
       <div className="mb-2 text-libra-navy">
         {amortizacao === 'SAC' && primeiraParcela ? (
-          <div className="bg-green-50 rounded-lg p-3">
+          <div className="bg-green-50 rounded-lg p-2">
             <div className="text-xs font-medium mb-2 text-center">Sistema SAC - Parcelas Decrescentes</div>
             <div className="grid grid-cols-3 gap-1">
               {/* Primeira parcela */}
-              <div className="text-center bg-green-100 rounded-lg p-2 border border-green-200">
+              <div className="text-center bg-green-100 rounded-lg p-1 border border-green-200">
                 <div className="text-xs font-medium mb-1">1ª Parcela</div>
                 <div className="text-lg font-bold">
                   R$ {primeiraParcela.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
@@ -254,7 +254,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
                 <div className="text-xs">Maior valor</div>
               </div>
               {/* Última parcela */}
-              <div className="text-center bg-green-100 rounded-lg p-2 border border-green-200">
+              <div className="text-center bg-green-100 rounded-lg p-1 border border-green-200">
                 <div className="text-xs font-medium mb-1">Última Parcela</div>
                 <div className="text-base font-bold">
                   R$ {ultimaParcela?.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
@@ -262,7 +262,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
                 <div className="text-xs">Menor valor</div>
               </div>
               {/* Renda mínima */}
-              <div className="text-center rounded-lg p-2 border border-green-200">
+              <div className="text-center rounded-lg p-1 border border-green-200">
                 <div className="text-xs mb-1 flex items-center justify-center gap-1">
                   <span className="font-bold">Renda necessária</span>
                   <TooltipInfo content="Renda familiar podendo ser composta por até 4 pessoas">
@@ -279,14 +279,15 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-1">
-            <div className="bg-green-50 rounded-lg p-4 text-center">
+          <div className="grid grid-cols-2 gap-2">
+            <div className="bg-green-50 rounded-lg p-3 text-center">
+
               <div className="text-xs mb-1">Parcela Fixa (PRICE)</div>
               <div className="text-xl lg:text-2xl font-bold">
                 R$ {valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </div>
             </div>
-            <div className="bg-green-50 rounded-lg p-4 text-center relative">
+            <div className="bg-green-50 rounded-lg p-3 text-center relative">
               <div className="text-xs mb-1 flex items-center justify-center gap-1">
                 <span className="font-bold">Renda necessária</span>
                 <TooltipInfo content="Renda familiar podendo ser composta por até 4 pessoas">
