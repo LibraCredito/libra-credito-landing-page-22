@@ -36,7 +36,7 @@ const Limit30General: React.FC<Limit30GeneralProps> = ({
   };
 
   return (
-    <div className={`bg-blue-50 border border-blue-200 rounded-lg ${isMobile ? 'p-3 mx-2' : 'p-4'} max-w-full overflow-hidden`}>
+    <div data-api-message="true" className={`bg-blue-50 border border-blue-200 rounded-lg ${isMobile ? 'p-3 mx-2' : 'p-4'} max-w-full overflow-hidden`}>
       <div className={`flex items-start ${isMobile ? 'gap-2' : 'gap-3'}`}>
         <div className={`bg-blue-100 ${isMobile ? 'p-1.5' : 'p-2'} rounded-full flex-shrink-0`}>
           <Info className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-blue-600`} />
