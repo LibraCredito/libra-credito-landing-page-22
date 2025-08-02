@@ -83,8 +83,8 @@ export default defineConfig(({ mode }) => ({
   // Otimizações de dependências para lazy loading
   optimizeDeps: {
     include: [
-      'react', 
-      'react-dom', 
+      'react',
+      'react-dom',
       'react-router-dom',
       'clsx',
       'class-variance-authority',
@@ -92,5 +92,10 @@ export default defineConfig(({ mode }) => ({
     ],
     // Excluir para lazy loading
     exclude: ['@supabase/supabase-js']
+  },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/setupTests.ts'
   }
   }));
