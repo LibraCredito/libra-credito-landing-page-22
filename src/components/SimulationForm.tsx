@@ -235,8 +235,11 @@ const SimulationForm: React.FC = () => {
 
   // Função para ajustar valores automaticamente (30%) e executar simulação
   const handleAdjustValues = async (novoEmprestimo: number, isRural: boolean = false) => {
+    const atual = norm(emprestimo);
+    const final = Math.min(novoEmprestimo, atual);
+
     // Ajustar os valores - usar valor completo com formatação
-    setEmprestimo(formatBRL(novoEmprestimo.toString()));
+    setEmprestimo(formatBRL(final.toString()));
     setIsRuralProperty(isRural);
     setApiMessage(null);
     setErro('');
@@ -250,7 +253,7 @@ const SimulationForm: React.FC = () => {
 
       // Recalcular validação com novos valores
       const newValidation = validateForm(
-        formatBRL(novoEmprestimo.toString()),
+        formatBRL(final.toString()),
         garantia,
         parcelas,
         amortizacao,
@@ -506,6 +509,7 @@ const SimulationForm: React.FC = () => {
                   <SmartApiMessage
                     analysis={apiMessage}
                     valorImovel={validation.garantiaValue}
+                    valorEmprestimoAtual={validation.emprestimoValue || norm(emprestimo)}
                     onAdjustValues={handleAdjustValues}
                     onTryAgain={handleTryAgain}
                   />
@@ -551,6 +555,7 @@ const SimulationForm: React.FC = () => {
               <SmartApiMessage
                 analysis={apiMessage as ApiMessageAnalysis}
                 valorImovel={validation.garantiaValue}
+                valorEmprestimoAtual={validation.emprestimoValue || norm(emprestimo)}
                 onAdjustValues={handleAdjustValues}
                 onTryAgain={handleTryAgain}
               />
