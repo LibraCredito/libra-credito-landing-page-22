@@ -40,10 +40,11 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
           <div className="h-[64px] overflow-hidden flex items-center">
             <img
               src="/images/optimized/logo-header.webp"
+              srcSet="/images/optimized/logo-header.webp 1x, /images/optimized/logo-header.webp 2x"
               alt="Libra Crédito - Simulação de crédito com garantia de imóvel"
-              className="header-logo h-[48px]"
-              width="90"
-              height="90"
+              className="header-logo"
+              width={150}
+              height={81}
             />
           </div>
         </Link>
