@@ -43,7 +43,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { validateForm } from '@/utils/validations';
 import { LocalSimulationService, SimulationResult } from '@/services/localSimulationService';
 import { useUserJourney } from '@/hooks/useUserJourney';
@@ -53,12 +52,10 @@ import LoanAmountField from './form/LoanAmountField';
 import GuaranteeAmountField from './form/GuaranteeAmountField';
 import InstallmentsField from './form/InstallmentsField';
 import AmortizationField from './form/AmortizationField';
-import ResultCard from './ResultCard';
-import ContactForm from './ContactForm';
 import ApiMessageDisplay from './ApiMessageDisplay';
 import SmartApiMessage from './messages/SmartApiMessage';
 import SimulationResultDisplay from './SimulationResultDisplay';
-import { analyzeApiMessage, ApiMessageAnalysis } from '@/utils/apiMessageAnalyzer';
+import { ApiMessageAnalysis } from '@/utils/apiMessageAnalyzer';
 import { analyzeLocalMessage } from '@/utils/localMessageAnalyzer';
 import { formatBRL, norm } from '@/utils/formatters';
 import { toast } from '@/components/ui/use-toast';
@@ -75,7 +72,7 @@ const SimulationForm: React.FC = () => {
   const [resultado, setResultado] = useState<SimulationResult | null>(null);
   const [erro, setErro] = useState('');
   const [apiMessage, setApiMessage] = useState<ApiMessageAnalysis | null>(null);
-  const [isRuralProperty, setIsRuralProperty] = useState(false);
+  const [_isRuralProperty, setIsRuralProperty] = useState(false);
 
   // Validações
   const validation = validateForm(emprestimo, garantia, parcelas, amortizacao, cidade);
@@ -435,7 +432,7 @@ const SimulationForm: React.FC = () => {
       <div className={`${showSideComplement ? 'grid grid-cols-1 lg:grid-cols-2 gap-6' : ''}`}>
         {/* Formulário de Simulação */}
         <Card className="shadow-lg" id="simulation-card">
-          <CardHeader className="text-center pb-2">
+          <CardHeader data-sim-card-header="true" className="text-center pb-2">
             <CardTitle className="text-lg md:text-xl font-bold text-green-700 mb-1">
               Sua simulação em um clique!
             </CardTitle>

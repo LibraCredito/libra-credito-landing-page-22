@@ -24,8 +24,11 @@ const Simulacao = () => {
     if (!isMobile) {
       const frame = requestAnimationFrame(() => {
         const card = document.getElementById('simulation-card');
-        if (card) {
-          scrollToTarget(card, -64);
+        const headerHeight = document.querySelector('header')?.offsetHeight ?? 0;
+        const cardHeader = card?.querySelector('[data-sim-card-header="true"]') as HTMLElement | null;
+        if (cardHeader) {
+          scrollToTarget(cardHeader, -headerHeight);
+
         }
       });
       return () => cancelAnimationFrame(frame);
