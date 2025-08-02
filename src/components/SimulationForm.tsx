@@ -123,6 +123,18 @@ const SimulationForm: React.FC = () => {
     }
   };
 
+  // Rolagem para mensagens de limite (rural/ltv30) no mobile
+  const scrollToApiMessage = () => {
+    if (isMobile) {
+      setTimeout(() => {
+        const messageElement = document.querySelector('[data-api-message="true"]');
+        if (messageElement) {
+          (messageElement as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -186,6 +198,9 @@ const SimulationForm: React.FC = () => {
           // É uma mensagem estruturada do serviço local
           setApiMessage(analysis);
           setErro(''); // Limpar erro genérico
+          if (analysis.type === 'limit_30_general' || analysis.type === 'limit_30_rural') {
+            scrollToApiMessage();
+          }
         } else {
           // É um erro genérico
           let errorMessage = 'Erro desconhecido ao realizar simulação';
@@ -293,6 +308,9 @@ const SimulationForm: React.FC = () => {
           if (analysis.type !== 'unknown_error') {
             setApiMessage(analysis);
             setErro('');
+            if (analysis.type === 'limit_30_general' || analysis.type === 'limit_30_rural') {
+              scrollToApiMessage();
+            }
           } else {
             let errorMessage = 'Erro ao processar simulação automática';
             
@@ -385,6 +403,9 @@ const SimulationForm: React.FC = () => {
           if (analysis.type !== 'unknown_error') {
             setApiMessage(analysis);
             setErro('');
+            if (analysis.type === 'limit_30_general' || analysis.type === 'limit_30_rural') {
+              scrollToApiMessage();
+            }
           } else {
             setErro('Erro ao refazer simulação com tabela PRICE');
             setApiMessage(null);

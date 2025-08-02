@@ -40,7 +40,7 @@ const Limit30Rural: React.FC<Limit30RuralProps> = ({
   };
 
   return (
-    <div className={`bg-green-50 border border-green-200 rounded-lg ${isMobile ? 'p-3 mx-2' : 'p-4'} max-w-full overflow-hidden`}>
+    <div data-api-message="true" className={`bg-green-50 border border-green-200 rounded-lg ${isMobile ? 'p-3 mx-2' : 'p-4'} max-w-full overflow-hidden`}>
       <div className={`flex items-start ${isMobile ? 'gap-2' : 'gap-3'}`}>
         <div className={`bg-green-100 ${isMobile ? 'p-1.5' : 'p-2'} rounded-full flex-shrink-0`}>
           <Wheat className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-green-600`} />
