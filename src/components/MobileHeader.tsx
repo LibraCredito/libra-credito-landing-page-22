@@ -70,10 +70,11 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ onPortalClientes, onSimulat
               <div className="h-[52px] overflow-hidden flex items-center">
                 <img
                   src="/images/optimized/logo-header.webp"
+                  srcSet="/images/optimized/logo-header.webp 1x, /images/optimized/logo-header.webp 2x"
                   alt="Libra Crédito"
                   className="header-logo"
-                  width="120"
-                  height="120"
+                  width={150}
+                  height={81}
                 />
               </div>
             </Link>
