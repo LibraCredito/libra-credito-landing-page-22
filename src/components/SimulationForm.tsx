@@ -434,7 +434,7 @@ const SimulationForm: React.FC = () => {
     >
       <div className={`${showSideComplement ? 'grid grid-cols-1 lg:grid-cols-2 gap-6' : ''}`}>
         {/* Formulário de Simulação */}
-        <Card className="shadow-lg">
+        <Card className="shadow-lg" id="simulation-card">
           <CardHeader className="text-center pb-2">
             <CardTitle className="text-lg md:text-xl font-bold text-green-700 mb-1">
               Sua simulação em um clique!
