@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -42,12 +42,25 @@ const ContactForm: React.FC<ContactFormProps> = ({
   const [imovelProprio, setImovelProprio] = useState<'proprio' | 'terceiro' | ''>('');
   const [aceitePrivacidade, setAceitePrivacidade] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showIncompleteError, setShowIncompleteError] = useState(false);
 
   const invalidNome = nome.trim() === '';
   const invalidEmail = email.trim() === '';
   const invalidTelefone = telefone.trim() === '';
   const invalidImovelProprio = imovelProprio === '';
   const invalidAceite = !aceitePrivacidade;
+  const formComplete =
+    !invalidNome &&
+    !invalidEmail &&
+    !invalidTelefone &&
+    !invalidImovelProprio &&
+    !invalidAceite;
+
+  useEffect(() => {
+    if (formComplete) {
+      setShowIncompleteError(false);
+    }
+  }, [formComplete]);
 
   // Função para aplicar máscara de telefone
   const formatPhoneNumber = (value: string) => {
@@ -73,6 +86,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!formComplete) {
+      setShowIncompleteError(true);
+      return;
+    }
     
     console.log('🔍 Debug dados da simulação:', {
       simulationResult,
@@ -304,36 +322,37 @@ const ContactForm: React.FC<ContactFormProps> = ({
           </label>
         </div>
 
-        <Button
-          type="submit"
-          disabled={
-            loading ||
-            !nome ||
-            !email ||
-            !telefone ||
-            !imovelProprio ||
-            !aceitePrivacidade
-          }
-          onClick={(e) => {
-            if (!nome || !email || !telefone || !imovelProprio || !aceitePrivacidade) {
-              e.preventDefault();
-              alert('Por favor, preencha todos os campos para prosseguir.');
-            }
-          }}
-          className={`w-full h-14 text-base font-semibold bg-gradient-to-r from-yellow-400 to-yellow-500 text-libra-navy hover:from-yellow-500 hover:to-yellow-600 ${buttonClassName}`}
-        >
-          {loading ? (
-            <div className="flex items-center gap-2">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
-              Enviando...
-            </div>
-          ) : (
-            <span className="flex items-center gap-2">
-              Solicitar análise agora
-              <ArrowRight className="w-5 h-5" />
-            </span>
+        <div className="relative">
+          <Button
+            type="submit"
+            disabled={loading || !formComplete}
+            className={`w-full h-14 text-base font-semibold bg-gradient-to-r from-yellow-400 to-yellow-500 text-libra-navy hover:from-yellow-500 hover:to-yellow-600 ${buttonClassName}`}
+          >
+            {loading ? (
+              <div className="flex items-center gap-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
+                Enviando...
+              </div>
+            ) : (
+              <span className="flex items-center gap-2">
+                Solicitar análise agora
+                <ArrowRight className="w-5 h-5" />
+              </span>
+            )}
+          </Button>
+          { !formComplete && !loading && (
+            <div
+              className="absolute inset-0 rounded-full cursor-not-allowed"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowIncompleteError(true);
+              }}
+            />
           )}
-        </Button>
+        </div>
+        {showIncompleteError && !formComplete && (
+          <p className="text-red-600 text-sm mt-2">Preencha todos os campos</p>
+        )}
       </form>
     );
   }
@@ -501,36 +520,37 @@ const ContactForm: React.FC<ContactFormProps> = ({
               </label>
             </div>
 
-            <Button
-              type="submit"
-              disabled={
-                loading ||
-                !nome ||
-                !email ||
-                !telefone ||
-                !imovelProprio ||
-                !aceitePrivacidade
-              }
-              onClick={(e) => {
-                if (!nome || !email || !telefone || !imovelProprio || !aceitePrivacidade) {
-                  e.preventDefault();
-                  alert('Por favor, preencha todos os campos para prosseguir.');
-                }
-              }}
-              className="w-full h-14 text-base font-semibold bg-gradient-to-r from-yellow-400 to-yellow-500 text-libra-navy hover:from-yellow-500 hover:to-yellow-600"
-            >
-              {loading ? (
-                <div className="flex items-center gap-2">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  Enviando...
-                </div>
-              ) : (
-                <span className="flex items-center gap-2">
-                  Solicitar análise agora
-                  <ArrowRight className="w-5 h-5" />
-                </span>
+            <div className="relative">
+              <Button
+                type="submit"
+                disabled={loading || !formComplete}
+                className="w-full h-14 text-base font-semibold bg-gradient-to-r from-yellow-400 to-yellow-500 text-libra-navy hover:from-yellow-500 hover:to-yellow-600"
+              >
+                {loading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    Enviando...
+                  </div>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    Solicitar análise agora
+                    <ArrowRight className="w-5 h-5" />
+                  </span>
+                )}
+              </Button>
+              { !formComplete && !loading && (
+                <div
+                  className="absolute inset-0 rounded-full cursor-not-allowed"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowIncompleteError(true);
+                  }}
+                />
               )}
-            </Button>
+            </div>
+            {showIncompleteError && !formComplete && (
+              <p className="text-red-600 text-sm mt-2">Preencha todos os campos</p>
+            )}
           </form>
         </CardContent>
       </Card>
