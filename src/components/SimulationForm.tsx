@@ -72,7 +72,7 @@ const SimulationForm: React.FC = () => {
   const [resultado, setResultado] = useState<SimulationResult | null>(null);
   const [erro, setErro] = useState('');
   const [apiMessage, setApiMessage] = useState<ApiMessageAnalysis | null>(null);
-  const [_isRuralProperty, setIsRuralProperty] = useState(false);
+  const [isRuralProperty, setIsRuralProperty] = useState(false);
 
   // Validações
   const validation = validateForm(emprestimo, garantia, parcelas, amortizacao, cidade);
@@ -162,7 +162,8 @@ const SimulationForm: React.FC = () => {
         parcelas: parcelas,
         tipoAmortizacao: amortizacao,
         userAgent: navigator.userAgent,
-        ipAddress: undefined
+        ipAddress: undefined,
+        isRuralProperty
       };
 
 
@@ -275,7 +276,8 @@ const SimulationForm: React.FC = () => {
           parcelas: parcelas,
           tipoAmortizacao: amortizacao,
           userAgent: navigator.userAgent,
-          ipAddress: undefined
+          ipAddress: undefined,
+          isRuralProperty: isRural
         };
 
 
@@ -370,7 +372,8 @@ const SimulationForm: React.FC = () => {
           parcelas: parcelas,
           tipoAmortizacao: 'PRICE',
           userAgent: navigator.userAgent,
-          ipAddress: undefined
+          ipAddress: undefined,
+          isRuralProperty
         };
 
 
