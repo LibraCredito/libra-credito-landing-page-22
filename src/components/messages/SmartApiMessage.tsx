@@ -8,6 +8,7 @@ import ApiMessageDisplay from '../ApiMessageDisplay';
 interface SmartApiMessageProps {
   analysis: ApiMessageAnalysis;
   valorImovel: number;
+  valorEmprestimoAtual: number;
   onAdjustValues: (novoEmprestimo: number, isRural?: boolean) => void;
   onTryAgain: () => void;
 }
@@ -18,6 +19,7 @@ interface SmartApiMessageProps {
 const SmartApiMessage: React.FC<SmartApiMessageProps> = ({
   analysis,
   valorImovel,
+  valorEmprestimoAtual,
   onAdjustValues,
   onTryAgain
 }) => {
@@ -39,6 +41,7 @@ const SmartApiMessage: React.FC<SmartApiMessageProps> = ({
           cidade={analysis.cidade || 'cidade informada'}
           valorSugerido={analysis.valorSugerido || 0}
           valorImovel={valorImovel}
+          valorEmprestimoAtual={valorEmprestimoAtual}
           onAdjustValues={onAdjustValues}
           onTryAgain={onTryAgain}
         />
