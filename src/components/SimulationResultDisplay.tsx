@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Calculator from 'lucide-react/dist/esm/icons/calculator';
 import CheckCircle from 'lucide-react/dist/esm/icons/check-circle';
 import Users from 'lucide-react/dist/esm/icons/users';
-import Info from 'lucide-react/dist/esm/icons/info';
 import TrendingUp from 'lucide-react/dist/esm/icons/trending-up';
 import Headphones from 'lucide-react/dist/esm/icons/headphones';
 import { Button } from '@/components/ui/button';
@@ -106,14 +105,14 @@ const SwitchPriceTip: React.FC<{ onSwitchToPrice?: () => void }> = ({
  */
 const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
   resultado,
-  valorEmprestimo,
-  valorImovel,
-  cidade,
+  valorEmprestimo: _valorEmprestimo,
+  valorImovel: _valorImovel,
+  cidade: _cidade,
   onNewSimulation,
   onSwitchToPrice
 }) => {
   const isMobile = useIsMobile();
-  const { valor, amortizacao, parcelas, primeiraParcela, ultimaParcela } = resultado;
+  const { valor, amortizacao, parcelas: _parcelas, primeiraParcela, ultimaParcela } = resultado;
   
   // Cálculo da renda mínima familiar
   const calcularRendaMinima = () => {
@@ -129,7 +128,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
   if (isMobile) {
     // Layout Mobile - Sucinto e direto
     return (
-      <div className="bg-libra-green rounded-xl p-4 text-libra-navy shadow-xl">
+      <div className="flex flex-col h-full bg-libra-green rounded-xl p-4 text-libra-navy shadow-xl">
 
         {/* Header compacto */}
         <div className="flex items-center gap-2 mb-4">
@@ -221,7 +220,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
   
   // Layout Desktop - Adaptação do Mobile na Lateral
   return (
-    <div className="bg-libra-green rounded-xl p-4 text-libra-navy shadow-xl">
+    <div className="flex flex-col h-full bg-libra-green rounded-xl p-4 text-libra-navy shadow-xl">
 
       {/* Header compacto */}
       <div className="flex items-center justify-between mb-3">
