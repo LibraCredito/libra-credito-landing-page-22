@@ -10,6 +10,7 @@ interface Limit30RuralProps {
   cidade: string;
   valorSugerido: number;
   valorImovel: number;
+  valorEmprestimoAtual: number;
   onAdjustValues: (novoEmprestimo: number, isRural: boolean) => void;
   onTryAgain: () => void;
 }
@@ -21,6 +22,7 @@ const Limit30Rural: React.FC<Limit30RuralProps> = ({
   cidade,
   valorSugerido,
   valorImovel,
+  valorEmprestimoAtual,
   onAdjustValues,
   onTryAgain
 }) => {
@@ -31,11 +33,12 @@ const Limit30Rural: React.FC<Limit30RuralProps> = ({
   const valor30PercentImovel = Math.floor(valorImovel * 0.3);
   // Usar o valor sugerido da API se disponível, senão usar o cálculo
   const valorMaximoEmprestimo = valorSugerido || valor30PercentImovel;
+  const valorAjustado = Math.min(valorMaximoEmprestimo, valorEmprestimoAtual);
 
   const handleAdjustClick = () => {
     if (isRuralConfirmed) {
-      // Ajustar o valor do EMPRÉSTIMO para o máximo permitido
-      onAdjustValues(valorMaximoEmprestimo, true);
+      // Ajustar o valor do EMPRÉSTIMO para o máximo permitido ou manter o valor atual
+      onAdjustValues(valorAjustado, true);
     }
   };
 
@@ -106,7 +109,9 @@ const Limit30Rural: React.FC<Limit30RuralProps> = ({
               {isRuralConfirmed && <CheckCircle className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'} flex-shrink-0`} />}
               <Calculator className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'} flex-shrink-0`} />
               <span className="truncate">
-                {isMobile ? `Continuar com R$ ${(valorMaximoEmprestimo / 1000).toFixed(0)}k` : `Continuar com R$ ${valorMaximoEmprestimo.toLocaleString('pt-BR')}`}
+                {isMobile
+                  ? `Continuar com R$ ${(valorAjustado / 1000).toFixed(0)}k`
+                  : `Continuar com R$ ${valorAjustado.toLocaleString('pt-BR')}`}
               </span>
             </Button>
 
