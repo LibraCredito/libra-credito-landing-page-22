@@ -38,7 +38,7 @@ const Simulacao = () => {
   return (
     <MobileLayout>
       <WaveSeparator variant="hero" height="md" inverted />
-      <div className="bg-white">
+      <div className="bg-white lg:flex lg:justify-center">
         <SimulationForm />
       </div>
     </MobileLayout>
