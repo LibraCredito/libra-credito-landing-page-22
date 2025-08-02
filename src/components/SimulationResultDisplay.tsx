@@ -231,7 +231,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         <Button
           onClick={onNewSimulation}
           variant="outline"
-          className="bg-white/10 border-white/30 text-white hover:bg-white/20 text-xs px-3 py-2"
+          className="bg-white/10 border-white/30 text-white hover:bg-white/20 text-xs px-2 py-1"
           size="sm"
         >
           <Calculator className="w-3 h-3 mr-1 text-white" />
