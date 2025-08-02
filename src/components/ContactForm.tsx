@@ -413,37 +413,39 @@ const ContactForm: React.FC<ContactFormProps> = ({
               />
             </div>
             
-            <div>
-              <label htmlFor="email-full" className="block text-sm font-medium text-libra-navy mb-1">
-                E-mail *
-              </label>
-              <Input
-                id="email-full"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Digite seu e-mail"
-                className={cn(invalidEmail && 'border-red-500 focus:border-red-500 focus:ring-red-500')}
-                required
-                aria-required="true"
-              />
-            </div>
-            
-            <div>
-              <label htmlFor="telefone-full" className="block text-sm font-medium text-libra-navy mb-1">
-                Telefone *
-              </label>
-              <Input
-                id="telefone-full"
-                type="tel"
-                value={telefone}
-                onChange={(e) => handlePhoneChange(e.target.value)}
-                placeholder="(99) 99999-9999"
-                inputMode="numeric"
-                className={cn(invalidTelefone && 'border-red-500 focus:border-red-500 focus:ring-red-500')}
-                required
-                aria-required="true"
-              />
+            <div className="space-y-3 md:space-y-0 md:grid md:grid-cols-2 md:gap-4">
+              <div className="flex-1">
+                <label htmlFor="email-full" className="block text-sm font-medium text-libra-navy mb-1">
+                  E-mail *
+                </label>
+                <Input
+                  id="email-full"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Digite seu e-mail"
+                  className={cn('h-12', invalidEmail && 'border-red-500 focus:border-red-500 focus:ring-red-500')}
+                  required
+                  aria-required="true"
+                />
+              </div>
+
+              <div className="flex-1">
+                <label htmlFor="telefone-full" className="block text-sm font-medium text-libra-navy mb-1">
+                  Telefone *
+                </label>
+                <Input
+                  id="telefone-full"
+                  type="tel"
+                  value={telefone}
+                  onChange={(e) => handlePhoneChange(e.target.value)}
+                  placeholder="(99) 99999-9999"
+                  inputMode="numeric"
+                  className={cn('h-12', invalidTelefone && 'border-red-500 focus:border-red-500 focus:ring-red-500')}
+                  required
+                  aria-required="true"
+                />
+              </div>
             </div>
 
             <fieldset className={cn('space-y-3', invalidImovelProprio && 'border border-red-500 rounded-md p-2')}>
