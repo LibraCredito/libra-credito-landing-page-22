@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4LXR55Y9HS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-4LXR55Y9HS');
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Libra Crédito | Empréstimo com Garantia de Imóvel</title>
@@ -357,37 +366,6 @@
         "reviewCount": "1250"
       }
     }
-    </script>
-    <!-- Lazy load analytics after critical content -->
-    <script>
-      // Defer analytics until after LCP
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      
-      // Load analytics after page interaction or 3 seconds
-      let analyticsLoaded = false;
-      const loadAnalytics = () => {
-        if (analyticsLoaded) return;
-        analyticsLoaded = true;
-        
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = 'https://www.googletagmanager.com/gtag/js?id=UA-XXXXXX';
-        document.head.appendChild(script);
-        
-        script.onload = () => {
-          gtag('js', new Date());
-          gtag('config', 'UA-XXXXXX', { send_page_view: false });
-        };
-      };
-      
-      // Load on first interaction
-      ['mousedown', 'touchstart', 'keydown', 'scroll'].forEach(event => {
-        document.addEventListener(event, loadAnalytics, { once: true, passive: true });
-      });
-      
-      // Fallback: load after 3 seconds
-      setTimeout(loadAnalytics, 3000);
     </script>
   </head>
 
