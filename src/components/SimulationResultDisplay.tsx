@@ -131,7 +131,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
       <div className="flex flex-col h-full bg-libra-green rounded-xl p-4 text-libra-navy shadow-xl">
 
         {/* Header compacto */}
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-2 mb-2">
           <CheckCircle className="w-5 h-5 text-white" />
           <div>
             <h3 className="font-bold text-white">Simulação Pronta!</h3>
@@ -139,10 +139,10 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         </div>
 
         {/* Valor da parcela destacado */}
-        <div className="bg-green-50 rounded-lg p-4 mb-4 text-libra-navy">
+        <div className="bg-green-50 rounded-lg p-4 mb-2 text-libra-navy">
           {amortizacao === 'SAC' && primeiraParcela ? (
             <div>
-              <div className="text-xs font-medium mb-3 text-center">Sistema SAC - Parcelas Decrescentes</div>
+              <div className="text-xs font-medium mb-2 text-center">Sistema SAC - Parcelas Decrescentes</div>
               <div className="grid grid-cols-2 gap-3 text-center">
                 {/* Primeira parcela */}
                 <div className="bg-green-100 rounded-lg p-3 border border-green-200">
@@ -173,7 +173,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         </div>
 
         {/* Renda mínima */}
-        <div className="bg-green-50 rounded-lg p-3 mb-4 text-center relative text-libra-navy">
+        <div className="bg-green-50 rounded-lg p-3 mb-2 text-center relative text-libra-navy">
           <div className="text-sm mb-1 flex items-center justify-center gap-1">
             <span className="font-bold">Renda necessária</span>
             <TooltipInfo content="Renda familiar podendo ser composta por até 4 pessoas">
@@ -191,7 +191,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         </div>
 
         {/* Informações sobre taxa e custos */}
-        <div className="bg-green-100 rounded-lg p-3 mb-4 lg:mb-3 text-xs text-[#003399]">
+        <div className="bg-green-100 rounded-lg p-3 mb-2 lg:mb-2 text-xs text-[#003399]">
           <p className="mb-1">
             <strong>Parcelas calculadas</strong> pelo sistema {amortizacao} com taxa de juros de 1,19% a.m. + IPCA.
           </p>
@@ -201,7 +201,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         </div>
 
         {/* CTA e Formulário compacto */}
-        <div className="bg-libra-blue text-white rounded-lg p-4 mb-4 lg:mb-3 flex items-center justify-center gap-2">
+        <div className="bg-libra-blue text-white rounded-lg p-4 mb-2 lg:mb-2 flex items-center justify-center gap-2">
           <Headphones className="w-5 h-5 text-[#003399]" />
         <p className="text-lg font-bold">
           Gostou? <span className="block sm:inline">Solicite uma consultoria gratuita!</span>
@@ -223,7 +223,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
     <div className="flex flex-col h-full bg-libra-green rounded-xl p-4 text-libra-navy shadow-xl">
 
       {/* Header compacto */}
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center justify-between mb-2">
       <div className="flex items-center gap-2">
           <CheckCircle className="w-5 h-5 text-white" />
           <h3 className="text-lg font-bold text-white">Simulação Pronta!</h3>
@@ -240,11 +240,11 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
       </div>
 
       {/* Valor da parcela e renda mínima em layout compacto */}
-      <div className="mb-3 text-libra-navy">
+      <div className="mb-2 text-libra-navy">
         {amortizacao === 'SAC' && primeiraParcela ? (
           <div className="bg-green-50 rounded-lg p-2">
             <div className="text-xs font-medium mb-2 text-center">Sistema SAC - Parcelas Decrescentes</div>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-1">
               {/* Primeira parcela */}
               <div className="text-center bg-green-100 rounded-lg p-1 border border-green-200">
                 <div className="text-xs font-medium mb-1">1ª Parcela</div>
@@ -281,6 +281,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         ) : (
           <div className="grid grid-cols-2 gap-2">
             <div className="bg-green-50 rounded-lg p-3 text-center">
+
               <div className="text-xs mb-1">Parcela Fixa (PRICE)</div>
               <div className="text-xl lg:text-2xl font-bold">
                 R$ {valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
@@ -303,7 +304,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
 
 
       {/* Informações sobre taxa e custos */}
-      <div className="bg-green-100 rounded-lg p-3 mb-4 lg:mb-3 text-xs text-[#003399]">
+      <div className="bg-green-100 rounded-lg p-3 mb-2 lg:mb-2 text-xs text-[#003399]">
         <p className="mb-1">
           <strong>Parcelas calculadas</strong> pelo sistema {amortizacao} com taxa de juros de 1,19% a.m. + IPCA.
         </p>
@@ -313,7 +314,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
       </div>
 
       {/* CTA e Formulário compacto */}
-      <div className="bg-libra-blue text-white rounded-lg p-4 mb-4 lg:mb-3 flex items-center justify-center gap-2">
+      <div className="bg-libra-blue text-white rounded-lg p-4 mb-2 lg:mb-2 flex items-center justify-center gap-2">
         <Headphones className="w-5 h-5 text-[#003399]" />
         <p className="text-lg font-bold">
           Gostou? <span className="block sm:inline">Solicite uma consultoria gratuita!</span>
