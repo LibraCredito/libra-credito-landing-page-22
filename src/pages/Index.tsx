@@ -5,11 +5,8 @@ import { useIsMobile } from '@/hooks/useMobileContext';
 
 // Critical components - NOT lazy loaded for LCP
 import HeroPremium from '@/components/HeroPremium';
-import TrustBarMinimal from '@/components/TrustBarMinimal';
 import WaveSeparator from '@/components/ui/WaveSeparator';
-import LogoBand from '@/components/LogoBand';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 
 // Lazy loading dos componentes pesados - com threshold otimizado
 const Benefits = lazy(() => import('@/components/Benefits'));
@@ -17,6 +14,9 @@ const Testimonials = lazy(() => import('@/components/Testimonials'));
 const MediaSection = lazy(() => import('@/components/MediaSection'));
 const FAQ = lazy(() => import('@/components/FAQ'));
 const BlogSection = lazy(() => import('@/components/BlogSection'));
+const TrustBarMinimal = lazy(() => import('@/components/TrustBarMinimal'));
+const LogoBand = lazy(() => import('@/components/LogoBand'));
+const Footer = lazy(() => import('@/components/Footer'));
 
 
 const Index: React.FC = () => {
@@ -55,14 +55,20 @@ const Index: React.FC = () => {
       {/* Faixa Separadora com Ondas - Apenas adicionada, sem alterar o resto */}
       <WaveSeparator variant="hero" height="md" />
       
-      <TrustBarMinimal />
-      
+      <Suspense fallback={null}>
+        <TrustBarMinimal />
+      </Suspense>
+
       <Suspense fallback={null}>
         <Benefits />
       </Suspense>
 
       {/* Faixa azul com logo - apenas para desktop */}
-      {!isMobile && <LogoBand />}
+      {!isMobile && (
+        <Suspense fallback={null}>
+          <LogoBand />
+        </Suspense>
+      )}
 
       <Suspense fallback={null}>
         <Testimonials />
@@ -137,7 +143,9 @@ const Index: React.FC = () => {
       </Suspense>
       </main>
       
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
     </div>
   );
 };
