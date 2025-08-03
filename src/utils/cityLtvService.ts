@@ -11,7 +11,7 @@
 let ltvCidades: CityLtvData[] | null = null;
 let loadingPromise: Promise<CityLtvData[]> | null = null;
 
-async function loadCityData(): Promise<CityLtvData[]> {
+export async function loadCityData(): Promise<CityLtvData[]> {
   // Se já está em cache, retorna imediatamente
   if (ltvCidades) {
     return ltvCidades;
