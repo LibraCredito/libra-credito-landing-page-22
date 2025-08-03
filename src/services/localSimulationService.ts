@@ -14,7 +14,6 @@
  * - Compatibilidade total com componentes existentes
  */
 
-import { validateCity, validateLTV } from '@/utils/cityLtvService';
 import { validateEmail, validatePhone, formatPhone } from '@/utils/validations';
 import { supabaseApi, SimulacaoData, supabase } from '@/lib/supabase';
 
@@ -72,6 +71,7 @@ export class LocalSimulationService {
       this.validateSimulationInput(input);
       
       // 2. Validar cidade e LTV
+      const { validateCity, validateLTV } = await import('@/utils/cityLtvService');
       const cityValidation = await validateCity(input.cidade);
       console.log('🏘️ Validação da cidade:', cityValidation);
       

@@ -13,7 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { validateCity, validateLTV, searchCities, CityValidationResult } from '@/utils/cityLtvService';
+import type { CityValidationResult } from '@/utils/cityLtvService';
 import { formatBRL, norm } from '@/utils/formatters';
 import AlertCircle from 'lucide-react/dist/esm/icons/alert-circle';
 import CheckCircle from 'lucide-react/dist/esm/icons/check-circle';
@@ -57,10 +57,12 @@ const LocalSimulationForm: React.FC = () => {
   // Buscar cidades conforme o usuário digita
   useEffect(() => {
     if (cidade.length >= 2) {
-      searchCities(cidade).then(suggestions => {
+      (async () => {
+        const { searchCities } = await import('@/utils/cityLtvService');
+        const suggestions = await searchCities(cidade);
         setCitySuggestions(suggestions);
         setShowSuggestions(suggestions.length > 0);
-      });
+      })();
     } else {
       setCitySuggestions([]);
       setShowSuggestions(false);
@@ -70,17 +72,21 @@ const LocalSimulationForm: React.FC = () => {
   // Validar cidade quando selecionada
   useEffect(() => {
     if (cidade) {
-      validateCity(cidade).then(validation => {
-        setCityValidation(validation);
-      }).catch(error => {
-        console.error('Erro ao validar cidade:', error);
-        setCityValidation({
-          found: false,
-          status: 'not_found',
-          message: 'Erro ao carregar dados da cidade',
-          allowCalculation: false
-        });
-      });
+      (async () => {
+        try {
+          const { validateCity } = await import('@/utils/cityLtvService');
+          const validation = await validateCity(cidade);
+          setCityValidation(validation);
+        } catch (error) {
+          console.error('Erro ao validar cidade:', error);
+          setCityValidation({
+            found: false,
+            status: 'not_found',
+            message: 'Erro ao carregar dados da cidade',
+            allowCalculation: false
+          });
+        }
+      })();
     } else {
       setCityValidation(null);
     }
@@ -97,13 +103,15 @@ const LocalSimulationForm: React.FC = () => {
       cidade &&
       cityValidation?.allowCalculation
     ) {
-      validateLTV(empValue, imValue, cidade).then(validation => {
+      (async () => {
+        const { validateLTV } = await import('@/utils/cityLtvService');
+        const validation = await validateLTV(empValue, imValue, cidade);
         setLtvValidation(validation);
-      });
+      })();
     } else {
       setLtvValidation(null);
     }
-  }, [valorEmprestimo, valorImovel, cityValidation]);
+  }, [valorEmprestimo, valorImovel, cidade, cityValidation]);
 
   const handleCitySelect = useCallback((selectedCity: string) => {
     setCidade(selectedCity);

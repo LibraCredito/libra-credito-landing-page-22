@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import MapPin from 'lucide-react/dist/esm/icons/map-pin';
-import { searchCities } from '@/utils/cityLtvService';
 import scrollToTarget from '@/utils/scrollToTarget';
 
 import { cn } from '@/lib/utils';
@@ -50,6 +49,7 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
 
     fetchTimeout.current = setTimeout(async () => {
       try {
+        const { searchCities } = await import('@/utils/cityLtvService');
         const results = await searchCities(inputValue);
         setSuggestions(results);
         setIsLoading(false);
