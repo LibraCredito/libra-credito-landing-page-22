@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4LXR55Y9HS"></script>
+    <!-- Google tag (gtag.js) loaded after initial page load -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function loadGtag() {
+        const script = document.createElement('script');
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-4LXR55Y9HS';
+        script.async = true;
+        document.head.appendChild(script);
 
-      gtag('config', 'G-4LXR55Y9HS');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-4LXR55Y9HS');
+      }
+
+      if (window.requestIdleCallback) {
+        window.requestIdleCallback(loadGtag);
+      } else {
+        window.addEventListener('DOMContentLoaded', loadGtag);
+      }
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
