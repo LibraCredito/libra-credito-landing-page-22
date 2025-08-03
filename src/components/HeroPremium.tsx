@@ -1,16 +1,13 @@
-import React from 'react';
 import TypewriterText from './TypewriterText';
 import HeroButton from '@/components/ui/HeroButton';
 import ChevronDown from 'lucide-react/dist/esm/icons/chevron-down';
 import Shield from 'lucide-react/dist/esm/icons/shield';
 import { useNavigate } from 'react-router-dom';
 import OptimizedYouTube from './OptimizedYouTube';
-import { useIsMobile } from '@/hooks/use-mobile';
 import scrollToTarget from '@/utils/scrollToTarget';
 
 const HeroPremium: React.FC = () => {
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
 
   const alternatingTexts = [
     'Crédito com Garantia de Imóvel',
@@ -53,7 +50,6 @@ const HeroPremium: React.FC = () => {
           {/* Lado Esquerdo */}
           <div className="text-[#003399] max-w-lg mx-auto space-y-4 md:space-y-5 text-center flex flex-col items-center">
             <div>
-              {isMobile && <p className="mb-2">&nbsp;</p>}
               <h1
                 id="hero-heading"
                 className="text-xl md:text-3xl lg:text-4xl font-extrabold mb-4 leading-tight"
@@ -93,7 +89,7 @@ const HeroPremium: React.FC = () => {
               <OptimizedYouTube
                 videoId="E9lwL6R2l1s"
                 title="Vídeo institucional Libra Crédito"
-                priority={true}
+                priority
                 className="w-full h-full"
                 thumbnailSrc="/images/optimized/video-thumbnail.webp"
               />
