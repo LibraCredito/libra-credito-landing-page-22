@@ -31,6 +31,12 @@ export interface PloomesPayload {
   telefone: string;
   imovelProprio: 'Imóvel próprio' | 'Imóvel de terceiro';
   aceitaPolitica: boolean;
+  utm_source?: string | null;
+  utm_medium?: string | null;
+  utm_campaign?: string | null;
+  utm_term?: string | null;
+  utm_content?: string | null;
+  landing_page?: string | null;
 }
 
 // Interface para resposta do Ploomes
@@ -73,6 +79,12 @@ export class PloomesService {
     email: string;
     telefone: string;
     imovelProprio: 'proprio' | 'terceiro';
+    utm_source?: string | null;
+    utm_medium?: string | null;
+    utm_campaign?: string | null;
+    utm_term?: string | null;
+    utm_content?: string | null;
+    landing_page?: string | null;
   }): Promise<PloomesResponse> {
     try {
       console.log('🚀 Iniciando cadastro no Ploomes:', data);
@@ -89,7 +101,13 @@ export class PloomesService {
         email: data.email.toLowerCase().trim(),
         telefone: this.limparTelefone(data.telefone),
         imovelProprio: IMOVEL_MAP[data.imovelProprio],
-        aceitaPolitica: true // Sempre true pois já foi validado antes
+        aceitaPolitica: true, // Sempre true pois já foi validado antes
+        utm_source: data.utm_source || null,
+        utm_medium: data.utm_medium || null,
+        utm_campaign: data.utm_campaign || null,
+        utm_term: data.utm_term || null,
+        utm_content: data.utm_content || null,
+        landing_page: data.landing_page || null
       };
       
       console.log('📤 Payload formatado para Ploomes:', payload);

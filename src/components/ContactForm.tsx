@@ -34,7 +34,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
   buttonClassName = '',
   compact = false
 }) => {
-  const { sessionId } = useUserJourney();
+  const { sessionId, getJourneyData } = useUserJourney();
   const navigate = useNavigate();
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
@@ -134,7 +134,9 @@ const ContactForm: React.FC<ContactFormProps> = ({
         imovelProprio,
         imovelProprioTexto: imovelProprio === 'proprio' ? 'Imóvel Próprio' : 'Imóvel de Terceiro'
       });
-      
+
+      const journey = getJourneyData();
+
       // Usar o serviço local com dados da simulação
       await LocalSimulationService.processContact({
         simulationId: simulationResult.id,
@@ -150,7 +152,13 @@ const ContactForm: React.FC<ContactFormProps> = ({
         valorParcelaCalculada: simulationResult.valor,
         tipoAmortizacao: simulationResult.amortizacao,
         quantidadeParcelas: simulationResult.parcelas,
-        aceitaPolitica: aceitePrivacidade
+        aceitaPolitica: aceitePrivacidade,
+        utm_source: journey?.utm_source,
+        utm_medium: journey?.utm_medium,
+        utm_campaign: journey?.utm_campaign,
+        utm_term: journey?.utm_term,
+        utm_content: journey?.utm_content,
+        landing_page: journey?.landing_page
       });
       
       // Redirecionar diretamente para a página de confirmação
