@@ -31,7 +31,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, loading, error }) => {
         <div className="text-center">
           <div className="mx-auto h-16 w-auto flex justify-center mb-6">
             <img
-              src="/images/logos/libra-logo.png"
+              src="/images/logos/logo-azul.png"
               alt="Libra Crédito"
               className="h-16 w-auto"
               loading="lazy"
