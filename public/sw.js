@@ -8,7 +8,7 @@ const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/src/styles/critical.css',
-  '/images/logos/libra-logo.png',
+  '/images/logos/logo-azul.png',
   '/images/logos/libra-icon.png',
   '/favicon.ico',
   '/manifest.json'
