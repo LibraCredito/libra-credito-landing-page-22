@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import ScrollToTop from '@/components/ScrollToTop';
 import { MobileProvider } from '@/hooks/useMobileContext';
 import { Toaster } from '@/components/ui/toast';
+import { Analytics } from '@vercel/analytics/react';
 
 const TooltipProvider = lazy(() => import('@/components/ui/tooltip').then(m => ({ default: m.TooltipProvider })));
 
@@ -100,6 +101,7 @@ const AppServer = () => {
           </Suspense>
         </StaticRouter>
         <Toaster />
+        <Analytics />
       </MobileProvider>
     </QueryClientProvider>
   );
