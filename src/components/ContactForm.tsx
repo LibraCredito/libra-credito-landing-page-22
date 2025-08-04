@@ -12,6 +12,13 @@ import Building from 'lucide-react/dist/esm/icons/building';
 import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right';
 import { cn } from '@/lib/utils';
 
+/**
+ * Props for the contact form component.
+ *
+ * The form automatically forwards any available UTM parameters and the
+ * original landing_page URL from the user's journey to the backend when the
+ * contact is submitted.
+ */
 interface ContactFormProps {
   simulationResult: {
     id?: string;
@@ -137,7 +144,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
       const journey = getJourneyData();
 
-      // Usar o serviço local com dados da simulação
+
       await LocalSimulationService.processContact({
         simulationId: simulationResult.id,
         sessionId,
@@ -153,12 +160,13 @@ const ContactForm: React.FC<ContactFormProps> = ({
         tipoAmortizacao: simulationResult.amortizacao,
         quantidadeParcelas: simulationResult.parcelas,
         aceitaPolitica: aceitePrivacidade,
-        utm_source: journey?.utm_source,
-        utm_medium: journey?.utm_medium,
-        utm_campaign: journey?.utm_campaign,
-        utm_term: journey?.utm_term,
-        utm_content: journey?.utm_content,
-        landing_page: journey?.landing_page
+        utm_source: journey?.utm_source ?? null,
+        utm_medium: journey?.utm_medium ?? null,
+        utm_campaign: journey?.utm_campaign ?? null,
+        utm_term: journey?.utm_term ?? null,
+        utm_content: journey?.utm_content ?? null,
+        landing_page: journey?.landing_page ?? null
+
       });
       
       // Redirecionar diretamente para a página de confirmação
