@@ -45,11 +45,11 @@ const MediaSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-md md:max-w-6xl mx-auto place-items-center md:place-items-stretch">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full md:max-w-6xl mx-auto place-items-center md:place-items-stretch">
           {mediaLinks.map((media) => (
             <div
               key={media.name}
-              className="aspect-square w-full flex items-center justify-center bg-white rounded-lg md:aspect-auto md:flex-col md:h-full md:p-6 md:shadow-sm md:text-center"
+              className="aspect-square w-full p-4 flex items-center justify-center bg-white rounded-lg md:aspect-auto md:flex-col md:h-full md:p-6 md:shadow-sm md:text-center"
 
             >
               <a
@@ -62,7 +62,7 @@ const MediaSection: React.FC = () => {
                 <img
                   src={media.logo}
                   alt={`${media.name} - acesse matéria sobre Libra Crédito`}
-                  className="max-h-14 w-auto object-contain md:max-h-full"
+                  className="max-h-16 w-auto object-contain md:max-h-full"
                   loading="lazy"
                   width="200"
                   height="80"
