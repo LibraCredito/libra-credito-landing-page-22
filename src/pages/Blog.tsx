@@ -239,7 +239,7 @@ const Blog = () => {
                           loading="lazy"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
-                          target.src = '/images/blog/default-blog.jpg';
+                          target.src = 'https://placehold.co/600x400?text=Blog+Image';
                         }}
                       />
                     </div>
