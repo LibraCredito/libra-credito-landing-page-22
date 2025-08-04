@@ -81,7 +81,7 @@ const BottomNavigation: React.FC = () => {
   return (
     <>
       {/* Bottom Navigation Bar */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 safe-bottom">
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200">
         <div className="grid grid-cols-4 h-16">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -194,7 +194,7 @@ const BottomNavigation: React.FC = () => {
             </div>
 
             {/* Contact Info */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 border-t bg-gray-50 safe-bottom">
+            <div className="absolute bottom-0 left-0 right-0 p-4 border-t bg-gray-50">
               <p className="text-sm text-gray-600 text-center">
                 Atendimento: Segunda a Sexta, 9h às 18h
               </p>

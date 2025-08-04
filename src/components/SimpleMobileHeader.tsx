@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDevice } from '@/hooks/useDevice';
 import Menu from 'lucide-react/dist/esm/icons/menu';
 import X from 'lucide-react/dist/esm/icons/x';
+
 import { Button } from '@/components/ui/button';
 
 interface SimpleMobileHeaderProps {
@@ -10,7 +11,6 @@ interface SimpleMobileHeaderProps {
 }
 
 const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalClientes }) => {
-  const { hasNotch } = useDevice();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -30,9 +30,9 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
   };
 
   return (
-    <header 
+    <header
       data-mobile="true"
-      className={`fixed top-0 left-0 right-0 z-[9999] bg-white border-b border-gray-200 shadow-sm ${hasNotch ? 'pt-safe-top' : ''}`}
+      className="fixed top-0 left-0 right-0 z-[9999] bg-white border-b border-gray-200 shadow-sm"
     >
       <div className="h-[64px] px-4 flex items-center justify-between">
         {/* Logo */}
