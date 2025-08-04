@@ -14,6 +14,7 @@ import CheckCircle from 'lucide-react/dist/esm/icons/check-circle';
 import CreditCard from 'lucide-react/dist/esm/icons/credit-card';
 import { useNavigate } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
+import Seo from '@/components/Seo';
 
 const Vantagens: React.FC = () => {
   const navigate = useNavigate();
@@ -53,16 +54,13 @@ const Vantagens: React.FC = () => {
   // Cálculo do valor máximo para animação das barras
   const maxTaxa = useMemo(() => Math.max(...taxasJuros.map(item => item.taxa)), [taxasJuros]);
 
-  useEffect(() => {
-    // Meta Title otimizado para vantagens - 57 caracteres
-    document.title = "Vantagens Home Equity | Libra Crédito 1,19% a.m.";
-    
-    // Meta Description otimizada - 153 caracteres
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Vantagens do crédito com garantia de imóvel: taxa mínima 1,19% a.m., até 180 meses, valores até 50% do imóvel. Compare as taxas agora.');
-    }
-  }, []);
+  const vantJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Vantagens do Crédito com Garantia de Imóvel',
+    description:
+      'Vantagens do crédito com garantia de imóvel: taxa mínima 1,19% a.m., até 180 meses, valores até 50% do imóvel. Compare as taxas agora.',
+  };
 
   // Animação das barras da tabela
   useEffect(() => {
@@ -185,6 +183,12 @@ const Vantagens: React.FC = () => {
 
   return (
     <MobileLayout>
+      <Seo
+        title="Vantagens Home Equity | Libra Crédito 1,19% a.m."
+        description="Vantagens do crédito com garantia de imóvel: taxa mínima 1,19% a.m., até 180 meses, valores até 50% do imóvel. Compare as taxas agora."
+        jsonLd={vantJsonLd}
+        schemaId="vantagens-schema"
+      />
       {/* Faixa Separadora Superior Invertida - Exatamente como na home */}
       <WaveSeparator variant="hero" height={isMobile ? "sm" : "md"} inverted />
       
