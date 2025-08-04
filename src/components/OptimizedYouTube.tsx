@@ -79,11 +79,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
             display: 'block',
           }}
           loading={priority ? 'eager' : 'lazy'}
-          onLoad={() => {
-            if (placeholderRef.current) {
-              placeholderRef.current.style.display = 'none';
-            }
-          }}
+          fetchPriority={priority ? 'high' : undefined}
 
         />
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors duration-200">
