@@ -1,11 +1,11 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { hydrateRoot } from 'react-dom/client';
 import App from './App.tsx'
 import './index.css';
 import './styles/overflow-fix.css';
 import { requestIdleCallback as requestIdleCb } from './utils/performance';
 
-// Renderização direta com createRoot para LCP otimizado
+// Hidratação do HTML pré-renderizado para LCP otimizado
 const renderApp = () => {
   // Definir idioma da página
   document.documentElement.lang = 'pt-BR';
@@ -21,7 +21,7 @@ const renderApp = () => {
   
   const root = document.getElementById('root');
   if (root) {
-    createRoot(root).render(<App />);
+    hydrateRoot(root, <App />);
   }
 };
 
