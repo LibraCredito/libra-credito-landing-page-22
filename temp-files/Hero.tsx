@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import PremiumButton from '@/components/ui/PremiumButton';
 import { ChevronDown, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import OptimizedYouTube from './OptimizedYouTube';
+import OptimizedYouTube from '@/components/OptimizedYouTube';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Hero: React.FC = () => {
@@ -109,7 +109,7 @@ const Hero: React.FC = () => {
                 title="Vídeo institucional Libra Crédito"
                 priority={true}
                 className="w-full h-full"
-                thumbnailSrc="/images/thumbnail-libra.webp"
+                thumbnailSrc="/images/media/video-cgi-libra.webp"
               />
             </div>
           </div>
