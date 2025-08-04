@@ -45,11 +45,11 @@ const MediaSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-md md:max-w-6xl mx-auto place-items-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-md md:max-w-6xl mx-auto place-items-center md:place-items-stretch">
           {mediaLinks.map((media) => (
             <div
               key={media.name}
-              className="aspect-square w-full flex items-center justify-center bg-white md:aspect-auto md:flex-col md:p-6 md:rounded-lg md:shadow-sm md:text-center"
+              className="aspect-square w-full flex items-center justify-center bg-white rounded-lg md:aspect-auto md:flex-col md:h-full md:p-6 md:shadow-sm md:text-center"
 
             >
               <a
