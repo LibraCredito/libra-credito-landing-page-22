@@ -125,7 +125,7 @@ const Index: React.FC = () => {
         >
           <div className="flex items-center px-4 max-w-full">
             <img
-              src="/images/logos/logo-azul.png"
+              src="/images/logos/logo-branco.svg"
               alt="Libra Crédito"
               className="h-12 sm:h-16 w-auto flex-shrink-0"
             />

@@ -6,7 +6,7 @@ const LogoBand: React.FC = () => {
     <div className="w-full bg-[#003399] flex justify-center py-4">
       <div className="flex items-center">
         <ImageOptimizer
-          src="/images/logos/logo-azul.png"
+          src="/images/logos/logo-branco.svg"
           alt="Libra Crédito"
           className="h-20 w-20"
           aspectRatio={1}

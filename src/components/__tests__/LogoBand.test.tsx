@@ -15,6 +15,7 @@ describe('LogoBand', () => {
     expect(img).toHaveClass('w-20');
     expect(img).not.toHaveClass('h-24');
     expect(img).not.toHaveClass('w-auto');
+    expect(img.getAttribute('src')).toBe('/images/logos/logo-branco.svg');
     expect(img).toHaveAttribute('width', '80');
     expect(img).toHaveAttribute('height', '80');
   });
