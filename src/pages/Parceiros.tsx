@@ -572,7 +572,6 @@ const Parceiros = () => {
                 
                 <div className="text-xs text-libra-silver/80 space-y-2">
                   <p>✓ Material de divulgação</p>
-                  <p>✓ Relatórios de comissão</p>
                   <p>✓ Suporte especializado</p>
                 </div>
               </div>
