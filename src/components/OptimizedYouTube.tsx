@@ -1,11 +1,12 @@
 import Play from 'lucide-react/dist/esm/icons/play';
-import type { FC, MouseEvent } from 'react';
+import { type FC, type MouseEvent, useRef } from 'react';
 
 interface OptimizedYouTubeProps {
   videoId: string;
   title: string;
   className?: string;
   priority?: boolean;
+  fetchPriority?: 'high' | 'low' | 'auto';
   thumbnailSrc?: string;
 }
 
@@ -14,9 +15,13 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   title,
   className = '',
   priority = false,
+  fetchPriority,
   thumbnailSrc,
 }) => {
   const thumbnailImage = thumbnailSrc || '/images/optimized/video-thumbnail.webp';
+  const placeholderRef = useRef<HTMLImageElement | null>(null);
+  const placeholderSrc =
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 360'%3E%3Crect width='480' height='360' fill='%23e2e8f0'/%3E%3C/svg%3E";
 
   const loadVideo = (e: MouseEvent<HTMLButtonElement>) => {
     const container = e.currentTarget.parentElement as HTMLElement | null;
@@ -45,6 +50,22 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
         type="button"
       >
         <img
+          ref={placeholderRef}
+          src={placeholderSrc}
+          alt=""
+          aria-hidden="true"
+          width="480"
+          height="360"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+          }}
+        />
+        <img
           src={thumbnailImage}
           alt={`Miniatura do ${title}`}
           width="480"
@@ -59,6 +80,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
           }}
           loading={priority ? 'eager' : 'lazy'}
           fetchPriority={priority ? 'high' : undefined}
+
         />
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors duration-200">
           <div className="w-16 h-16 md:w-20 md:h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:bg-red-700 transition-all duration-200 group-hover:scale-105">
