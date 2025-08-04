@@ -10,6 +10,7 @@ const STATIC_ASSETS = [
   '/src/styles/critical.css',
   '/images/logos/logo-azul.png',
   '/images/logos/libra-icon.png',
+
   '/favicon.ico',
   '/manifest.json'
 ];
@@ -293,8 +294,8 @@ self.addEventListener('push', (event) => {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: '/images/logos/libra-icon.png',
-      badge: '/images/logos/libra-icon.png',
+      icon: '/icon-192.png',
+      badge: '/icon-192.png',
       data: data.data
     };
     
