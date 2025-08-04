@@ -49,7 +49,8 @@ const MediaSection: React.FC = () => {
           {mediaLinks.map((media) => (
             <div
               key={media.name}
-              className="flex flex-col items-center text-center p-0 md:p-6 md:bg-white md:rounded-lg md:shadow-sm"
+              className="flex flex-col items-center text-center p-0 md:p-6 bg-white md:rounded-lg md:shadow-sm"
+
             >
               <a
                 href={media.url}
