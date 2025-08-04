@@ -50,6 +50,7 @@ const MediaSection: React.FC = () => {
             <div
               key={media.name}
               className="aspect-square w-full flex items-center justify-center bg-white md:aspect-auto md:flex-col md:p-6 md:rounded-lg md:shadow-sm md:text-center"
+
             >
               <a
                 href={media.url}
@@ -57,6 +58,7 @@ const MediaSection: React.FC = () => {
                 rel="noopener noreferrer"
                 aria-label={`Ver matéria da ${media.name}`}
                 className="flex h-full w-full items-center justify-center md:h-20 md:mb-4"
+
               >
                 <img
                   src={media.logo}
