@@ -5,10 +5,19 @@ interface OptimizedYouTubeProps {
   videoId: string;
   title: string;
   className?: string;
+  /**
+   * If true, the thumbnail is loaded eagerly with high fetch priority.
+   * Use for above-the-fold videos that impact LCP.
+   */
   priority?: boolean;
   thumbnailSrc?: string;
 }
 
+/**
+ * Lightweight YouTube embed that swaps in the real iframe on demand.
+ * Set `priority` for above-the-fold videos so their thumbnail is requested early
+ * with high fetch priority, improving Largest Contentful Paint.
+ */
 const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   videoId,
   title,
@@ -44,6 +53,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
         aria-label={`Reproduzir vídeo: ${title}`}
         type="button"
       >
+        {/* When priority is true, set fetchPriority="high" so the thumbnail is requested early for better LCP */}
         <img
           src={thumbnailImage}
           alt={`Miniatura do ${title}`}
@@ -58,6 +68,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
             display: 'block',
           }}
           loading={priority ? 'eager' : 'lazy'}
+          fetchPriority={priority ? 'high' : undefined}
         />
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors duration-200">
           <div className="w-16 h-16 md:w-20 md:h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:bg-red-700 transition-all duration-200 group-hover:scale-105">
