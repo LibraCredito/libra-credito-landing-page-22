@@ -45,23 +45,23 @@ const MediaSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-md md:max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-md md:max-w-6xl mx-auto place-items-center">
           {mediaLinks.map((media) => (
             <div
               key={media.name}
-              className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center text-center"
+              className="aspect-square w-full flex items-center justify-center bg-white md:aspect-auto md:flex-col md:p-6 md:rounded-lg md:shadow-sm md:text-center"
             >
               <a
                 href={media.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Ver matéria da ${media.name}`}
-                className={`w-full flex items-center justify-center mb-4 ${media.name === 'G1 Globo' ? 'h-14 md:h-20' : 'h-12 md:h-20'}`}
+                className="flex h-full w-full items-center justify-center md:h-20 md:mb-4"
               >
                 <img
                   src={media.logo}
                   alt={`${media.name} - acesse matéria sobre Libra Crédito`}
-                  className="h-full w-auto object-contain"
+                  className="max-h-14 w-auto object-contain md:max-h-full"
                   loading="lazy"
                   width="200"
                   height="80"
