@@ -54,6 +54,12 @@ export interface ContactFormInput {
   telefone: string;
   imovelProprio: 'proprio' | 'terceiro';
   observacoes?: string;
+  utm_source?: string | null;
+  utm_medium?: string | null;
+  utm_campaign?: string | null;
+  utm_term?: string | null;
+  utm_content?: string | null;
+  landing_page?: string | null;
 }
 
 // Classe principal do serviço local
@@ -319,7 +325,13 @@ export class LocalSimulationService {
         email: input.email.trim().toLowerCase(),
         telefone: input.telefone.replace(/\D/g, ''), // Remove all non-digits
         imovelProprio: input.imovelProprio === 'proprio' ? 'Imóvel próprio' : 'Imóvel de terceiro',
-        aceitaPolitica: Boolean(input.aceitaPolitica)
+        aceitaPolitica: Boolean(input.aceitaPolitica),
+        utm_source: input.utm_source || null,
+        utm_medium: input.utm_medium || null,
+        utm_campaign: input.utm_campaign || null,
+        utm_term: input.utm_term || null,
+        utm_content: input.utm_content || null,
+        landing_page: input.landing_page || null
       };
 
       // Validar campos obrigatórios
