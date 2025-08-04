@@ -1,31 +1,22 @@
 import Play from 'lucide-react/dist/esm/icons/play';
-import { type FC, type MouseEvent, useRef } from 'react';
+import { type FC, type MouseEvent, useEffect, useRef } from 'react';
 
 interface OptimizedYouTubeProps {
   videoId: string;
   title: string;
   className?: string;
-  /**
-   * If true, the thumbnail is loaded eagerly with high fetch priority.
-   * Use for above-the-fold videos that impact LCP.
-   */
-  priority?: boolean;
-  fetchPriority?: 'high' | 'low' | 'auto';
   decoding?: 'sync' | 'async' | 'auto';
   thumbnailSrc?: string;
 }
 
 /**
  * Lightweight YouTube embed that swaps in the real iframe on demand.
- * Set `priority` for above-the-fold videos so their thumbnail is requested early
- * with high fetch priority, improving Largest Contentful Paint.
+ * Uses an SVG placeholder for instant paint while the real image loads lazily.
  */
 const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   videoId,
   title,
   className = '',
-  priority = false,
-  fetchPriority,
   decoding = 'async',
   thumbnailSrc,
 }) => {
@@ -35,11 +26,50 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   const placeholderSrc =
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 360'%3E%3Crect width='480' height='360' fill='%23e2e8f0'/%3E%3C/svg%3E";
 
-  const handleThumbnailLoad = () => {
-    if (placeholderRef.current) {
-      placeholderRef.current.style.display = 'none';
+  useEffect(() => {
+    const imgEl = placeholderRef.current;
+    if (!imgEl) return;
+
+    const loadRealImage = () => {
+      const img = new Image();
+      img.loading = 'lazy';
+      // @ts-expect-error fetchPriority is experimental
+      img.fetchPriority = 'low';
+      img.decoding = decoding;
+      img.onload = () => {
+        if (placeholderRef.current) {
+          placeholderRef.current.src = thumbnailImage;
+        }
+      };
+      img.src = thumbnailImage;
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            observer.disconnect();
+            if ('requestIdleCallback' in window) {
+              // @ts-expect-error requestIdleCallback is not in the DOM lib yet
+              requestIdleCallback(loadRealImage);
+            } else {
+              loadRealImage();
+            }
+          }
+        });
+      });
+      observer.observe(imgEl);
+      return () => observer.disconnect();
     }
-  };
+
+    if ('requestIdleCallback' in window) {
+      // @ts-expect-error requestIdleCallback is not in the DOM lib yet
+      requestIdleCallback(loadRealImage);
+    } else {
+      const id = setTimeout(loadRealImage, 200);
+      return () => clearTimeout(id);
+    }
+  }, [thumbnailImage, decoding]);
 
   const loadVideo = (e: MouseEvent<HTMLButtonElement>) => {
     const container = e.currentTarget.parentElement as HTMLElement | null;
@@ -67,7 +97,6 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
         aria-label={`Reproduzir vídeo: ${title}`}
         type="button"
       >
-        {/* When priority is true, set fetchPriority="high" so the thumbnail is requested early for better LCP */}
         <img
           ref={placeholderRef}
           src={placeholderSrc}
@@ -75,32 +104,18 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
           aria-hidden="true"
           width="480"
           height="360"
-          style={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            display: 'block',
-          }}
-        />
-        <img
-          src={thumbnailImage}
-          alt={`Miniatura do ${title}`}
-          width="480"
-          height="360"
-          style={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            display: 'block',
-          }}
-          loading={priority ? 'eager' : 'lazy'}
-          fetchPriority={fetchPriority ?? (priority ? 'high' : undefined)}
+          loading="lazy"
+          // @ts-expect-error fetchPriority is experimental
+          fetchPriority="low"
           decoding={decoding}
-          onLoad={handleThumbnailLoad}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+          }}
         />
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors duration-200">
           <div className="w-16 h-16 md:w-20 md:h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:bg-red-700 transition-all duration-200 group-hover:scale-105">
