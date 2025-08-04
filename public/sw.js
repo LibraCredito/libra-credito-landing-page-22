@@ -11,7 +11,7 @@ const STATIC_ASSETS = [
   '/images/logos/logo-azul.png',
   '/images/logos/libra-icon.png',
 
-  '/favicon.ico',
+  '/logo-azul.ico',
   '/manifest.json'
 ];
 
@@ -227,7 +227,7 @@ function isStaticAsset(url) {
     url.pathname.endsWith('.js') ||
     url.pathname.endsWith('.woff2') ||
     url.pathname.endsWith('.woff') ||
-    url.pathname.includes('/favicon')
+    url.pathname.endsWith('.ico')
   );
 }
 
