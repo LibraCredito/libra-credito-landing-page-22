@@ -35,6 +35,12 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   const placeholderSrc =
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 360'%3E%3Crect width='480' height='360' fill='%23e2e8f0'/%3E%3C/svg%3E";
 
+  const handleThumbnailLoad = () => {
+    if (placeholderRef.current) {
+      placeholderRef.current.style.display = 'none';
+    }
+  };
+
   const loadVideo = (e: MouseEvent<HTMLButtonElement>) => {
     const container = e.currentTarget.parentElement as HTMLElement | null;
     if (!container) return;
@@ -94,6 +100,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
           loading={priority ? 'eager' : 'lazy'}
           fetchPriority={fetchPriority ?? (priority ? 'high' : undefined)}
           decoding={decoding}
+          onLoad={handleThumbnailLoad}
         />
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors duration-200">
           <div className="w-16 h-16 md:w-20 md:h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:bg-red-700 transition-all duration-200 group-hover:scale-105">
