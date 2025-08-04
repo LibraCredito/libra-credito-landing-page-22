@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import Newspaper from 'lucide-react/dist/esm/icons/newspaper';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 const mediaLinks = [
   {
@@ -31,77 +30,72 @@ const mediaLinks = [
 ];
 
 const MediaSection: React.FC = () => {
-  const isMobile = useIsMobile();
-
   return (
-    <section className={`${isMobile ? 'py-8' : 'py-10'} bg-[#003399]`}>
+    <section className="py-8 md:py-10 bg-[#003399]">
       <div className="container mx-auto px-4">
-        <div className={`text-center ${isMobile ? 'mb-6' : 'mb-6'}`}>
+        <div className="text-center mb-6">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Newspaper className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'} text-white`} />
-            <h2 className={`${isMobile ? 'text-xl' : 'text-3xl'} font-bold text-white`}>
+            <Newspaper className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            <h2 className="text-xl md:text-3xl font-bold text-white">
               A Libra na Mídia
             </h2>
           </div>
-          <p className={`${isMobile ? 'text-sm px-2' : 'text-base'} text-white/80 max-w-2xl mx-auto`}>
+          <p className="text-sm md:text-base px-2 md:px-0 text-white/80 max-w-2xl mx-auto">
             Confira as principais matérias sobre a Libra Crédito
           </p>
         </div>
 
-        {isMobile ? (
-          // Layout Mobile - Grid 2x2 apenas com logos
-          <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
-            {mediaLinks.map((media) => (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-md md:max-w-6xl mx-auto">
+          {mediaLinks.map((media) => (
+            <div
+              key={media.name}
+              className="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center text-center"
+            >
               <a
-                key={media.name}
                 href={media.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 flex items-center justify-center"
                 aria-label={`Ver matéria da ${media.name}`}
+                className={`w-full flex items-center justify-center mb-4 ${media.name === 'G1 Globo' ? 'h-14 md:h-20' : 'h-12 md:h-20'}`}
               >
-                <div
-                  className={`w-full flex items-center justify-center ${media.name === 'G1 Globo' ? 'h-14' : 'h-12'}`}
-                >
-                  <img
-                    src={media.logo}
-                    alt={`${media.name} - acesse matéria sobre Libra Crédito`}
-                    className="h-full w-auto object-contain"
-                    loading="lazy"
-                  />
-                </div>
+                <img
+                  src={media.logo}
+                  alt={`${media.name} - acesse matéria sobre Libra Crédito`}
+                  className="h-full w-auto object-contain"
+                  loading="lazy"
+                  width="200"
+                  height="80"
+                />
               </a>
-            ))}
-          </div>
-        ) : (
-          // Layout Desktop - 4 Cards horizontais
-          <div className="grid grid-cols-4 gap-4 max-w-6xl mx-auto">
-            {mediaLinks.map((media) => (
-              <div key={media.name} className="bg-white rounded-lg shadow-sm p-6 flex flex-col">
-                <div className="h-20 mb-4 flex items-center justify-center">
-                  <img
-                    src={media.logo}
-                    alt={`${media.name} - veículo de mídia que destaca a Libra Crédito`}
-                    className="max-h-full max-w-full object-contain"
-                    loading="lazy"
-                  />
-                </div>
-                <p className="text-[#003399] font-medium mb-4 flex-grow text-sm leading-tight" 
-                   style={{display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden'}}>
-                  {media.title}
-                </p>
-                <Button
-                  onClick={() => window.open(media.url, '_blank')}
-                  variant="outline"
-                  size="sm"
-                  className="w-full border-[#003399] text-[#003399] hover:bg-[#003399] hover:text-white transition-colors text-xs py-2"
+              <p
+                className="hidden md:block text-[#003399] font-medium mb-4 flex-grow text-sm leading-tight"
+                style={{
+                  display: '-webkit-box',
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden'
+                }}
+              >
+                {media.title}
+              </p>
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="hidden md:inline-flex w-full border-[#003399] text-[#003399] hover:bg-[#003399] hover:text-white transition-colors text-xs py-2"
+              >
+                <a
+                  href={media.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Acessar matéria da ${media.name}`}
                 >
                   ACESSAR
-                </Button>
-              </div>
-            ))}
-          </div>
-        )}
+                </a>
+              </Button>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
