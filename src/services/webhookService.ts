@@ -204,7 +204,7 @@ export class WebhookService {
       let responseText = '';
       try {
         responseText = await response.text();
-      } catch (e) {
+      } catch {
         // Ignorar erro ao ler resposta
       }
       
