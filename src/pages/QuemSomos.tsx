@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import MobileLayout from '@/components/MobileLayout';
 import ImageOptimizer from '@/components/ImageOptimizer';
 import WaveSeparator from '@/components/ui/WaveSeparator';
@@ -10,19 +10,19 @@ import Shield from 'lucide-react/dist/esm/icons/shield';
 import TrendingUp from 'lucide-react/dist/esm/icons/trending-up';
 import { Link, useNavigate } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
+import Seo from '@/components/Seo';
 
 const QuemSomos = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
-  useEffect(() => {
-    document.title = "Quem Somos | Libra Crédito | Nossa História e Missão";
-    
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Conheça a Libra Crédito: nossa história, missão e valores. Especialistas em empréstimo com garantia de imóvel.');
-    }
-  }, []);
+  const aboutJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'Quem Somos - Libra Crédito',
+    description:
+      'Conheça a Libra Crédito: nossa história, missão e valores. Especialistas em empréstimo com garantia de imóvel.',
+  };
 
   const handleSimular = () => {
     navigate('/simulacao');
@@ -58,6 +58,12 @@ const QuemSomos = () => {
 
   return (
     <MobileLayout>
+      <Seo
+        title="Quem Somos | Libra Crédito | Nossa História e Missão"
+        description="Conheça a Libra Crédito: nossa história, missão e valores. Especialistas em empréstimo com garantia de imóvel."
+        jsonLd={aboutJsonLd}
+        schemaId="about-schema"
+      />
       <WaveSeparator variant="hero" height="md" inverted />
       <div className="bg-white">
         {/* Quem Somos e Nossa História lado a lado */}
