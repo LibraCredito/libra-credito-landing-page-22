@@ -15,6 +15,7 @@
     "build:critters": "vite build && node scripts/extract-critical.mjs",
     "build:dev": "vite build --mode development",
     "build:prod": "vite build",
+    "build:ssr": "vite build && tsx --tsconfig tsconfig.app.json scripts/prerender.tsx",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "typecheck": "tsc --noEmit",
@@ -71,6 +72,7 @@
     "typescript-eslint": "^8.0.1",
     "vite": "^4.5.3",
     "vite-plugin-compression": "^0.5.1",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "tsx": "^4.15.7"
   }
 }
