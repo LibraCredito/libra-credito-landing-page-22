@@ -6,13 +6,13 @@ import { useIsMobile } from '@/hooks/use-mobile';
 const mediaLinks = [
   {
     name: 'G1 Globo',
-    logo: '/images/optimized/media/G1-logo-1.webp',
+    logo: '/images/media/G1-logo-1.png',
     title: 'A Libra Crédito tem soluções financeiras com as menores taxas no pós-pandemia',
     url: 'https://g1.globo.com/sp/ribeirao-preto-franca/especial-publicitario/libra-credito-solucoes-financeiras/noticia/2022/10/28/a-libra-credito-tem-solucoes-financeiras-com-as-menores-taxas-no-pos-pandemia.ghtml'
   },
   {
     name: 'Estadão',
-    logo: '/images/optimized/media/estadao-logo.webp',
+    logo: '/images/media/estadao-logo.png',
     title: 'Libra simplifica processo para empréstimo com garantia de imóvel',
     url: 'https://bluestudioexpress.estadao.com.br/conteudo/2023/08/24/libra-simplifica-processo-para-emprestimo-com-garantia-de-imovel/'
   },
@@ -24,7 +24,7 @@ const mediaLinks = [
   },
   {
     name: 'Revide',
-    logo: '/images/optimized/media/revide-logo.webp',
+    logo: '/images/media/revide-logo.webp',
     title: 'A revolução do crédito',
     url: 'https://www.revide.com.br/noticias/revista/a-revolucao-do-credito/'
   }

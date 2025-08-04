@@ -143,7 +143,7 @@ const BenefitsSection2: React.FC = () => {
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-8 flex items-center justify-center">
                   <img
-                    src="/images/optimized/media/G1-logo-1.webp"
+                    src="/images/media/G1-logo-1.png"
                     alt="G1 Globo"
                     className="max-w-full max-h-full object-contain"
                     loading="lazy"
