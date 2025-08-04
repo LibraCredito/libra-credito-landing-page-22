@@ -5,11 +5,20 @@ interface OptimizedYouTubeProps {
   videoId: string;
   title: string;
   className?: string;
+  /**
+   * If true, the thumbnail is loaded eagerly with high fetch priority.
+   * Use for above-the-fold videos that impact LCP.
+   */
   priority?: boolean;
   fetchPriority?: 'high' | 'low' | 'auto';
   thumbnailSrc?: string;
 }
 
+/**
+ * Lightweight YouTube embed that swaps in the real iframe on demand.
+ * Set `priority` for above-the-fold videos so their thumbnail is requested early
+ * with high fetch priority, improving Largest Contentful Paint.
+ */
 const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   videoId,
   title,
@@ -49,6 +58,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
         aria-label={`Reproduzir vídeo: ${title}`}
         type="button"
       >
+        {/* When priority is true, set fetchPriority="high" so the thumbnail is requested early for better LCP */}
         <img
           ref={placeholderRef}
           src={placeholderSrc}
