@@ -353,9 +353,11 @@
 
   /* Prevent logo resizing on tap in iOS */
   .header-logo {
-    @apply h-[80%] w-auto pointer-events-none;
+    @apply h-full w-auto pointer-events-none;
     max-width: none;
     -webkit-user-drag: none;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
   }
   
   /* Garantir que textos secundários tenham contraste suficiente */
