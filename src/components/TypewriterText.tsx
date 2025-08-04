@@ -5,18 +5,27 @@ export default function TypewriterText({ strings }: { strings: string[] }) {
 
   useEffect(() => {
     let typed: any;
+    let isMounted = true;
 
-    import('typed.js').then(({ default: Typed }) => {
-      typed = new Typed(el.current!, {
+    const loadTyped = async () => {
+      const { default: Typed } = await import('typed.js');
+      if (!isMounted || !el.current) return;
+
+      typed = new Typed(el.current, {
         strings,
         typeSpeed: 50,
         backSpeed: 30,
         backDelay: 1500,
         loop: true,
       });
-    });
+    };
 
-    return () => typed?.destroy();
+    loadTyped();
+
+    return () => {
+      isMounted = false;
+      typed?.destroy();
+    };
   }, [strings]);
 
   return <span ref={el}>{strings[0]}</span>;
