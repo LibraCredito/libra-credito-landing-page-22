@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import MobileLayout from '@/components/MobileLayout';
 import WaveSeparator from '@/components/ui/WaveSeparator';
 import { BlogService, type BlogPost as BlogPostType } from '@/services/blogService';
+import Seo from '@/components/Seo';
 
 type BlogPost = BlogPostType;
 
@@ -27,12 +28,6 @@ const BlogPost = () => {
         const foundPost = await BlogService.getPostBySlug(slug);
         if (foundPost) {
           setPost(foundPost);
-          document.title = `${foundPost.title} | Blog Libra Crédito`;
-          
-          const metaDescription = document.querySelector('meta[name="description"]');
-          if (metaDescription) {
-            metaDescription.setAttribute('content', foundPost.description);
-          }
         }
       } catch (error) {
         console.error('Erro ao carregar post:', error);
@@ -119,6 +114,24 @@ const BlogPost = () => {
 
   return (
     <MobileLayout>
+      {post && (
+        <Seo
+          title={`${post.title} | Blog Libra Crédito`}
+          description={post.description}
+          jsonLd={{
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: post.title,
+            description: post.description,
+            author: {
+              '@type': 'Organization',
+              name: 'Libra Crédito'
+            },
+            image: post.imageUrl
+          }}
+          schemaId="article-schema"
+        />
+      )}
       <WaveSeparator variant="hero" height="md" inverted />
       
       <div className="bg-white flex-1 pb-8 md:pb-12">
