@@ -1333,7 +1333,7 @@ Escreva seu conteúdo aqui...
                             alt={post.title} 
                             className="w-20 h-20 object-cover rounded-lg border"
                             onError={(e) => {
-                              (e.target as HTMLImageElement).src = '/images/blog/capital-giro.jpg';
+                              (e.target as HTMLImageElement).src = 'https://placehold.co/600x400?text=Blog+Image';
                             }}
                           />
                           <div className="flex-1 min-w-0">

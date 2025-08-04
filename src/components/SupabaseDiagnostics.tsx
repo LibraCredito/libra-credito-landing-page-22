@@ -125,7 +125,7 @@ const SupabaseDiagnostics: React.FC = () => {
           description: 'Post de teste para verificar funcionamento',
           category: 'home-equity' as const,
           content: 'Conteúdo de teste para diagnóstico do sistema.',
-          imageUrl: '/images/blog/capital-giro.jpg',
+          imageUrl: 'https://placehold.co/600x400?text=Blog+Image',
           slug: `teste-diagnostico-${Date.now()}`,
           readTime: 1,
           published: false,

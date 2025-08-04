@@ -29,7 +29,7 @@ const BlogSection: React.FC = () => {
             id: '1',
             title: "Como calcular o valor do empréstimo com garantia de imóvel",
             description: "Descubra como determinar o valor ideal para seu empréstimo baseado no valor do seu imóvel.",
-            imageUrl: "/images/blog/capital-giro.jpg",
+            imageUrl: "https://placehold.co/600x400?text=Blog+Image",
             category: "home-equity",
             readTime: 5,
             slug: "como-calcular-valor-emprestimo",
@@ -40,7 +40,7 @@ const BlogSection: React.FC = () => {
             id: '2',
             title: "Vantagens do Home Equity vs Financiamento Tradicional",
             description: "Compare as modalidades e entenda qual é a melhor opção para seu perfil e necessidades.",
-            imageUrl: "/images/blog/consolidacao.jpg",
+            imageUrl: "https://placehold.co/600x400?text=Blog+Image",
             category: "home-equity",
             readTime: 7,
             slug: "vantagens-home-equity",
@@ -51,7 +51,7 @@ const BlogSection: React.FC = () => {
             id: '3',
             title: "Documentos necessários para crédito com garantia de imóvel",
             description: "Lista completa dos documentos necessários para agilizar seu processo de aprovação.",
-            imageUrl: "/images/blog/reforma.jpg",
+            imageUrl: "https://placehold.co/600x400?text=Blog+Image",
             category: "documentacao",
             readTime: 4,
             slug: "documentos-necessarios",
@@ -149,7 +149,7 @@ const BlogSection: React.FC = () => {
                       loading="lazy"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        target.src = '/images/blog/default-blog.jpg';
+                        target.src = 'https://placehold.co/600x400?text=Blog+Image';
                       }}
                     />
                   </div>

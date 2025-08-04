@@ -123,7 +123,7 @@ const EXISTING_POSTS: BlogPost[] = [
     title: 'Home Equity: O que é e como conseguir esse tipo de crédito',
     description: 'Guia completo sobre Home Equity - modalidade que permite usar seu imóvel como garantia para obter crédito com melhores condições.',
     category: 'home-equity',
-    imageUrl: '/images/blog/capital-giro.jpg',
+    imageUrl: 'https://placehold.co/600x400?text=Blog+Image',
     slug: 'home-equity-o-que-e-como-conseguir',
     content: `
       <h2>O que é Home Equity?</h2>
@@ -170,7 +170,7 @@ const EXISTING_POSTS: BlogPost[] = [
     title: 'Home Equity: Guia Completo para Entender a Modalidade de Uma Vez por Todas',
     description: 'Tudo sobre crédito com garantia de imóvel: taxas desde 1,09% a.m., prazos até 15 anos e como funciona.',
     category: 'home-equity',
-    imageUrl: '/images/blog/consolidacao.jpg',
+    imageUrl: 'https://placehold.co/600x400?text=Blog+Image',
     slug: 'home-equity-guia-completo-modalidade',
     content: `
       <h2>Home Equity: Entendendo Completamente a Modalidade</h2>
@@ -224,7 +224,7 @@ const EXISTING_POSTS: BlogPost[] = [
     title: 'Como Investir sem Descapitalizar usando Home Equity',
     description: 'Descubra como usar seu imóvel como fonte de investimento acessível, obtendo crédito sem se descapitalizar.',
     category: 'home-equity',
-    imageUrl: '/images/blog/reforma.jpg',
+    imageUrl: 'https://placehold.co/600x400?text=Blog+Image',
     slug: 'como-investir-sem-descapitalizar-home-equity',
     content: `
       <h2>A Estratégia de Investimento sem Descapitalização</h2>
@@ -265,7 +265,7 @@ const EXISTING_POSTS: BlogPost[] = [
     title: 'Simplificando o Pós-venda: Um Guia para Retirar seus Boletos',
     description: 'Conheça as ferramentas disponíveis para clientes: Chat Bot e Portal do Cliente para retirada de boletos.',
     category: 'home-equity',
-    imageUrl: '/images/blog/capital-giro.jpg',
+    imageUrl: 'https://placehold.co/600x400?text=Blog+Image',
     slug: 'simplificando-pos-venda-guia-boletos',
     content: `
       <h2>Atendimento Pós-Venda Digital</h2>
@@ -288,7 +288,7 @@ const EXISTING_POSTS: BlogPost[] = [
     title: 'Processo de Registro e Liberação de Recurso no Home Equity',
     description: 'Passo a passo completo das etapas após formalização do contrato de empréstimo com garantia imobiliária.',
     category: 'home-equity',
-    imageUrl: '/images/blog/consolidacao.jpg',
+    imageUrl: 'https://placehold.co/600x400?text=Blog+Image',
     slug: 'processo-registro-liberacao-home-equity',
     content: `
       <h2>Etapas do Registro</h2>
@@ -308,7 +308,7 @@ const EXISTING_POSTS: BlogPost[] = [
     title: 'Capital de giro para o agronegócio: utilize sua fazenda como garantia e alcance seus objetivos',
     description: 'Descubra como produtores rurais em Ribeirão Preto podem obter capital de giro usando sua propriedade rural como garantia.',
     category: 'credito-rural',
-    imageUrl: '/images/blog/capital-giro.jpg',
+    imageUrl: 'https://placehold.co/600x400?text=Blog+Image',
     slug: 'capital-de-giro-agronegocio-fazenda-garantia',
     content: `
       <h2>A Importância do Capital de Giro no Agronegócio</h2>
