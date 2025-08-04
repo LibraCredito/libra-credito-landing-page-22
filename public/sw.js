@@ -7,9 +7,9 @@ const DYNAMIC_CACHE_NAME = 'libra-dynamic-v1';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/src/styles/critical.css',
-  '/images/logos/libra-logo.png',
-  '/images/logos/libra-icon.png',
+  '/assets/css/index.css',
+  '/images/logos/logo-azul.png',
+  '/icon-192.png',
   '/favicon.ico',
   '/manifest.json'
 ];
@@ -293,8 +293,8 @@ self.addEventListener('push', (event) => {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: '/images/logos/libra-icon.png',
-      badge: '/images/logos/libra-icon.png',
+      icon: '/icon-192.png',
+      badge: '/icon-192.png',
       data: data.data
     };
     
