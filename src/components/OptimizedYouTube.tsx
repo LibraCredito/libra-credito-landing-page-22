@@ -29,8 +29,8 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   decoding = 'async',
   thumbnailSrc,
 }) => {
-  const thumbnailImage =
-    thumbnailSrc || '/images/media/video-cgi-libra.webp';
+  const thumbnailImage = thumbnailSrc || '/images/media/video-cgi-libra.webp';
+
   const placeholderRef = useRef<HTMLImageElement | null>(null);
   const placeholderSrc =
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 360'%3E%3Crect width='480' height='360' fill='%23e2e8f0'/%3E%3C/svg%3E";
