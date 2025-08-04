@@ -50,6 +50,7 @@ const MediaSection: React.FC = () => {
             <div
               key={media.name}
               className="aspect-square w-full flex items-center justify-center bg-white rounded-lg md:aspect-auto md:flex-col md:h-full md:p-6 md:shadow-sm md:text-center"
+
             >
               <a
                 href={media.url}
