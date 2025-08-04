@@ -144,8 +144,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
       const journey = getJourneyData();
 
-      // Forward journey UTM parameters and landing_page URL to the backend
-      // along with the contact data
+
       await LocalSimulationService.processContact({
         simulationId: simulationResult.id,
         sessionId,
@@ -167,6 +166,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
         utm_term: journey?.utm_term ?? null,
         utm_content: journey?.utm_content ?? null,
         landing_page: journey?.landing_page ?? null
+
       });
       
       // Redirecionar diretamente para a página de confirmação
