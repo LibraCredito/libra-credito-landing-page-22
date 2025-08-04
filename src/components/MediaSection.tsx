@@ -58,7 +58,6 @@ const MediaSection: React.FC = () => {
                 rel="noopener noreferrer"
                 aria-label={`Ver matéria da ${media.name}`}
                 className="flex h-full w-full items-center justify-center md:h-20 md:mb-4"
-
               >
                 <img
                   src={media.logo}
@@ -69,32 +68,34 @@ const MediaSection: React.FC = () => {
                   height="80"
                 />
               </a>
-              <p
-                className="hidden md:block text-[#003399] font-medium mb-4 flex-grow text-sm leading-tight"
-                style={{
-                  display: '-webkit-box',
-                  WebkitLineClamp: 3,
-                  WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden'
-                }}
-              >
-                {media.title}
-              </p>
-              <Button
-                asChild
-                variant="outline"
-                size="sm"
-                className="hidden md:inline-flex w-full border-[#003399] text-[#003399] hover:bg-[#003399] hover:text-white transition-colors text-xs py-2"
-              >
-                <a
-                  href={media.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Acessar matéria da ${media.name}`}
+              <div className="hidden md:flex md:flex-col md:items-center md:justify-between md:h-full md:w-full">
+                <p
+                  className="text-[#003399] font-medium mb-4 flex-grow text-sm leading-tight"
+                  style={{
+                    display: '-webkit-box',
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden'
+                  }}
                 >
-                  ACESSAR
-                </a>
-              </Button>
+                  {media.title}
+                </p>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="w-full border-[#003399] text-[#003399] hover:bg-[#003399] hover:text-white transition-colors text-xs py-2"
+                >
+                  <a
+                    href={media.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Acessar matéria da ${media.name}`}
+                  >
+                    ACESSAR
+                  </a>
+                </Button>
+              </div>
             </div>
           ))}
         </div>
