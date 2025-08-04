@@ -141,12 +141,12 @@ const QuemSomos = () => {
               {/* Imagem Institucional */}
               <div className="relative">
                 <ImageOptimizer
-                  src="/images/optimized/timelibra2.webp"
+                  src="/images/timelibra2.webp"
                   alt="Libra Crédito - Quem Somos"
                   className="rounded-xl shadow-lg w-full"
-                  aspectRatio={16/9}
-                  width={480}
-                  height={320}
+                  aspectRatio={1600/1066}
+                  width={1600}
+                  height={1066}
                 />
               </div>
             </div>
