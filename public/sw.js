@@ -7,9 +7,10 @@ const DYNAMIC_CACHE_NAME = 'libra-dynamic-v1';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/assets/css/index.css',
+  '/src/styles/critical.css',
   '/images/logos/logo-azul.png',
-  '/icon-192.png',
+  '/images/logos/libra-icon.png',
+
   '/favicon.ico',
   '/manifest.json'
 ];
