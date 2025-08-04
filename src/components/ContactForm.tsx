@@ -12,6 +12,13 @@ import Building from 'lucide-react/dist/esm/icons/building';
 import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right';
 import { cn } from '@/lib/utils';
 
+/**
+ * Props for the contact form component.
+ *
+ * The form automatically forwards any available UTM parameters and the
+ * original landing_page URL from the user's journey to the backend when the
+ * contact is submitted.
+ */
 interface ContactFormProps {
   simulationResult: {
     id?: string;
@@ -34,7 +41,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
   buttonClassName = '',
   compact = false
 }) => {
-  const { sessionId } = useUserJourney();
+  const { sessionId, getJourneyData } = useUserJourney();
   const navigate = useNavigate();
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
@@ -134,8 +141,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
         imovelProprio,
         imovelProprioTexto: imovelProprio === 'proprio' ? 'Imóvel Próprio' : 'Imóvel de Terceiro'
       });
-      
-      // Usar o serviço local com dados da simulação
+
+      const journey = getJourneyData();
+
+      // Forward journey UTM parameters and landing_page URL to the backend
+      // along with the contact data
       await LocalSimulationService.processContact({
         simulationId: simulationResult.id,
         sessionId,
@@ -150,7 +160,13 @@ const ContactForm: React.FC<ContactFormProps> = ({
         valorParcelaCalculada: simulationResult.valor,
         tipoAmortizacao: simulationResult.amortizacao,
         quantidadeParcelas: simulationResult.parcelas,
-        aceitaPolitica: aceitePrivacidade
+        aceitaPolitica: aceitePrivacidade,
+        utm_source: journey?.utm_source ?? null,
+        utm_medium: journey?.utm_medium ?? null,
+        utm_campaign: journey?.utm_campaign ?? null,
+        utm_term: journey?.utm_term ?? null,
+        utm_content: journey?.utm_content ?? null,
+        landing_page: journey?.landing_page ?? null
       });
       
       // Redirecionar diretamente para a página de confirmação
