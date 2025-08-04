@@ -120,7 +120,7 @@ const HeroAnimated: React.FC = () => {
                 title="Vídeo institucional Libra Crédito"
                 priority={true}
                 className="w-full h-full"
-                thumbnailSrc="/images/thumbnail-libra.webp"
+                thumbnailSrc="/images/media/video-cgi-libra.webp"
               />
             </div>
           </div>
