@@ -10,7 +10,10 @@ interface OptimizedYouTubeProps {
    * Use for above-the-fold videos that impact LCP.
    */
   priority?: boolean;
-  fetchPriority?: 'high' | 'low' | 'auto';
+  /**
+   * Note: This must be lowercase `fetchpriority` to be a valid prop in React.
+   */
+  fetchpriority?: 'high' | 'low' | 'auto';
   decoding?: 'sync' | 'async' | 'auto';
   thumbnailSrc?: string;
 }
@@ -25,7 +28,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   title,
   className = '',
   priority = false,
-  fetchPriority,
+  fetchpriority,
   decoding = 'async',
   thumbnailSrc,
 }) => {
@@ -98,7 +101,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
             display: 'block',
           }}
           loading={priority ? 'eager' : 'lazy'}
-          fetchPriority={fetchPriority ?? (priority ? 'high' : undefined)}
+          fetchPriority={fetchpriority ?? (priority ? 'high' : undefined)}
           decoding={decoding}
           onLoad={handleThumbnailLoad}
         />
