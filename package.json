@@ -9,6 +9,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "prebuild": "npm run export:hero",
     "build": "vite build",
     "build:stats": "rm -f stats.html && STATS=1 vite build",
     "build:critical": "vite build && node scripts/async-css.mjs",
