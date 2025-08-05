@@ -34,6 +34,8 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, loading, error }) => {
               src="/images/logos/logo-azul.png"
               alt="Libra Crédito"
               className="h-16 w-auto"
+              width={2048}
+              height={2047}
               loading="lazy"
             />
           </div>

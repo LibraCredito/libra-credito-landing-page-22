@@ -236,13 +236,15 @@ const Blog = () => {
                           src={post.imageUrl}
                           alt={post.title}
                           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                          width={1280}
+                          height={720}
                           loading="lazy"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = 'https://placehold.co/600x400?text=Blog+Image';
-                        }}
-                      />
-                    </div>
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = 'https://placehold.co/1280x720?text=Blog+Image';
+                          }}
+                        />
+                      </div>
                       <div className="p-4">
                         <span className="text-sm text-libra-blue font-medium">
                           {CATEGORIES.find(cat => cat.id === post.category)?.name}

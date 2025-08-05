@@ -14,6 +14,8 @@ const TransparencySection: React.FC = () => {
                 src="/images/customer-testimonial.png"
                 alt="Cliente satisfeita"
                 className="w-full h-full object-cover"
+                width={128}
+                height={128}
                 loading="lazy"
               />
             </div>

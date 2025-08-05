@@ -153,6 +153,8 @@ const BlogPost = () => {
                 src={post.imageUrl}
                 alt={post.title}
                 className="w-full h-auto max-h-screen object-contain transition-transform duration-300 hover:scale-105"
+                width={1280}
+                height={720}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
             </div>
