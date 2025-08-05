@@ -1,4 +1,4 @@
-import React, { useEffect, lazy, Suspense } from 'react';
+import React, { useEffect, lazy, Suspense, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/useMobileContext';
@@ -9,14 +9,47 @@ import WaveSeparator from '@/components/ui/WaveSeparator';
 import Header from '@/components/Header';
 
 // Lazy loading dos componentes pesados - com threshold otimizado
-const Benefits = lazy(() => import('@/components/Benefits'));
-const Testimonials = lazy(() => import('@/components/Testimonials'));
-const MediaSection = lazy(() => import('@/components/MediaSection'));
 const FAQ = lazy(() => import('@/components/FAQ'));
 const BlogSection = lazy(() => import('@/components/BlogSection'));
-const TrustBarMinimal = lazy(() => import('@/components/TrustBarMinimal'));
-const LogoBand = lazy(() => import('@/components/LogoBand'));
-const Footer = lazy(() => import('@/components/Footer'));
+
+interface LazySectionProps {
+  load: () => Promise<{ default: React.ComponentType<unknown> }>;
+}
+
+const LazySection: React.FC<LazySectionProps> = ({ load }) => {
+  const [Component, setComponent] = useState<React.ComponentType<unknown> | null>(
+    null,
+  );
+  const ref = useRef<HTMLDivElement | null>(null);
+  const loadRef = useRef(load);
+
+  useEffect(() => {
+    loadRef.current = load;
+  }, [load]);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          loadRef.current().then(({ default: Loaded }) => {
+            setComponent(() => Loaded);
+          });
+          obs.disconnect();
+        }
+      },
+      { rootMargin: '200px 0px' },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  return <div ref={ref}>{Component ? <Component /> : null}</div>;
+};
 
 
 const Index: React.FC = () => {
@@ -55,30 +88,20 @@ const Index: React.FC = () => {
       {/* Faixa Separadora com Ondas - Apenas adicionada, sem alterar o resto */}
       <WaveSeparator variant="hero" height="md" />
       
-      <Suspense fallback={null}>
-        <TrustBarMinimal />
-      </Suspense>
+      <LazySection load={() => import('@/components/TrustBarMinimal')} />
 
-      <Suspense fallback={null}>
-        <Benefits />
-      </Suspense>
+      <LazySection load={() => import('@/components/Benefits')} />
 
       {/* Faixa azul com logo - apenas para desktop */}
       {!isMobile && (
-        <Suspense fallback={null}>
-          <LogoBand />
-        </Suspense>
+        <LazySection load={() => import('@/components/LogoBand')} />
       )}
 
-      <Suspense fallback={null}>
-        <Testimonials />
-      </Suspense>
-      
+      <LazySection load={() => import('@/components/Testimonials')} />
+
       <WaveSeparator variant="hero" height="md" />
-      
-      <Suspense fallback={null}>
-        <MediaSection />
-      </Suspense>
+
+      <LazySection load={() => import('@/components/MediaSection')} />
       
       <WaveSeparator variant="hero" height="md" inverted />
       
@@ -142,10 +165,8 @@ const Index: React.FC = () => {
         <BlogSection />
       </Suspense>
       </main>
-      
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
+
+      <LazySection load={() => import('@/components/Footer')} />
     </div>
   );
 };
