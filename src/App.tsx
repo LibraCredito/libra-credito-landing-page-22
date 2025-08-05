@@ -22,19 +22,36 @@ const Simulacao = lazy(() => import("./pages/Simulacao"));
 const PoliticaPrivacidade = lazy(() => import("./pages/PoliticaPrivacidade"));
 const PoliticaCookies = lazy(() => import("./pages/PoliticaCookies"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
-const SupabaseTestPage = lazy(() => import("../temp-files/test-pages/SupabaseTestPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const MobileDemo = lazy(() => import("../temp-files/test-pages/MobileDemo"));
-const SimulacaoWizard = lazy(() => import("./pages/SimulacaoWizard"));
-const SimpleWizardTest = lazy(() => import("../temp-files/test-pages/SimpleWizardTest"));
-const MobileNavDemo = lazy(() => import("../temp-files/test-pages/MobileNavDemo"));
 const SimulacaoSapi = lazy(() => import("./pages/SimulacaoSapi"));
 const SimulacaoLocal = lazy(() => import("./pages/SimulacaoLocal"));
-const Home2 = lazy(() => import("../temp-files/experimental-pages/Home2"));
-const TestWebhook = lazy(() => import("../temp-files/test-pages/TestWebhook"));
 const Confirmacao = lazy(() => import("./pages/Confirmacao"));
 const Sucesso = lazy(() => import("./pages/Sucesso"));
 const Atendimento = lazy(() => import("./pages/Atendimento"));
+
+let devRoutes = null;
+
+if (import.meta.env.DEV) {
+  const SupabaseTestPage = lazy(() => import("../temp-files/test-pages/SupabaseTestPage"));
+  const MobileDemo = lazy(() => import("../temp-files/test-pages/MobileDemo"));
+  const SimulacaoWizard = lazy(() => import("./pages/SimulacaoWizard"));
+  const SimpleWizardTest = lazy(() => import("../temp-files/test-pages/SimpleWizardTest"));
+  const MobileNavDemo = lazy(() => import("../temp-files/test-pages/MobileNavDemo"));
+  const Home2 = lazy(() => import("../temp-files/experimental-pages/Home2"));
+  const TestWebhook = lazy(() => import("../temp-files/test-pages/TestWebhook"));
+
+  devRoutes = (
+    <>
+      <Route path="/test-supabase" element={<SupabaseTestPage />} />
+      <Route path="/test-webhook" element={<TestWebhook />} />
+      <Route path="/mobile-demo" element={<MobileDemo />} />
+      <Route path="/mobile-nav" element={<MobileNavDemo />} />
+      <Route path="/simulacao-wizard" element={<SimulacaoWizard />} />
+      <Route path="/wizard-test" element={<SimpleWizardTest />} />
+      <Route path="/home2" element={<Home2 />} />
+    </>
+  );
+}
 
 const Loading = () => (
   <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -87,16 +104,10 @@ const App = () => {
                   <TooltipProvider><AdminDashboard /></TooltipProvider>
                 </Suspense>
               } />
-              <Route path="/test-supabase" element={<SupabaseTestPage />} />
-              <Route path="/test-webhook" element={<TestWebhook />} />
-              <Route path="/mobile-demo" element={<MobileDemo />} />
-              <Route path="/mobile-nav" element={<MobileNavDemo />} />
-              <Route path="/simulacao-wizard" element={<SimulacaoWizard />} />
-              <Route path="/wizard-test" element={<SimpleWizardTest />} />
+              {devRoutes}
               <Route path="/confirmacao" element={<Confirmacao />} />
               <Route path="/atendimento" element={<Atendimento />} />
               <Route path="/sucesso" element={<Sucesso />} />
-              <Route path="/home2" element={<Home2 />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
