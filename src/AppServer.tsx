@@ -1,15 +1,16 @@
-import { Suspense, lazy, useEffect, useState } from 'react';
+import { Suspense, lazy } from 'react';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { StaticRouter } from "react-router-dom/server";
+import { Routes, Route } from "react-router-dom";
 import ScrollToTop from '@/components/ScrollToTop';
 import { MobileProvider } from '@/hooks/useMobileContext';
+import { Toaster } from '@/components/ui/toast';
+import { Analytics } from '@vercel/analytics/react';
 
-// Lazy load TooltipProvider para LCP
 const TooltipProvider = lazy(() => import('@/components/ui/tooltip').then(m => ({ default: m.TooltipProvider })));
 
 // Import homepage directly (not lazy) for faster LCP
 import Index from "./pages/Index";
-import { Toaster } from '@/components/ui/toast';
 
 // Lazy load other components
 const Vantagens = lazy(() => import("./pages/Vantagens"));
@@ -21,36 +22,19 @@ const Simulacao = lazy(() => import("./pages/Simulacao"));
 const PoliticaPrivacidade = lazy(() => import("./pages/PoliticaPrivacidade"));
 const PoliticaCookies = lazy(() => import("./pages/PoliticaCookies"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const SupabaseTestPage = lazy(() => import("../temp-files/test-pages/SupabaseTestPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const MobileDemo = lazy(() => import("../temp-files/test-pages/MobileDemo"));
+const SimulacaoWizard = lazy(() => import("./pages/SimulacaoWizard"));
+const SimpleWizardTest = lazy(() => import("../temp-files/test-pages/SimpleWizardTest"));
+const MobileNavDemo = lazy(() => import("../temp-files/test-pages/MobileNavDemo"));
 const SimulacaoSapi = lazy(() => import("./pages/SimulacaoSapi"));
 const SimulacaoLocal = lazy(() => import("./pages/SimulacaoLocal"));
+const Home2 = lazy(() => import("../temp-files/experimental-pages/Home2"));
+const TestWebhook = lazy(() => import("../temp-files/test-pages/TestWebhook"));
 const Confirmacao = lazy(() => import("./pages/Confirmacao"));
 const Sucesso = lazy(() => import("./pages/Sucesso"));
 const Atendimento = lazy(() => import("./pages/Atendimento"));
-
-let devRoutes = null;
-
-if (import.meta.env.DEV) {
-  const SupabaseTestPage = lazy(() => import("../temp-files/test-pages/SupabaseTestPage"));
-  const MobileDemo = lazy(() => import("../temp-files/test-pages/MobileDemo"));
-  const SimulacaoWizard = lazy(() => import("./pages/SimulacaoWizard"));
-  const SimpleWizardTest = lazy(() => import("../temp-files/test-pages/SimpleWizardTest"));
-  const MobileNavDemo = lazy(() => import("../temp-files/test-pages/MobileNavDemo"));
-  const Home2 = lazy(() => import("../temp-files/experimental-pages/Home2"));
-  const TestWebhook = lazy(() => import("../temp-files/test-pages/TestWebhook"));
-
-  devRoutes = (
-    <>
-      <Route path="/test-supabase" element={<SupabaseTestPage />} />
-      <Route path="/test-webhook" element={<TestWebhook />} />
-      <Route path="/mobile-demo" element={<MobileDemo />} />
-      <Route path="/mobile-nav" element={<MobileNavDemo />} />
-      <Route path="/simulacao-wizard" element={<SimulacaoWizard />} />
-      <Route path="/wizard-test" element={<SimpleWizardTest />} />
-      <Route path="/home2" element={<Home2 />} />
-    </>
-  );
-}
 
 const Loading = () => (
   <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -61,31 +45,20 @@ const Loading = () => (
   </div>
 );
 
-// Configure query client outside component to prevent re-initialization
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      cacheTime: 10 * 60 * 1000, // 10 minutes
+      staleTime: 5 * 60 * 1000,
+      cacheTime: 10 * 60 * 1000,
     },
   },
 });
 
-const App = () => {
-  const [AnalyticsComponent, setAnalyticsComponent] = useState<React.ComponentType | null>(null);
-
-  useEffect(() => {
-    if (import.meta.env.PROD) {
-      import('@vercel/analytics/react').then((m) => {
-        setAnalyticsComponent(() => m.Analytics);
-      });
-    }
-  }, []);
-
+const AppServer = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <MobileProvider>
-        <BrowserRouter>
+        <StaticRouter location="/">
           <ScrollToTop />
           <Suspense fallback={<Loading />}>
             <Routes>
@@ -113,19 +86,25 @@ const App = () => {
                   <TooltipProvider><AdminDashboard /></TooltipProvider>
                 </Suspense>
               } />
-              {devRoutes}
+              <Route path="/test-supabase" element={<SupabaseTestPage />} />
+              <Route path="/test-webhook" element={<TestWebhook />} />
+              <Route path="/mobile-demo" element={<MobileDemo />} />
+              <Route path="/mobile-nav" element={<MobileNavDemo />} />
+              <Route path="/simulacao-wizard" element={<SimulacaoWizard />} />
+              <Route path="/wizard-test" element={<SimpleWizardTest />} />
               <Route path="/confirmacao" element={<Confirmacao />} />
               <Route path="/atendimento" element={<Atendimento />} />
               <Route path="/sucesso" element={<Sucesso />} />
+              <Route path="/home2" element={<Home2 />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
-        </BrowserRouter>
+        </StaticRouter>
         <Toaster />
-        {AnalyticsComponent && <AnalyticsComponent />}
+        <Analytics />
       </MobileProvider>
     </QueryClientProvider>
   );
 };
 
-export default App;
+export default AppServer;

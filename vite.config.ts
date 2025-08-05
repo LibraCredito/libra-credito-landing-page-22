@@ -3,9 +3,10 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import compression from "vite-plugin-compression";
 import { visualizer } from "rollup-plugin-visualizer";
+import { readFileSync } from "fs";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ command, mode }) => ({
   server: {
     host: "::",
     port: 8080,
@@ -27,7 +28,15 @@ export default defineConfig(({ mode }) => ({
       filename: 'stats.html',
       template: 'treemap',
       open: true,
-    })
+    }),
+    command === 'build' && {
+      name: 'inject-hero-html',
+      transformIndexHtml(html) {
+        const heroPath = path.resolve(__dirname, 'public/hero.html');
+        const heroHtml = readFileSync(heroPath, 'utf-8');
+        return html.replace('<div id="root"></div>', `<div id="root">${heroHtml}</div>`);
+      },
+    }
   ].filter(Boolean),
   resolve: {
     alias: {

@@ -8,19 +8,11 @@ interface WaveSeparatorProps {
   className?: string;
 }
 
-const WaveSeparator: React.FC<WaveSeparatorProps> = ({ 
-  variant = 'hero', 
-  height = 'md',
+const WaveSeparator: React.FC<WaveSeparatorProps> = ({
+  variant = 'hero',
   inverted = false,
-  className 
+  className
 }) => {
-  // Alturas responsivas usando Tailwind classes (mantém fix mobile)
-  const heightClasses = {
-    sm: 'h-8 md:h-10 lg:h-12 xl:h-16', // 32px, 40px, 48px, 64px
-    md: 'h-12 md:h-16 lg:h-20 xl:h-24 2xl:h-28', // 48px, 64px, 80px, 96px, 112px  
-    lg: 'h-16 md:h-20 lg:h-24 xl:h-28 2xl:h-36'  // 64px, 80px, 96px, 112px, 144px
-  };
-
   // Configurações de cores da marca Libra (versão original)
   const variantConfig = {
     hero: {
@@ -46,27 +38,28 @@ const WaveSeparator: React.FC<WaveSeparatorProps> = ({
   };
 
   const config = variantConfig[variant];
-  const heightClass = heightClasses[height];
 
   return (
     <div
       className={cn(
-        'relative w-full flex-shrink-0 overflow-hidden pointer-events-none', // Adiciona overflow-hidden e desativa interações
+        'relative w-full flex-shrink-0 overflow-hidden pointer-events-none',
         config.background,
-        heightClass,
-        inverted && '-mt-1', // Margem negativa para ondas invertidas grudarem no header
+        'h-16 md:h-20 lg:h-24',
+        inverted && '-mt-1',
         className
       )}
       aria-hidden="true"
     >
       {/* SVG com as 3 camadas de profundidade originais */}
       <svg
+        width="100%"
+        height="100%"
         className={cn(
           'absolute w-full h-full pointer-events-none',
-          inverted ? '-bottom-1' : '-top-1', // Estende 1px para fora em ambas direções
+          inverted ? '-bottom-1' : '-top-1',
           inverted && 'transform scale-y-[-1]'
         )}
-        style={{ 
+        style={{
           left: 0,
           right: 0,
           height: 'calc(100% + 2px)', // Aumenta altura em 2px

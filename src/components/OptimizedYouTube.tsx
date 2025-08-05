@@ -1,5 +1,5 @@
 import Play from 'lucide-react/dist/esm/icons/play';
-import { type FC, type MouseEvent, useRef } from 'react';
+import { type FC, type MouseEvent, useEffect, useRef } from 'react';
 
 interface OptimizedYouTubeProps {
   videoId: string;
@@ -32,8 +32,22 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   const thumbnailImage = thumbnailSrc || '/images/media/video-cgi-libra.webp';
 
   const placeholderRef = useRef<HTMLImageElement | null>(null);
+  const thumbnailRef = useRef<HTMLImageElement | null>(null);
   const placeholderSrc =
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 360'%3E%3Crect width='480' height='360' fill='%23e2e8f0'/%3E%3C/svg%3E";
+  const fetchPriorityAttr = fetchPriority ?? (priority ? 'high' : undefined);
+
+  const handleThumbnailLoad = () => {
+    if (placeholderRef.current) {
+      placeholderRef.current.style.display = 'none';
+    }
+  };
+
+  useEffect(() => {
+    if (thumbnailRef.current?.complete) {
+      handleThumbnailLoad();
+    }
+  }, []);
 
   const loadVideo = (e: MouseEvent<HTMLButtonElement>) => {
     const container = e.currentTarget.parentElement as HTMLElement | null;
@@ -78,23 +92,33 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
             display: 'block',
           }}
         />
-        <img
-          src={thumbnailImage}
-          alt={`Miniatura do ${title}`}
-          width="480"
-          height="360"
+        <picture
           style={{
             position: 'absolute',
             inset: 0,
             width: '100%',
             height: '100%',
-            objectFit: 'cover',
             display: 'block',
           }}
-          loading={priority ? 'eager' : 'lazy'}
-          fetchPriority={fetchPriority ?? (priority ? 'high' : undefined)}
-          decoding={decoding}
-        />
+        >
+          <img
+            ref={thumbnailRef}
+            src={thumbnailImage}
+            alt={`Miniatura do ${title}`}
+            width="480"
+            height="360"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block',
+            }}
+            loading={priority ? 'eager' : 'lazy'}
+            {...(fetchPriorityAttr ? { fetchpriority: fetchPriorityAttr } : {})}
+            decoding={decoding}
+            onLoad={handleThumbnailLoad}
+          />
+        </picture>
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors duration-200">
           <div className="w-16 h-16 md:w-20 md:h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:bg-red-700 transition-all duration-200 group-hover:scale-105">
             <Play className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" fill="currentColor" />

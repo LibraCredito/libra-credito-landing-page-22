@@ -8,12 +8,9 @@ const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/src/styles/critical.css',
-  '/images/logos/logo-azul.png',
-  '/images/logos/libra-icon.png',
-
-  '/favicon.ico',
   '/manifest.json'
 ];
+// Logos e ícones grandes serão armazenados no cache dinâmico após o primeiro uso
 
 // Precache desativado para reduzir requisições iniciais
 const PRECACHE_ASSETS = [];
@@ -222,12 +219,10 @@ function isStaticAsset(url) {
   return (
     url.pathname.includes('/static/') ||
     url.pathname.includes('/assets/') ||
-    url.pathname.includes('/images/') ||
     url.pathname.endsWith('.css') ||
     url.pathname.endsWith('.js') ||
     url.pathname.endsWith('.woff2') ||
-    url.pathname.endsWith('.woff') ||
-    url.pathname.includes('/favicon')
+    url.pathname.endsWith('.woff')
   );
 }
 
@@ -246,7 +241,8 @@ function isImageRequest(url) {
     url.pathname.endsWith('.png') ||
     url.pathname.endsWith('.webp') ||
     url.pathname.endsWith('.avif') ||
-    url.pathname.endsWith('.svg')
+    url.pathname.endsWith('.svg') ||
+    url.pathname.endsWith('.ico')
   );
 }
 
