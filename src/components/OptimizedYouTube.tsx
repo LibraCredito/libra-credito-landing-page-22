@@ -1,5 +1,5 @@
 import Play from 'lucide-react/dist/esm/icons/play';
-import { type FC, type MouseEvent, useRef } from 'react';
+import { type FC, type MouseEvent, useEffect, useRef } from 'react';
 
 interface OptimizedYouTubeProps {
   videoId: string;
@@ -32,14 +32,22 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   const thumbnailImage = thumbnailSrc || '/images/media/video-cgi-libra.webp';
 
   const placeholderRef = useRef<HTMLImageElement | null>(null);
+  const thumbnailRef = useRef<HTMLImageElement | null>(null);
   const placeholderSrc =
     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 360'%3E%3Crect width='480' height='360' fill='%23e2e8f0'/%3E%3C/svg%3E";
+  const fetchPriorityAttr = fetchPriority ?? (priority ? 'high' : undefined);
 
   const handleThumbnailLoad = () => {
     if (placeholderRef.current) {
       placeholderRef.current.style.display = 'none';
     }
   };
+
+  useEffect(() => {
+    if (thumbnailRef.current?.complete) {
+      handleThumbnailLoad();
+    }
+  }, []);
 
   const loadVideo = (e: MouseEvent<HTMLButtonElement>) => {
     const container = e.currentTarget.parentElement as HTMLElement | null;
@@ -93,12 +101,8 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
             display: 'block',
           }}
         >
-          <source type="image/avif" srcSet="/images/media/video-cgi-libra.avif" />
-          <source
-            type="image/webp"
-            srcSet="/images/media/video-cgi-libra.webp 1x, /images/media/video-cgi-libra-720.webp 2x"
-          />
           <img
+            ref={thumbnailRef}
             src={thumbnailImage}
             alt={`Miniatura do ${title}`}
             width="480"
@@ -110,7 +114,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
               display: 'block',
             }}
             loading={priority ? 'eager' : 'lazy'}
-            fetchPriority={fetchPriority ?? (priority ? 'high' : undefined)}
+            {...(fetchPriorityAttr ? { fetchpriority: fetchPriorityAttr } : {})}
             decoding={decoding}
             onLoad={handleThumbnailLoad}
           />
