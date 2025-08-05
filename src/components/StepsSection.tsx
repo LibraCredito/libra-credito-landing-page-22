@@ -76,6 +76,8 @@ const StepsSection: React.FC = () => {
                     src={step.image}
                     alt={step.title}
                     className="w-full h-full object-cover"
+                    width={96}
+                    height={72}
                     loading="lazy"
                   />
                 </div>

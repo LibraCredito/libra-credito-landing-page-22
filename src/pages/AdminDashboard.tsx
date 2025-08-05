@@ -1328,12 +1328,14 @@ Escreva seu conteúdo aqui...
                     <div key={post.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
                       <div className="flex items-start justify-between">
                         <div className="flex items-start gap-4 flex-1">
-                          <img 
-                            src={post.imageUrl} 
-                            alt={post.title} 
+                          <img
+                            src={post.imageUrl}
+                            alt={post.title}
                             className="w-20 h-20 object-cover rounded-lg border"
+                            width={80}
+                            height={80}
                             onError={(e) => {
-                              (e.target as HTMLImageElement).src = 'https://placehold.co/600x400?text=Blog+Image';
+                              (e.target as HTMLImageElement).src = 'https://placehold.co/80x80?text=Image';
                             }}
                           />
                           <div className="flex-1 min-w-0">

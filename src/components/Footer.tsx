@@ -45,6 +45,8 @@ const Footer: React.FC = () => {
           src="/logo-libra.png"
           alt="Libra Crédito"
           className="h-24 md:h-20 lg:h-24 xl:h-32 w-auto max-w-full"
+          width={240}
+          height={240}
           loading="lazy"
         />
           </div>
