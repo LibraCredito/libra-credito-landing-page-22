@@ -1,9 +1,8 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from '@/components/ScrollToTop';
 import { MobileProvider } from '@/hooks/useMobileContext';
-import { Analytics } from '@vercel/analytics/react';
 
 // Lazy load TooltipProvider para LCP
 const TooltipProvider = lazy(() => import('@/components/ui/tooltip').then(m => ({ default: m.TooltipProvider })));
@@ -56,6 +55,16 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  const [AnalyticsComponent, setAnalyticsComponent] = useState<React.ComponentType | null>(null);
+
+  useEffect(() => {
+    if (import.meta.env.PROD) {
+      import('@vercel/analytics/react').then((m) => {
+        setAnalyticsComponent(() => m.Analytics);
+      });
+    }
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <MobileProvider>
@@ -102,7 +111,7 @@ const App = () => {
           </Suspense>
         </BrowserRouter>
         <Toaster />
-        <Analytics />
+        {AnalyticsComponent && <AnalyticsComponent />}
       </MobileProvider>
     </QueryClientProvider>
   );
