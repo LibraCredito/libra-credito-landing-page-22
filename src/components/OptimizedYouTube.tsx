@@ -84,24 +84,37 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
             display: 'block',
           }}
         />
-        <img
-          src={thumbnailImage}
-          alt={`Miniatura do ${title}`}
-          width="480"
-          height="360"
+        <picture
           style={{
             position: 'absolute',
             inset: 0,
             width: '100%',
             height: '100%',
-            objectFit: 'cover',
             display: 'block',
           }}
-          loading={priority ? 'eager' : 'lazy'}
-          fetchPriority={fetchPriority ?? (priority ? 'high' : undefined)}
-          decoding={decoding}
-          onLoad={handleThumbnailLoad}
-        />
+        >
+          <source type="image/avif" srcSet="/images/media/video-cgi-libra.avif" />
+          <source
+            type="image/webp"
+            srcSet="/images/media/video-cgi-libra.webp 1x, /images/media/video-cgi-libra-720.webp 2x"
+          />
+          <img
+            src={thumbnailImage}
+            alt={`Miniatura do ${title}`}
+            width="480"
+            height="360"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block',
+            }}
+            loading={priority ? 'eager' : 'lazy'}
+            fetchPriority={fetchPriority ?? (priority ? 'high' : undefined)}
+            decoding={decoding}
+            onLoad={handleThumbnailLoad}
+          />
+        </picture>
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors duration-200">
           <div className="w-16 h-16 md:w-20 md:h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:bg-red-700 transition-all duration-200 group-hover:scale-105">
             <Play className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" fill="currentColor" />
