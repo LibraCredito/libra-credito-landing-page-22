@@ -15,7 +15,7 @@
  */
 
 import { validateEmail, validatePhone, formatPhone } from '@/utils/validations';
-import { supabaseApi, SimulacaoData, supabase } from '@/lib/supabase';
+import type { SimulacaoData } from '@/lib/supabase';
 
 // Reutilizar interfaces do serviço original
 export interface SimulationInput {
@@ -72,6 +72,8 @@ export class LocalSimulationService {
   static async performSimulation(input: SimulationInput): Promise<SimulationResult> {
     try {
       console.log('🎯 Iniciando simulação local:', input);
+
+      const { supabaseApi } = await import('@/lib/supabase');
       
       // 1. Validar dados de entrada
       this.validateSimulationInput(input);
@@ -255,6 +257,8 @@ export class LocalSimulationService {
   }): Promise<{success: boolean, message: string}> {
     try {
       console.log('📧 Processando contato com integração:', input);
+
+      const { supabase } = await import('@/lib/supabase');
       
       // Validar dados
       if (!validateEmail(input.email)) {
@@ -629,6 +633,7 @@ export class LocalSimulationService {
    */
   static async getSimulacoes(limit = 1000) {
     try {
+      const { supabaseApi } = await import('@/lib/supabase');
       return await supabaseApi.getSimulacoes(limit);
     } catch (error) {
       console.error('❌ Erro ao buscar simulações:', error);
@@ -641,6 +646,7 @@ export class LocalSimulationService {
    */
   static async updateSimulationStatus(id: string, status: string) {
     try {
+      const { supabaseApi } = await import('@/lib/supabase');
       return await supabaseApi.updateSimulacaoStatus(id, status);
     } catch (error) {
       console.error('❌ Erro ao atualizar status:', error);

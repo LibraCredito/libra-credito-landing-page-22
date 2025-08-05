@@ -3,7 +3,7 @@
  * Suporta tanto armazenamento local quanto Supabase Storage
  */
 
-import { supabaseApi } from '@/lib/supabase';
+// Supabase client is loaded dynamically to reduce initial bundle size
 
 export interface UploadResult {
   url: string;
@@ -38,6 +38,7 @@ export class ImageUploadService {
    */
   private static async uploadToSupabase(file: File): Promise<UploadResult> {
     try {
+      const { supabaseApi } = await import('@/lib/supabase');
       const url = await supabaseApi.uploadBlogImage(file);
       console.log('Upload Supabase realizado com sucesso:', url);
       return {
@@ -155,6 +156,7 @@ export class ImageUploadService {
     try {
       // Se for URL do Supabase, tentar deletar de lá
       if (imageUrl.includes('supabase')) {
+        const { supabaseApi } = await import('@/lib/supabase');
         await supabaseApi.deleteBlogImage(imageUrl);
         return true;
       }
