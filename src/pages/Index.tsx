@@ -150,6 +150,8 @@ const Index: React.FC = () => {
             <img
               src="/images/logos/logo-branco.svg"
               alt="Libra Crédito"
+              width={64}
+              height={64}
               className="h-12 sm:h-16 w-auto flex-shrink-0"
             />
             <span className="ml-3 sm:ml-4 text-white text-sm sm:text-base font-semibold leading-tight text-center flex-1 min-w-0">
