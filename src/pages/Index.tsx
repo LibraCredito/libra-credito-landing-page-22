@@ -7,7 +7,6 @@ import { useIsMobile } from '@/hooks/useMobileContext';
 import HeroPremium from '@/components/HeroPremium';
 import WaveSeparator from '@/components/ui/WaveSeparator';
 import Header from '@/components/Header';
-import ImageOptimizer from '@/components/ImageOptimizer';
 
 // Lazy loading dos componentes pesados - com threshold otimizado
 const FAQ = lazy(() => import('@/components/FAQ'));
@@ -115,14 +114,14 @@ const Index: React.FC = () => {
       
       {/* Botão Conheça a Libra - Desktop / Faixa azul clicável - Mobile */}
       {!isMobile ? (
-        <section 
+        <section
           className="py-8"
           style={{ backgroundColor: '#003399' }}
           aria-label="Conheça mais sobre a Libra Crédito"
         >
           <div className="container mx-auto px-4">
             <div className="flex justify-center items-center">
-              <Button 
+              <Button
                 onClick={goToQuemSomos}
                 className="min-h-[48px] min-w-[200px] bg-white text-[#003399] hover:bg-gray-50 border-0"
                 size="xl"
@@ -164,6 +163,7 @@ const Index: React.FC = () => {
             </span>
           </div>
         </section>
+
       )}
       
       <WaveSeparator variant="hero" height="md" inverted />
