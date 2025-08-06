@@ -85,7 +85,9 @@ const BlogPost: React.FC<BlogPostPageProps> = ({ initialPost }) => {
   const renderContent = (content: string) => {
     if (!content) return '';
     const parsed = marked.parse(content);
-    return DOMPurify.sanitize(parsed);
+    const sanitized = DOMPurify.sanitize(parsed);
+    // Garante tamanho de fonte adequado para headings dinâmicos
+    return sanitized.replace(/<h1(\s|>)/g, '<h1 class="text-2xl"$1');
   };
 
   const origin = typeof window !== 'undefined' ? window.location.origin : 'https://libracredito.com.br';

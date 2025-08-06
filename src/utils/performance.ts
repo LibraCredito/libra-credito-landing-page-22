@@ -37,11 +37,14 @@ class MobilePerformanceMonitor {
   }
 
   private getConnectionSpeed(): 'slow' | 'medium' | 'fast' {
-    const connection = (navigator as any).connection || 
-                      (navigator as any).mozConnection || 
-                      (navigator as any).webkitConnection;
+    if (typeof navigator === 'undefined') return 'medium';
 
-    if (!connection) return 'medium';
+    const connection =
+      (navigator as any).connection ||
+      (navigator as any).mozConnection ||
+      (navigator as any).webkitConnection;
+
+    if (!connection || !('effectiveType' in connection)) return 'medium';
 
     const effectiveType = connection.effectiveType;
     if (effectiveType === 'slow-2g' || effectiveType === '2g') return 'slow';
