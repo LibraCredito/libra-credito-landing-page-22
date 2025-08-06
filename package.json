@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "prebuild": "npm run export:hero",
+    "prebuild": "npm run export:hero && npm run generate:sitemap",
     "build": "vite build",
     "build:stats": "rm -f stats.html && STATS=1 vite build",
     "build:critical": "vite build && node scripts/async-css.mjs",
@@ -18,6 +18,7 @@
     "build:prod": "vite build",
     "build:ssr": "vite build && tsx --tsconfig tsconfig.app.json scripts/prerender.tsx",
     "export:hero": "tsx scripts/export-hero.tsx",
+    "generate:sitemap": "vite-node scripts/generate-sitemap.ts",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "typecheck": "tsc --noEmit",
