@@ -62,6 +62,7 @@ const LogoBand: React.FC<LogoBandProps> = ({ onClick, size = 'desktop' }) => {
           alt="Libra Crédito"
           className={config.imgClass}
           aspectRatio={1}
+
           priority={false}
           width={config.imgSize}
           height={config.imgSize}

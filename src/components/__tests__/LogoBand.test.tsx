@@ -14,9 +14,10 @@ describe('LogoBand', () => {
     const imgContainer = img.parentElement as HTMLElement;
 
     expect(imgContainer).toHaveClass('h-20');
-    expect(imgContainer).toHaveClass('w-20');
+    expect(imgContainer).toHaveClass('w-auto');
     expect(img).not.toHaveClass('w-full');
     expect(img).not.toHaveClass('h-full');
+    expect(img).toHaveClass('object-contain');
     expect(img.getAttribute('src')).toBe('/images/logos/logo-branco.svg');
     expect(img).toHaveAttribute('width', '80');
     expect(img).toHaveAttribute('height', '80');

@@ -142,6 +142,7 @@ const Index: React.FC = () => {
             }))
           }
         />
+
       )}
       
       <WaveSeparator variant="hero" height="md" inverted />
