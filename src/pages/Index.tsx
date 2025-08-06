@@ -155,6 +155,7 @@ const Index: React.FC = () => {
               height={64}
               aspectRatio={1}
               className="h-12 sm:h-16 flex-shrink-0"
+              objectFit="contain"
               widths={[64, 128]}
               sizes="64px"
             />

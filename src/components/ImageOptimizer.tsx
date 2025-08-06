@@ -19,7 +19,8 @@
  * @param {boolean} [props.priority=false] - Se true, carrega a imagem com prioridade alta
  * @param {number} [props.width] - Largura da imagem em pixels
  * @param {number} [props.height] - Altura da imagem em pixels
- * 
+ * @param {string} [props.objectFit="cover"] - Valor do object-fit (ex: cover, contain)
+ *
  * @example
  * ```tsx
  * // Imagem normal com lazy loading
@@ -58,6 +59,14 @@ interface ImageOptimizerProps {
   className?: string;
   /** Classes aplicadas diretamente à imagem */
   imgClassName?: string;
+  /** Define o comportamento de object-fit da imagem */
+  objectFit?:
+    | 'contain'
+    | 'cover'
+    | 'fill'
+    | 'none'
+    | 'scale-down'
+    | (string & {});
   aspectRatio?: number;
   priority?: boolean;
   width?: number;
@@ -71,6 +80,7 @@ const ImageOptimizer: React.FC<ImageOptimizerProps> = ({
   alt,
   className = "",
   imgClassName = "",
+  objectFit = 'cover',
   aspectRatio = 16/9,
   priority = false,
   width,
@@ -89,7 +99,7 @@ const ImageOptimizer: React.FC<ImageOptimizerProps> = ({
       alt={alt}
       loading={priority ? "eager" : "lazy"}
       className={cn(
-        "object-cover",
+        `object-${objectFit}`,
         !hasWidthClass && "w-full",
         !hasHeightClass && "h-full",
         imgClassName

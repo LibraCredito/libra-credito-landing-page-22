@@ -9,6 +9,7 @@ const LogoBand: React.FC = () => {
           src="/images/logos/logo-branco.svg"
           alt="Libra Crédito"
           className="h-20 w-20"
+          objectFit="contain"
           aspectRatio={1}
           priority={false}
           width={80}
