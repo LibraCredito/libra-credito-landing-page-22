@@ -11,7 +11,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CheckCircle, XCircle, AlertCircle, Database, Users, Activity } from 'lucide-react';
-import { supabaseApi } from '@/lib/supabase';
 import { useUserJourney } from '@/hooks/useUserJourney';
 
 interface TestResult {
@@ -29,6 +28,8 @@ const SupabaseTestPage: React.FC = () => {
   const runTests = async () => {
     setLoading(true);
     const results: TestResult[] = [];
+
+    const { supabaseApi } = await import('@/lib/supabase');
 
     // Test 1: Conexão Supabase
     try {

@@ -77,7 +77,6 @@ export default defineConfig(({ command, mode }) => ({
           // Vendor chunks separados para melhor cache
           'vendor-react': ['react', 'react-dom'],
           'vendor-router': ['react-router-dom'],
-          'vendor-query': ['@tanstack/react-query'],
           'vendor-supabase': ['@supabase/supabase-js'],
           'vendor-ui': [
             '@radix-ui/react-dialog',
@@ -101,7 +100,7 @@ export default defineConfig(({ command, mode }) => ({
       'lucide-react'
     ],
     // Excluir para lazy loading
-    exclude: ['@supabase/supabase-js']
+    exclude: ['@supabase/supabase-js', '@tanstack/react-query']
   },
   test: {
     environment: 'jsdom',

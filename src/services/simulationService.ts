@@ -19,7 +19,7 @@
  * 5. Retorna dados para o componente
  */
 
-import { supabaseApi, SimulacaoData } from '@/lib/supabase';
+import type { SimulacaoData } from '@/lib/supabase';
 import { simulateCredit } from '@/services/simulationApi';
 import { validateEmail, validatePhone, formatPhone } from '@/utils/validations';
 import { PloomesService } from '@/services/ploomesService';
@@ -118,6 +118,7 @@ export class SimulationService {
       console.log('💾 Salvando no Supabase:', supabaseData);
       
       // 6. Salvar no Supabase
+      const { supabaseApi } = await import('@/lib/supabase');
       const savedSimulation = await supabaseApi.createSimulacao(supabaseData);
       
       console.log('✅ Simulação salva:', savedSimulation);
@@ -290,6 +291,7 @@ export class SimulationService {
    */
   static async getSimulacoes(limit = 50) {
     try {
+      const { supabaseApi } = await import('@/lib/supabase');
       return await supabaseApi.getSimulacoes(limit);
     } catch (error) {
       console.error('❌ Erro ao buscar simulações:', error);
@@ -302,6 +304,7 @@ export class SimulationService {
    */
   static async updateSimulationStatus(id: string, status: string) {
     try {
+      const { supabaseApi } = await import('@/lib/supabase');
       return await supabaseApi.updateSimulacaoStatus(id, status);
     } catch (error) {
       console.error('❌ Erro ao atualizar status:', error);

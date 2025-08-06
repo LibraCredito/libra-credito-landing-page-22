@@ -1,5 +1,21 @@
-import { Suspense, lazy, useEffect, useState } from 'react';
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Suspense, lazy, useEffect, useState, type ReactNode } from 'react';
+// Lazy load React Query to avoid adding it to the initial bundle
+const ReactQueryProvider = lazy(async () => {
+  const { QueryClient, QueryClientProvider } = await import('@tanstack/react-query');
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 5 * 60 * 1000,
+        cacheTime: 10 * 60 * 1000,
+      },
+    },
+  });
+  return {
+    default: ({ children }: { children: ReactNode }) => (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    ),
+  };
+});
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from '@/components/ScrollToTop';
 import { MobileProvider } from '@/hooks/useMobileContext';
@@ -61,16 +77,6 @@ const Loading = () => (
   </div>
 );
 
-// Configure query client outside component to prevent re-initialization
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      cacheTime: 10 * 60 * 1000, // 10 minutes
-    },
-  },
-});
-
 const App = () => {
   const [AnalyticsComponent, setAnalyticsComponent] = useState<React.ComponentType | null>(null);
 
@@ -83,12 +89,13 @@ const App = () => {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <MobileProvider>
-        <BrowserRouter>
-          <ScrollToTop />
-          <Suspense fallback={<Loading />}>
-            <Routes>
+    <Suspense fallback={<Loading />}>
+      <ReactQueryProvider>
+        <MobileProvider>
+          <BrowserRouter>
+            <ScrollToTop />
+            <Suspense fallback={<Loading />}>
+              <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/vantagens" element={
                 <Suspense fallback={<Loading />}>
@@ -118,13 +125,14 @@ const App = () => {
               <Route path="/atendimento" element={<Atendimento />} />
               <Route path="/sucesso" element={<Sucesso />} />
               <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-        <Toaster />
-        {AnalyticsComponent && <AnalyticsComponent />}
-      </MobileProvider>
-    </QueryClientProvider>
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+          <Toaster />
+          {AnalyticsComponent && <AnalyticsComponent />}
+        </MobileProvider>
+      </ReactQueryProvider>
+    </Suspense>
   );
 };
 

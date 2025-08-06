@@ -11,7 +11,7 @@
  * - Gestão de status
  */
 
-import { supabaseApi, ParceiroData } from '@/lib/supabase';
+import type { ParceiroData } from '@/lib/supabase';
 import { validateEmail, validatePhone, formatPhone } from '@/utils/validations';
 import { EmailService, PartnerEmailData } from './emailService';
 
@@ -51,7 +51,8 @@ export class PartnersService {
   static async createPartnership(input: PartnerInput): Promise<PartnerResult> {
     try {
       console.log('🤝 Criando solicitação de parceria:', input);
-      
+      const { supabaseApi } = await import('@/lib/supabase');
+
       // 0. Testar conexão primeiro
       console.log('🔄 Testando conexão Supabase...');
       await supabaseApi.testConnection();
@@ -168,6 +169,7 @@ export class PartnersService {
    */
   static async getParceiros(limit = 50) {
     try {
+      const { supabaseApi } = await import('@/lib/supabase');
       return await supabaseApi.getParceiros(limit);
     } catch (error) {
       console.error('❌ Erro ao buscar parceiros:', error);
@@ -180,6 +182,7 @@ export class PartnersService {
    */
   static async updatePartnerStatus(id: string, status: string) {
     try {
+      const { supabaseApi } = await import('@/lib/supabase');
       return await supabaseApi.updateParceiroStatus(id, status);
     } catch (error) {
       console.error('❌ Erro ao atualizar status do parceiro:', error);

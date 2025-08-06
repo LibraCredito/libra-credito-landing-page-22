@@ -1,5 +1,21 @@
-import { Suspense, lazy } from 'react';
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Suspense, lazy, type ReactNode } from 'react';
+// Lazy load React Query on the server bundle as well
+const ReactQueryProvider = lazy(async () => {
+  const { QueryClient, QueryClientProvider } = await import('@tanstack/react-query');
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 5 * 60 * 1000,
+        cacheTime: 10 * 60 * 1000,
+      },
+    },
+  });
+  return {
+    default: ({ children }: { children: ReactNode }) => (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    ),
+  };
+});
 import { StaticRouter } from "react-router-dom/server";
 import { Routes, Route } from "react-router-dom";
 import ScrollToTop from '@/components/ScrollToTop';
@@ -45,23 +61,15 @@ const Loading = () => (
   </div>
 );
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 5 * 60 * 1000,
-      cacheTime: 10 * 60 * 1000,
-    },
-  },
-});
-
 const AppServer = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <MobileProvider>
-        <StaticRouter location="/">
-          <ScrollToTop />
-          <Suspense fallback={<Loading />}>
-            <Routes>
+    <Suspense fallback={<Loading />}>
+      <ReactQueryProvider>
+        <MobileProvider>
+          <StaticRouter location="/">
+            <ScrollToTop />
+            <Suspense fallback={<Loading />}>
+              <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/vantagens" element={
                 <Suspense fallback={<Loading />}>
@@ -97,13 +105,14 @@ const AppServer = () => {
               <Route path="/sucesso" element={<Sucesso />} />
               <Route path="/home2" element={<Home2 />} />
               <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </StaticRouter>
-        <Toaster />
-        <Analytics />
-      </MobileProvider>
-    </QueryClientProvider>
+              </Routes>
+            </Suspense>
+          </StaticRouter>
+          <Toaster />
+          <Analytics />
+        </MobileProvider>
+      </ReactQueryProvider>
+    </Suspense>
   );
 };
 

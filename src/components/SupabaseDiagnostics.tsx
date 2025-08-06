@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { supabaseApi, supabase } from '@/lib/supabase';
+// Supabase is loaded lazily within the diagnostic routine
 import { BlogService } from '@/services/blogService';
 
 interface DiagnosticResult {
@@ -24,6 +24,8 @@ const SupabaseDiagnostics: React.FC = () => {
     setResults([]);
     setIsRunning(true);
     setSyncStatus('Iniciando diagnósticos...');
+
+    const { supabaseApi, supabase } = await import('@/lib/supabase');
 
     try {
       // 1. Teste de conexão básica

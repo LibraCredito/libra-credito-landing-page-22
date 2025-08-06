@@ -5,7 +5,16 @@
  * @description Gerencia CRUD de posts do blog, categorias e configurações
  */
 
-import { supabaseApi, type BlogPostData } from '@/lib/supabase';
+import type { BlogPostData } from '@/lib/supabase';
+
+// Lazy loader for Supabase API to keep initial bundle small
+let supabaseApiPromise: Promise<typeof import('@/lib/supabase').supabaseApi> | null = null;
+async function getSupabaseApi() {
+  if (!supabaseApiPromise) {
+    supabaseApiPromise = import('@/lib/supabase').then(m => m.supabaseApi);
+  }
+  return supabaseApiPromise;
+}
 
 export interface BlogPost {
   id?: string;
@@ -533,6 +542,7 @@ export class BlogService {
       console.log('🔍 Buscando posts do Supabase...');
       
       // Tentar buscar do Supabase primeiro (SEMPRE)
+      const supabaseApi = await getSupabaseApi();
       const supabasePosts = await supabaseApi.getAllBlogPosts();
       console.log(`📊 Posts encontrados no Supabase: ${supabasePosts?.length || 0}`);
       
@@ -630,6 +640,7 @@ export class BlogService {
       for (const post of localPosts) {
         try {
           // Verificar se post já existe no Supabase
+          const supabaseApi = await getSupabaseApi();
           const existing = await supabaseApi.getBlogPostById(post.id!).catch(() => null);
           
           if (!existing) {
@@ -661,6 +672,7 @@ export class BlogService {
       for (const post of EXISTING_POSTS) {
         try {
           const supabaseData = this.convertBlogPostToSupabase(post);
+          const supabaseApi = await getSupabaseApi();
           await supabaseApi.createBlogPost(supabaseData);
           console.log(`✅ Post padrão criado: ${post.title}`);
         } catch (error) {
@@ -694,6 +706,7 @@ export class BlogService {
       } as BlogPost);
 
       console.log('📤 Enviando para Supabase...', supabaseData);
+      const supabaseApi = await getSupabaseApi();
       const createdPost = await supabaseApi.createBlogPost(supabaseData);
       const convertedPost = this.convertSupabaseToBlogPost(createdPost);
       
@@ -757,6 +770,7 @@ export class BlogService {
     // Tentar atualizar no Supabase primeiro
     try {
       const supabaseData = this.convertBlogPostToSupabase(postData as BlogPost);
+      const supabaseApi = await getSupabaseApi();
       const updatedPost = await supabaseApi.updateBlogPost(id, supabaseData);
       const convertedPost = this.convertSupabaseToBlogPost(updatedPost);
       
@@ -810,6 +824,7 @@ export class BlogService {
   static async deletePost(id: string): Promise<boolean> {
     try {
       // Primeiro, tentar deletar do Supabase
+      const supabaseApi = await getSupabaseApi();
       await supabaseApi.deleteBlogPost(id);
       console.log('✅ Post deletado do Supabase com sucesso');
       
