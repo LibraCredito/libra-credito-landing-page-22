@@ -10,7 +10,8 @@ const imagesToOptimize = [
   { name: 'logo-header.webp', width: 150 },
   // Updated G1 logo path
   { name: 'media/G1-logo-1.png', width: 200 },
-  { name: 'video-thumbnail.webp', width: 480 },
+  // Updated video thumbnail path
+  { name: 'media/video-cgi-libra.webp', width: 480 },
   { name: 'media/revide-logo.webp', width: 200 },
 ];
 
