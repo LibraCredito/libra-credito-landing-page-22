@@ -112,6 +112,12 @@ const BlogPost = () => {
     return html;
   };
 
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://libracredito.com.br';
+  const postUrl = post ? `${origin}/blog/${post.slug}` : '';
+  const logoUrl = `${origin}/images/logos/logo-azul.png`;
+  const datePublished = post?.createdAt ? new Date(post.createdAt).toISOString() : undefined;
+  const dateModified = post?.updatedAt ? new Date(post.updatedAt).toISOString() : undefined;
+
   return (
     <MobileLayout>
       {post && (
@@ -127,7 +133,23 @@ const BlogPost = () => {
               '@type': 'Organization',
               name: 'Libra Crédito'
             },
-            image: post.imageUrl
+            image: post.imageUrl,
+            datePublished,
+            dateModified,
+            mainEntityOfPage: {
+              '@type': 'WebPage',
+              '@id': postUrl
+            },
+            publisher: {
+              '@type': 'Organization',
+              name: 'Libra Crédito',
+              logo: {
+                '@type': 'ImageObject',
+                url: logoUrl
+              }
+            },
+            keywords: post.tags?.join(', '),
+            articleSection: post.category
           }}
           schemaId="article-schema"
         />
