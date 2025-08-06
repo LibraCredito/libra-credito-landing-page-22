@@ -7,7 +7,6 @@ import { useIsMobile } from '@/hooks/useMobileContext';
 import HeroPremium from '@/components/HeroPremium';
 import WaveSeparator from '@/components/ui/WaveSeparator';
 import Header from '@/components/Header';
-import ImageOptimizer from '@/components/ImageOptimizer';
 
 // Lazy loading dos componentes pesados - com threshold otimizado
 const FAQ = lazy(() => import('@/components/FAQ'));
@@ -115,14 +114,14 @@ const Index: React.FC = () => {
       
       {/* Botão Conheça a Libra - Desktop / Faixa azul clicável - Mobile */}
       {!isMobile ? (
-        <section 
+        <section
           className="py-8"
           style={{ backgroundColor: '#003399' }}
           aria-label="Conheça mais sobre a Libra Crédito"
         >
           <div className="container mx-auto px-4">
             <div className="flex justify-center items-center">
-              <Button 
+              <Button
                 onClick={goToQuemSomos}
                 className="min-h-[48px] min-w-[200px] bg-white text-[#003399] hover:bg-gray-50 border-0"
                 size="xl"
@@ -134,36 +133,16 @@ const Index: React.FC = () => {
           </div>
         </section>
       ) : (
-        <section 
-          className="w-full bg-[#003399] flex justify-center py-8 cursor-pointer hover:bg-[#002277] transition-colors"
-          onClick={goToQuemSomos}
-          aria-label="Clique para conhecer mais sobre a Libra Crédito"
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              goToQuemSomos();
-            }
-          }}
-        >
-          <div className="flex items-center px-4 max-w-full">
-            <ImageOptimizer
-              src="/images/logos/logo-branco.svg"
-              alt="Libra Crédito"
-              width={64}
-              height={64}
-              aspectRatio={0}
-              className="h-12 sm:h-16 w-auto flex-shrink-0"
-              imgClassName="object-contain"
-              widths={[64, 128]}
-              sizes="64px"
-            />
-            <span className="ml-3 sm:ml-4 text-white text-sm sm:text-base font-semibold leading-tight text-center flex-1 min-w-0">
-              Crédito justo, equilibrado e consciente!
-            </span>
-          </div>
-        </section>
+        <LazySection
+          load={() =>
+            import('@/components/LogoBand').then(({ default: LogoBand }) => ({
+              default: () => (
+                <LogoBand onClick={goToQuemSomos} size="mobile" />
+              ),
+            }))
+          }
+        />
+
       )}
       
       <WaveSeparator variant="hero" height="md" inverted />
