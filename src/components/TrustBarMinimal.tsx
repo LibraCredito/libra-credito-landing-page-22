@@ -118,8 +118,10 @@ const TrustBarMinimal: React.FC = () => {
                 {/* Valor e label em linha */}
                 <div className="text-center md:text-left">
                   <div className="text-[0.9rem] md:text-[1.2rem] font-bold text-white leading-none">
-                    {stat.value}
-                    <span className="text-white font-bold text-[0.75rem] md:text-[1rem]">
+                    <span className="tabular-nums inline-block min-w-[4ch]">
+                      {stat.value}
+                    </span>
+                    <span className="text-white font-bold text-[0.75rem] md:text-[1rem] tabular-nums inline-block min-w-[3ch]">
                       {stat.suffix}
                     </span>
                   </div>
