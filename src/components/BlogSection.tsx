@@ -144,7 +144,7 @@ const BlogSection: React.FC = () => {
                   <div className="aspect-video overflow-hidden rounded-t-lg bg-white">
                     <img
                       src={post.imageUrl}
-                      alt={post.title}
+                      alt={post.metaTitle ?? post.title}
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                       width={1280}
                       height={720}
@@ -164,13 +164,13 @@ const BlogSection: React.FC = () => {
                       {post.readTime} min
                     </div>
                     <CardTitle className={`${isMobile ? 'text-base' : 'text-lg'} leading-tight text-[#003399] group-hover:text-[#0044aa] transition-colors`}>
-                      {post.title}
+                      {post.metaTitle ?? post.title}
                     </CardTitle>
                   </CardHeader>
                   
                   <CardContent>
                     <p className={`text-gray-600 ${isMobile ? 'text-sm' : 'text-sm'} leading-relaxed mb-4 line-clamp-2`}>
-                      {post.description}
+                      {post.metaDescription ?? post.description}
                     </p>
                     <div className="flex items-center text-[#003399] group-hover:text-[#0044aa] transition-colors">
                       <span className="text-sm font-medium">Ler mais</span>

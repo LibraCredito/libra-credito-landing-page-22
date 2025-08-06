@@ -234,7 +234,7 @@ const Blog = () => {
                       <div className="aspect-video overflow-hidden rounded-t-xl bg-white">
                         <img
                           src={post.imageUrl}
-                          alt={post.title}
+                          alt={post.metaTitle ?? post.title}
                           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                           width={1280}
                           height={720}
@@ -250,10 +250,10 @@ const Blog = () => {
                           {CATEGORIES.find(cat => cat.id === post.category)?.name}
                         </span>
                         <h3 className="text-lg font-bold text-libra-navy mt-2 mb-2 group-hover:text-libra-blue transition-colors">
-                          {post.title}
+                          {post.metaTitle ?? post.title}
                         </h3>
                         <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                          {post.description}
+                          {post.metaDescription ?? post.description}
                         </p>
                       <div className="flex items-center justify-between text-sm text-gray-500">
                         <span>{new Date(post.createdAt || '').toLocaleDateString('pt-BR')}</span>

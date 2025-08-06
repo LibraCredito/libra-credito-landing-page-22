@@ -116,13 +116,13 @@ const BlogPost = () => {
     <MobileLayout>
       {post && (
         <Seo
-          title={`${post.title} | Blog Libra Crédito`}
-          description={post.description}
+          title={`${post.metaTitle ?? post.title} | Blog Libra Crédito`}
+          description={post.metaDescription ?? post.description}
           jsonLd={{
             '@context': 'https://schema.org',
             '@type': 'Article',
-            headline: post.title,
-            description: post.description,
+            headline: post.metaTitle ?? post.title,
+            description: post.metaDescription ?? post.description,
             author: {
               '@type': 'Organization',
               name: 'Libra Crédito'
