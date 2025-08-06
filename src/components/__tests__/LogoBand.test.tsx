@@ -18,6 +18,8 @@ describe('LogoBand', () => {
     expect(img.getAttribute('src')).toBe('/images/logos/logo-branco.svg');
     expect(img).toHaveAttribute('width', '80');
     expect(img).toHaveAttribute('height', '80');
+    expect(img.getAttribute('srcset')).toContain('width=80');
+    expect(img).toHaveAttribute('sizes', '80px');
   });
 });
 

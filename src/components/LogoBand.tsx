@@ -13,6 +13,8 @@ const LogoBand: React.FC = () => {
           priority={false}
           width={80}
           height={80}
+          widths={[80, 160]}
+          sizes="80px"
         />
         <span className="ml-4 text-white text-lg font-semibold whitespace-nowrap">
           Crédito justo, equilibrado e consciente!

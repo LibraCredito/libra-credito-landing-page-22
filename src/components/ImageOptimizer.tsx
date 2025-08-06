@@ -58,6 +58,8 @@ interface ImageOptimizerProps {
   priority?: boolean;
   width?: number;
   height?: number;
+  widths?: number[];
+  sizes?: string;
 }
 
 const ImageOptimizer: React.FC<ImageOptimizerProps> = ({
@@ -67,8 +69,12 @@ const ImageOptimizer: React.FC<ImageOptimizerProps> = ({
   aspectRatio = 16/9,
   priority = false,
   width,
-  height
+  height,
+  widths,
+  sizes
 }) => {
+  const srcSet = widths?.map((w) => `${src}?width=${w} ${w}w`).join(', ');
+
   const imageElement = (
     <img
       src={src}
@@ -78,6 +84,8 @@ const ImageOptimizer: React.FC<ImageOptimizerProps> = ({
       width={width}
       height={height}
       decoding="async"
+      srcSet={srcSet}
+      sizes={sizes}
     />
   );
   
