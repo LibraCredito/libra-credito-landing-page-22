@@ -21,13 +21,8 @@ interface MobileProviderProps {
 }
 
 export const MobileProvider: React.FC<MobileProviderProps> = ({ children }) => {
-  // Valor inicial baseado no breakpoint padrão
-  const getInitialValue = (): boolean => {
-    if (typeof window === 'undefined') return false;
-    return window.innerWidth < MOBILE_BREAKPOINT;
-  };
-
-  const [isMobile, setIsMobile] = useState<boolean>(getInitialValue);
+  // Valor inicial determinístico para evitar mismatch
+  const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -40,7 +35,7 @@ export const MobileProvider: React.FC<MobileProviderProps> = ({ children }) => {
       setIsMobile(e.matches);
     };
 
-    // Definir valor inicial correto
+    // Definir valor inicial correto após montar
     setIsMobile(mql.matches);
     setIsLoading(false);
     
