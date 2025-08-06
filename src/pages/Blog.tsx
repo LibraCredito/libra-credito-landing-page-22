@@ -21,6 +21,7 @@ import MobileLayout from '@/components/MobileLayout';
 import WaveSeparator from '@/components/ui/WaveSeparator';
 import { BlogService, type BlogPost as BlogPostType } from '@/services/blogService';
 import { useIsMobile } from '@/hooks/use-mobile';
+import Seo from '@/components/Seo';
 
 // Usar o tipo do BlogService
 type BlogPost = BlogPostType;
@@ -84,14 +85,16 @@ const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    document.title = "Blog | Libra Crédito | Artigos e Dicas Financeiras";
-    
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Confira artigos e dicas sobre capital de giro, consolidação de dívidas e financiamento para reformas. Mantenha-se informado com o blog da Libra Crédito.');
-    }
+  const blogJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'Blog Libra Crédito',
+    description:
+      'Confira artigos e dicas sobre capital de giro, consolidação de dívidas e financiamento para reformas. Mantenha-se informado com o blog da Libra Crédito.',
+    url: 'https://libracredito.com.br/blog'
+  };
 
+  useEffect(() => {
     // Carregar posts do BlogService
     const loadPosts = async () => {
       try {
@@ -120,6 +123,12 @@ const Blog = () => {
 
   return (
     <MobileLayout>
+      <Seo
+        title="Blog | Libra Crédito | Artigos e Dicas Financeiras"
+        description="Confira artigos e dicas sobre capital de giro, consolidação de dívidas e financiamento para reformas. Mantenha-se informado com o blog da Libra Crédito."
+        jsonLd={blogJsonLd}
+        schemaId="blog-schema"
+      />
       <WaveSeparator variant="hero" height="md" inverted />
       
       <div className="bg-white pb-8 md:pb-12">
