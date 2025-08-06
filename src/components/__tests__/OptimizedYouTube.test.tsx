@@ -28,5 +28,20 @@ describe('OptimizedYouTube', () => {
     expect(iframe).toBeInTheDocument();
     expect(iframe?.getAttribute('src')).toContain('abc123');
   });
+
+  it('shows unmute button after loading video', () => {
+    const { container, getByText, queryByText } = render(
+      <OptimizedYouTube videoId="abc123" title="Test Video" />
+    );
+
+    const button = container.querySelector('button') as HTMLButtonElement;
+    fireEvent.click(button);
+
+    const unmute = getByText('Ativar som');
+    expect(unmute).toBeInTheDocument();
+
+    fireEvent.click(unmute);
+    expect(queryByText('Ativar som')).toBeNull();
+  });
 });
 
