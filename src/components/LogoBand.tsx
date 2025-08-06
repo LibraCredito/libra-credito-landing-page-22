@@ -60,7 +60,9 @@ const LogoBand: React.FC<LogoBandProps> = ({ onClick, size = 'desktop' }) => {
         <ImageOptimizer
           src="/images/logos/logo-branco.svg"
           alt="Libra Crédito"
-          className={config.imgClass}
+          className="h-20 w-20"
+          objectFit="contain"
+
           aspectRatio={1}
 
           priority={false}

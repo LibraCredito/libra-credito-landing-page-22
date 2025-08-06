@@ -133,15 +133,36 @@ const Index: React.FC = () => {
           </div>
         </section>
       ) : (
-        <LazySection
-          load={() =>
-            import('@/components/LogoBand').then(({ default: LogoBand }) => ({
-              default: () => (
-                <LogoBand onClick={goToQuemSomos} size="mobile" />
-              ),
-            }))
-          }
-        />
+        <section 
+          className="w-full bg-[#003399] flex justify-center py-8 cursor-pointer hover:bg-[#002277] transition-colors"
+          onClick={goToQuemSomos}
+          aria-label="Clique para conhecer mais sobre a Libra Crédito"
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              goToQuemSomos();
+            }
+          }}
+        >
+          <div className="flex items-center px-4 max-w-full">
+            <ImageOptimizer
+              src="/images/logos/logo-branco.svg"
+              alt="Libra Crédito"
+              width={64}
+              height={64}
+              aspectRatio={1}
+              className="h-12 sm:h-16 flex-shrink-0"
+              objectFit="contain"
+              widths={[64, 128]}
+              sizes="64px"
+            />
+            <span className="ml-3 sm:ml-4 text-white text-sm sm:text-base font-semibold leading-tight text-center flex-1 min-w-0">
+              Crédito justo, equilibrado e consciente!
+            </span>
+          </div>
+        </section>
 
       )}
       
