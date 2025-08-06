@@ -30,9 +30,9 @@
     <!-- Preload local Comfortaa font -->
     <link rel="preload" as="font" href="/fonts/Comfortaa.woff2" type="font/woff2" crossorigin>
 
-    <!-- Preload main stylesheet -->
-    <link rel="preload" href="/assets/css/index.css" as="style" onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/assets/css/index.css"></noscript>
+    <!-- Main stylesheet -->
+    <link rel="preload" href="/assets/css/index.css" as="style">
+    <link rel="stylesheet" href="/assets/css/index.css">
 
     <link rel="preload" as="image" href="/images/media/video-cgi-libra.webp" fetchpriority="high">
 
@@ -95,6 +95,7 @@
       #root { height: 100%; }
       h1, h2, h3, h4, h5, h6 { font-weight: 700; }
       p { font-weight: 300; }
+      h1 { font-size: 1.5rem; line-height: 2rem; }
       
       /* Header Critical */
       .header-fixed { 
