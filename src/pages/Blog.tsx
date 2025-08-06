@@ -76,13 +76,15 @@ const CATEGORIES = [
   }
 ];
 
-const Blog = () => {
+interface BlogProps { initialPosts?: BlogPost[]; }
+
+const Blog: React.FC<BlogProps> = ({ initialPosts = [] }) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState<BlogPost[]>(initialPosts);
+  const [loading, setLoading] = useState(initialPosts.length === 0);
 
   useEffect(() => {
     document.title = "Blog | Libra Crédito | Artigos e Dicas Financeiras";
@@ -103,9 +105,12 @@ const Blog = () => {
         setLoading(false);
       }
     };
-
-    loadPosts();
-  }, []);
+    if (initialPosts.length === 0) {
+      loadPosts();
+    } else {
+      setLoading(false);
+    }
+  }, [initialPosts]);
 
   const handleSimular = () => {
     navigate('/simulacao');

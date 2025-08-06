@@ -6,6 +6,7 @@ import ScrollToTop from '@/components/ScrollToTop';
 import { MobileProvider } from '@/hooks/useMobileContext';
 import { Toaster } from '@/components/ui/toast';
 import { Analytics } from '@vercel/analytics/react';
+import type { BlogPost as BlogPostType } from '@/data/blogPosts';
 
 const TooltipProvider = lazy(() => import('@/components/ui/tooltip').then(m => ({ default: m.TooltipProvider })));
 
@@ -15,8 +16,8 @@ import Index from "./pages/Index";
 // Lazy load other components
 const Vantagens = lazy(() => import("./pages/Vantagens"));
 const QuemSomos = lazy(() => import("./pages/QuemSomos"));
-const Blog = lazy(() => import("./pages/Blog"));
-const BlogPost = lazy(() => import("./pages/BlogPost"));
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 const Parceiros = lazy(() => import("./pages/Parceiros"));
 const Simulacao = lazy(() => import("./pages/Simulacao"));
 const PoliticaPrivacidade = lazy(() => import("./pages/PoliticaPrivacidade"));
@@ -54,11 +55,15 @@ const queryClient = new QueryClient({
   },
 });
 
-const AppServer = () => {
+interface InitialData { posts?: BlogPostType[]; post?: BlogPostType; }
+
+interface AppServerProps { url: string; initialData?: InitialData; }
+
+const AppServer: React.FC<AppServerProps> = ({ url, initialData = {} }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <MobileProvider>
-        <StaticRouter location="/">
+        <StaticRouter location={url}>
           <ScrollToTop />
           <Suspense fallback={<Loading />}>
             <Routes>
@@ -69,8 +74,8 @@ const AppServer = () => {
                 </Suspense>
               } />
               <Route path="/quem-somos" element={<QuemSomos />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/blog" element={<Blog initialPosts={initialData.posts} />} />
+              <Route path="/blog/:slug" element={<BlogPost initialPost={initialData.post} />} />
               <Route path="/parceiros" element={<Parceiros />} />
               <Route path="/simulacao" element={
                 <Suspense fallback={<Loading />}>
