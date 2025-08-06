@@ -11,10 +11,12 @@ describe('LogoBand', () => {
     expect(wrapper).not.toHaveClass('py-8');
 
     const img = screen.getByAltText('Libra Crédito') as HTMLImageElement;
-    expect(img).toHaveClass('h-20');
-    expect(img).toHaveClass('w-20');
-    expect(img).not.toHaveClass('h-24');
-    expect(img).not.toHaveClass('w-auto');
+    const imgContainer = img.parentElement as HTMLElement;
+
+    expect(imgContainer).toHaveClass('h-20');
+    expect(imgContainer).toHaveClass('w-20');
+    expect(img).not.toHaveClass('w-full');
+    expect(img).not.toHaveClass('h-full');
     expect(img.getAttribute('src')).toBe('/images/logos/logo-branco.svg');
     expect(img).toHaveAttribute('width', '80');
     expect(img).toHaveAttribute('height', '80');
