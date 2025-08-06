@@ -96,6 +96,8 @@ const QuemSomos = () => {
                     aspectRatio={16/9}
                     width={2048}
                     height={1106}
+                    widths={[480, 768, 1024, 1600, 2048]}
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
               </div>
             </div>
@@ -147,6 +149,8 @@ const QuemSomos = () => {
                   aspectRatio={1600/1066}
                   width={1600}
                   height={1066}
+                  widths={[480, 768, 1024, 1600]}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
             </div>

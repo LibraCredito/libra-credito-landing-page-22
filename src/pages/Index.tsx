@@ -155,6 +155,8 @@ const Index: React.FC = () => {
               height={64}
               aspectRatio={1}
               className="h-12 sm:h-16 flex-shrink-0"
+              widths={[64, 128]}
+              sizes="64px"
             />
             <span className="ml-3 sm:ml-4 text-white text-sm sm:text-base font-semibold leading-tight text-center flex-1 min-w-0">
               Crédito justo, equilibrado e consciente!
