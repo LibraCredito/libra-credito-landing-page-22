@@ -34,11 +34,12 @@ export const useDevice = (): DeviceInfo => {
 
     const width = window.innerWidth;
     const height = window.innerHeight;
-    const userAgent = navigator.userAgent;
+    const uaData = (navigator as any).userAgentData;
+    const platform = uaData?.platform || navigator.userAgent;
 
-    // Detectar sistema operacional
-    const isIOS = /iPad|iPhone|iPod/.test(userAgent);
-    const isAndroid = /Android/.test(userAgent);
+    // Detectar sistema operacional utilizando userAgentData com fallback
+    const isIOS = /iPad|iPhone|iPod/.test(platform);
+    const isAndroid = /Android/.test(platform);
 
     // Detectar dispositivo premium
     const isPremiumDevice = 
@@ -54,8 +55,10 @@ export const useDevice = (): DeviceInfo => {
       (width === 430 && height === 932)    // iPhone 14 Pro Max
     );
 
-    // Detectar touch
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    // Detectar touch com verificação de suporte a maxTouchPoints
+    const maxTouchPoints =
+      'maxTouchPoints' in navigator ? navigator.maxTouchPoints : 0;
+    const isTouchDevice = 'ontouchstart' in window || maxTouchPoints > 0;
 
     // Determinar tipo de dispositivo
     let deviceType: DeviceInfo['deviceType'];
@@ -99,10 +102,11 @@ export const useDevice = (): DeviceInfo => {
     const handleResize = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      const userAgent = navigator.userAgent;
+      const uaData = (navigator as any).userAgentData;
+      const platform = uaData?.platform || navigator.userAgent;
 
-      const isIOS = /iPad|iPhone|iPod/.test(userAgent);
-      const isAndroid = /Android/.test(userAgent);
+      const isIOS = /iPad|iPhone|iPod/.test(platform);
+      const isAndroid = /Android/.test(platform);
 
       const isPremiumDevice = 
         (isIOS && (width >= 375 || height >= 812)) ||
@@ -116,7 +120,9 @@ export const useDevice = (): DeviceInfo => {
         (width === 430 && height === 932)
       );
 
-      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const maxTouchPoints =
+        'maxTouchPoints' in navigator ? navigator.maxTouchPoints : 0;
+      const isTouchDevice = 'ontouchstart' in window || maxTouchPoints > 0;
 
       let deviceType: DeviceInfo['deviceType'];
       let isMobile = false;
