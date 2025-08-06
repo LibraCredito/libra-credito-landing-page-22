@@ -39,6 +39,8 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
   const location = useLocation();
   const _navigate = useNavigate();
   const [showBanner, setShowBanner] = useState(true);
+  const bannerRef = useRef<HTMLDivElement | null>(null);
+  const [bannerHeight, setBannerHeight] = useState(0);
   const headerRef = useRef<HTMLElement | null>(null);
   const headerHeightRef = useRef(0);
 
@@ -82,8 +84,8 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
         ref={headerRef}
       >
       {/* Faixa superior informativa */}
-      {showBanner && (
-        <div className="w-full bg-libra-navy">
+      {showBanner ? (
+        <div ref={bannerRef} className="w-full bg-libra-navy overflow-hidden">
           <div className="container mx-auto px-4">
             <div className="relative flex items-center justify-center py-2">
               <div className="flex items-center text-white text-sm font-semibold">
@@ -92,7 +94,12 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
               </div>
               <button
                 className="absolute right-0 top-1/2 -translate-y-1/2 text-white hover:text-gray-200"
-                onClick={() => setShowBanner(false)}
+                onClick={() => {
+                  if (bannerRef.current) {
+                    setBannerHeight(bannerRef.current.offsetHeight);
+                  }
+                  setShowBanner(false);
+                }}
                 aria-label="Fechar aviso"
               >
                 <X className="w-4 h-4" />
@@ -100,6 +107,12 @@ const DesktopHeader: React.FC<DesktopHeaderProps> = ({ onPortalClientes, onSimul
             </div>
           </div>
         </div>
+      ) : (
+        <div
+          aria-hidden="true"
+          style={{ height: bannerHeight }}
+          className="w-full overflow-hidden"
+        />
       )}
 
         {/* Faixa principal */}
