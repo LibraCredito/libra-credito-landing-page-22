@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * Hook SSR-safe para detectar se o dispositivo é mobile
@@ -7,28 +7,20 @@ import { useState, useEffect, useLayoutEffect } from 'react';
  * @returns boolean - true se for mobile, false caso contrário
  */
 export const useIsMobile = (breakpoint: number = 768): boolean => {
-  // Inicializar com valor que evita hydration mismatch
-  const [isMobile, setIsMobile] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return false;
-    return window.innerWidth < breakpoint;
-  });
+  // Inicia com valor determinístico para evitar mismatch
+  const [isMobile, setIsMobile] = useState(false);
 
-  // useLayoutEffect para sincronizar antes do paint
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (typeof window === 'undefined') return;
 
     const mql = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
-    const onChange = (e: MediaQueryListEvent) => {
-      setIsMobile(e.matches);
-    };
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
 
-    // Garantir valor correto imediatamente
+    // Atualiza imediatamente após o mount
     setIsMobile(mql.matches);
     mql.addEventListener('change', onChange);
 
-    return () => {
-      mql.removeEventListener('change', onChange);
-    };
+    return () => mql.removeEventListener('change', onChange);
   }, [breakpoint]);
 
   return isMobile;
@@ -36,15 +28,9 @@ export const useIsMobile = (breakpoint: number = 768): boolean => {
 
 // Hook adicional para diferentes breakpoints - SSR-safe
 export const useBreakpoint = () => {
-  const [breakpoint, setBreakpoint] = useState<'mobile' | 'tablet' | 'desktop'>(() => {
-    if (typeof window === 'undefined') return 'desktop';
-    const width = window.innerWidth;
-    if (width < 768) return 'mobile';
-    if (width < 1024) return 'tablet';
-    return 'desktop';
-  });
+  const [breakpoint, setBreakpoint] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (typeof window === 'undefined') return;
 
     const checkBreakpoint = () => {
@@ -61,9 +47,7 @@ export const useBreakpoint = () => {
     checkBreakpoint();
     window.addEventListener('resize', checkBreakpoint);
 
-    return () => {
-      window.removeEventListener('resize', checkBreakpoint);
-    };
+    return () => window.removeEventListener('resize', checkBreakpoint);
   }, []);
 
   return breakpoint;
@@ -71,12 +55,9 @@ export const useBreakpoint = () => {
 
 // Hook para detectar orientação do dispositivo - SSR-safe
 export const useOrientation = () => {
-  const [orientation, setOrientation] = useState<'portrait' | 'landscape'>(() => {
-    if (typeof window === 'undefined') return 'portrait';
-    return window.matchMedia('(orientation: portrait)').matches ? 'portrait' : 'landscape';
-  });
+  const [orientation, setOrientation] = useState<'portrait' | 'landscape'>('portrait');
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (typeof window === 'undefined') return;
 
     const getOrientation = () => {
@@ -87,9 +68,7 @@ export const useOrientation = () => {
       return window.matchMedia('(orientation: portrait)').matches ? 'portrait' : 'landscape';
     };
 
-    const checkOrientation = () => {
-      setOrientation(getOrientation());
-    };
+    const checkOrientation = () => setOrientation(getOrientation());
 
     checkOrientation();
     window.addEventListener('orientationchange', checkOrientation);
