@@ -7,6 +7,7 @@ import { useIsMobile } from '@/hooks/useMobileContext';
 import HeroPremium from '@/components/HeroPremium';
 import WaveSeparator from '@/components/ui/WaveSeparator';
 import Header from '@/components/Header';
+import ImageOptimizer from '@/components/ImageOptimizer';
 
 // Lazy loading dos componentes pesados - com threshold otimizado
 const FAQ = lazy(() => import('@/components/FAQ'));
