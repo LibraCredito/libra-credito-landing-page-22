@@ -328,6 +328,7 @@
   html {
     /* Ensures minimum 12px fonts for accessibility */
     font-size: 100%;
+    overflow-x: hidden;
   }
 
   body {
