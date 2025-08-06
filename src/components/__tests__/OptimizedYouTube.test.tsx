@@ -4,23 +4,29 @@ import React from 'react';
 import OptimizedYouTube from '../OptimizedYouTube';
 
 describe('OptimizedYouTube', () => {
-  it('hides placeholder after thumbnail loads', () => {
-    const { container, getByAltText } = render(
+  it('renders thumbnail without placeholder', () => {
+    const { queryByAltText, getByAltText } = render(
       <OptimizedYouTube videoId="abc123" title="Test Video" />
     );
 
-    const placeholder = container.querySelector('img[aria-hidden="true"]') as HTMLImageElement;
-    const thumbnail = getByAltText('Miniatura do Test Video') as HTMLImageElement;
+    const thumbnail = getByAltText('Miniatura do Test Video');
+    const placeholder = queryByAltText('');
 
-    // placeholder initially in the DOM and visible
-    expect(placeholder).toBeInTheDocument();
-    expect(placeholder.style.display).toBe('block');
+    expect(thumbnail).toBeInTheDocument();
+    expect(placeholder).toBeNull();
+  });
 
-    // fire load event
-    fireEvent.load(thumbnail);
+  it('loads video iframe on click', () => {
+    const { container } = render(
+      <OptimizedYouTube videoId="abc123" title="Test Video" />
+    );
 
-    // placeholder should be hidden after thumbnail load
-    expect(placeholder.style.display).toBe('none');
+    const button = container.querySelector('button') as HTMLButtonElement;
+    fireEvent.click(button);
+
+    const iframe = container.querySelector('iframe');
+    expect(iframe).toBeInTheDocument();
+    expect(iframe?.getAttribute('src')).toContain('abc123');
   });
 });
 
