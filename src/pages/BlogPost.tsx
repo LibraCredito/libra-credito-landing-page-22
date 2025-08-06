@@ -14,10 +14,12 @@ import DOMPurify from 'dompurify';
 
 type BlogPost = BlogPostType;
 
-const BlogPost = () => {
+interface BlogPostPageProps { initialPost?: BlogPost; }
+
+const BlogPost: React.FC<BlogPostPageProps> = ({ initialPost }) => {
   const { slug } = useParams<{ slug: string }>();
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [post, setPost] = useState<BlogPost | null>(initialPost || null);
+  const [loading, setLoading] = useState(!initialPost);
 
   useEffect(() => {
     const loadPost = async () => {
@@ -38,8 +40,12 @@ const BlogPost = () => {
       }
     };
 
-    loadPost();
-  }, [slug]);
+    if (!initialPost) {
+      loadPost();
+    } else {
+      setLoading(false);
+    }
+  }, [slug, initialPost]);
 
   if (loading) {
     return (
