@@ -8,8 +8,9 @@ const LogoBand: React.FC = () => {
         <ImageOptimizer
           src="/images/logos/logo-branco.svg"
           alt="Libra Crédito"
-          className="h-20 w-20"
-          aspectRatio={1}
+          className="h-20 w-auto"
+          imgClassName="object-contain"
+          aspectRatio={0}
           priority={false}
           width={80}
           height={80}
