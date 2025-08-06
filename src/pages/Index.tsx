@@ -153,7 +153,8 @@ const Index: React.FC = () => {
               width={64}
               height={64}
               aspectRatio={1}
-              className="h-12 sm:h-16 flex-shrink-0"
+              className="w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0"
+              imgClassName="w-full h-full"
               objectFit="contain"
               widths={[64, 128]}
               sizes="64px"
