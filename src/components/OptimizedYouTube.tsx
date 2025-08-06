@@ -26,7 +26,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   className = '',
   priority = false,
   fetchPriority,
-  decoding = 'async',
+  decoding = priority ? 'sync' : 'async',
   thumbnailSrc,
 }) => {
   const thumbnailImage = thumbnailSrc || '/images/media/video-cgi-libra.webp';
@@ -91,6 +91,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
             objectFit: 'cover',
             display: 'block',
           }}
+          decoding={decoding}
         />
         <picture
           style={{
@@ -115,7 +116,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
             }}
             loading={priority ? 'eager' : 'lazy'}
             {...(fetchPriorityAttr ? { fetchpriority: fetchPriorityAttr } : {})}
-            decoding={decoding}
+            decoding="sync"
             onLoad={handleThumbnailLoad}
           />
         </picture>
