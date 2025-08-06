@@ -49,11 +49,15 @@
 
 import React from 'react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { cn } from "@/lib/utils";
 
 interface ImageOptimizerProps {
   src: string;
   alt: string;
+  /** Classes aplicadas ao container */
   className?: string;
+  /** Classes aplicadas diretamente à imagem */
+  imgClassName?: string;
   aspectRatio?: number;
   priority?: boolean;
   width?: number;
@@ -66,6 +70,7 @@ const ImageOptimizer: React.FC<ImageOptimizerProps> = ({
   src,
   alt,
   className = "",
+  imgClassName = "",
   aspectRatio = 16/9,
   priority = false,
   width,
@@ -74,13 +79,21 @@ const ImageOptimizer: React.FC<ImageOptimizerProps> = ({
   sizes
 }) => {
   const srcSet = widths?.map((w) => `${src}?width=${w} ${w}w`).join(', ');
+  const allClasses = `${className} ${imgClassName}`;
+  const hasWidthClass = /\bw-\S+/.test(allClasses);
+  const hasHeightClass = /\bh-\S+/.test(allClasses);
 
   const imageElement = (
     <img
       src={src}
       alt={alt}
       loading={priority ? "eager" : "lazy"}
-      className={`object-cover w-full h-full ${className}`}
+      className={cn(
+        "object-cover",
+        !hasWidthClass && "w-full",
+        !hasHeightClass && "h-full",
+        imgClassName
+      )}
       width={width}
       height={height}
       decoding="async"
@@ -88,13 +101,15 @@ const ImageOptimizer: React.FC<ImageOptimizerProps> = ({
       sizes={sizes}
     />
   );
-  
+
+  const containerClasses = cn("overflow-hidden", className);
+
   return aspectRatio ? (
-    <AspectRatio ratio={aspectRatio} className={`overflow-hidden ${className}`}>
+    <AspectRatio ratio={aspectRatio} className={containerClasses}>
       {imageElement}
     </AspectRatio>
   ) : (
-    <div className={`overflow-hidden ${className}`}>
+    <div className={containerClasses}>
       {imageElement}
     </div>
   );
