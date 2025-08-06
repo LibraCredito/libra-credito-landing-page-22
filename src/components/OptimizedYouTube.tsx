@@ -1,5 +1,5 @@
 import Play from 'lucide-react/dist/esm/icons/play';
-import { type FC, type MouseEvent, useEffect, useRef } from 'react';
+import { type FC, type MouseEvent } from 'react';
 
 interface OptimizedYouTubeProps {
   videoId: string;
@@ -30,24 +30,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   thumbnailSrc,
 }) => {
   const thumbnailImage = thumbnailSrc || '/images/media/video-cgi-libra.webp';
-
-  const placeholderRef = useRef<HTMLImageElement | null>(null);
-  const thumbnailRef = useRef<HTMLImageElement | null>(null);
-  const placeholderSrc =
-    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 360'%3E%3Crect width='480' height='360' fill='%23e2e8f0'/%3E%3C/svg%3E";
   const fetchPriorityAttr = fetchPriority ?? (priority ? 'high' : undefined);
-
-  const handleThumbnailLoad = () => {
-    if (placeholderRef.current) {
-      placeholderRef.current.style.display = 'none';
-    }
-  };
-
-  useEffect(() => {
-    if (thumbnailRef.current?.complete) {
-      handleThumbnailLoad();
-    }
-  }, []);
 
   const loadVideo = (e: MouseEvent<HTMLButtonElement>) => {
     const container = e.currentTarget.parentElement as HTMLElement | null;
@@ -68,55 +51,23 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   };
 
   return (
-    <div className={`hero-video relative w-full h-full overflow-hidden ${className}`}>
+    <div className={`hero-video relative w-full h-full overflow-hidden bg-gray-200 ${className}`}>
       <button
-        className="w-full h-full cursor-pointer relative bg-black flex items-center justify-center group"
+        className="w-full h-full cursor-pointer relative flex items-center justify-center group"
         onClick={loadVideo}
         aria-label={`Reproduzir vídeo: ${title}`}
         type="button"
       >
-        {/* When priority is true, set fetchPriority="high" so the thumbnail is requested early for better LCP */}
-        <img
-          ref={placeholderRef}
-          src={placeholderSrc}
-          alt=""
-          aria-hidden="true"
-          width="480"
-          height="360"
-          style={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            display: 'block',
-          }}
-        />
-        <picture
-          style={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            display: 'block',
-          }}
-        >
+        <picture className="absolute inset-0 w-full h-full block">
           <img
-            ref={thumbnailRef}
             src={thumbnailImage}
             alt={`Miniatura do ${title}`}
             width="480"
             height="360"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              display: 'block',
-            }}
+            className="w-full h-full object-cover block"
             loading={priority ? 'eager' : 'lazy'}
             {...(fetchPriorityAttr ? { fetchpriority: fetchPriorityAttr } : {})}
             decoding={decoding}
-            onLoad={handleThumbnailLoad}
           />
         </picture>
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors duration-200">
