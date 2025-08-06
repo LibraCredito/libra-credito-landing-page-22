@@ -6,6 +6,7 @@ export default function TypewriterText({ strings }: { strings: string[] }) {
   useEffect(() => {
     let typed: any;
     let isMounted = true;
+    let idleId: number | null = null;
 
     const loadTyped = async () => {
       const { default: Typed } = await import('typed.js');
@@ -20,10 +21,30 @@ export default function TypewriterText({ strings }: { strings: string[] }) {
       });
     };
 
-    loadTyped();
+    const start = () => {
+      if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+        idleId = (window as any).requestIdleCallback(() => loadTyped());
+      } else {
+        loadTyped();
+      }
+    };
+
+    const onInteract = () => {
+      start();
+      window.removeEventListener('pointerdown', onInteract);
+      window.removeEventListener('keydown', onInteract);
+    };
+
+    window.addEventListener('pointerdown', onInteract, { once: true });
+    window.addEventListener('keydown', onInteract, { once: true });
 
     return () => {
       isMounted = false;
+      if (idleId !== null && typeof window !== 'undefined' && 'cancelIdleCallback' in window) {
+        (window as any).cancelIdleCallback(idleId);
+      }
+      window.removeEventListener('pointerdown', onInteract);
+      window.removeEventListener('keydown', onInteract);
       typed?.destroy();
     };
   }, [strings]);
