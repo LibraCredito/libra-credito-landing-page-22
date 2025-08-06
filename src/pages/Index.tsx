@@ -153,8 +153,9 @@ const Index: React.FC = () => {
               alt="Libra Crédito"
               width={64}
               height={64}
-              aspectRatio={1}
-              className="h-12 sm:h-16 flex-shrink-0"
+              aspectRatio={0}
+              className="h-12 sm:h-16 w-auto flex-shrink-0"
+              imgClassName="object-contain"
               widths={[64, 128]}
               sizes="64px"
             />
