@@ -26,7 +26,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   className = '',
   priority = false,
   fetchPriority,
-  decoding = 'async',
+  decoding = priority ? 'sync' : 'async',
   thumbnailSrc,
 }) => {
   const thumbnailImage = thumbnailSrc || '/images/media/video-cgi-libra.webp';
@@ -59,6 +59,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
         type="button"
       >
         <picture className="absolute inset-0 w-full h-full block">
+
           <img
             src={thumbnailImage}
             alt={`Miniatura do ${title}`}
@@ -68,6 +69,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
             loading={priority ? 'eager' : 'lazy'}
             {...(fetchPriorityAttr ? { fetchpriority: fetchPriorityAttr } : {})}
             decoding={decoding}
+
           />
         </picture>
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors duration-200">

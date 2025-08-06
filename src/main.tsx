@@ -1,5 +1,5 @@
 import React from 'react';
-import { hydrateRoot } from 'react-dom/client';
+import { hydrateRoot, createRoot } from 'react-dom/client';
 import App from './App.tsx'
 import './index.css';
 import './styles/overflow-fix.css';
@@ -21,7 +21,11 @@ const renderApp = () => {
   
   const root = document.getElementById('root');
   if (root) {
-    hydrateRoot(root, <App />);
+    if (root.hasChildNodes()) {
+      hydrateRoot(root, <App />);
+    } else {
+      createRoot(root).render(<App />);
+    }
   }
 };
 
