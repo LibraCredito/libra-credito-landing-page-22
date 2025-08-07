@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import Calculator from 'lucide-react/dist/esm/icons/calculator';
-import CheckCircle from 'lucide-react/dist/esm/icons/check-circle';
-import Users from 'lucide-react/dist/esm/icons/users';
-import TrendingUp from 'lucide-react/dist/esm/icons/trending-up';
-import Headphones from 'lucide-react/dist/esm/icons/headphones';
+import React, { Suspense, useState } from 'react';
+import { Calculator, CheckCircle, Users, Headphones } from 'lucide-react';
+const TrendingUp = React.lazy(() =>
+  import('lucide-react').then((m) => ({ default: m.TrendingUp }))
+);
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ContactForm from './ContactForm';
@@ -90,7 +89,9 @@ const SwitchPriceTip: React.FC<{ onSwitchToPrice?: () => void }> = ({
               className="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs py-1"
               size="sm"
             >
-              <TrendingUp className="w-3 h-3 mr-1 text-[#003399]" />
+              <Suspense fallback={<div className="w-3 h-3 mr-1" />}>
+                <TrendingUp className="w-3 h-3 mr-1 text-[#003399]" />
+              </Suspense>
               Ver simulação PRICE
             </Button>
           )}

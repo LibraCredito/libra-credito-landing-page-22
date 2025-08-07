@@ -1,10 +1,13 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import MobileLayout from '@/components/MobileLayout';
-import SimulationForm from '@/components/SimulationForm';
 import WaveSeparator from '@/components/ui/WaveSeparator';
 import { useIsMobile } from '@/hooks/use-mobile';
 import scrollToTarget from '@/utils/scrollToTarget';
+import LazySection from '@/components/LazySection';
+
+const SimulationForm = lazy(() => import('@/components/SimulationForm'));
+const Footer = lazy(() => import('@/components/Footer'));
 
 interface LazySectionProps {
   load: () => Promise<{ default: React.ComponentType<unknown> }>;
@@ -50,8 +53,8 @@ const Simulacao = () => {
 
   useEffect(() => {
     // Meta Title otimizado para simulação - 59 caracteres
-    document.title = "Simulação Home Equity | Libra Crédito Garantia Imóvel";
-    
+    document.title = 'Simulação Home Equity | Libra Crédito Garantia Imóvel';
+
     // Meta Description otimizada - 154 caracteres
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
@@ -67,7 +70,6 @@ const Simulacao = () => {
         const cardHeader = card?.querySelector('[data-sim-card-header="true"]') as HTMLElement | null;
         if (cardHeader) {
           scrollToTarget(cardHeader, -headerHeight);
-
         }
       });
       return () => cancelAnimationFrame(frame);
@@ -82,6 +84,7 @@ const Simulacao = () => {
         <SimulationForm />
       </div>
       <LazySection load={() => import('@/components/Footer')} />
+
     </MobileLayout>
   );
 };
