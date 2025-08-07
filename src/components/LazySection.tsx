@@ -1,47 +1,41 @@
-/**
- * Componente de seção lazy loading otimizado
- * 
- * Substitui o Suspense fallback por um loading mais performático
- */
-
-import React, { ReactNode } from 'react';
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 
 interface LazySectionProps {
-  children: ReactNode;
-  fallback?: ReactNode;
-  className?: string;
-  rootMargin?: string;
-  threshold?: number;
+  load: () => Promise<{ default: React.ComponentType<unknown> }>;
+  children?: ReactNode;
 }
 
-const LazySection: React.FC<LazySectionProps> = ({
-  children,
-  fallback,
-  className = '',
-  rootMargin = '100px',
-  threshold = 0.1
-}) => {
-  const { targetRef, isIntersecting } = useIntersectionObserver({
-    threshold,
-    rootMargin,
-    triggerOnce: true
-  });
+const LazySection: React.FC<LazySectionProps> = ({ load, children }) => {
+  const [Component, setComponent] = useState<React.ComponentType<unknown> | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
+  const loadRef = useRef(load);
 
-  const defaultFallback = (
-    <div className="w-full h-96 flex items-center justify-center bg-gray-50 rounded-lg animate-pulse">
-      <div className="text-center">
-        <div className="w-8 h-8 border-2 border-libra-blue border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
-        <p className="text-gray-500 text-sm">Carregando...</p>
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    loadRef.current = load;
+  }, [load]);
 
-  return (
-    <div ref={targetRef} className={className}>
-      {isIntersecting ? children : (fallback || defaultFallback)}
-    </div>
-  );
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          loadRef.current().then(({ default: Loaded }) => {
+            setComponent(() => Loaded);
+          });
+          obs.disconnect();
+        }
+      },
+      { rootMargin: '200px 0px' }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  return <div ref={ref}>{Component ? (children ? children : <Component />) : null}</div>;
 };
 
 export default LazySection;
