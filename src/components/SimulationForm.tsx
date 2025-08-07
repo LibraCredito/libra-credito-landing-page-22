@@ -40,25 +40,27 @@
  * @see {@link formatBRL} para formatação de valores
  */
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { validateForm } from '@/utils/validations';
 import { LocalSimulationService, SimulationResult } from '@/services/localSimulationService';
 import { useUserJourney } from '@/hooks/useUserJourney';
 import { useIsMobile } from '@/hooks/use-mobile';
-import CityAutocomplete from './form/CityAutocomplete';
-import LoanAmountField from './form/LoanAmountField';
-import GuaranteeAmountField from './form/GuaranteeAmountField';
-import InstallmentsField from './form/InstallmentsField';
-import AmortizationField from './form/AmortizationField';
-import ApiMessageDisplay from './ApiMessageDisplay';
-import SmartApiMessage from './messages/SmartApiMessage';
-import SimulationResultDisplay from './SimulationResultDisplay';
 import { ApiMessageAnalysis } from '@/utils/apiMessageAnalyzer';
 import { analyzeLocalMessage } from '@/utils/localMessageAnalyzer';
 import { formatBRL, norm } from '@/utils/formatters';
 import { toast } from '@/components/ui/use-toast';
+
+// Lazy-loaded components
+const CityAutocomplete = React.lazy(() => import('./form/CityAutocomplete'));
+const LoanAmountField = React.lazy(() => import('./form/LoanAmountField'));
+const GuaranteeAmountField = React.lazy(() => import('./form/GuaranteeAmountField'));
+const InstallmentsField = React.lazy(() => import('./form/InstallmentsField'));
+const AmortizationField = React.lazy(() => import('./form/AmortizationField'));
+const ApiMessageDisplay = React.lazy(() => import('./ApiMessageDisplay'));
+const SmartApiMessage = React.lazy(() => import('./messages/SmartApiMessage'));
+const SimulationResultDisplay = React.lazy(() => import('./SimulationResultDisplay'));
 
 const SimulationForm: React.FC = () => {
   const { sessionId, trackSimulation } = useUserJourney();
@@ -450,32 +452,42 @@ const SimulationForm: React.FC = () => {
           <CardContent className="p-3 md:p-4">
             <form onSubmit={handleSubmit} className="space-y-2">
               
-              <CityAutocomplete
-                value={cidade}
-                onCityChange={setCidade}
-                isInvalid={invalidCity}
-              />
+              <Suspense fallback={<div className="h-10 bg-gray-100 animate-pulse rounded" />}>
+                <CityAutocomplete
+                  value={cidade}
+                  onCityChange={setCidade}
+                  isInvalid={invalidCity}
+                />
+              </Suspense>
 
-              <LoanAmountField
-                value={emprestimo}
-                onChange={handleEmprestimoChange}
-                isInvalid={invalidLoan}
-              />
+              <Suspense fallback={<div className="h-10 bg-gray-100 animate-pulse rounded" />}>
+                <LoanAmountField
+                  value={emprestimo}
+                  onChange={handleEmprestimoChange}
+                  isInvalid={invalidLoan}
+                />
+              </Suspense>
 
-              <GuaranteeAmountField
-                value={garantia}
-                onChange={handleGarantiaChange}
-                showError={validation.emprestimoExcedeGarantia}
-                isInvalid={invalidGuarantee}
-              />
+              <Suspense fallback={<div className="h-10 bg-gray-100 animate-pulse rounded" />}>
+                <GuaranteeAmountField
+                  value={garantia}
+                  onChange={handleGarantiaChange}
+                  showError={validation.emprestimoExcedeGarantia}
+                  isInvalid={invalidGuarantee}
+                />
+              </Suspense>
 
-              <InstallmentsField value={parcelas} onChange={setParcelas} />
+              <Suspense fallback={<div className="h-10 bg-gray-100 animate-pulse rounded" />}>
+                <InstallmentsField value={parcelas} onChange={setParcelas} />
+              </Suspense>
 
-              <AmortizationField
-                value={amortizacao}
-                onChange={setAmortizacao}
-                isInvalid={invalidAmortization}
-              />
+              <Suspense fallback={<div className="h-10 bg-gray-100 animate-pulse rounded" />}>
+                <AmortizationField
+                  value={amortizacao}
+                  onChange={setAmortizacao}
+                  isInvalid={invalidAmortization}
+                />
+              </Suspense>
 
               {/* Botões */}
               <div className="flex gap-2 pt-2">
@@ -506,30 +518,34 @@ const SimulationForm: React.FC = () => {
               {/* Mensagem inteligente da API */}
               {apiMessage && (!isLtvMessage || isMobile) && (
                 <div className="mt-3">
-                  <SmartApiMessage
-                    analysis={apiMessage}
-                    valorImovel={validation.garantiaValue}
-                    valorEmprestimoAtual={validation.emprestimoValue || norm(emprestimo)}
-                    onAdjustValues={handleAdjustValues}
-                    onTryAgain={handleTryAgain}
-                  />
+                  <Suspense fallback={<div className="h-12 bg-gray-100 animate-pulse rounded" />}>
+                    <SmartApiMessage
+                      analysis={apiMessage}
+                      valorImovel={validation.garantiaValue}
+                      valorEmprestimoAtual={validation.emprestimoValue || norm(emprestimo)}
+                      onAdjustValues={handleAdjustValues}
+                      onTryAgain={handleTryAgain}
+                    />
+                  </Suspense>
                 </div>
               )}
               
               {/* Erro genérico */}
               {erro && !apiMessage && (
                 <div className="mt-3">
-                  <ApiMessageDisplay 
-                    message={erro}
-                    type="error"
-                    onRetry={() => {
-                      setErro('');
-                      if (validation.formularioValido) {
-                        handleSubmit(new Event('submit') as any);
-                      }
-                    }}
-                    showRetryButton={validation.formularioValido}
-                  />
+                  <Suspense fallback={<div className="h-12 bg-gray-100 animate-pulse rounded" />}>
+                    <ApiMessageDisplay
+                      message={erro}
+                      type="error"
+                      onRetry={() => {
+                        setErro('');
+                        if (validation.formularioValido) {
+                          handleSubmit(new Event('submit') as any);
+                        }
+                      }}
+                      showRetryButton={validation.formularioValido}
+                    />
+                  </Suspense>
                 </div>
               )}
             </form>
@@ -543,22 +559,26 @@ const SimulationForm: React.FC = () => {
             className={`scroll-mt-header h-full ${showSideComplement ? '' : 'mt-4'}`}
           >
             {resultado ? (
-              <SimulationResultDisplay
-                resultado={resultado}
-                valorEmprestimo={validation.emprestimoValue}
-                valorImovel={validation.garantiaValue}
-                cidade={cidade}
-                onNewSimulation={handleNewSimulation}
-                onSwitchToPrice={handleSwitchToPrice}
-              />
+              <Suspense fallback={<div className="p-4 text-center">Carregando...</div>}>
+                <SimulationResultDisplay
+                  resultado={resultado}
+                  valorEmprestimo={validation.emprestimoValue}
+                  valorImovel={validation.garantiaValue}
+                  cidade={cidade}
+                  onNewSimulation={handleNewSimulation}
+                  onSwitchToPrice={handleSwitchToPrice}
+                />
+              </Suspense>
             ) : (
-              <SmartApiMessage
-                analysis={apiMessage as ApiMessageAnalysis}
-                valorImovel={validation.garantiaValue}
-                valorEmprestimoAtual={validation.emprestimoValue || norm(emprestimo)}
-                onAdjustValues={handleAdjustValues}
-                onTryAgain={handleTryAgain}
-              />
+              <Suspense fallback={<div className="p-4 text-center">Carregando...</div>}>
+                <SmartApiMessage
+                  analysis={apiMessage as ApiMessageAnalysis}
+                  valorImovel={validation.garantiaValue}
+                  valorEmprestimoAtual={validation.emprestimoValue || norm(emprestimo)}
+                  onAdjustValues={handleAdjustValues}
+                  onTryAgain={handleTryAgain}
+                />
+              </Suspense>
             )}
           </div>
         )}
