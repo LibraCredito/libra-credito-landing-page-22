@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import Calculator from 'lucide-react/dist/esm/icons/calculator';
 import CheckCircle from 'lucide-react/dist/esm/icons/check-circle';
 import Users from 'lucide-react/dist/esm/icons/users';
@@ -6,7 +6,9 @@ import TrendingUp from 'lucide-react/dist/esm/icons/trending-up';
 import Headphones from 'lucide-react/dist/esm/icons/headphones';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
-import ContactForm from './ContactForm';
+
+// Lazy-loaded contact form
+const ContactForm = React.lazy(() => import('./ContactForm'));
 
 interface SimulationResultDisplayProps {
   resultado: {
@@ -113,6 +115,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
 }) => {
   const isMobile = useIsMobile();
   const { valor, amortizacao, parcelas: _parcelas, primeiraParcela, ultimaParcela } = resultado;
+  const [showContactForm, setShowContactForm] = useState(false);
   
   // Cálculo da renda mínima familiar
   const calcularRendaMinima = () => {
@@ -208,12 +211,23 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         </p>
         </div>
         
-        <ContactForm
-          simulationResult={resultado}
-          compact={true}
-          className="space-y-3"
-          inputClassName="bg-white/90 text-gray-800 placeholder-gray-500"
-        />
+        {showContactForm ? (
+          <Suspense fallback={<div className="p-4 text-center">Carregando...</div>}>
+            <ContactForm
+              simulationResult={resultado}
+              compact={true}
+              className="space-y-3"
+              inputClassName="bg-white/90 text-gray-800 placeholder-gray-500"
+            />
+          </Suspense>
+        ) : (
+          <Button
+            onClick={() => setShowContactForm(true)}
+            className="w-full bg-green-600 hover:bg-green-700 text-white"
+          >
+            Avançar para contato
+          </Button>
+        )}
       </div>
     );
   }
@@ -321,12 +335,25 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         </p>
       </div>
       
-      <ContactForm
-        simulationResult={resultado}
-        compact={true}
-        className="space-y-3"
-        inputClassName="bg-white/90 text-gray-800 placeholder-gray-500"
-      />
+      {showContactForm ? (
+        <Suspense fallback={<div className="p-4 text-center">Carregando...</div>}>
+          <ContactForm
+            simulationResult={resultado}
+            compact={true}
+            className="space-y-3"
+            inputClassName="bg-white/90 text-gray-800 placeholder-gray-500"
+          />
+        </Suspense>
+      ) : (
+        <div className="flex justify-center">
+          <Button
+            onClick={() => setShowContactForm(true)}
+            className="bg-green-600 hover:bg-green-700 text-white"
+          >
+            Avançar para contato
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
