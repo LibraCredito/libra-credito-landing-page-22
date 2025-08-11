@@ -1,13 +1,51 @@
 /* @vitest-environment jsdom */
 
-import { describe, expect, it } from 'vitest';
-import { renderMarkdown } from '@/utils/markdown';
+import React from 'react';
+import { render } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import BlogPost from '../BlogPost';
+import type { BlogPost as BlogPostType } from '@/services/blogService';
 
-describe('renderMarkdown', () => {
-  it('applies styling classes to markdown elements', () => {
+vi.mock('react-router-dom', () => ({
+  useParams: () => ({ slug: undefined }),
+  Link: ({ to, children }: { to: string; children: React.ReactNode }) => <a href={to}>{children}</a>,
+}));
+
+vi.mock('@/components/MobileLayout', () => ({
+  default: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+}));
+
+vi.mock('@/components/ui/WaveSeparator', () => ({
+  default: () => <div />, 
+}));
+
+vi.mock('@/components/ui/button', () => ({
+  Button: ({ children }: { children: React.ReactNode }) => <button>{children}</button>,
+}));
+
+vi.mock('@/components/Seo', () => ({
+  default: () => null,
+}));
+
+describe('BlogPost Markdown rendering', () => {
+  it('applies styling classes to rendered markdown', () => {
     const markdown = '# Título\n\n## Subtítulo\n\n### Seção\n\nParágrafo com [link](https://example.com) **negrito** *itálico* `código`.\n\n> Citação\n\n- Item 1\n- Item 2\n\n1. Primeiro\n2. Segundo';
-    const html = renderMarkdown(markdown);
-    const doc = new DOMParser().parseFromString(html, 'text/html');
+
+    const post: BlogPostType = {
+      title: 'Teste',
+      description: 'Desc',
+      category: 'home-equity',
+      imageUrl: 'https://example.com/img.png',
+      slug: 'teste',
+      content: markdown,
+      readTime: 1,
+      published: true,
+      featuredPost: false,
+    };
+
+    const { container } = render(<BlogPost initialPost={post} />);
+    const contentDiv = container.querySelector('.mt-8 > div') as HTMLElement;
+    const doc = new DOMParser().parseFromString(contentDiv.innerHTML, 'text/html');
 
     expect(doc.querySelector('h1')?.className).toBe('text-3xl font-bold text-gray-900 mt-12 mb-8 border-l-4 border-blue-500 pl-4');
     expect(doc.querySelector('h2')?.className).toBe('text-2xl font-bold text-gray-900 mt-10 mb-6 border-l-4 border-blue-500 pl-4');

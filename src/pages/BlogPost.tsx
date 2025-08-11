@@ -9,8 +9,7 @@ import MobileLayout from '@/components/MobileLayout';
 import WaveSeparator from '@/components/ui/WaveSeparator';
 import { BlogService, type BlogPost as BlogPostType } from '@/services/blogService';
 import Seo from '@/components/Seo';
-import { marked } from 'marked';
-import DOMPurify from 'dompurify';
+import { renderMarkdown } from '@/utils/markdown';
 
 type BlogPost = BlogPostType;
 
@@ -81,14 +80,8 @@ const BlogPost: React.FC<BlogPostPageProps> = ({ initialPost }) => {
     );
   }
 
-  // Função para renderizar Markdown como HTML usando biblioteca com sanitização
-  const renderContent = (content: string) => {
-    if (!content) return '';
-    const parsed = marked.parse(content);
-    const sanitized = DOMPurify.sanitize(parsed);
-    // Garante tamanho de fonte adequado para headings dinâmicos
-    return sanitized.replace(/<h1(\s|>)/g, '<h1 class="text-2xl"$1');
-  };
+  // Renderiza conteúdo Markdown com sanitização e estilos
+  const renderContent = (content: string) => renderMarkdown(content);
 
   const origin = typeof window !== 'undefined' ? window.location.origin : 'https://libracredito.com.br';
   const postUrl = post ? `${origin}/blog/${post.slug}` : '';
