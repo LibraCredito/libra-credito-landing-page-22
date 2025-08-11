@@ -60,6 +60,7 @@ export interface ContactFormInput {
   utm_term?: string | null;
   utm_content?: string | null;
   landing_page?: string | null;
+  referrer?: string | null;
 }
 
 // Classe principal do serviço local
@@ -252,6 +253,7 @@ export class LocalSimulationService {
     tipoAmortizacao?: string;
     valorParcelaCalculada?: number;
     aceitaPolitica?: boolean;
+    referrer?: string | null;
   }): Promise<{success: boolean, message: string}> {
     try {
       console.log('📧 Processando contato com integração:', input);
@@ -331,7 +333,8 @@ export class LocalSimulationService {
         utm_campaign: input.utm_campaign || null,
         utm_term: input.utm_term || null,
         utm_content: input.utm_content || null,
-        landing_page: input.landing_page || null
+        landing_page: input.landing_page || null,
+        referrer: input.referrer || null
       };
 
       // Validar campos obrigatórios

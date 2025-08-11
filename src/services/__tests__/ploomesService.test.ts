@@ -32,7 +32,8 @@ describe('PloomesService', () => {
       utm_campaign: 'camp',
       utm_term: 'term',
       utm_content: 'content',
-      landing_page: 'https://example.com'
+      landing_page: 'https://example.com',
+      referrer: 'https://referrer.com'
     });
 
     expect(fetchMock).toHaveBeenCalled();
@@ -44,7 +45,8 @@ describe('PloomesService', () => {
       utm_campaign: 'camp',
       utm_term: 'term',
       utm_content: 'content',
-      landing_page: 'https://example.com'
+      landing_page: 'https://example.com',
+      referrer: 'https://referrer.com'
     });
   });
 });

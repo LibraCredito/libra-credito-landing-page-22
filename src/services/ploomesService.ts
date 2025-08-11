@@ -37,6 +37,7 @@ export interface PloomesPayload {
   utm_term?: string | null;
   utm_content?: string | null;
   landing_page?: string | null;
+  referrer?: string | null;
 }
 
 // Interface para resposta do Ploomes
@@ -85,6 +86,7 @@ export class PloomesService {
     utm_term?: string | null;
     utm_content?: string | null;
     landing_page?: string | null;
+    referrer?: string | null;
   }): Promise<PloomesResponse> {
     try {
       console.log('🚀 Iniciando cadastro no Ploomes:', data);
@@ -107,7 +109,8 @@ export class PloomesService {
         utm_campaign: data.utm_campaign || null,
         utm_term: data.utm_term || null,
         utm_content: data.utm_content || null,
-        landing_page: data.landing_page || null
+        landing_page: data.landing_page || null,
+        referrer: data.referrer || null
       };
       
       console.log('📤 Payload formatado para Ploomes:', payload);
