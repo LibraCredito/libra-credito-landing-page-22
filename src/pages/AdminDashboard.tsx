@@ -50,6 +50,15 @@ import Trash2 from 'lucide-react/dist/esm/icons/trash-2';
 import Save from 'lucide-react/dist/esm/icons/save';
 import LogOut from 'lucide-react/dist/esm/icons/log-out';
 import { formatBRL } from '@/utils/formatters';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
+
+export const renderMarkdownPreview = (content: string) => {
+  if (!content) return '';
+  const parsed = marked.parse(content);
+  const sanitized = DOMPurify.sanitize(parsed);
+  return sanitized.replace(/<h1(\s|>)/g, '<h1 class="text-2xl"$1');
+};
 
 const AdminDashboard: React.FC = () => {
   // Estados de autenticação
@@ -203,39 +212,7 @@ const AdminDashboard: React.FC = () => {
     return text.trim().split(' ').filter(word => word.length > 0).length;
   };
 
-  // Função para renderizar preview do markdown
-  const renderMarkdownPreview = (content: string) => {
-    if (!content) return '';
-    
-    // Conversão aprimorada de Markdown para HTML (similar à do BlogPost)
-    const html = content
-      // Headers com classes para estilização
-      .replace(/^### (.*$)/gim, '<h3 class="text-xl font-semibold text-gray-900 mt-8 mb-4 border-l-4 border-blue-500 pl-4">$1</h3>')
-      .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold text-gray-900 mt-10 mb-6 border-l-4 border-blue-500 pl-4">$1</h2>')
-      .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold text-gray-900 mt-12 mb-8 border-l-4 border-blue-500 pl-4">$1</h1>')
-      // Bold e Italic
-      .replace(/\*\*(.*)\*\*/gim, '<strong class="font-semibold text-gray-900">$1</strong>')
-      .replace(/\*(.*)\*/gim, '<em class="italic text-gray-700">$1</em>')
-      // Links
-      .replace(/\[([^\]]*)\]\(([^)]*)\)/gim, '<a href="$2" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">$1</a>')
-      // Quotes
-      .replace(/^> (.*$)/gim, '<blockquote class="border-l-4 border-blue-500 bg-gray-50 p-4 my-6 italic text-gray-700">$1</blockquote>')
-      // Code blocks (inline)
-      .replace(/`([^`]+)`/gim, '<code class="bg-gray-100 text-gray-900 px-2 py-1 rounded font-mono text-sm">$1</code>')
-      // Line breaks
-      .replace(/\n\n/gim, '</p><p class="mb-6 text-gray-700 leading-relaxed">')
-      // Lists
-      .replace(/^\* (.*$)/gim, '<li class="mb-2 text-gray-700">$1</li>')
-      .replace(/^- (.*$)/gim, '<li class="mb-2 text-gray-700">$1</li>')
-      .replace(/(<li class="mb-2 text-gray-700">.*<\/li>)/s, '<ul class="list-disc list-inside space-y-2 my-6 ml-4">$1</ul>')
-      // Numbered lists
-      .replace(/^\d+\. (.*$)/gim, '<li class="mb-2 text-gray-700">$1</li>')
-      // Wrap in paragraphs
-      .replace(/^(?!<[hul])/gim, '<p class="mb-6 text-gray-700 leading-relaxed">')
-      .replace(/(?!<\/[hul]>)$/gim, '</p>');
-    
-    return html;
-  };
+
 
   // Função para inserir texto no editor
   const insertText = (before: string, after: string = '', placeholder: string = '') => {
