@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 
 export default function TypewriterText({ strings }: { strings: string[] }) {
   const el = useRef<HTMLSpanElement>(null);
+  const maxChars = Math.max(...strings.map((s) => s.length));
 
   useEffect(() => {
     let typed: any;
@@ -28,5 +29,12 @@ export default function TypewriterText({ strings }: { strings: string[] }) {
     };
   }, [strings]);
 
-  return <span ref={el}>{strings[0]}</span>;
+  return (
+    <span
+      ref={el}
+      style={{ display: 'inline-block', minWidth: `${maxChars}ch` }}
+    >
+      {strings[0]}
+    </span>
+  );
 }
