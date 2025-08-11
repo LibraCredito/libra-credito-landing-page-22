@@ -165,7 +165,8 @@ const ContactForm: React.FC<ContactFormProps> = ({
         utm_campaign: journey?.utm_campaign ?? null,
         utm_term: journey?.utm_term ?? null,
         utm_content: journey?.utm_content ?? null,
-        landing_page: journey?.landing_page ?? null
+        landing_page: journey?.landing_page ?? null,
+        referrer: journey?.referrer ?? null
 
       });
       

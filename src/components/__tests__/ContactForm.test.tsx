@@ -49,7 +49,8 @@ describe('ContactForm', () => {
       utm_campaign: 'camp',
       utm_term: 'term',
       utm_content: 'content',
-      landing_page: 'https://example.com'
+      landing_page: 'https://example.com',
+      referrer: 'https://referrer.com'
     });
 
     render(<ContactForm simulationResult={simulationResult} />);
@@ -70,7 +71,8 @@ describe('ContactForm', () => {
           utm_campaign: 'camp',
           utm_term: 'term',
           utm_content: 'content',
-          landing_page: 'https://example.com'
+          landing_page: 'https://example.com',
+          referrer: 'https://referrer.com'
         })
       );
     });
@@ -97,7 +99,8 @@ describe('ContactForm', () => {
           utm_campaign: null,
           utm_term: null,
           utm_content: null,
-          landing_page: null
+          landing_page: null,
+          referrer: null
         })
       );
     });
