@@ -24,7 +24,7 @@ const HeroAnimated: React.FC = () => {
 
 
   const scrollToSimulator = () => {
-    navigate('/simulacao');
+    navigate('/simulacao-guiada');
   };
 
   const goToVantagens = () => {

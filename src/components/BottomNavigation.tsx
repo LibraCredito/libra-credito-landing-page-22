@@ -38,7 +38,7 @@ const BottomNavigation: React.FC = () => {
       id: 'simulate',
       label: 'Simular',
       icon: Calculator,
-      href: '/simulacao',
+      href: '/simulacao-guiada',
       isSpecial: true
     },
     {
@@ -187,7 +187,7 @@ const BottomNavigation: React.FC = () => {
               {/* CTA Button in Menu */}
               <div className="mt-6">
                 <Link
-                  to="/simulacao"
+                  to="/simulacao-guiada"
                   className="block w-full py-3 px-4 bg-libra-blue text-white text-center font-semibold rounded-lg"
                   onClick={() => setIsMenuOpen(false)}
                 >

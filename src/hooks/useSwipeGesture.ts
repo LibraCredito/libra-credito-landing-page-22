@@ -73,7 +73,7 @@ export const useSwipeGesture = (
 // Hook for page navigation with swipe
 export const useSwipeNavigation = () => {
   const bodyRef = useRef(document.body);
-  const pages = ['/', '/simulacao', '/vantagens', '/quem-somos'];
+  const pages = ['/', '/simulacao-guiada', '/vantagens', '/quem-somos'];
   
   const getCurrentPageIndex = () => {
     const currentPath = window.location.pathname;

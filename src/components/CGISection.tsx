@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CGISection: React.FC = () => {
   const benefits = [
@@ -24,6 +25,8 @@ const CGISection: React.FC = () => {
       iconBg: "bg-yellow-500"
     }
   ];
+
+  const navigate = useNavigate();
 
   return (
     <div className="bg-gray-50 py-16 px-4">
@@ -78,7 +81,10 @@ const CGISection: React.FC = () => {
               Com o CGI Libra, você tem a liberdade de usar o crédito como desejar, 
               sempre com as melhores condições do mercado.
             </p>
-            <button className="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3 rounded-full transition-colors">
+            <button
+              onClick={() => navigate('/simulacao-guiada')}
+              className="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3 rounded-full transition-colors"
+            >
               Simular Agora
             </button>
           </div>

@@ -19,7 +19,7 @@ const HeroPremium: React.FC = () => {
   ];
 
   const scrollToSimulator = () => {
-    navigate('/simulacao');
+    navigate('/simulacao-guiada');
   };
 
   const scrollToBenefits = () => {

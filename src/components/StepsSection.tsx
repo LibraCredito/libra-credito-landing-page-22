@@ -40,7 +40,7 @@ const StepsSection: React.FC = () => {
   ];
 
   const handleSimulate = () => {
-    navigate('/simulacao');
+    navigate('/simulacao-guiada');
   };
 
   return (

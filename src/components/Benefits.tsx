@@ -79,7 +79,7 @@ const Benefits: React.FC = () => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate('/simulacao');
+    navigate('/simulacao-guiada');
   };
   
   return (

@@ -220,7 +220,7 @@ const BlogPost: React.FC<BlogPostPageProps> = ({ initialPost }) => {
                 <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto text-libra-navy">
                   Simule agora e descubra as melhores condições para você. Processo 100% digital e sem complicações.
                 </p>
-                <Link to="/simulacao">
+                <Link to="/simulacao-guiada">
                   <Button size="lg" className="bg-red-600 text-white hover:bg-red-700 font-semibold px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-300">
                     Fazer Simulação Gratuita
                   </Button>

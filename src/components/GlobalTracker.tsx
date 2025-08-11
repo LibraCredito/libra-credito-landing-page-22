@@ -38,6 +38,7 @@ const GlobalTracker: React.FC = () => {
     const pageEvents: Record<string, string> = {
       '/': 'homepage_view',
       '/simulacao': 'simulation_page_view',
+      '/simulacao-guiada': 'simulation_page_view',
       '/parceiros': 'partners_page_view',
       '/vantagens': 'benefits_page_view',
       '/quem-somos': 'about_page_view'

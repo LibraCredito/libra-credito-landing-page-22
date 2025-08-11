@@ -17,7 +17,7 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
 
   const navigationItems = [
     { name: 'Home', path: '/' },
-    { name: 'Simulação', path: '/simulacao' },
+    { name: 'Simulação', path: '/simulacao-guiada' },
     { name: 'Vantagens', path: '/vantagens' },
     { name: 'Quem Somos', path: '/quem-somos' },
     { name: 'Blog', path: '/blog' },
@@ -25,7 +25,7 @@ const SimpleMobileHeader: React.FC<SimpleMobileHeaderProps> = ({ onPortalCliente
   ];
 
   const handleSimulate = () => {
-    navigate('/simulacao');
+    navigate('/simulacao-guiada');
     setIsMenuOpen(false);
   };
 

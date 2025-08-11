@@ -18,6 +18,7 @@ const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Parceiros = lazy(() => import("./pages/Parceiros"));
 const Simulacao = lazy(() => import("./pages/Simulacao"));
+const SimulacaoGuiada = lazy(() => import("./pages/SimulacaoGuiada"));
 const PoliticaPrivacidade = lazy(() => import("./pages/PoliticaPrivacidade"));
 const PoliticaCookies = lazy(() => import("./pages/PoliticaCookies"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
@@ -102,6 +103,11 @@ const App = () => {
               <Route path="/simulacao" element={
                 <Suspense fallback={<Loading />}>
                   <TooltipProvider><Simulacao /></TooltipProvider>
+                </Suspense>
+              } />
+              <Route path="/simulacao-guiada" element={
+                <Suspense fallback={<Loading />}>
+                  <TooltipProvider><SimulacaoGuiada /></TooltipProvider>
                 </Suspense>
               } />
               <Route path="/simulacao/sapi" element={<SimulacaoSapi />} />
