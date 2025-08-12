@@ -1,6 +1,28 @@
 import Play from 'lucide-react/dist/esm/icons/play';
 import { type FC, type MouseEvent } from 'react';
 
+let youtubeApiPromise: Promise<void> | null = null;
+
+const loadYouTubeApi = (): Promise<void> => {
+  const w = window as any;
+
+  if (w.YT && w.YT.Player) {
+    return Promise.resolve();
+  }
+
+  if (!youtubeApiPromise) {
+    youtubeApiPromise = new Promise((resolve) => {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
+      w.onYouTubeIframeAPIReady = () => resolve();
+    });
+  }
+
+  return youtubeApiPromise;
+};
+
 interface OptimizedYouTubeProps {
   videoId: string;
   title: string;
@@ -32,23 +54,34 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   const thumbnailImage = thumbnailSrc || '/images/media/video-cgi-libra.webp';
   const fetchPriorityAttr = fetchPriority ?? (priority ? 'high' : undefined);
 
-  const loadVideo = (e: MouseEvent<HTMLButtonElement>) => {
+  const loadVideo = async (e: MouseEvent<HTMLButtonElement>) => {
     const container = e.currentTarget.parentElement as HTMLElement | null;
     if (!container) return;
 
-    const iframe = document.createElement('iframe');
-
-    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&playsinline=1&modestbranding=1&rel=0&enablejsapi=1`;
-    iframe.title = title;
-    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-    iframe.allowFullscreen = true;
-    iframe.style.position = 'absolute';
-    iframe.style.inset = '0';
-    iframe.style.width = '100%';
-    iframe.style.height = '100%';
+    await loadYouTubeApi();
+    const w = window as any;
 
     container.innerHTML = '';
-    container.appendChild(iframe);
+    const div = document.createElement('div');
+    div.style.position = 'absolute';
+    div.style.inset = '0';
+    div.style.width = '100%';
+    div.style.height = '100%';
+    container.appendChild(div);
+
+    new w.YT.Player(div, {
+      width: '100%',
+      height: '100%',
+      videoId,
+      playerVars: { autoplay: 1, playsinline: 1, modestbranding: 1, rel: 0 },
+      events: {
+        onReady: (event: any) => {
+          event.target.unMute();
+          event.target.setVolume(100);
+          event.target.playVideo();
+        },
+      },
+    });
   };
 
   return (

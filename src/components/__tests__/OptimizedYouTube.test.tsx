@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import React from 'react';
 import OptimizedYouTube from '../OptimizedYouTube';
@@ -16,42 +16,31 @@ describe('OptimizedYouTube', () => {
     expect(placeholder).toBeNull();
   });
 
-  it('loads video iframe on click', () => {
-    const { container } = render(
-      <OptimizedYouTube videoId="abc123" title="Test Video" />
-    );
+  it('calls player methods on click', async () => {
+    const unMute = vi.fn();
+    const setVolume = vi.fn();
+    const playVideo = vi.fn();
 
-    const button = container.querySelector('button') as HTMLButtonElement;
-    fireEvent.click(button);
-
-    const iframe = container.querySelector('iframe');
-    expect(iframe).toBeInTheDocument();
-    expect(iframe?.getAttribute('src')).toContain('abc123');
-  });
-
-  it('não renderiza botão de unmute', () => {
-    const { container } = render(
-      <OptimizedYouTube videoId="abc123" title="Test Video" />
-    );
-
-    const button = container.querySelector('button') as HTMLButtonElement;
-    fireEvent.click(button);
-
-    const iframe = container.querySelector('iframe') as HTMLIFrameElement;
-    expect(iframe).toBeInTheDocument();
-    expect(iframe.getAttribute('src')).not.toContain('mute=1');
-
-    const postMessage = vi.fn();
-    Object.defineProperty(iframe, 'contentWindow', {
-      value: { postMessage },
+    const PlayerMock = vi.fn().mockImplementation((element, options) => {
+      options.events.onReady({ target: { unMute, setVolume, playVideo } });
+      return {};
     });
 
-    const messageData = JSON.stringify({ event: 'onReady' });
-    window.dispatchEvent(
-      new MessageEvent('message', { source: iframe.contentWindow, data: messageData })
+    (window as any).YT = { Player: PlayerMock };
+
+    const { container } = render(
+      <OptimizedYouTube videoId="abc123" title="Test Video" />
     );
 
-    expect(postMessage).not.toHaveBeenCalled();
+    const button = container.querySelector('button') as HTMLButtonElement;
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(PlayerMock).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ width: '100%', height: '100%' }));
+      expect(unMute).toHaveBeenCalled();
+      expect(setVolume).toHaveBeenCalledWith(100);
+      expect(playVideo).toHaveBeenCalled();
+    });
   });
 });
 
