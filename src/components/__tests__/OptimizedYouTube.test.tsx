@@ -1,4 +1,4 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import React from 'react';
 import OptimizedYouTube from '../OptimizedYouTube';
@@ -16,15 +16,16 @@ describe('OptimizedYouTube', () => {
     expect(placeholder).toBeNull();
   });
 
-  it('calls player methods on click', async () => {
+  it('calls player methods on click', () => {
     const unMute = vi.fn();
     const setVolume = vi.fn();
     const playVideo = vi.fn();
 
-    const PlayerMock = vi.fn().mockImplementation((element, options) => {
-      options.events.onReady({ target: { unMute, setVolume, playVideo } });
-      return {};
-    });
+    const PlayerMock = vi.fn().mockImplementation(() => ({
+      unMute,
+      setVolume,
+      playVideo,
+    }));
 
     (window as any).YT = { Player: PlayerMock };
 
@@ -35,13 +36,10 @@ describe('OptimizedYouTube', () => {
     const button = container.querySelector('button') as HTMLButtonElement;
     fireEvent.click(button);
 
-    await waitFor(() => {
-      expect(PlayerMock).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ width: '100%', height: '100%' }));
-
-      expect(unMute).toHaveBeenCalled();
-      expect(setVolume).toHaveBeenCalledWith(100);
-      expect(playVideo).toHaveBeenCalled();
-    });
+    expect(PlayerMock).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ width: '100%', height: '100%' }));
+    expect(unMute).toHaveBeenCalled();
+    expect(setVolume).toHaveBeenCalledWith(100);
+    expect(playVideo).toHaveBeenCalled();
   });
 });
 
