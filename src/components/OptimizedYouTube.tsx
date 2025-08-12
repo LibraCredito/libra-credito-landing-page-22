@@ -63,9 +63,16 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
 
     container.innerHTML = '';
     const div = document.createElement('div');
+    div.style.position = 'absolute';
+    div.style.inset = '0';
+    div.style.width = '100%';
+    div.style.height = '100%';
     container.appendChild(div);
 
     new w.YT.Player(div, {
+      width: '100%',
+      height: '100%',
+
       videoId,
       playerVars: { autoplay: 1, playsinline: 1, modestbranding: 1, rel: 0 },
       events: {
