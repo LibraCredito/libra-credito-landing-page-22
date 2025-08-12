@@ -1,5 +1,5 @@
 import Play from 'lucide-react/dist/esm/icons/play';
-import { type FC, type MouseEvent } from 'react';
+import { type FC, type MouseEvent, useEffect } from 'react';
 
 let youtubeApiPromise: Promise<void> | null = null;
 
@@ -54,11 +54,14 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
   const thumbnailImage = thumbnailSrc || '/images/media/video-cgi-libra.webp';
   const fetchPriorityAttr = fetchPriority ?? (priority ? 'high' : undefined);
 
-  const loadVideo = async (e: MouseEvent<HTMLButtonElement>) => {
+  useEffect(() => {
+    loadYouTubeApi();
+  }, []);
+
+  const loadVideo = (e: MouseEvent<HTMLButtonElement>) => {
     const container = e.currentTarget.parentElement as HTMLElement | null;
     if (!container) return;
 
-    await loadYouTubeApi();
     const w = window as any;
 
     container.innerHTML = '';
@@ -69,20 +72,16 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
     div.style.height = '100%';
     container.appendChild(div);
 
-    new w.YT.Player(div, {
+    const player = new w.YT.Player(div, {
       width: '100%',
       height: '100%',
-
       videoId,
       playerVars: { autoplay: 1, playsinline: 1, modestbranding: 1, rel: 0 },
-      events: {
-        onReady: (event: any) => {
-          event.target.unMute();
-          event.target.setVolume(100);
-          event.target.playVideo();
-        },
-      },
     });
+
+    player.unMute();
+    player.setVolume(100);
+    player.playVideo();
   };
 
   return (
