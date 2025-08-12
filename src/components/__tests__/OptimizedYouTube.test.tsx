@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import React from 'react';
 import OptimizedYouTube from '../OptimizedYouTube';
 
@@ -29,7 +29,7 @@ describe('OptimizedYouTube', () => {
     expect(iframe?.getAttribute('src')).toContain('abc123');
   });
 
-  it('sends unmute commands when player is ready', () => {
+  it('não renderiza botão de unmute', () => {
     const { container } = render(
       <OptimizedYouTube videoId="abc123" title="Test Video" />
     );
@@ -38,6 +38,9 @@ describe('OptimizedYouTube', () => {
     fireEvent.click(button);
 
     const iframe = container.querySelector('iframe') as HTMLIFrameElement;
+    expect(iframe).toBeInTheDocument();
+    expect(iframe.getAttribute('src')).not.toContain('mute=1');
+
     const postMessage = vi.fn();
     Object.defineProperty(iframe, 'contentWindow', {
       value: { postMessage },
@@ -48,14 +51,7 @@ describe('OptimizedYouTube', () => {
       new MessageEvent('message', { source: iframe.contentWindow, data: messageData })
     );
 
-    expect(postMessage).toHaveBeenCalledWith(
-      JSON.stringify({ event: 'command', func: 'unMute', args: [] }),
-      '*'
-    );
-    expect(postMessage).toHaveBeenCalledWith(
-      JSON.stringify({ event: 'command', func: 'setVolume', args: [100] }),
-      '*'
-    );
+    expect(postMessage).not.toHaveBeenCalled();
   });
 });
 

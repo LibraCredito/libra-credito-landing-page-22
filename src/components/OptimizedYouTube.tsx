@@ -38,35 +38,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
 
     const iframe = document.createElement('iframe');
 
-    const sendUnmuteCommands = () => {
-      iframe.contentWindow?.postMessage(
-        JSON.stringify({ event: 'command', func: 'unMute', args: [] }),
-        '*',
-      );
-      iframe.contentWindow?.postMessage(
-        JSON.stringify({ event: 'command', func: 'setVolume', args: [100] }),
-        '*',
-      );
-    };
-
-    let fallbackTimer: ReturnType<typeof setTimeout>;
-
-    const handlePlayerReady = (event: MessageEvent) => {
-      if (event.source !== iframe.contentWindow) return;
-      try {
-        const data =
-          typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
-        if (data?.event === 'onReady') {
-          clearTimeout(fallbackTimer);
-          sendUnmuteCommands();
-          window.removeEventListener('message', handlePlayerReady);
-        }
-      } catch {}
-    };
-
-    window.addEventListener('message', handlePlayerReady);
-
-    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&playsinline=1&modestbranding=1&rel=0&enablejsapi=1`;
+    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&playsinline=1&modestbranding=1&rel=0&enablejsapi=1`;
     iframe.title = title;
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
     iframe.allowFullscreen = true;
@@ -77,9 +49,6 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
 
     container.innerHTML = '';
     container.appendChild(iframe);
-
-    fallbackTimer = setTimeout(sendUnmuteCommands, 1000);
-
   };
 
   return (
