@@ -31,6 +31,7 @@ describe('OptimizedYouTube', () => {
 
   it('does not render unmute button and unmutes video on load', () => {
     const { container, queryByText } = render(
+
       <OptimizedYouTube videoId="abc123" title="Test Video" />
     );
 
@@ -51,6 +52,7 @@ describe('OptimizedYouTube', () => {
     expect(postMessage).toHaveBeenCalledWith(
       JSON.stringify({ event: 'command', func: 'setVolume', args: [100] }),
       '*',
+
     );
   });
 });
