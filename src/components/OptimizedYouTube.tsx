@@ -49,24 +49,26 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
     container.innerHTML = '';
     container.appendChild(iframe);
 
-    const unmuteBtn = document.createElement('button');
-    unmuteBtn.type = 'button';
-    unmuteBtn.textContent = 'Ativar som';
-    unmuteBtn.className =
-      'absolute bottom-4 right-4 bg-white/90 text-gray-900 px-3 py-1 rounded shadow';
-    unmuteBtn.addEventListener('click', () => {
-      iframe.contentWindow?.postMessage(
-        JSON.stringify({ event: 'command', func: 'unMute', args: [] }),
-        '*',
-      );
-      iframe.contentWindow?.postMessage(
-        JSON.stringify({ event: 'command', func: 'setVolume', args: [100] }),
-        '*',
-      );
-      unmuteBtn.remove();
-    });
+    const handlePlayerReady = (event: MessageEvent) => {
+      if (event.source !== iframe.contentWindow) return;
+      try {
+        const data =
+          typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+        if (data?.event === 'onReady') {
+          iframe.contentWindow?.postMessage(
+            JSON.stringify({ event: 'command', func: 'unMute', args: [] }),
+            '*',
+          );
+          iframe.contentWindow?.postMessage(
+            JSON.stringify({ event: 'command', func: 'setVolume', args: [100] }),
+            '*',
+          );
+          window.removeEventListener('message', handlePlayerReady);
+        }
+      } catch {}
+    };
 
-    container.appendChild(unmuteBtn);
+    window.addEventListener('message', handlePlayerReady);
   };
 
   return (

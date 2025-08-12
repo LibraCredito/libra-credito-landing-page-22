@@ -29,19 +29,33 @@ describe('OptimizedYouTube', () => {
     expect(iframe?.getAttribute('src')).toContain('abc123');
   });
 
-  it('shows unmute button after loading video', () => {
-    const { container, getByText, queryByText } = render(
+  it('sends unmute commands when player is ready', () => {
+    const { container } = render(
       <OptimizedYouTube videoId="abc123" title="Test Video" />
     );
 
     const button = container.querySelector('button') as HTMLButtonElement;
     fireEvent.click(button);
 
-    const unmute = getByText('Ativar som');
-    expect(unmute).toBeInTheDocument();
+    const iframe = container.querySelector('iframe') as HTMLIFrameElement;
+    const postMessage = vi.fn();
+    Object.defineProperty(iframe, 'contentWindow', {
+      value: { postMessage },
+    });
 
-    fireEvent.click(unmute);
-    expect(queryByText('Ativar som')).toBeNull();
+    const messageData = JSON.stringify({ event: 'onReady' });
+    window.dispatchEvent(
+      new MessageEvent('message', { source: iframe.contentWindow, data: messageData })
+    );
+
+    expect(postMessage).toHaveBeenCalledWith(
+      JSON.stringify({ event: 'command', func: 'unMute', args: [] }),
+      '*'
+    );
+    expect(postMessage).toHaveBeenCalledWith(
+      JSON.stringify({ event: 'command', func: 'setVolume', args: [100] }),
+      '*'
+    );
   });
 });
 
