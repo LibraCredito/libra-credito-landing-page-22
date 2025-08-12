@@ -22,14 +22,14 @@ const LogoBand: React.FC<LogoBandProps> = ({ onClick, size = 'desktop' }) => {
       ? {
           padding: 'py-8',
           imgSize: 64,
-          imgClass: 'h-12 sm:h-16 flex-shrink-0',
+          imgClass: 'h-12 sm:h-16 flex-shrink-0 w-auto',
           textClass:
             'ml-3 sm:ml-4 text-white text-sm sm:text-base font-semibold leading-tight text-center flex-1 min-w-0',
         }
       : {
           padding: 'py-4',
           imgSize: 80,
-          imgClass: 'h-20 w-20 flex-shrink-0',
+          imgClass: 'h-20 w-auto flex-shrink-0',
           textClass: 'ml-4 text-white text-lg font-semibold whitespace-nowrap',
         };
 
@@ -60,11 +60,9 @@ const LogoBand: React.FC<LogoBandProps> = ({ onClick, size = 'desktop' }) => {
         <ImageOptimizer
           src="/images/logos/logo-branco.svg"
           alt="Libra Crédito"
-          className="h-20 w-20"
+          className={config.imgClass}
           objectFit="contain"
-
           aspectRatio={1}
-
           priority={false}
           width={config.imgSize}
           height={config.imgSize}
