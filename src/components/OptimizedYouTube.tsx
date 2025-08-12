@@ -49,12 +49,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
     container.innerHTML = '';
     container.appendChild(iframe);
 
-    const unmuteBtn = document.createElement('button');
-    unmuteBtn.type = 'button';
-    unmuteBtn.textContent = 'Ativar som';
-    unmuteBtn.className =
-      'absolute bottom-4 right-4 bg-white/90 text-gray-900 px-3 py-1 rounded shadow';
-    unmuteBtn.addEventListener('click', () => {
+    iframe.addEventListener('load', () => {
       iframe.contentWindow?.postMessage(
         JSON.stringify({ event: 'command', func: 'unMute', args: [] }),
         '*',
@@ -63,10 +58,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
         JSON.stringify({ event: 'command', func: 'setVolume', args: [100] }),
         '*',
       );
-      unmuteBtn.remove();
     });
-
-    container.appendChild(unmuteBtn);
   };
 
   return (
