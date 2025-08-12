@@ -78,7 +78,16 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
     container.innerHTML = '';
     container.appendChild(iframe);
 
-    fallbackTimer = setTimeout(sendUnmuteCommands, 1000);
+    iframe.addEventListener('load', () => {
+      iframe.contentWindow?.postMessage(
+        JSON.stringify({ event: 'command', func: 'unMute', args: [] }),
+        '*',
+      );
+      iframe.contentWindow?.postMessage(
+        JSON.stringify({ event: 'command', func: 'setVolume', args: [100] }),
+        '*',
+      );
+    });
 
   };
 

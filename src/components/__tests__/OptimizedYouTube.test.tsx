@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import React from 'react';
 import OptimizedYouTube from '../OptimizedYouTube';
 
@@ -29,8 +29,9 @@ describe('OptimizedYouTube', () => {
     expect(iframe?.getAttribute('src')).toContain('abc123');
   });
 
-  it('sends unmute commands when player is ready', () => {
-    const { container } = render(
+  it('does not render unmute button and unmutes video on load', () => {
+    const { container, queryByText } = render(
+
       <OptimizedYouTube videoId="abc123" title="Test Video" />
     );
 
@@ -39,22 +40,19 @@ describe('OptimizedYouTube', () => {
 
     const iframe = container.querySelector('iframe') as HTMLIFrameElement;
     const postMessage = vi.fn();
-    Object.defineProperty(iframe, 'contentWindow', {
-      value: { postMessage },
-    });
+    Object.defineProperty(iframe, 'contentWindow', { value: { postMessage } });
 
-    const messageData = JSON.stringify({ event: 'onReady' });
-    window.dispatchEvent(
-      new MessageEvent('message', { source: iframe.contentWindow, data: messageData })
-    );
+    fireEvent.load(iframe);
 
+    expect(queryByText('Ativar som')).toBeNull();
     expect(postMessage).toHaveBeenCalledWith(
       JSON.stringify({ event: 'command', func: 'unMute', args: [] }),
-      '*'
+      '*',
     );
     expect(postMessage).toHaveBeenCalledWith(
       JSON.stringify({ event: 'command', func: 'setVolume', args: [100] }),
-      '*'
+      '*',
+
     );
   });
 });
