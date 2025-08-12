@@ -79,6 +79,7 @@ const OptimizedYouTube: FC<OptimizedYouTubeProps> = ({
     container.appendChild(iframe);
 
     fallbackTimer = setTimeout(sendUnmuteCommands, 1000);
+
   };
 
   return (
