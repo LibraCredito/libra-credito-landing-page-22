@@ -37,6 +37,7 @@ describe('OptimizedYouTube', () => {
 
     await waitFor(() => {
       expect(PlayerMock).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ width: '100%', height: '100%' }));
+
       expect(unMute).toHaveBeenCalled();
       expect(setVolume).toHaveBeenCalledWith(100);
       expect(playVideo).toHaveBeenCalled();
