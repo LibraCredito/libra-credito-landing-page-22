@@ -1,4 +1,5 @@
-import React, { useEffect, lazy, Suspense } from 'react';
+
+import React, { useEffect, useRef, useState } from 'react';
 import MobileLayout from '@/components/MobileLayout';
 import WaveSeparator from '@/components/ui/WaveSeparator';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -7,6 +8,45 @@ import LazySection from '@/components/LazySection';
 
 const SimulationForm = lazy(() => import('@/components/SimulationForm'));
 const Footer = lazy(() => import('@/components/Footer'));
+
+interface LazySectionProps {
+  load: () => Promise<{ default: React.ComponentType<unknown> }>;
+}
+
+const LazySection: React.FC<LazySectionProps> = ({ load }) => {
+  const [Component, setComponent] = useState<React.ComponentType<unknown> | null>(
+    null,
+  );
+  const ref = useRef<HTMLDivElement | null>(null);
+  const loadRef = useRef(load);
+
+  useEffect(() => {
+    loadRef.current = load;
+  }, [load]);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          loadRef.current().then(({ default: Loaded }) => {
+            setComponent(() => Loaded);
+          });
+          obs.disconnect();
+        }
+      },
+      { rootMargin: '200px 0px' },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  return <div ref={ref}>{Component ? <Component /> : null}</div>;
+};
 
 const Simulacao = () => {
   const isMobile = useIsMobile();
@@ -37,20 +77,14 @@ const Simulacao = () => {
   }, [isMobile]);
 
   return (
-    <MobileLayout showFooter={false}>
+    <MobileLayout showHeader={false} showFooter={false}>
+      <LazySection load={() => import('@/components/Header')} />
       <WaveSeparator variant="hero" height="md" inverted />
-      <LazySection load={() => import('@/components/SimulationForm')}>
-        <div className="bg-white lg:flex lg:justify-center">
-          <Suspense fallback={null}>
-            <SimulationForm />
-          </Suspense>
-        </div>
-      </LazySection>
-      <LazySection load={() => import('@/components/Footer')}>
-        <Suspense fallback={null}>
-          <Footer />
-        </Suspense>
-      </LazySection>
+      <div className="bg-white lg:flex lg:justify-center">
+        <SimulationForm />
+      </div>
+      <LazySection load={() => import('@/components/Footer')} />
+
     </MobileLayout>
   );
 };
