@@ -27,6 +27,7 @@ const SimulacaoLocal = lazy(() => import("./pages/SimulacaoLocal"));
 const Confirmacao = lazy(() => import("./pages/Confirmacao"));
 const Sucesso = lazy(() => import("./pages/Sucesso"));
 const Atendimento = lazy(() => import("./pages/Atendimento"));
+const Assistente = lazy(() => import("./pages/Assistente"));
 
 let devRoutes = null;
 
@@ -116,6 +117,7 @@ const App = () => {
               {devRoutes}
               <Route path="/confirmacao" element={<Confirmacao />} />
               <Route path="/atendimento" element={<Atendimento />} />
+              <Route path="/assistente" element={<Assistente />} />
               <Route path="/sucesso" element={<Sucesso />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

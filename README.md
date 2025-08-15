@@ -41,6 +41,11 @@ cp .env.example .env
 # - `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`
 #   - **Sem valores válidos a aplicação não inicializa**
 # - `VITE_WEBHOOK_URL` (opcional - para webhook de simulações)
+# - `VITE_FEATURE_ASSISTANT` (habilita o assistente de voz)
+# - `VITE_ELEVENLABS_AGENT_ID` (ID do agente, exposto no cliente)
+# - `ELEVENLABS_API_KEY` (apenas funções serverless)
+# - `ELEVENLABS_WEBHOOK_SECRET` (apenas funções serverless)
+# - `SUPABASE_SERVICE_ROLE_KEY` (apenas funções serverless)
 # - Outras conforme necessário
 ```
 
@@ -328,6 +333,28 @@ Se o navegador exibir `QuotaExceededError`, o espaço do localStorage esgotou co
 Acesse `/clear-localstorage.html` para limpar os dados armazenados e liberar espaço.
 
 ---
+
+## 🗣️ Assistente de Voz (ElevenLabs)
+
+- Ative o assistente definindo `VITE_FEATURE_ASSISTANT=true`.
+- Configure `VITE_ELEVENLABS_AGENT_ID` com o Agent ID obtido no painel da ElevenLabs.
+- Nas funções serverless defina `ELEVENLABS_API_KEY`, `ELEVENLABS_WEBHOOK_SECRET` e `SUPABASE_SERVICE_ROLE_KEY`.
+- O botão **Falar com especialista** leva a `/assistente?sim_id=<id>` e inicia a sessão de voz.
+- Cadastre o webhook pós-chamada no painel ElevenLabs apontando para `/api/elevenlabs/webhook`.
+
+### Teste Local
+
+1. Execute `npm run dev` com as variáveis acima configuradas.
+2. Realize uma simulação e clique em **Falar com especialista**.
+3. Para testar o webhook localmente:
+   ```bash
+   curl -X POST http://localhost:3000/api/elevenlabs/webhook \
+     -H "elevenlabs-signature: t=0,v0=assinatura" \
+     -d '{"type":"post_call_transcription","data":{}}'
+   ```
+
+### Alternativa: Supabase Edge Functions
+Caso o deploy não suporte rotas Node em `/api`, utilize as funções em `supabase/functions` e publique com `supabase functions deploy`.
 
 ## 🔒 Segurança e LGPD
 
