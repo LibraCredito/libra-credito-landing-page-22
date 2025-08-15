@@ -41,7 +41,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ onPortalClientes, onSimulat
 
   const navigationItems = [
     { name: 'Home', path: '/' },
-    { name: 'Simulação', path: '/simulacao', highlight: true },
+    { name: 'Simulação', path: '/simulacao-guiada', highlight: true },
     { name: 'Vantagens', path: '/vantagens' },
     { name: 'Quem Somos', path: '/quem-somos' },
     { name: 'Blog', path: '/blog' },

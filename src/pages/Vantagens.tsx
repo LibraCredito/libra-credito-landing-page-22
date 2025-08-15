@@ -178,7 +178,7 @@ const Vantagens: React.FC = () => {
   ];
 
   const handleSimular = () => {
-    navigate('/simulacao');
+    navigate('/simulacao-guiada');
   };
 
   return (

@@ -116,7 +116,7 @@ const Blog: React.FC<BlogProps> = ({ initialPosts = [] }) => {
   }, [initialPosts]);
 
   const handleSimular = () => {
-    navigate('/simulacao');
+    navigate('/simulacao-guiada');
   };
 
   const filteredPosts = posts.filter(post => {

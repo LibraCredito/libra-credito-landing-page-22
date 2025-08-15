@@ -25,7 +25,7 @@ const QuemSomos = () => {
   };
 
   const handleSimular = () => {
-    navigate('/simulacao');
+    navigate('/simulacao-guiada');
   };
 
   const valores = [
@@ -85,7 +85,7 @@ const QuemSomos = () => {
                   Clique aqui e entenda as <Link to="/vantagens" className="text-libra-blue hover:text-libra-navy transition-colors">vantagens</Link> que oferecemos para equiLIBRAr a sua vida financeira.
                 </p>
                 <p className="text-base md:text-lg text-gray-600">
-                  Faça uma <Link to="/simulacao" className="text-libra-blue hover:text-libra-navy transition-colors">simulação</Link> e fale com um consultor!
+                  Faça uma <Link to="/simulacao-guiada" className="text-libra-blue hover:text-libra-navy transition-colors">simulação</Link> e fale com um consultor!
                 </p>
               </div>
               <div className="relative">

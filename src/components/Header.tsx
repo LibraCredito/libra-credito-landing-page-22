@@ -45,7 +45,7 @@ const Header: React.FC = () => {
   // Carrega o popup assim que o componente é montado
   useEffect(() => {
     const currentPath = location.pathname;
-    const allowedPaths = ['/', '/simulacao'];
+    const allowedPaths = ['/', '/simulacao-guiada'];
 
     if (allowedPaths.includes(currentPath)) {
       const storageKey = `popup_seen_${currentPath.replace('/', 'home')}`;
@@ -68,7 +68,7 @@ const Header: React.FC = () => {
   };
 
   const handleSimulateNow = () => {
-    navigate('/simulacao');
+    navigate('/simulacao-guiada');
   };
 
   const handlePortalClientes = () => {

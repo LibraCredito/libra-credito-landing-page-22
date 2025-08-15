@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
             <h3 className="text-sm md:text-xl font-bold mb-2 md:mb-4 text-white">Navegação</h3>
             <ul className="space-y-1 md:space-y-2">
               <li><Link to="/" className="text-white/80 hover:text-white transition-colors text-xs md:text-base">Início</Link></li>
-              <li><Link to="/simulacao" className="text-white/80 hover:text-white transition-colors text-xs md:text-base">Simulação</Link></li>
+              <li><Link to="/simulacao-guiada" className="text-white/80 hover:text-white transition-colors text-xs md:text-base">Simulação</Link></li>
               <li><Link to="/vantagens" className="text-white/80 hover:text-white transition-colors text-xs md:text-base">Vantagens</Link></li>
               <li><Link to="/quem-somos" className="text-white/80 hover:text-white transition-colors text-xs md:text-base">Quem Somos</Link></li>
               <li><Link to="/blog" className="text-white/80 hover:text-white transition-colors text-xs md:text-base">Blog</Link></li>

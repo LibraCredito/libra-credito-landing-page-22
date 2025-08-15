@@ -86,7 +86,7 @@ const SimulacaoSapi: React.FC = () => {
         {/* Breadcrumb */}
         <div className="mb-6">
           <Link 
-            to="/simulacao" 
+            to="/simulacao-guiada"
             className="inline-flex items-center text-libra-blue hover:text-libra-blue/80 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />

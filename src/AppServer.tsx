@@ -20,6 +20,7 @@ import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 const Parceiros = lazy(() => import("./pages/Parceiros"));
 const Simulacao = lazy(() => import("./pages/Simulacao"));
+const SimulacaoGuiada = lazy(() => import("./pages/SimulacaoGuiada"));
 const PoliticaPrivacidade = lazy(() => import("./pages/PoliticaPrivacidade"));
 const PoliticaCookies = lazy(() => import("./pages/PoliticaCookies"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
@@ -80,6 +81,11 @@ const AppServer: React.FC<AppServerProps> = ({ url, initialData = {} }) => {
               <Route path="/simulacao" element={
                 <Suspense fallback={<Loading />}>
                   <TooltipProvider><Simulacao /></TooltipProvider>
+                </Suspense>
+              } />
+              <Route path="/simulacao-guiada" element={
+                <Suspense fallback={<Loading />}>
+                  <TooltipProvider><SimulacaoGuiada /></TooltipProvider>
                 </Suspense>
               } />
               <Route path="/simulacao/sapi" element={<SimulacaoSapi />} />
