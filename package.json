@@ -27,6 +27,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@elevenlabs/client": "^0.5.0",
     "@emailjs/browser": "^4.4.1",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-progress": "^1.1.0",

@@ -1,4 +1,5 @@
 import React, { Suspense, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Calculator, CheckCircle, Users, Headphones } from 'lucide-react';
 const TrendingUp = React.lazy(() =>
   import('lucide-react').then((m) => ({ default: m.TrendingUp }))
@@ -113,6 +114,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
   onSwitchToPrice
 }) => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const { valor, amortizacao, parcelas: _parcelas, primeiraParcela, ultimaParcela } = resultado;
   
   // Cálculo da renda mínima familiar
@@ -328,6 +330,14 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         className="space-y-3"
         inputClassName="bg-white/90 text-gray-800 placeholder-gray-500"
       />
+      {import.meta.env.VITE_FEATURE_ASSISTANT === 'true' && (
+        <Button
+          onClick={() => navigate(`/assistente?sim_id=${resultado.id}`)}
+          className="w-full mt-4 bg-[#003399] text-white"
+        >
+          Falar com especialista
+        </Button>
+      )}
     </div>
   );
 };
