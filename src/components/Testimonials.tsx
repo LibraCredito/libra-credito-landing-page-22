@@ -147,8 +147,8 @@ const Testimonials: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 lg:items-stretch items-center max-w-6xl mx-auto">
           <div className="w-full max-w-xl mx-auto">
             <div className="aspect-video rounded-lg overflow-hidden shadow-xl bg-black">
-              <OptimizedYouTube 
-                videoId="ETQRA4cvADk" 
+              <OptimizedYouTube
+                videoId="a4x-wOpVdfI"
                 title="Depoimento Cliente - Libra Crédito"
                 priority={false}
                 className="w-full h-full"
