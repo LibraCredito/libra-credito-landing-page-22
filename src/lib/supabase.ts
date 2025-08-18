@@ -334,9 +334,19 @@ export const supabaseApi = {
       .select('*')
       .eq('session_id', sessionId)
       .maybeSingle(); // Use maybeSingle ao invés de single para evitar erro quando não encontrar
-    
+
     if (error) throw error;
     return data;
+  },
+
+  async getUserJourneysBySessionIds(sessionIds: string[]) {
+    const { data, error } = await supabase
+      .from('user_journey')
+      .select('*')
+      .in('session_id', sessionIds);
+
+    if (error) throw error;
+    return data || [];
   },
 
   // Analytics

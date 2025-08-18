@@ -23,7 +23,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { LocalSimulationService } from '@/services/localSimulationService';
+import { LocalSimulationService, type SimulationWithJourney } from '@/services/localSimulationService';
 import { PartnersService } from '@/services/partnersService';
 import { BlogService, type BlogPost } from '@/services/blogService';
 import { AuthService, type LoginCredentials, type AuthUser } from '@/services/authService';
@@ -31,7 +31,7 @@ import AdminLogin from '@/components/AdminLogin';
 import ImageUploader from '@/components/ImageUploader';
 import StorageStats from '@/components/StorageStats';
 import SupabaseDiagnostics from '@/components/SupabaseDiagnostics';
-import { SimulacaoData, ParceiroData } from '@/lib/supabase';
+import { ParceiroData } from '@/lib/supabase';
 import Eye from 'lucide-react/dist/esm/icons/eye';
 import Download from 'lucide-react/dist/esm/icons/download';
 import RefreshCw from 'lucide-react/dist/esm/icons/refresh-cw';
@@ -63,7 +63,7 @@ const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'simulacoes' | 'parceiros' | 'blog' | 'configuracoes'>('simulacoes');
   
   // Estados para simulações
-  const [simulacoes, setSimulacoes] = useState<SimulacaoData[]>([]);
+  const [simulacoes, setSimulacoes] = useState<SimulationWithJourney[]>([]);
   const [loading, setLoading] = useState(false);
   const [filtroStatus, setFiltroStatus] = useState<string>('todos');
   const [filtroNome, setFiltroNome] = useState('');
@@ -324,7 +324,7 @@ const AdminDashboard: React.FC = () => {
   const loadSimulacoes = async () => {
     setLoading(true);
     try {
-      const data = await LocalSimulationService.getSimulacoes(1000);
+      const data = await LocalSimulationService.getSimulacoesAgrupadas(1000);
       setSimulacoes(data);
       calculateStats(data);
     } catch (error) {
@@ -334,7 +334,7 @@ const AdminDashboard: React.FC = () => {
     }
   };
 
-  const calculateStats = (data: SimulacaoData[]) => {
+  const calculateStats = (data: SimulationWithJourney[]) => {
     const stats = {
       total: data.length,
       novos: data.filter(s => s.status === 'novo').length,
@@ -660,6 +660,7 @@ const AdminDashboard: React.FC = () => {
                       <TableHead>Data</TableHead>
                       <TableHead>Nome</TableHead>
                       <TableHead>Contato</TableHead>
+                      <TableHead>Origem</TableHead>
                       <TableHead>Cidade</TableHead>
                       <TableHead>Empréstimo</TableHead>
                       <TableHead>Sistema</TableHead>
@@ -684,6 +685,33 @@ const AdminDashboard: React.FC = () => {
                         <TableCell className="text-sm">
                           <div>{formatEmail(simulacao.email)}</div>
                           <div className="text-gray-500">{formatPhone(simulacao.telefone)}</div>
+                        </TableCell>
+                        <TableCell className="text-xs">
+                          <div>
+                            {[simulacao.utm_source, simulacao.utm_medium, simulacao.utm_campaign]
+                              .filter(Boolean)
+                              .join(' / ') || '-'}
+                          </div>
+                          {simulacao.landing_page && (
+                            <a
+                              href={simulacao.landing_page}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:underline break-all"
+                            >
+                              {simulacao.landing_page}
+                            </a>
+                          )}
+                          {!simulacao.landing_page && simulacao.referrer && (
+                            <a
+                              href={simulacao.referrer}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:underline break-all"
+                            >
+                              {simulacao.referrer}
+                            </a>
+                          )}
                         </TableCell>
                         <TableCell>{simulacao.cidade}</TableCell>
                         <TableCell className="text-sm">
