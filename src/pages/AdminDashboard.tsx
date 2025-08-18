@@ -24,6 +24,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { LocalSimulationService, type SimulationWithJourney } from '@/services/localSimulationService';
+
 import { PartnersService } from '@/services/partnersService';
 import { BlogService, type BlogPost } from '@/services/blogService';
 import { AuthService, type LoginCredentials, type AuthUser } from '@/services/authService';
@@ -64,6 +65,7 @@ const AdminDashboard: React.FC = () => {
   
   // Estados para simulações
   const [simulacoes, setSimulacoes] = useState<SimulationWithJourney[]>([]);
+
   const [loading, setLoading] = useState(false);
   const [filtroStatus, setFiltroStatus] = useState<string>('todos');
   const [filtroNome, setFiltroNome] = useState('');
@@ -326,6 +328,7 @@ const AdminDashboard: React.FC = () => {
     try {
       const data = await LocalSimulationService.getSimulacoesAgrupadas(1000);
       setSimulacoes(data);
+
       calculateStats(data);
     } catch (error) {
       console.error('Erro ao carregar simulações:', error);
@@ -335,12 +338,13 @@ const AdminDashboard: React.FC = () => {
   };
 
   const calculateStats = (data: SimulationWithJourney[]) => {
+
     const stats = {
       total: data.length,
-      novos: data.filter(s => s.status === 'novo').length,
-      interessados: data.filter(s => s.status === 'interessado').length,
-      contatados: data.filter(s => s.status === 'contatado').length,
-      finalizados: data.filter(s => s.status === 'finalizado').length
+      novos: data.filter(s => s.simulacoes[0]?.status === 'novo').length,
+      interessados: data.filter(s => s.simulacoes[0]?.status === 'interessado').length,
+      contatados: data.filter(s => s.simulacoes[0]?.status === 'contatado').length,
+      finalizados: data.filter(s => s.simulacoes[0]?.status === 'finalizado').length
     };
     setStats(stats);
   };
@@ -357,19 +361,24 @@ const AdminDashboard: React.FC = () => {
   const exportToCSV = () => {
     const filteredData = getFilteredSimulacoes();
     const csv = [
-      'Data,Nome,Email,Telefone,Cidade,Valor Emprestimo,Valor Imovel,Parcelas,Sistema,Status',
-      ...filteredData.map(s => [
-        new Date(s.created_at!).toLocaleDateString(),
-        s.nome_completo,
-        s.email,
-        s.telefone,
-        s.cidade,
-        s.valor_emprestimo,
-        s.valor_imovel,
-        s.parcelas,
-        s.tipo_amortizacao,
-        s.status
-      ].join(','))
+      'Sessao,Quantidade,Data,Nome,Email,Telefone,Cidade,Valor Emprestimo,Valor Imovel,Parcelas,Sistema,Status',
+      ...filteredData.map(group => {
+        const s = group.simulacoes[0];
+        return [
+          group.session_id,
+          group.simulacoes.length,
+          s.created_at ? new Date(s.created_at).toLocaleDateString() : '',
+          s.nome_completo,
+          s.email,
+          s.telefone,
+          s.cidade,
+          s.valor_emprestimo,
+          s.valor_imovel,
+          s.parcelas,
+          s.tipo_amortizacao,
+          s.status
+        ].join(',');
+      })
     ].join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv' });
@@ -381,9 +390,10 @@ const AdminDashboard: React.FC = () => {
   };
 
   const getFilteredSimulacoes = () => {
-    return simulacoes.filter(s => {
-      const matchStatus = filtroStatus === 'todos' || s.status === filtroStatus;
-      const matchNome = !filtroNome || s.nome_completo.toLowerCase().includes(filtroNome.toLowerCase());
+    return sessionGroups.filter(group => {
+      const sim = group.simulacoes[0];
+      const matchStatus = filtroStatus === 'todos' || sim.status === filtroStatus;
+      const matchNome = !filtroNome || sim.nome_completo.toLowerCase().includes(filtroNome.toLowerCase());
       return matchStatus && matchNome;
     });
   };
@@ -455,7 +465,7 @@ const AdminDashboard: React.FC = () => {
     return email;
   };
 
-  const filteredSimulacoes = getFilteredSimulacoes();
+  const filteredSessions = getFilteredSimulacoes();
   const filteredParceiros = getFilteredParceiros();
 
   // Mostrar loading durante verificação inicial
@@ -563,7 +573,7 @@ const AdminDashboard: React.FC = () => {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Total de Simulações</p>
+                    <p className="text-sm font-medium text-gray-600">Total de Sessões</p>
                     <p className="text-3xl font-bold text-blue-600">{stats.total}</p>
                   </div>
                   <Users className="w-8 h-8 text-blue-600" />
@@ -650,7 +660,7 @@ const AdminDashboard: React.FC = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Simulações ({filteredSimulacoes.length})</CardTitle>
+              <CardTitle>Sessões ({filteredSessions.length})</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
@@ -665,13 +675,16 @@ const AdminDashboard: React.FC = () => {
                       <TableHead>Empréstimo</TableHead>
                       <TableHead>Sistema</TableHead>
                       <TableHead>Parcelas</TableHead>
+                      <TableHead>Simulações</TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead>Ações</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {filteredSimulacoes.map((simulacao) => (
-                      <TableRow key={simulacao.id}>
+                    {filteredSessions.map((session) => {
+                      const simulacao = session.simulacoes[0];
+                      return (
+                      <TableRow key={session.session_id}>
                         <TableCell className="text-sm">
                           {simulacao.created_at ? new Date(simulacao.created_at).toLocaleDateString('pt-BR') : 'Data não informada'}
                           <br />
@@ -726,9 +739,10 @@ const AdminDashboard: React.FC = () => {
                           <Badge variant="outline">{simulacao.tipo_amortizacao}</Badge>
                         </TableCell>
                         <TableCell>{simulacao.parcelas}x</TableCell>
+                        <TableCell>{session.simulacoes.length}</TableCell>
                         <TableCell>
-                          <Select 
-                            value={simulacao.status || 'novo'} 
+                          <Select
+                            value={simulacao.status || 'novo'}
                             onValueChange={(value) => updateStatus(simulacao.id!, value)}
                           >
                             <SelectTrigger className="w-[120px]">
@@ -748,12 +762,13 @@ const AdminDashboard: React.FC = () => {
                           </Button>
                         </TableCell>
                       </TableRow>
-                    ))}
+                      );
+                    })}
                   </TableBody>
                 </Table>
               </div>
 
-              {filteredSimulacoes.length === 0 && (
+              {filteredSessions.length === 0 && (
                 <div className="text-center py-8 text-gray-500">
                   Nenhuma simulação encontrada.
                 </div>

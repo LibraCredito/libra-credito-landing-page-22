@@ -70,6 +70,7 @@ export interface SimulationWithJourney extends SimulacaoData {
   landing_page?: string | null;
   referrer?: string | null;
   total_simulacoes?: number;
+
 }
 
 // Classe principal do serviço local
@@ -694,6 +695,7 @@ export class LocalSimulationService {
       return result;
     } catch (error) {
       console.error('❌ Erro ao buscar simulações agrupadas:', error);
+
       throw error;
     }
   }
