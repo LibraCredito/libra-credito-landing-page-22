@@ -664,7 +664,7 @@ const AdminDashboard: React.FC = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Sessões ({filteredSessionGroups.length})</CardTitle>
+              <CardTitle>Sessões ({filteredSessions.length})</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
@@ -685,7 +685,7 @@ const AdminDashboard: React.FC = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {filteredSessionGroups.map((session) => {
+                    {filteredSessions.map((session) => {
                       const simulacao = session.simulacoes[0];
                       return (
                       <TableRow key={session.session_id}>
@@ -772,7 +772,7 @@ const AdminDashboard: React.FC = () => {
                 </Table>
               </div>
 
-              {filteredSessionGroups.length === 0 && (
+              {filteredSessions.length === 0 && (
                 <div className="text-center py-8 text-gray-500">
                   Nenhuma simulação encontrada.
                 </div>
