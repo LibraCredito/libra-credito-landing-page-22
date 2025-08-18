@@ -62,9 +62,9 @@ const AdminDashboard: React.FC = () => {
   const [checkingAuth, setCheckingAuth] = useState(true);
 
   const [activeTab, setActiveTab] = useState<'simulacoes' | 'parceiros' | 'blog' | 'configuracoes'>('simulacoes');
-  
+
   // Estados para simulações
-  const [simulacoes, setSimulacoes] = useState<SimulationWithJourney[]>([]);
+  const [sessionGroups, setSessionGroups] = useState<SimulationWithJourney[]>([]);
 
   const [loading, setLoading] = useState(false);
   const [filtroStatus, setFiltroStatus] = useState<string>('todos');
@@ -327,7 +327,7 @@ const AdminDashboard: React.FC = () => {
     setLoading(true);
     try {
       const data = await LocalSimulationService.getSimulacoesAgrupadas(1000);
-      setSimulacoes(data);
+      setSessionGroups(data);
 
       calculateStats(data);
     } catch (error) {
@@ -359,7 +359,7 @@ const AdminDashboard: React.FC = () => {
   };
 
   const exportToCSV = () => {
-    const filteredData = getFilteredSimulacoes();
+    const filteredData = getFilteredSessionGroups();
     const csv = [
       'Sessao,Quantidade,Data,Nome,Email,Telefone,Cidade,Valor Emprestimo,Valor Imovel,Parcelas,Sistema,Status',
       ...filteredData.map(group => {
@@ -389,7 +389,7 @@ const AdminDashboard: React.FC = () => {
     a.click();
   };
 
-  const getFilteredSimulacoes = () => {
+  const getFilteredSessionGroups = () => {
     return sessionGroups.filter(group => {
       const sim = group.simulacoes[0];
       const matchStatus = filtroStatus === 'todos' || sim.status === filtroStatus;
@@ -465,7 +465,7 @@ const AdminDashboard: React.FC = () => {
     return email;
   };
 
-  const filteredSessions = getFilteredSimulacoes();
+  const filteredSessionGroups = getFilteredSessionGroups();
   const filteredParceiros = getFilteredParceiros();
 
   // Mostrar loading durante verificação inicial
@@ -660,7 +660,7 @@ const AdminDashboard: React.FC = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Sessões ({filteredSessions.length})</CardTitle>
+              <CardTitle>Sessões ({filteredSessionGroups.length})</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
@@ -681,7 +681,7 @@ const AdminDashboard: React.FC = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {filteredSessions.map((session) => {
+                    {filteredSessionGroups.map((session) => {
                       const simulacao = session.simulacoes[0];
                       return (
                       <TableRow key={session.session_id}>
@@ -768,7 +768,7 @@ const AdminDashboard: React.FC = () => {
                 </Table>
               </div>
 
-              {filteredSessions.length === 0 && (
+              {filteredSessionGroups.length === 0 && (
                 <div className="text-center py-8 text-gray-500">
                   Nenhuma simulação encontrada.
                 </div>
