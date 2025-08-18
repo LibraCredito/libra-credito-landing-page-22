@@ -14,7 +14,7 @@
  * - Compatibilidade total com componentes existentes
  */
 
-import { validateEmail, validatePhone, formatPhone } from '@/utils/validations';
+import { validateEmail, validatePhone } from '@/utils/validations';
 import { supabaseApi, SimulacaoData, supabase } from '@/lib/supabase';
 
 // Reutilizar interfaces do serviço original
@@ -63,9 +63,14 @@ export interface ContactFormInput {
   referrer?: string | null;
 }
 
-export interface SimulacoesPorSessao {
-  session_id: string;
-  simulacoes: SimulacaoData[];
+export interface SimulationWithJourney extends SimulacaoData {
+  utm_source?: string | null;
+  utm_medium?: string | null;
+  utm_campaign?: string | null;
+  landing_page?: string | null;
+  referrer?: string | null;
+  total_simulacoes?: number;
+
 }
 
 // Classe principal do serviço local
@@ -644,20 +649,53 @@ export class LocalSimulationService {
     }
   }
 
-  static async getSimulacoesGroupedBySession(limit = 1000): Promise<SimulacoesPorSessao[]> {
+  static async getSimulacoesAgrupadas(limit = 1000): Promise<SimulationWithJourney[]> {
     try {
-      const simulacoes = await this.getSimulacoes(limit);
-      const grouped = simulacoes.reduce((map, simulacao) => {
-        const sessionId = simulacao.session_id;
-        if (!map.has(sessionId)) {
-          map.set(sessionId, []);
+      const simulacoes = await supabaseApi.getSimulacoes(limit);
+
+      const grouped = new Map<string, SimulacaoData[]>();
+      for (const sim of simulacoes) {
+        if (!sim.session_id) continue;
+        const arr = grouped.get(sim.session_id) || [];
+        arr.push(sim);
+        grouped.set(sim.session_id, arr);
+      }
+
+      const sessionIds = Array.from(grouped.keys());
+      let journeys = [] as any[];
+      if (sessionIds.length > 0) {
+        try {
+          journeys = await supabaseApi.getUserJourneysBySessionIds(sessionIds);
+        } catch (journeyError) {
+          console.error('Erro ao buscar jornadas:', journeyError);
         }
-        map.get(sessionId)!.push(simulacao);
-        return map;
-      }, new Map<string, SimulacaoData[]>());
-      return Array.from(grouped.entries()).map(([session_id, simulacoes]) => ({ session_id, simulacoes }));
+      }
+
+      const journeyMap = new Map<string, any>();
+      for (const j of journeys) {
+        if (j?.session_id) journeyMap.set(j.session_id, j);
+      }
+
+      const result: SimulationWithJourney[] = [];
+      for (const [sessionId, sims] of grouped.entries()) {
+        const sorted = sims.sort((a, b) => new Date(b.created_at || '').getTime() - new Date(a.created_at || '').getTime());
+        const latest = sorted[0];
+        const journey = journeyMap.get(sessionId);
+        result.push({
+          ...latest,
+          total_simulacoes: sims.length,
+          utm_source: journey?.utm_source ?? null,
+          utm_medium: journey?.utm_medium ?? null,
+          utm_campaign: journey?.utm_campaign ?? null,
+          landing_page: journey?.landing_page ?? null,
+          referrer: journey?.referrer ?? null,
+        });
+      }
+
+      return result;
     } catch (error) {
-      console.error('❌ Erro ao agrupar simulações por sessão:', error);
+      console.error('❌ Erro ao buscar simulações agrupadas:', error);
+
       throw error;
     }
   }
