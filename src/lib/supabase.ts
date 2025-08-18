@@ -20,22 +20,21 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-// Configurações do Supabase - opcionais para desenvolvimento
+// Configurações do Supabase - obtidas de variáveis de ambiente
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Variáveis de fallback para desenvolvimento quando Supabase não está configurado
-const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey);
-
-if (!isSupabaseConfigured) {
-  console.warn('⚠️ Supabase não configurado: VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY não definidas');
-  console.log('🔧 Aplicação funcionará em modo local (sem salvamento de dados)');
+// Verificação obrigatória das variáveis de ambiente
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error(
+    '⚠️ Supabase não configurado: defina VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY'
+  );
 }
 
 // Log para debug (apenas em development)
 if (typeof window !== 'undefined' && import.meta.env.DEV) {
   console.log('Supabase URL:', supabaseUrl);
-  console.log('Supabase Key:', supabaseAnonKey?.substring(0, 20) + '...');
+  console.log('Supabase Key:', supabaseAnonKey.substring(0, 20) + '...');
 }
 
 // Tipos TypeScript para as tabelas
@@ -158,10 +157,10 @@ export interface Database {
   };
 }
 
-// Cliente Supabase tipado com fallback para desenvolvimento
+// Cliente Supabase tipado
 export const supabase = createClient<Database>(
-  supabaseUrl || 'https://wprkpdqnmibxphiofoqk.supabase.co', 
-  supabaseAnonKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndwcmtwZHFubWlieHBoaW9mb3FrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI2NzM4NjAsImV4cCI6MjA2ODI0OTg2MH0.OABg1mnBBFxceEHRIdDrGbFo4m0yau6bN91HxnMkazw',
+  supabaseUrl,
+  supabaseAnonKey,
   {
     auth: {
       persistSession: false // Não precisamos de autenticação de usuário
@@ -174,20 +173,10 @@ export const supabase = createClient<Database>(
   }
 );
 
-// Flag para verificar se Supabase está funcionando
-export { isSupabaseConfigured };
-
 // Funções auxiliares para operações no banco
 export const supabaseApi = {
   // Teste de conexão
   async testConnection() {
-    if (!isSupabaseConfigured) {
-      if (import.meta.env.DEV) {
-        console.log('🔧 Supabase em modo fallback - conexão simulada');
-      }
-      return false;
-    }
-
     try {
       const { data, error } = await supabase
         .from('parceiros')
@@ -217,11 +206,6 @@ export const supabaseApi = {
 
   // Simulações
   async createSimulacao(data: Database['public']['Tables']['simulacoes']['Insert']) {
-    if (!isSupabaseConfigured) {
-      console.log('📝 Simulação salva em modo local:', data);
-      return { ...data, id: 'local-' + Date.now() } as any;
-    }
-
     const { data: result, error } = await supabase
       .from('simulacoes')
       .insert(data)
