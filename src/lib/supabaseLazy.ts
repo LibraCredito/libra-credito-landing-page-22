@@ -33,8 +33,14 @@ async function loadSupabaseClient() {
   loadingPromise = import('@supabase/supabase-js')
     .then(async ({ createClient }) => {
       // Configurações do Supabase
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://wprkpdqnmibxphiofoqk.supabase.co';
-      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_xjn_ruSWUfyiqoMIrQfcOw_-YVtj5lr';
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+      if (!supabaseUrl || !supabaseAnonKey) {
+        throw new Error(
+          '⚠️ Supabase não configurado: defina VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY'
+        );
+      }
 
       // Criar cliente
       const client = createClient<Database>(supabaseUrl, supabaseAnonKey, {
