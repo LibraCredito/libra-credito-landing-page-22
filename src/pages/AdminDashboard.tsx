@@ -23,7 +23,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { LocalSimulationService, type SimulationWithJourney } from '@/services/localSimulationService';
+import { LocalSimulationService, type SessionGroupWithJourney } from '@/services/localSimulationService';
 
 import { PartnersService } from '@/services/partnersService';
 import { BlogService, type BlogPost } from '@/services/blogService';
@@ -62,9 +62,10 @@ const AdminDashboard: React.FC = () => {
   const [checkingAuth, setCheckingAuth] = useState(true);
 
   const [activeTab, setActiveTab] = useState<'simulacoes' | 'parceiros' | 'blog' | 'configuracoes'>('simulacoes');
+  
+  // Estados para simulações agrupadas por sessão
+  const [sessionGroups, setSessionGroups] = useState<SessionGroupWithJourney[]>([]);
 
-  // Estados para simulações
-  const [sessionGroups, setSessionGroups] = useState<SimulationWithJourney[]>([]);
 
   const [loading, setLoading] = useState(false);
   const [filtroStatus, setFiltroStatus] = useState<string>('todos');
@@ -337,7 +338,7 @@ const AdminDashboard: React.FC = () => {
     }
   };
 
-  const calculateStats = (data: SimulationWithJourney[]) => {
+  const calculateStats = (data: SessionGroupWithJourney[]) => {
 
     const stats = {
       total: data.length,
@@ -359,14 +360,15 @@ const AdminDashboard: React.FC = () => {
   };
 
   const exportToCSV = () => {
-    const filteredData = getFilteredSessionGroups();
+    const filteredData = getFilteredSessions();
+
     const csv = [
       'Sessao,Quantidade,Data,Nome,Email,Telefone,Cidade,Valor Emprestimo,Valor Imovel,Parcelas,Sistema,Status',
       ...filteredData.map(group => {
         const s = group.simulacoes[0];
         return [
           group.session_id,
-          group.simulacoes.length,
+          group.total_simulacoes,
           s.created_at ? new Date(s.created_at).toLocaleDateString() : '',
           s.nome_completo,
           s.email,
@@ -389,7 +391,8 @@ const AdminDashboard: React.FC = () => {
     a.click();
   };
 
-  const getFilteredSessionGroups = () => {
+  const getFilteredSessions = () => {
+
     return sessionGroups.filter(group => {
       const sim = group.simulacoes[0];
       const matchStatus = filtroStatus === 'todos' || sim.status === filtroStatus;
@@ -465,7 +468,8 @@ const AdminDashboard: React.FC = () => {
     return email;
   };
 
-  const filteredSessionGroups = getFilteredSessionGroups();
+  const filteredSessions = getFilteredSessions();
+
   const filteredParceiros = getFilteredParceiros();
 
   // Mostrar loading durante verificação inicial
@@ -701,28 +705,28 @@ const AdminDashboard: React.FC = () => {
                         </TableCell>
                         <TableCell className="text-xs">
                           <div>
-                            {[simulacao.utm_source, simulacao.utm_medium, simulacao.utm_campaign]
+                            {[session.utm_source, session.utm_medium, session.utm_campaign]
                               .filter(Boolean)
                               .join(' / ') || '-'}
                           </div>
-                          {simulacao.landing_page && (
+                          {session.landing_page && (
                             <a
-                              href={simulacao.landing_page}
+                              href={session.landing_page}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:underline break-all"
                             >
-                              {simulacao.landing_page}
+                              {session.landing_page}
                             </a>
                           )}
-                          {!simulacao.landing_page && simulacao.referrer && (
+                          {!session.landing_page && session.referrer && (
                             <a
-                              href={simulacao.referrer}
+                              href={session.referrer}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:underline break-all"
                             >
-                              {simulacao.referrer}
+                              {session.referrer}
                             </a>
                           )}
                         </TableCell>
@@ -739,7 +743,7 @@ const AdminDashboard: React.FC = () => {
                           <Badge variant="outline">{simulacao.tipo_amortizacao}</Badge>
                         </TableCell>
                         <TableCell>{simulacao.parcelas}x</TableCell>
-                        <TableCell>{session.simulacoes.length}</TableCell>
+                        <TableCell>{session.total_simulacoes}</TableCell>
                         <TableCell>
                           <Select
                             value={simulacao.status || 'novo'}
