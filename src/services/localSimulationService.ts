@@ -63,6 +63,11 @@ export interface ContactFormInput {
   referrer?: string | null;
 }
 
+export interface SimulacoesPorSessao {
+  session_id: string;
+  simulacoes: SimulacaoData[];
+}
+
 // Classe principal do serviço local
 export class LocalSimulationService {
   
@@ -635,6 +640,24 @@ export class LocalSimulationService {
       return await supabaseApi.getSimulacoes(limit);
     } catch (error) {
       console.error('❌ Erro ao buscar simulações:', error);
+      throw error;
+    }
+  }
+
+  static async getSimulacoesGroupedBySession(limit = 1000): Promise<SimulacoesPorSessao[]> {
+    try {
+      const simulacoes = await this.getSimulacoes(limit);
+      const grouped = simulacoes.reduce((map, simulacao) => {
+        const sessionId = simulacao.session_id;
+        if (!map.has(sessionId)) {
+          map.set(sessionId, []);
+        }
+        map.get(sessionId)!.push(simulacao);
+        return map;
+      }, new Map<string, SimulacaoData[]>());
+      return Array.from(grouped.entries()).map(([session_id, simulacoes]) => ({ session_id, simulacoes }));
+    } catch (error) {
+      console.error('❌ Erro ao agrupar simulações por sessão:', error);
       throw error;
     }
   }
