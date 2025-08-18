@@ -8,7 +8,7 @@
  * Reduz ~116KB do bundle inicial
  */
 
-import type { Database, SimulacaoData, ParceiroData, UserJourneyData, BlogPostData } from './supabase';
+import type { Database } from './supabase';
 
 // Cache do cliente para evitar múltiplas inicializações
 let supabaseClient: any = null;
@@ -29,13 +29,21 @@ async function loadSupabaseClient() {
     return loadingPromise;
   }
   
+  // Verificar configuração
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    const error = new Error(
+      'Supabase não configurado: defina VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY'
+    );
+    loadingPromise = Promise.reject(error);
+    return loadingPromise;
+  }
+
   // Inicia o carregamento
   loadingPromise = import('@supabase/supabase-js')
     .then(async ({ createClient }) => {
-      // Configurações do Supabase
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://wprkpdqnmibxphiofoqk.supabase.co';
-      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_xjn_ruSWUfyiqoMIrQfcOw_-YVtj5lr';
-
       // Criar cliente
       const client = createClient<Database>(supabaseUrl, supabaseAnonKey, {
         auth: {
@@ -63,7 +71,7 @@ async function loadSupabaseClient() {
         // Teste de conexão
         async testConnection() {
           try {
-            const { data, error } = await client
+            const { error } = await client
               .from('parceiros')
               .select('*')
               .limit(1);
@@ -289,7 +297,7 @@ async function loadSupabaseClient() {
           const finalFileName = fileName || `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
           const filePath = `${new Date().getFullYear()}/${String(new Date().getMonth() + 1).padStart(2, '0')}/${finalFileName}`;
 
-          const { data, error } = await client.storage
+          const { data: _data, error } = await client.storage
             .from('blog-images')
             .upload(filePath, file, {
               cacheControl: '3600',

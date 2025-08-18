@@ -24,17 +24,25 @@ import { v4 as uuidv4 } from 'uuid';
 import type { UserJourneyData, PageVisit, DeviceInfo } from '@/lib/supabase';
 
 // Lazy loader para evitar carregar Supabase na primeira pintura
-let cachedSupabase: typeof import("@/lib/supabase").supabaseApi | null = null;
-async function getSupabaseApi() {
+type SupabaseApi = typeof import('@/lib/supabase').supabaseApi;
+let cachedSupabase: SupabaseApi | null = null;
+async function getSupabaseApi(): Promise<SupabaseApi> {
   if (!cachedSupabase) {
-    cachedSupabase = (await import('@/lib/supabase')).supabaseApi;
+    try {
+      const { getSupabaseApi } = await import('@/lib/supabaseLazy');
+      cachedSupabase = await getSupabaseApi();
+    } catch (error) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Supabase API unavailable:', error);
+      }
+      throw error;
+    }
   }
-  return cachedSupabase as typeof import('@/lib/supabase').supabaseApi;
+  return cachedSupabase;
 }
 
 // Constantes
 const SESSION_STORAGE_KEY = 'libra_session_id';
-const JOURNEY_STORAGE_KEY = 'libra_user_journey';
 
 // Types específicos do hook
 interface UserJourneyHook {
@@ -297,13 +305,19 @@ export function useUserJourney(): UserJourneyHook {
             time_on_site: Number(updatedJourney.time_on_site) || 0
           };
           
-          getSupabaseApi().then(api =>
-            api.updateUserJourney(sessionId, safeData).catch((error) => {
+          getSupabaseApi()
+            .then(api =>
+              api.updateUserJourney(sessionId, safeData).catch((error) => {
+                if (process.env.NODE_ENV === 'development') {
+                  console.warn('Failed to update user journey:', error);
+                }
+              })
+            )
+            .catch(error => {
               if (process.env.NODE_ENV === 'development') {
-                console.warn('Failed to update user journey:', error);
+                console.warn('Supabase API unavailable:', error);
               }
-            })
-          );
+            });
         }
       }, 1000);
       
@@ -345,13 +359,19 @@ export function useUserJourney(): UserJourneyHook {
           }))
         };
         
-        getSupabaseApi().then(api =>
-          api.updateUserJourney(sessionId, safeData).catch((error) => {
+        getSupabaseApi()
+          .then(api =>
+            api.updateUserJourney(sessionId, safeData).catch((error) => {
+              if (process.env.NODE_ENV === 'development') {
+                console.warn('Failed to track simulation:', error);
+              }
+            })
+          )
+          .catch(error => {
             if (process.env.NODE_ENV === 'development') {
-              console.warn('Failed to track simulation:', error);
+              console.warn('Supabase API unavailable:', error);
             }
-          })
-        );
+          });
       }
       
       return updatedJourney;
@@ -366,15 +386,21 @@ export function useUserJourney(): UserJourneyHook {
     const timeOnSite = Math.floor((currentTime - sessionStartTime.current) / 1000);
     
     if (isTracking) {
-      getSupabaseApi().then(api =>
-        api.updateUserJourney(sessionId, {
-          time_on_site: timeOnSite
-        }).catch((error) => {
+      getSupabaseApi()
+        .then(api =>
+          api.updateUserJourney(sessionId, {
+            time_on_site: timeOnSite
+          }).catch((error) => {
+            if (process.env.NODE_ENV === 'development') {
+              console.warn('Failed to update time on site:', error);
+            }
+          })
+        )
+        .catch(error => {
           if (process.env.NODE_ENV === 'development') {
-            console.warn('Failed to update time on site:', error);
+            console.warn('Supabase API unavailable:', error);
           }
-        })
-      );
+        });
     }
   }, [sessionId, isTracking]);
   
