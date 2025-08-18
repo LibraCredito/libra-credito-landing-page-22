@@ -63,14 +63,17 @@ export interface ContactFormInput {
   referrer?: string | null;
 }
 
-export interface SimulationWithJourney extends SimulacaoData {
+export interface SessionGroupWithJourney {
+  session_id: string;
+  simulacoes: SimulacaoData[];
+  total_simulacoes: number;
   utm_source?: string | null;
   utm_medium?: string | null;
   utm_campaign?: string | null;
+  utm_term?: string | null;
+  utm_content?: string | null;
   landing_page?: string | null;
   referrer?: string | null;
-  total_simulacoes?: number;
-
 }
 
 // Classe principal do serviço local
@@ -649,7 +652,7 @@ export class LocalSimulationService {
     }
   }
 
-  static async getSimulacoesAgrupadas(limit = 1000): Promise<SimulationWithJourney[]> {
+  static async getSimulacoesAgrupadas(limit = 1000): Promise<SessionGroupWithJourney[]> {
     try {
       const simulacoes = await supabaseApi.getSimulacoes(limit);
 
@@ -676,17 +679,19 @@ export class LocalSimulationService {
         if (j?.session_id) journeyMap.set(j.session_id, j);
       }
 
-      const result: SimulationWithJourney[] = [];
+      const result: SessionGroupWithJourney[] = [];
       for (const [sessionId, sims] of grouped.entries()) {
-        const sorted = sims.sort((a, b) => new Date(b.created_at || '').getTime() - new Date(a.created_at || '').getTime());
-        const latest = sorted[0];
+        sims.sort((a, b) => new Date(b.created_at || '').getTime() - new Date(a.created_at || '').getTime());
         const journey = journeyMap.get(sessionId);
         result.push({
-          ...latest,
+          session_id: sessionId,
+          simulacoes: sims,
           total_simulacoes: sims.length,
           utm_source: journey?.utm_source ?? null,
           utm_medium: journey?.utm_medium ?? null,
           utm_campaign: journey?.utm_campaign ?? null,
+          utm_term: journey?.utm_term ?? null,
+          utm_content: journey?.utm_content ?? null,
           landing_page: journey?.landing_page ?? null,
           referrer: journey?.referrer ?? null,
         });
