@@ -44,6 +44,7 @@ async function loadSupabaseClient() {
   // Inicia o carregamento
   loadingPromise = import('@supabase/supabase-js')
     .then(async ({ createClient }) => {
+
       // Criar cliente
       const client = createClient<Database>(supabaseUrl, supabaseAnonKey, {
         auth: {
