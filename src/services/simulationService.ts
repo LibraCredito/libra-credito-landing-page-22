@@ -266,12 +266,31 @@ export class SimulationService {
           status: updatedSimulation.status
         };
         
-        const webhookResult = await WebhookService.sendSimulationData(webhookPayload);
-        
-        if (webhookResult.success) {
+        const webhookCalls = [
+          WebhookService.sendSimulationData(webhookPayload)
+        ];
+
+        const secondaryUrl = process.env.VITE_WEBHOOK_SECONDARY_URL;
+        if (secondaryUrl) {
+          webhookCalls.push(
+            WebhookService.sendSimulationData(webhookPayload, { url: secondaryUrl })
+          );
+        }
+
+        const [primaryResult, secondaryResult] = await Promise.all(webhookCalls);
+
+        if (primaryResult.success) {
           console.log('✅ Webhook enviado com sucesso');
         } else {
-          console.warn('⚠️ Falha no webhook (não crítico):', webhookResult.message);
+          console.warn('⚠️ Falha no webhook (não crítico):', primaryResult.message);
+        }
+
+        if (secondaryUrl) {
+          if (secondaryResult?.success) {
+            console.log('✅ Webhook secundário enviado com sucesso');
+          } else {
+            console.warn('⚠️ Falha no webhook secundário (não crítico):', secondaryResult?.message);
+          }
         }
         
       } catch (webhookError) {
