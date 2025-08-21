@@ -41,6 +41,7 @@ cp .env.example .env
 # - `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`
 #   - **Sem valores válidos a aplicação não inicializa**
 # - `VITE_WEBHOOK_URL` (opcional - para webhook de simulações)
+# - `VITE_WEBHOOK_SECONDARY_URL` (opcional - segundo endpoint para receber dados da simulação)
 # - Outras conforme necessário
 ```
 
