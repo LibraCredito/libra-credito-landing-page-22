@@ -20,6 +20,7 @@ import { supabaseApi, SimulacaoData, supabase } from '@/lib/supabase';
 // Reutilizar interfaces do serviço original
 export interface SimulationInput {
   sessionId: string;
+  visitorId: string;
   nomeCompleto: string;
   email: string;
   telefone: string;
@@ -44,11 +45,13 @@ export interface SimulationResult {
   valorImovel: number;
   cidade: string;
   sessionId: string;
+  visitorId?: string;
 }
 
 export interface ContactFormInput {
   simulationId: string;
   sessionId: string;
+  visitorId: string;
   nomeCompleto: string;
   email: string;
   telefone: string;
@@ -170,7 +173,8 @@ export class LocalSimulationService {
         valorEmprestimo: input.valorEmprestimo,
         valorImovel: input.valorImovel,
         cidade: input.cidade,
-        sessionId: input.sessionId
+        sessionId: input.sessionId,
+        visitorId: input.visitorId
       };
 
       // 7. Salvar no Supabase apenas se temos dados reais (não salvar placeholders)
@@ -186,6 +190,7 @@ export class LocalSimulationService {
         if (hasRealContactData) {
           const supabaseData = {
             session_id: input.sessionId,
+            visitor_id: input.visitorId,
             nome_completo: input.nomeCompleto,
             email: input.email,
             telefone: input.telefone,
@@ -405,7 +410,8 @@ export class LocalSimulationService {
             email: input.email.trim().toLowerCase(),
             telefone: input.telefone.replace(/\D/g, ''), // Limpar telefone
             imovel_proprio: input.imovelProprio as 'proprio' | 'terceiro', // Garantir tipo correto
-            status: 'interessado' // Status após contato para compatibilidade com AdminDashboard
+            status: 'interessado', // Status após contato para compatibilidade com AdminDashboard
+            visitor_id: input.visitorId
           };
           
           // Validar dados antes da atualização
@@ -471,6 +477,7 @@ export class LocalSimulationService {
               // Criar registro completo no Supabase
               const createData = {
                 session_id: input.sessionId,
+                visitor_id: input.visitorId,
                 nome_completo: updateData.nome_completo,
                 email: updateData.email,
                 telefone: updateData.telefone,

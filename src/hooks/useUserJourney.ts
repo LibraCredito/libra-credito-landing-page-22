@@ -43,15 +43,27 @@ async function getSupabaseApi(): Promise<SupabaseApi> {
 
 // Constantes
 const SESSION_STORAGE_KEY = 'libra_session_id';
+const VISITOR_STORAGE_KEY = 'libra_visitor_id';
 
 // Types específicos do hook
 interface UserJourneyHook {
   sessionId: string;
+  visitorId: string;
   isTracking: boolean;
   trackPageVisit: (url?: string) => void;
   trackSimulation: (simulationData: unknown) => void;
   getJourneyData: () => UserJourneyData | null;
   updateTimeOnSite: () => void;
+}
+
+// Recupera ou gera um visitorId persistente no localStorage
+function getOrCreateVisitorId(): string {
+  let id = localStorage.getItem(VISITOR_STORAGE_KEY);
+  if (!id) {
+    id = uuidv4();
+    localStorage.setItem(VISITOR_STORAGE_KEY, id);
+  }
+  return id;
 }
 
 // Função para extrair UTMs da URL
@@ -128,6 +140,7 @@ async function getUserIP(): Promise<string> {
 export function useUserJourney(): UserJourneyHook {
   const location = useLocation();
   const [sessionId, setSessionId] = useState<string>('');
+  const [visitorId, setVisitorId] = useState<string>('');
   const [isTracking, setIsTracking] = useState(false);
   const [journeyData, setJourneyData] = useState<UserJourneyData | null>(null);
   const pageStartTime = useRef<number>(Date.now());
@@ -152,18 +165,21 @@ export function useUserJourney(): UserJourneyHook {
   // Inicialização da sessão
   useEffect(() => {
     let currentSessionId = sessionStorage.getItem(SESSION_STORAGE_KEY);
-    
+    const currentVisitorId = getOrCreateVisitorId();
+
+    setVisitorId(currentVisitorId);
+
     if (!currentSessionId) {
       currentSessionId = uuidv4();
       sessionStorage.setItem(SESSION_STORAGE_KEY, currentSessionId);
       sessionStartTime.current = Date.now();
     }
-    
+
     setSessionId(currentSessionId);
     if ('requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(() => initializeJourney(currentSessionId!));
+      (window as any).requestIdleCallback(() => initializeJourney(currentSessionId!, currentVisitorId));
     } else {
-      setTimeout(() => initializeJourney(currentSessionId!), 500);
+      setTimeout(() => initializeJourney(currentSessionId!, currentVisitorId), 500);
     }
   }, []);
   
@@ -207,7 +223,7 @@ export function useUserJourney(): UserJourneyHook {
   }, [sessionId, isTracking, fetchAndStoreIP]);
   
   // Inicializar jornada do usuário
-  const initializeJourney = useCallback(async (sessionId: string) => {
+  const initializeJourney = useCallback(async (sessionId: string, visitorId: string) => {
     try {
       // Verificar se já existe jornada para esta sessão
       let existingJourney;
@@ -231,6 +247,7 @@ export function useUserJourney(): UserJourneyHook {
 
           const newJourney: UserJourneyData = {
             session_id: sessionId,
+            visitor_id: visitorId,
             utm_source: utms.utm_source || null,
             utm_medium: utms.utm_medium || null,
             utm_campaign: utms.utm_campaign || null,
@@ -423,9 +440,10 @@ export function useUserJourney(): UserJourneyHook {
   }, [updateTimeOnSite]);
   
   const getJourneyData = useCallback(() => journeyData, [journeyData]);
-  
+
   return {
     sessionId,
+    visitorId,
     isTracking,
     trackPageVisit,
     trackSimulation,

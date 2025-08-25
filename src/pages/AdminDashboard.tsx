@@ -700,7 +700,7 @@ const AdminDashboard: React.FC = () => {
                           {simulacao.nome_completo}
                         </TableCell>
                         <TableCell className="text-sm">
-                          <div>{formatEmail(simulacao.email)}</div>
+                          <div>{simulacao.email}</div>
                           <div className="text-gray-500">{formatPhone(simulacao.telefone)}</div>
                         </TableCell>
                         <TableCell className="text-xs">
@@ -909,7 +909,7 @@ const AdminDashboard: React.FC = () => {
                           {parceiro.nome}
                         </TableCell>
                         <TableCell className="text-sm">
-                          <div>{formatEmail(parceiro.email)}</div>
+                          <div>{parceiro.email}</div>
                           <div className="text-gray-500">{formatPhone(parceiro.telefone)}</div>
                         </TableCell>
                         <TableCell>{parceiro.cidade}</TableCell>
