@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { norm, formatBRL, formatBRLInput } from '../formatters';
+import {
+  norm,
+  formatBRL,
+  formatBRLInput,
+  formatCurrency,
+} from '../formatters';
 
 const NBSP = '\u00A0';
 

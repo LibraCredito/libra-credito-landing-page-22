@@ -113,7 +113,19 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
   onSwitchToPrice
 }) => {
   const isMobile = useIsMobile();
-  const { valor, amortizacao, parcelas: _parcelas, primeiraParcela, ultimaParcela } = resultado;
+  const {
+    valor: valorRaw,
+    amortizacao,
+    parcelas: _parcelas,
+    primeiraParcela: primeiraParcelaRaw,
+    ultimaParcela: ultimaParcelaRaw,
+  } = resultado;
+
+  const valor = Number(valorRaw);
+  const primeiraParcela =
+    primeiraParcelaRaw !== undefined ? Number(primeiraParcelaRaw) : undefined;
+  const ultimaParcela =
+    ultimaParcelaRaw !== undefined ? Number(ultimaParcelaRaw) : undefined;
   
   // Cálculo da renda mínima familiar
   const calcularRendaMinima = () => {
