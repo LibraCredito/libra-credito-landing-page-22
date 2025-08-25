@@ -669,19 +669,38 @@ export class LocalSimulationService {
       const simulacoes = await supabaseApi.getSimulacoes(limit);
 
       const grouped = new Map<string, SimulacaoData[]>();
+      const visitorIds = new Set<string>();
+      const sessionIds = new Set<string>();
+
       for (const sim of simulacoes) {
         const key = sim.visitor_id || sim.session_id;
         if (!key) continue;
         const arr = grouped.get(key) || [];
         arr.push(sim);
         grouped.set(key, arr);
+
+        if (sim.visitor_id) {
+          visitorIds.add(sim.visitor_id);
+        } else if (sim.session_id) {
+          sessionIds.add(sim.session_id);
+        }
       }
 
-      const visitorIds = Array.from(grouped.keys());
-      let journeys = [] as any[];
-      if (visitorIds.length > 0) {
+      let journeys: any[] = [];
+      if (visitorIds.size > 0) {
         try {
-          journeys = await supabaseApi.getUserJourneysByVisitorIds(visitorIds);
+          journeys = journeys.concat(
+            await supabaseApi.getUserJourneysByVisitorIds(Array.from(visitorIds))
+          );
+        } catch (journeyError) {
+          console.error('Erro ao buscar jornadas:', journeyError);
+        }
+      }
+      if (sessionIds.size > 0) {
+        try {
+          journeys = journeys.concat(
+            await supabaseApi.getUserJourneysBySessionIds(Array.from(sessionIds))
+          );
         } catch (journeyError) {
           console.error('Erro ao buscar jornadas:', journeyError);
         }
@@ -689,15 +708,16 @@ export class LocalSimulationService {
 
       const journeyMap = new Map<string, any>();
       for (const j of journeys) {
-        if (j?.visitor_id) journeyMap.set(j.visitor_id, j);
+        const key = j?.visitor_id || j?.session_id;
+        if (key) journeyMap.set(key, j);
       }
 
       const result: SessionGroupWithJourney[] = [];
-      for (const [visitorId, sims] of grouped.entries()) {
+      for (const [key, sims] of grouped.entries()) {
         sims.sort((a, b) => new Date(b.created_at || '').getTime() - new Date(a.created_at || '').getTime());
-        const journey = journeyMap.get(visitorId);
+        const journey = journeyMap.get(key);
         result.push({
-          visitor_id: visitorId,
+          visitor_id: key,
           simulacoes: sims,
           total_simulacoes: sims.length,
           utm_source: journey?.utm_source ?? null,
