@@ -53,6 +53,13 @@ import LogOut from 'lucide-react/dist/esm/icons/log-out';
 import { formatBRL } from '@/utils/formatters';
 import { renderMarkdown } from '@/utils/markdown';
 
+// Garante compatibilidade com scripts antigos que ainda referenciam
+// window.getFilteredSessions antes da montagem do componente. Inicializa
+// com função vazia para evitar ReferenceError durante o carregamento.
+if (typeof window !== 'undefined' && !(window as any).getFilteredSessions) {
+  (window as any).getFilteredSessions = () => [];
+}
+
 const AdminDashboard: React.FC = () => {
   // Estados de autenticação
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -409,11 +416,6 @@ const AdminDashboard: React.FC = () => {
     });
   };
 
-  // Compatibilidade com builds anteriores que ainda referenciam
-  // getFilteredSessions. Mantemos um alias para evitar ReferenceError
-  // caso algum script externo utilize o nome antigo.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getFilteredSessions = getFilteredVisitors;
 
   useEffect(() => {
     (window as any).getFilteredSessions = getFilteredVisitors;

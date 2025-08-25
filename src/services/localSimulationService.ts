@@ -83,6 +83,26 @@ export interface SessionGroupWithJourney {
 
 // Classe principal do serviço local
 export class LocalSimulationService {
+
+  /**
+   * Busca jornadas em lotes para evitar erros de URL muito longas no Supabase
+   */
+  private static async fetchJourneysInChunks<T>(
+    ids: string[],
+    fetchFn: (chunk: string[]) => Promise<T[]>,
+    chunkSize = 50
+  ): Promise<T[]> {
+    const results: T[] = [];
+    for (let i = 0; i < ids.length; i += chunkSize) {
+      const chunk = ids.slice(i, i + chunkSize);
+      try {
+        results.push(...await fetchFn(chunk));
+      } catch (journeyError) {
+        console.error('Erro ao buscar jornadas:', journeyError);
+      }
+    }
+    return results;
+  }
   
   /**
    * Realiza simulação usando apenas dados locais
@@ -683,27 +703,26 @@ export class LocalSimulationService {
           visitorIds.add(sim.visitor_id);
         } else if (sim.session_id) {
           sessionIds.add(sim.session_id);
+
         }
       }
 
       let journeys: any[] = [];
       if (visitorIds.size > 0) {
-        try {
-          journeys = journeys.concat(
-            await supabaseApi.getUserJourneysByVisitorIds(Array.from(visitorIds))
-          );
-        } catch (journeyError) {
-          console.error('Erro ao buscar jornadas:', journeyError);
-        }
+        journeys = journeys.concat(
+          await this.fetchJourneysInChunks(
+            Array.from(visitorIds),
+            ids => supabaseApi.getUserJourneysByVisitorIds(ids)
+          )
+        );
       }
       if (sessionIds.size > 0) {
-        try {
-          journeys = journeys.concat(
-            await supabaseApi.getUserJourneysBySessionIds(Array.from(sessionIds))
-          );
-        } catch (journeyError) {
-          console.error('Erro ao buscar jornadas:', journeyError);
-        }
+        journeys = journeys.concat(
+          await this.fetchJourneysInChunks(
+            Array.from(sessionIds),
+            ids => supabaseApi.getUserJourneysBySessionIds(ids)
+          )
+        );
       }
 
       const journeyMap = new Map<string, any>();
