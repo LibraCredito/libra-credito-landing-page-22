@@ -53,6 +53,13 @@ import LogOut from 'lucide-react/dist/esm/icons/log-out';
 import { formatBRL } from '@/utils/formatters';
 import { renderMarkdown } from '@/utils/markdown';
 
+// Garante compatibilidade com scripts antigos que ainda referenciam
+// window.getFilteredSessions antes da montagem do componente. Inicializa
+// com função vazia para evitar ReferenceError durante o carregamento.
+if (typeof window !== 'undefined' && !(window as any).getFilteredSessions) {
+  (window as any).getFilteredSessions = () => [];
+}
+
 const AdminDashboard: React.FC = () => {
   // Estados de autenticação
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -328,9 +335,17 @@ const AdminDashboard: React.FC = () => {
     setLoading(true);
     try {
       const data = await LocalSimulationService.getSimulacoesAgrupadas(1000);
-      setVisitorGroups(data);
+      const completed = data.filter(group => {
+        const sim = group.simulacoes[0];
+        return (
+          !!sim.nome_completo?.trim() &&
+          !!sim.email?.trim() &&
+          !!sim.telefone?.trim()
+        );
+      });
+      setVisitorGroups(completed);
 
-      calculateStats(data);
+      calculateStats(completed);
     } catch (error) {
       console.error('Erro ao carregar simulações:', error);
     } finally {
@@ -400,6 +415,10 @@ const AdminDashboard: React.FC = () => {
       return matchStatus && matchNome;
     });
   };
+
+  useEffect(() => {
+    (window as any).getFilteredSessions = getFilteredVisitors;
+  }, [visitorGroups, filtroStatus, filtroNome]);
   
   const getFilteredParceiros = () => {
     return parceiros.filter(p => {
