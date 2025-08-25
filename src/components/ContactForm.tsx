@@ -41,7 +41,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
   buttonClassName = '',
   compact = false
 }) => {
-  const { sessionId, getJourneyData } = useUserJourney();
+  const { sessionId, visitorId, getJourneyData } = useUserJourney();
   const navigate = useNavigate();
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
@@ -148,6 +148,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
       await LocalSimulationService.processContact({
         simulationId: simulationResult.id,
         sessionId,
+        visitorId,
         nomeCompleto: nome,
         email,
         telefone,
