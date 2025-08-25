@@ -3,6 +3,7 @@ import { norm, formatBRL, formatBRLInput } from '../formatters';
 
 const NBSP = '\u00A0';
 
+
 describe('norm', () => {
   it('handles empty string', () => {
     expect(norm('')).toBe(0);
@@ -47,5 +48,11 @@ describe('formatBRLInput', () => {
   it('formats input preserving cents', () => {
     expect(formatBRLInput('1')).toBe('0,01');
     expect(formatBRLInput('123456')).toBe('1.234,56');
+  });
+});
+
+describe('formatCurrency', () => {
+  it('formats number to Brazilian currency with cents', () => {
+    expect(formatCurrency(1234.56)).toBe('R$ 1.234,56');
   });
 });
