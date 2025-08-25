@@ -41,6 +41,7 @@ if (typeof window !== 'undefined' && import.meta.env.DEV) {
 export interface SimulacaoData {
   id?: string;
   session_id: string;
+  visitor_id?: string;
   nome_completo: string;
   email: string;
   telefone: string;
@@ -81,6 +82,7 @@ export interface ParceiroData {
 export interface UserJourneyData {
   id?: string;
   session_id: string;
+  visitor_id?: string;
   utm_source?: string;
   utm_medium?: string;
   utm_campaign?: string;
@@ -328,6 +330,16 @@ export const supabaseApi = {
       .from('user_journey')
       .select('*')
       .in('session_id', sessionIds);
+
+    if (error) throw error;
+    return data || [];
+  },
+
+  async getUserJourneysByVisitorIds(visitorIds: string[]) {
+    const { data, error } = await supabase
+      .from('user_journey')
+      .select('*')
+      .in('visitor_id', visitorIds);
 
     if (error) throw error;
     return data || [];
