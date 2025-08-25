@@ -408,6 +408,16 @@ const AdminDashboard: React.FC = () => {
       return matchStatus && matchNome;
     });
   };
+
+  // Compatibilidade com builds anteriores que ainda referenciam
+  // getFilteredSessions. Mantemos um alias para evitar ReferenceError
+  // caso algum script externo utilize o nome antigo.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const getFilteredSessions = getFilteredVisitors;
+
+  useEffect(() => {
+    (window as any).getFilteredSessions = getFilteredVisitors;
+  }, [visitorGroups, filtroStatus, filtroNome]);
   
   const getFilteredParceiros = () => {
     return parceiros.filter(p => {
