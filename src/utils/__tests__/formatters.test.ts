@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { norm, formatBRL } from '../formatters';
+import { norm, formatBRL, formatCurrency } from '../formatters';
 
 describe('norm', () => {
   it('handles empty string', () => {
@@ -38,5 +38,11 @@ describe('formatBRL', () => {
 
   it('handles values with surrounding spaces', () => {
     expect(formatBRL(' 1234567 ')).toBe('R$ 1.234.567');
+  });
+});
+
+describe('formatCurrency', () => {
+  it('formats number to Brazilian currency with cents', () => {
+    expect(formatCurrency(1234.56)).toBe('R$ 1.234,56');
   });
 });
