@@ -468,7 +468,18 @@ const AdminDashboard: React.FC = () => {
     return email;
   };
 
-  const filteredVisitors = getFilteredVisitors();
+  const shortenUrl = (url: string) => {
+    try {
+      const { hostname, pathname } = new URL(url);
+      return `${hostname}${pathname}`;
+    } catch {
+      return url;
+    }
+  };
+
+
+  const filteredSessions = getFilteredSessions();
+
 
   const filteredParceiros = getFilteredParceiros();
 
@@ -709,8 +720,10 @@ const AdminDashboard: React.FC = () => {
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:underline break-all"
+                              title={session.landing_page}
                             >
-                              {visitor.landing_page}
+                              {shortenUrl(session.landing_page)}
+
                             </a>
                           )}
                           {!visitor.landing_page && visitor.referrer && (
@@ -719,8 +732,10 @@ const AdminDashboard: React.FC = () => {
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:underline break-all"
+                              title={session.referrer}
                             >
-                              {visitor.referrer}
+                              {shortenUrl(session.referrer)}
+
                             </a>
                           )}
                         </TableCell>
