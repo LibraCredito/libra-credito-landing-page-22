@@ -416,6 +416,7 @@ const AdminDashboard: React.FC = () => {
     });
   };
 
+
   useEffect(() => {
     (window as any).getFilteredSessions = getFilteredVisitors;
   }, [visitorGroups, filtroStatus, filtroNome]);
@@ -487,7 +488,18 @@ const AdminDashboard: React.FC = () => {
     return email;
   };
 
+  const shortenUrl = (url: string) => {
+    try {
+      const { hostname, pathname } = new URL(url);
+      return `${hostname}${pathname}`;
+    } catch {
+      return url;
+    }
+  };
+
+
   const filteredVisitors = getFilteredVisitors();
+
 
   const filteredParceiros = getFilteredParceiros();
 
@@ -691,9 +703,9 @@ const AdminDashboard: React.FC = () => {
                   <TableHeader>
                     <TableRow>
                       <TableHead>Data</TableHead>
+                      <TableHead>Origem</TableHead>
                       <TableHead>Nome</TableHead>
                       <TableHead>Contato</TableHead>
-                      <TableHead>Origem</TableHead>
                       <TableHead>Cidade</TableHead>
                       <TableHead>Empréstimo</TableHead>
                       <TableHead>Sistema</TableHead>
@@ -715,13 +727,7 @@ const AdminDashboard: React.FC = () => {
                             {simulacao.created_at ? new Date(simulacao.created_at).toLocaleTimeString('pt-BR') : ''}
                           </span>
                         </TableCell>
-                        <TableCell className="font-medium">
-                          {simulacao.nome_completo}
-                        </TableCell>
-                        <TableCell className="text-sm">
-                          <div>{simulacao.email}</div>
-                          <div className="text-gray-500">{formatPhone(simulacao.telefone)}</div>
-                        </TableCell>
+
                         <TableCell className="text-xs">
                           <div>
                             {[visitor.utm_source, visitor.utm_medium, visitor.utm_campaign]
@@ -734,8 +740,10 @@ const AdminDashboard: React.FC = () => {
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:underline break-all"
+                              title={session.landing_page}
                             >
-                              {visitor.landing_page}
+                              {shortenUrl(session.landing_page)}
+
                             </a>
                           )}
                           {!visitor.landing_page && visitor.referrer && (
@@ -744,10 +752,19 @@ const AdminDashboard: React.FC = () => {
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:underline break-all"
+                              title={session.referrer}
                             >
-                              {visitor.referrer}
+                              {shortenUrl(session.referrer)}
+
                             </a>
                           )}
+                        </TableCell>
+                        <TableCell className="font-medium">
+                          {simulacao.nome_completo}
+                        </TableCell>
+                        <TableCell className="text-sm">
+                          <div>{formatEmail(simulacao.email)}</div>
+                          <div className="text-gray-500">{formatPhone(simulacao.telefone)}</div>
                         </TableCell>
                         <TableCell>{simulacao.cidade}</TableCell>
                         <TableCell className="text-sm">

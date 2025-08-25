@@ -703,6 +703,7 @@ export class LocalSimulationService {
           visitorIds.add(sim.visitor_id);
         } else if (sim.session_id) {
           sessionIds.add(sim.session_id);
+
         }
       }
 
