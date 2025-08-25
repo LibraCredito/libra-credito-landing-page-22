@@ -486,7 +486,7 @@ const AdminDashboard: React.FC = () => {
   };
 
 
-  const filteredSessions = getFilteredSessions();
+  const filteredVisitors = getFilteredVisitors();
 
 
   const filteredParceiros = getFilteredParceiros();
