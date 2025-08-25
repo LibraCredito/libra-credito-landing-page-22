@@ -460,14 +460,6 @@ const AdminDashboard: React.FC = () => {
     return phone;
   };
 
-  const formatEmail = (email: string) => {
-    const [user, domain] = email.split('@');
-    if (user.length > 3) {
-      return user.substring(0, 3) + '***@' + domain;
-    }
-    return email;
-  };
-
   const filteredSessions = getFilteredSessions();
 
   const filteredParceiros = getFilteredParceiros();
@@ -696,6 +688,7 @@ const AdminDashboard: React.FC = () => {
                             {simulacao.created_at ? new Date(simulacao.created_at).toLocaleTimeString('pt-BR') : ''}
                           </span>
                         </TableCell>
+
                         <TableCell className="text-xs">
                           <div>
                             {[session.utm_source, session.utm_medium, session.utm_campaign]
@@ -909,7 +902,7 @@ const AdminDashboard: React.FC = () => {
                           {parceiro.nome}
                         </TableCell>
                         <TableCell className="text-sm">
-                          <div>{formatEmail(parceiro.email)}</div>
+                          <div>{parceiro.email}</div>
                           <div className="text-gray-500">{formatPhone(parceiro.telefone)}</div>
                         </TableCell>
                         <TableCell>{parceiro.cidade}</TableCell>
