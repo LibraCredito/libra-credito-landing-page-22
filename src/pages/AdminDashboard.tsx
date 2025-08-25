@@ -328,9 +328,17 @@ const AdminDashboard: React.FC = () => {
     setLoading(true);
     try {
       const data = await LocalSimulationService.getSimulacoesAgrupadas(1000);
-      setVisitorGroups(data);
+      const completed = data.filter(group => {
+        const sim = group.simulacoes[0];
+        return (
+          !!sim.nome_completo?.trim() &&
+          !!sim.email?.trim() &&
+          !!sim.telefone?.trim()
+        );
+      });
+      setVisitorGroups(completed);
 
-      calculateStats(data);
+      calculateStats(completed);
     } catch (error) {
       console.error('Erro ao carregar simulações:', error);
     } finally {
