@@ -113,7 +113,19 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
   onSwitchToPrice
 }) => {
   const isMobile = useIsMobile();
-  const { valor, amortizacao, parcelas: _parcelas, primeiraParcela, ultimaParcela } = resultado;
+  const {
+    valor: valorRaw,
+    amortizacao,
+    parcelas: _parcelas,
+    primeiraParcela: primeiraParcelaRaw,
+    ultimaParcela: ultimaParcelaRaw,
+  } = resultado;
+
+  const valor = Number(valorRaw);
+  const primeiraParcela =
+    primeiraParcelaRaw !== undefined ? Number(primeiraParcelaRaw) : undefined;
+  const ultimaParcela =
+    ultimaParcelaRaw !== undefined ? Number(ultimaParcelaRaw) : undefined;
   
   // Cálculo da renda mínima familiar
   const calcularRendaMinima = () => {
@@ -149,7 +161,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
                 <div className="bg-green-100 rounded-lg p-3 border border-green-200">
                   <div className="text-xs font-medium mb-1">1ª Parcela</div>
                   <div className="text-lg font-bold whitespace-nowrap">
-                    R$ {primeiraParcela.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    R$ {primeiraParcela.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </div>
                   <div className="text-xs text-gray-500 mt-1">Maior valor</div>
                 </div>
@@ -157,7 +169,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
                 <div className="bg-green-100 rounded-lg p-3 border border-green-200">
                   <div className="text-xs font-medium mb-1">Última Parcela</div>
                   <div className="text-lg font-bold whitespace-nowrap">
-                    R$ {ultimaParcela?.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    R$ {ultimaParcela?.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </div>
                   <div className="text-xs text-gray-500 mt-1">Menor valor</div>
                 </div>
@@ -167,7 +179,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
             <div className="text-center">
               <div className="text-xs mb-1">Parcela Fixa (PRICE)</div>
               <div className="text-2xl font-bold whitespace-nowrap">
-                R$ {valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                R$ {valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </div>
             </div>
           )}
@@ -182,7 +194,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
             </TooltipInfo>
           </div>
           <div className="text-lg font-bold whitespace-nowrap">
-            R$ {rendaMinima.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+            R$ {rendaMinima.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </div>
           {amortizacao === 'SAC' && (
             <div className="text-xs mt-2">
@@ -250,7 +262,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
               <div className="text-center bg-green-100 rounded-lg p-1 border border-green-200">
                 <div className="text-xs font-medium mb-1">1ª Parcela</div>
                 <div className="text-lg font-bold">
-                  R$ {primeiraParcela.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                  R$ {primeiraParcela.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </div>
                 <div className="text-xs">Maior valor</div>
               </div>
@@ -258,7 +270,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
               <div className="text-center bg-green-100 rounded-lg p-1 border border-green-200">
                 <div className="text-xs font-medium mb-1">Última Parcela</div>
                 <div className="text-base font-bold">
-                  R$ {ultimaParcela?.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                  R$ {ultimaParcela?.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </div>
                 <div className="text-xs">Menor valor</div>
               </div>
@@ -271,7 +283,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
                   </TooltipInfo>
                 </div>
                 <div className="text-base font-bold">
-                  R$ {rendaMinima.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                  R$ {rendaMinima.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </div>
                 <div className="mt-1 text-xs">
                   <SwitchPriceTip onSwitchToPrice={onSwitchToPrice} />
@@ -285,7 +297,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
 
               <div className="text-xs mb-1">Parcela Fixa (PRICE)</div>
               <div className="text-xl lg:text-2xl font-bold">
-                R$ {valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                R$ {valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </div>
             </div>
             <div className="bg-green-50 rounded-lg p-3 text-center relative">
@@ -296,7 +308,7 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
                 </TooltipInfo>
               </div>
               <div className="text-xl lg:text-2xl font-bold">
-                R$ {rendaMinima.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                R$ {rendaMinima.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </div>
             </div>
           </div>
