@@ -41,6 +41,7 @@ if (typeof window !== 'undefined' && import.meta.env.DEV) {
 export interface SimulacaoData {
   id?: string;
   session_id: string;
+  visitor_id?: string;
   nome_completo: string;
   email: string;
   telefone: string;
@@ -81,6 +82,7 @@ export interface ParceiroData {
 export interface UserJourneyData {
   id?: string;
   session_id: string;
+  visitor_id?: string;
   utm_source?: string;
   utm_medium?: string;
   utm_campaign?: string;
@@ -178,11 +180,11 @@ export const supabaseApi = {
   // Teste de conexão
   async testConnection() {
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('parceiros')
         .select('*')
         .limit(1);
-      
+
       if (error) {
         // Log silencioso para evitar poluição do console
         if (import.meta.env.DEV) {
@@ -333,6 +335,16 @@ export const supabaseApi = {
     return data || [];
   },
 
+  async getUserJourneysByVisitorIds(visitorIds: string[]) {
+    const { data, error } = await supabase
+      .from('user_journey')
+      .select('*')
+      .in('visitor_id', visitorIds);
+
+    if (error) throw error;
+    return data || [];
+  },
+
   // Analytics
   async getSimulacaoStats() {
     const { data, error } = await supabase
@@ -452,7 +464,7 @@ export const supabaseApi = {
     const finalFileName = fileName || `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
     const filePath = `${new Date().getFullYear()}/${String(new Date().getMonth() + 1).padStart(2, '0')}/${finalFileName}`;
 
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from('blog-images')
       .upload(filePath, file, {
         cacheControl: '3600',

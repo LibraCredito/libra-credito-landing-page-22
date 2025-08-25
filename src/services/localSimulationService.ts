@@ -20,6 +20,8 @@ import { supabaseApi, SimulacaoData, supabase } from '@/lib/supabase';
 // Reutilizar interfaces do serviço original
 export interface SimulationInput {
   sessionId: string;
+  visitorId?: string;
+
   nomeCompleto: string;
   email: string;
   telefone: string;
@@ -44,11 +46,14 @@ export interface SimulationResult {
   valorImovel: number;
   cidade: string;
   sessionId: string;
+  visitorId?: string;
 }
 
 export interface ContactFormInput {
   simulationId: string;
   sessionId: string;
+  visitorId?: string;
+
   nomeCompleto: string;
   email: string;
   telefone: string;
@@ -64,7 +69,7 @@ export interface ContactFormInput {
 }
 
 export interface SessionGroupWithJourney {
-  session_id: string;
+  visitor_id: string;
   simulacoes: SimulacaoData[];
   total_simulacoes: number;
   utm_source?: string | null;
@@ -170,7 +175,8 @@ export class LocalSimulationService {
         valorEmprestimo: input.valorEmprestimo,
         valorImovel: input.valorImovel,
         cidade: input.cidade,
-        sessionId: input.sessionId
+        sessionId: input.sessionId,
+        visitorId: input.visitorId
       };
 
       // 7. Salvar no Supabase apenas se temos dados reais (não salvar placeholders)
@@ -186,6 +192,8 @@ export class LocalSimulationService {
         if (hasRealContactData) {
           const supabaseData = {
             session_id: input.sessionId,
+            visitor_id: input.visitorId || null,
+
             nome_completo: input.nomeCompleto,
             email: input.email,
             telefone: input.telefone,
@@ -203,6 +211,7 @@ export class LocalSimulationService {
 
           console.log('💾 Tentando salvar simulação no Supabase:', {
             session_id: supabaseData.session_id,
+            visitor_id: supabaseData.visitor_id,
             cidade: supabaseData.cidade,
             valor_emprestimo: supabaseData.valor_emprestimo,
             original_local_id: simulationId
@@ -305,7 +314,7 @@ export class LocalSimulationService {
               console.log('📋 Tentando buscar todas as simulações para debug...');
               const { data: allData } = await supabase
                 .from('simulacoes')
-                .select('id, session_id, created_at')
+                .select('id, session_id, visitor_id, created_at')
                 .eq('session_id', input.sessionId)
                 .order('created_at', { ascending: false });
               console.log('📋 Simulações encontradas:', allData);
@@ -405,7 +414,8 @@ export class LocalSimulationService {
             email: input.email.trim().toLowerCase(),
             telefone: input.telefone.replace(/\D/g, ''), // Limpar telefone
             imovel_proprio: input.imovelProprio as 'proprio' | 'terceiro', // Garantir tipo correto
-            status: 'interessado' // Status após contato para compatibilidade com AdminDashboard
+            status: 'interessado', // Status após contato para compatibilidade com AdminDashboard
+            visitor_id: input.visitorId
           };
           
           // Validar dados antes da atualização
@@ -443,7 +453,7 @@ export class LocalSimulationService {
             // Para IDs locais, buscar pela session_id mais recente
             const { data: searchResults, error: selectError } = await supabase
               .from('simulacoes')
-              .select('id, nome_completo, email, telefone, imovel_proprio, status, session_id, created_at')
+              .select('id, nome_completo, email, telefone, imovel_proprio, status, session_id, visitor_id, created_at')
               .eq('session_id', input.sessionId)
               .order('created_at', { ascending: false })
               .limit(1);
@@ -471,6 +481,8 @@ export class LocalSimulationService {
               // Criar registro completo no Supabase
               const createData = {
                 session_id: input.sessionId,
+                visitor_id: input.visitorId || null,
+
                 nome_completo: updateData.nome_completo,
                 email: updateData.email,
                 telefone: updateData.telefone,
@@ -519,7 +531,7 @@ export class LocalSimulationService {
             // Para IDs do Supabase, buscar e atualizar normalmente
             const { data: searchData, error: selectError } = await supabase
               .from('simulacoes')
-              .select('id, nome_completo, email, telefone, imovel_proprio, status')
+              .select('id, nome_completo, email, telefone, imovel_proprio, status, visitor_id')
               .eq('id', input.simulationId)
               .single();
               
@@ -658,17 +670,18 @@ export class LocalSimulationService {
 
       const grouped = new Map<string, SimulacaoData[]>();
       for (const sim of simulacoes) {
-        if (!sim.session_id) continue;
-        const arr = grouped.get(sim.session_id) || [];
+        const key = sim.visitor_id || sim.session_id;
+        if (!key) continue;
+        const arr = grouped.get(key) || [];
         arr.push(sim);
-        grouped.set(sim.session_id, arr);
+        grouped.set(key, arr);
       }
 
-      const sessionIds = Array.from(grouped.keys());
+      const visitorIds = Array.from(grouped.keys());
       let journeys = [] as any[];
-      if (sessionIds.length > 0) {
+      if (visitorIds.length > 0) {
         try {
-          journeys = await supabaseApi.getUserJourneysBySessionIds(sessionIds);
+          journeys = await supabaseApi.getUserJourneysByVisitorIds(visitorIds);
         } catch (journeyError) {
           console.error('Erro ao buscar jornadas:', journeyError);
         }
@@ -676,15 +689,15 @@ export class LocalSimulationService {
 
       const journeyMap = new Map<string, any>();
       for (const j of journeys) {
-        if (j?.session_id) journeyMap.set(j.session_id, j);
+        if (j?.visitor_id) journeyMap.set(j.visitor_id, j);
       }
 
       const result: SessionGroupWithJourney[] = [];
-      for (const [sessionId, sims] of grouped.entries()) {
+      for (const [visitorId, sims] of grouped.entries()) {
         sims.sort((a, b) => new Date(b.created_at || '').getTime() - new Date(a.created_at || '').getTime());
-        const journey = journeyMap.get(sessionId);
+        const journey = journeyMap.get(visitorId);
         result.push({
-          session_id: sessionId,
+          visitor_id: visitorId,
           simulacoes: sims,
           total_simulacoes: sims.length,
           utm_source: journey?.utm_source ?? null,

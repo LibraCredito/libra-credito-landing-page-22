@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { CityValidationResult } from '@/utils/cityLtvService';
-import { formatBRL, norm } from '@/utils/formatters';
+import { formatBRL, formatCurrency, norm } from '@/utils/formatters';
 import AlertCircle from 'lucide-react/dist/esm/icons/alert-circle';
 import CheckCircle from 'lucide-react/dist/esm/icons/check-circle';
 import XCircle from 'lucide-react/dist/esm/icons/x-circle';
@@ -262,7 +262,7 @@ const LocalSimulationForm: React.FC = () => {
                     onClick={adjustLoanAmount}
                     className="text-xs"
                   >
-                    Ajustar para R$ {validation.suggestedLoanAmount.toLocaleString('pt-BR')}
+                    Ajustar para {formatCurrency(validation.suggestedLoanAmount)}
                   </Button>
                 </div>
               )}
@@ -425,7 +425,7 @@ const LocalSimulationForm: React.FC = () => {
                     </div>
                     <div>
                       <span className="text-gray-600">Empréstimo:</span>
-                      <p className="font-medium">R$ {resultado.valorEmprestimo.toLocaleString('pt-BR')}</p>
+                      <p className="font-medium">{formatCurrency(resultado.valorEmprestimo)}</p>
                     </div>
                     <div>
                       <span className="text-gray-600">Taxa Juros:</span>
@@ -443,10 +443,7 @@ const LocalSimulationForm: React.FC = () => {
                     <h4 className="font-medium text-blue-800 mb-1">Sistema PRICE</h4>
                     <p className="text-sm text-blue-600 mb-2">Parcelas fixas</p>
                     <p className="text-xl font-bold text-blue-800">
-                      R$ {resultado.parcelaPrice.toLocaleString('pt-BR', { 
-                        minimumFractionDigits: 2, 
-                        maximumFractionDigits: 2 
-                      })}
+                      {formatCurrency(resultado.parcelaPrice)}
                     </p>
                   </div>
 
@@ -458,19 +455,13 @@ const LocalSimulationForm: React.FC = () => {
                       <div>
                         <p className="text-xs text-green-600">1ª parcela</p>
                         <p className="text-lg font-bold text-green-800">
-                          R$ {resultado.parcelaSac.inicial.toLocaleString('pt-BR', { 
-                            minimumFractionDigits: 2, 
-                            maximumFractionDigits: 2 
-                          })}
+                          {formatCurrency(resultado.parcelaSac.inicial)}
                         </p>
                       </div>
                       <div className="text-right">
                         <p className="text-xs text-green-600">Última parcela</p>
                         <p className="text-lg font-bold text-green-800">
-                          R$ {resultado.parcelaSac.final.toLocaleString('pt-BR', { 
-                            minimumFractionDigits: 2, 
-                            maximumFractionDigits: 2 
-                          })}
+                          {formatCurrency(resultado.parcelaSac.final)}
                         </p>
                       </div>
                     </div>

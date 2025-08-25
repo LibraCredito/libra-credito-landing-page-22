@@ -63,8 +63,8 @@ const AdminDashboard: React.FC = () => {
 
   const [activeTab, setActiveTab] = useState<'simulacoes' | 'parceiros' | 'blog' | 'configuracoes'>('simulacoes');
   
-  // Estados para simulações agrupadas por sessão
-  const [sessionGroups, setSessionGroups] = useState<SessionGroupWithJourney[]>([]);
+  // Estados para simulações agrupadas por visitante
+  const [visitorGroups, setVisitorGroups] = useState<SessionGroupWithJourney[]>([]);
 
 
   const [loading, setLoading] = useState(false);
@@ -328,7 +328,7 @@ const AdminDashboard: React.FC = () => {
     setLoading(true);
     try {
       const data = await LocalSimulationService.getSimulacoesAgrupadas(1000);
-      setSessionGroups(data);
+      setVisitorGroups(data);
 
       calculateStats(data);
     } catch (error) {
@@ -360,14 +360,14 @@ const AdminDashboard: React.FC = () => {
   };
 
   const exportToCSV = () => {
-    const filteredData = getFilteredSessions();
+    const filteredData = getFilteredVisitors();
 
     const csv = [
-      'Sessao,Quantidade,Data,Nome,Email,Telefone,Cidade,Valor Emprestimo,Valor Imovel,Parcelas,Sistema,Status',
+      'Visitante,Quantidade,Data,Nome,Email,Telefone,Cidade,Valor Emprestimo,Valor Imovel,Parcelas,Sistema,Status',
       ...filteredData.map(group => {
         const s = group.simulacoes[0];
         return [
-          group.session_id,
+          group.visitor_id,
           group.total_simulacoes,
           s.created_at ? new Date(s.created_at).toLocaleDateString() : '',
           s.nome_completo,
@@ -391,9 +391,9 @@ const AdminDashboard: React.FC = () => {
     a.click();
   };
 
-  const getFilteredSessions = () => {
+  const getFilteredVisitors = () => {
 
-    return sessionGroups.filter(group => {
+    return visitorGroups.filter(group => {
       const sim = group.simulacoes[0];
       const matchStatus = filtroStatus === 'todos' || sim.status === filtroStatus;
       const matchNome = !filtroNome || sim.nome_completo.toLowerCase().includes(filtroNome.toLowerCase());
@@ -479,6 +479,7 @@ const AdminDashboard: React.FC = () => {
 
 
   const filteredSessions = getFilteredSessions();
+
 
   const filteredParceiros = getFilteredParceiros();
 
@@ -587,7 +588,7 @@ const AdminDashboard: React.FC = () => {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Total de Sessões</p>
+                    <p className="text-sm font-medium text-gray-600">Total de Visitantes</p>
                     <p className="text-3xl font-bold text-blue-600">{stats.total}</p>
                   </div>
                   <Users className="w-8 h-8 text-blue-600" />
@@ -674,7 +675,7 @@ const AdminDashboard: React.FC = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Sessões ({filteredSessions.length})</CardTitle>
+              <CardTitle>Visitantes ({filteredVisitors.length})</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
@@ -682,9 +683,9 @@ const AdminDashboard: React.FC = () => {
                   <TableHeader>
                     <TableRow>
                       <TableHead>Data</TableHead>
+                      <TableHead>Origem</TableHead>
                       <TableHead>Nome</TableHead>
                       <TableHead>Contato</TableHead>
-                      <TableHead>Origem</TableHead>
                       <TableHead>Cidade</TableHead>
                       <TableHead>Empréstimo</TableHead>
                       <TableHead>Sistema</TableHead>
@@ -695,10 +696,10 @@ const AdminDashboard: React.FC = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {filteredSessions.map((session) => {
-                      const simulacao = session.simulacoes[0];
+                    {filteredVisitors.map((visitor) => {
+                      const simulacao = visitor.simulacoes[0];
                       return (
-                      <TableRow key={session.session_id}>
+                      <TableRow key={visitor.visitor_id}>
                         <TableCell className="text-sm">
                           {simulacao.created_at ? new Date(simulacao.created_at).toLocaleDateString('pt-BR') : 'Data não informada'}
                           <br />
@@ -706,41 +707,44 @@ const AdminDashboard: React.FC = () => {
                             {simulacao.created_at ? new Date(simulacao.created_at).toLocaleTimeString('pt-BR') : ''}
                           </span>
                         </TableCell>
-                        <TableCell className="font-medium">
-                          {simulacao.nome_completo}
-                        </TableCell>
-                        <TableCell className="text-sm">
-                          <div>{simulacao.email}</div>
-                          <div className="text-gray-500">{formatPhone(simulacao.telefone)}</div>
-                        </TableCell>
+
                         <TableCell className="text-xs">
                           <div>
-                            {[session.utm_source, session.utm_medium, session.utm_campaign]
+                            {[visitor.utm_source, visitor.utm_medium, visitor.utm_campaign]
                               .filter(Boolean)
                               .join(' / ') || '-'}
                           </div>
-                          {session.landing_page && (
+                          {visitor.landing_page && (
                             <a
-                              href={session.landing_page}
+                              href={visitor.landing_page}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:underline break-all"
                               title={session.landing_page}
                             >
                               {shortenUrl(session.landing_page)}
+
                             </a>
                           )}
-                          {!session.landing_page && session.referrer && (
+                          {!visitor.landing_page && visitor.referrer && (
                             <a
-                              href={session.referrer}
+                              href={visitor.referrer}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:underline break-all"
                               title={session.referrer}
                             >
                               {shortenUrl(session.referrer)}
+
                             </a>
                           )}
+                        </TableCell>
+                        <TableCell className="font-medium">
+                          {simulacao.nome_completo}
+                        </TableCell>
+                        <TableCell className="text-sm">
+                          <div>{formatEmail(simulacao.email)}</div>
+                          <div className="text-gray-500">{formatPhone(simulacao.telefone)}</div>
                         </TableCell>
                         <TableCell>{simulacao.cidade}</TableCell>
                         <TableCell className="text-sm">
@@ -755,7 +759,7 @@ const AdminDashboard: React.FC = () => {
                           <Badge variant="outline">{simulacao.tipo_amortizacao}</Badge>
                         </TableCell>
                         <TableCell>{simulacao.parcelas}x</TableCell>
-                        <TableCell>{session.total_simulacoes}</TableCell>
+                        <TableCell>{visitor.total_simulacoes}</TableCell>
                         <TableCell>
                           <Select
                             value={simulacao.status || 'novo'}
@@ -784,7 +788,7 @@ const AdminDashboard: React.FC = () => {
                 </Table>
               </div>
 
-              {filteredSessions.length === 0 && (
+              {filteredVisitors.length === 0 && (
                 <div className="text-center py-8 text-gray-500">
                   Nenhuma simulação encontrada.
                 </div>
