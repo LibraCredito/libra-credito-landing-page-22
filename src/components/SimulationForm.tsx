@@ -61,7 +61,7 @@ import { formatBRL, norm } from '@/utils/formatters';
 import { toast } from '@/components/ui/use-toast';
 
 const SimulationForm: React.FC = () => {
-  const { sessionId, trackSimulation } = useUserJourney();
+  const { sessionId, visitorId, trackSimulation } = useUserJourney();
   const isMobile = useIsMobile();
   const [emprestimo, setEmprestimo] = useState('');
   const [garantia, setGarantia] = useState('');
@@ -153,6 +153,7 @@ const SimulationForm: React.FC = () => {
       // Preparar dados para o serviço (sem dados pessoais ainda)
       const simulationInput = {
         sessionId,
+        visitorId,
         nomeCompleto: 'Lead Anônimo', // Temporário até preenchimento do contato
         email: 'nao-informado@temp.com',
         telefone: '(00) 00000-0000',
@@ -270,6 +271,7 @@ const SimulationForm: React.FC = () => {
       try {
         const simulationInput = {
           sessionId,
+          visitorId,
           nomeCompleto: 'Lead Anônimo',
           email: 'nao-informado@temp.com',
           telefone: '(00) 00000-0000',
@@ -366,6 +368,7 @@ const SimulationForm: React.FC = () => {
       try {
         const simulationInput = {
           sessionId,
+          visitorId,
           nomeCompleto: 'Lead Anônimo',
           email: 'nao-informado@temp.com',
           telefone: '(00) 00000-0000',

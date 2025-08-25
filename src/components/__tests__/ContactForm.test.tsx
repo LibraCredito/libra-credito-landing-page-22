@@ -11,6 +11,7 @@ const mockGetJourneyData = vi.fn();
 vi.mock('@/hooks/useUserJourney', () => ({
   useUserJourney: () => ({
     sessionId: 'session123',
+    visitorId: 'visitor123',
     getJourneyData: mockGetJourneyData
   })
 }));
