@@ -20,7 +20,8 @@ import { supabaseApi, SimulacaoData, supabase } from '@/lib/supabase';
 // Reutilizar interfaces do serviço original
 export interface SimulationInput {
   sessionId: string;
-  visitorId: string;
+  visitorId?: string;
+
   nomeCompleto: string;
   email: string;
   telefone: string;
@@ -51,7 +52,8 @@ export interface SimulationResult {
 export interface ContactFormInput {
   simulationId: string;
   sessionId: string;
-  visitorId: string;
+  visitorId?: string;
+
   nomeCompleto: string;
   email: string;
   telefone: string;
@@ -190,7 +192,8 @@ export class LocalSimulationService {
         if (hasRealContactData) {
           const supabaseData = {
             session_id: input.sessionId,
-            visitor_id: input.visitorId,
+            visitor_id: input.visitorId || null,
+
             nome_completo: input.nomeCompleto,
             email: input.email,
             telefone: input.telefone,
@@ -208,6 +211,7 @@ export class LocalSimulationService {
 
           console.log('💾 Tentando salvar simulação no Supabase:', {
             session_id: supabaseData.session_id,
+            visitor_id: supabaseData.visitor_id,
             cidade: supabaseData.cidade,
             valor_emprestimo: supabaseData.valor_emprestimo,
             original_local_id: simulationId
@@ -310,7 +314,7 @@ export class LocalSimulationService {
               console.log('📋 Tentando buscar todas as simulações para debug...');
               const { data: allData } = await supabase
                 .from('simulacoes')
-                .select('id, session_id, created_at')
+                .select('id, session_id, visitor_id, created_at')
                 .eq('session_id', input.sessionId)
                 .order('created_at', { ascending: false });
               console.log('📋 Simulações encontradas:', allData);
@@ -449,7 +453,7 @@ export class LocalSimulationService {
             // Para IDs locais, buscar pela session_id mais recente
             const { data: searchResults, error: selectError } = await supabase
               .from('simulacoes')
-              .select('id, nome_completo, email, telefone, imovel_proprio, status, session_id, created_at')
+              .select('id, nome_completo, email, telefone, imovel_proprio, status, session_id, visitor_id, created_at')
               .eq('session_id', input.sessionId)
               .order('created_at', { ascending: false })
               .limit(1);
@@ -477,7 +481,8 @@ export class LocalSimulationService {
               // Criar registro completo no Supabase
               const createData = {
                 session_id: input.sessionId,
-                visitor_id: input.visitorId,
+                visitor_id: input.visitorId || null,
+
                 nome_completo: updateData.nome_completo,
                 email: updateData.email,
                 telefone: updateData.telefone,
@@ -526,7 +531,7 @@ export class LocalSimulationService {
             // Para IDs do Supabase, buscar e atualizar normalmente
             const { data: searchData, error: selectError } = await supabase
               .from('simulacoes')
-              .select('id, nome_completo, email, telefone, imovel_proprio, status')
+              .select('id, nome_completo, email, telefone, imovel_proprio, status, visitor_id')
               .eq('id', input.simulationId)
               .single();
               
