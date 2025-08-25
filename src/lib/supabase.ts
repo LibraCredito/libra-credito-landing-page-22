@@ -82,6 +82,7 @@ export interface ParceiroData {
 export interface UserJourneyData {
   id?: string;
   session_id: string;
+  visitor_id?: string;
   utm_source?: string;
   utm_medium?: string;
   utm_campaign?: string;
