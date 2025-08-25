@@ -7,13 +7,7 @@ export const norm = (s: string) =>
 export const formatBRL = (value: string) => {
   const num = value.replace(/\D/g, '');
   if (!num) return '';
-
-  return Number(num).toLocaleString('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    minimumFractionDigits: 2,
-  });
-
+  return `R$ ${Number(num).toLocaleString('pt-BR')}`;
 };
 
 // Função para formatar valores com formatação brasileira em tempo real

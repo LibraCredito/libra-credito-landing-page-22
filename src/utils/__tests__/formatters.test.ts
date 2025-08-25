@@ -6,8 +6,6 @@ import {
   formatCurrency,
 } from '../formatters';
 
-const NBSP = '\u00A0';
-
 
 describe('norm', () => {
   it('handles empty string', () => {
@@ -35,17 +33,17 @@ describe('formatBRL', () => {
   });
 
   it('formats numbers with separators correctly', () => {
-    expect(formatBRL('1234567')).toBe(`R$${NBSP}1.234.567,00`);
-    expect(formatBRL('1.234.567')).toBe(`R$${NBSP}1.234.567,00`);
+    expect(formatBRL('1234567')).toBe('R$ 1.234.567');
+    expect(formatBRL('1.234.567')).toBe('R$ 1.234.567');
   });
 
   it('strips non numeric characters before formatting', () => {
-    expect(formatBRL('R$ 1.234,56')).toBe(`R$${NBSP}123.456,00`);
-    expect(formatBRL('abc123456')).toBe(`R$${NBSP}123.456,00`);
+    expect(formatBRL('R$ 1.234,56')).toBe('R$ 123.456');
+    expect(formatBRL('abc123456')).toBe('R$ 123.456');
   });
 
   it('handles values with surrounding spaces', () => {
-    expect(formatBRL(' 1234567 ')).toBe(`R$${NBSP}1.234.567,00`);
+    expect(formatBRL(' 1234567 ')).toBe('R$ 1.234.567');
   });
 });
 
