@@ -672,9 +672,9 @@ const AdminDashboard: React.FC = () => {
                   <TableHeader>
                     <TableRow>
                       <TableHead>Data</TableHead>
+                      <TableHead>Origem</TableHead>
                       <TableHead>Nome</TableHead>
                       <TableHead>Contato</TableHead>
-                      <TableHead>Origem</TableHead>
                       <TableHead>Cidade</TableHead>
                       <TableHead>Empréstimo</TableHead>
                       <TableHead>Sistema</TableHead>
@@ -695,13 +695,6 @@ const AdminDashboard: React.FC = () => {
                           <span className="text-gray-500 text-xs">
                             {simulacao.created_at ? new Date(simulacao.created_at).toLocaleTimeString('pt-BR') : ''}
                           </span>
-                        </TableCell>
-                        <TableCell className="font-medium">
-                          {simulacao.nome_completo}
-                        </TableCell>
-                        <TableCell className="text-sm">
-                          <div>{formatEmail(simulacao.email)}</div>
-                          <div className="text-gray-500">{formatPhone(simulacao.telefone)}</div>
                         </TableCell>
                         <TableCell className="text-xs">
                           <div>
@@ -729,6 +722,13 @@ const AdminDashboard: React.FC = () => {
                               {session.referrer}
                             </a>
                           )}
+                        </TableCell>
+                        <TableCell className="font-medium">
+                          {simulacao.nome_completo}
+                        </TableCell>
+                        <TableCell className="text-sm">
+                          <div>{formatEmail(simulacao.email)}</div>
+                          <div className="text-gray-500">{formatPhone(simulacao.telefone)}</div>
                         </TableCell>
                         <TableCell>{simulacao.cidade}</TableCell>
                         <TableCell className="text-sm">
