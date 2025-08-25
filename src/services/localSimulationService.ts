@@ -69,7 +69,7 @@ export interface ContactFormInput {
 }
 
 export interface SessionGroupWithJourney {
-  session_id: string;
+  visitor_id: string;
   simulacoes: SimulacaoData[];
   total_simulacoes: number;
   utm_source?: string | null;
@@ -670,17 +670,18 @@ export class LocalSimulationService {
 
       const grouped = new Map<string, SimulacaoData[]>();
       for (const sim of simulacoes) {
-        if (!sim.session_id) continue;
-        const arr = grouped.get(sim.session_id) || [];
+        const key = sim.visitor_id || sim.session_id;
+        if (!key) continue;
+        const arr = grouped.get(key) || [];
         arr.push(sim);
-        grouped.set(sim.session_id, arr);
+        grouped.set(key, arr);
       }
 
-      const sessionIds = Array.from(grouped.keys());
+      const visitorIds = Array.from(grouped.keys());
       let journeys = [] as any[];
-      if (sessionIds.length > 0) {
+      if (visitorIds.length > 0) {
         try {
-          journeys = await supabaseApi.getUserJourneysBySessionIds(sessionIds);
+          journeys = await supabaseApi.getUserJourneysByVisitorIds(visitorIds);
         } catch (journeyError) {
           console.error('Erro ao buscar jornadas:', journeyError);
         }
@@ -688,15 +689,15 @@ export class LocalSimulationService {
 
       const journeyMap = new Map<string, any>();
       for (const j of journeys) {
-        if (j?.session_id) journeyMap.set(j.session_id, j);
+        if (j?.visitor_id) journeyMap.set(j.visitor_id, j);
       }
 
       const result: SessionGroupWithJourney[] = [];
-      for (const [sessionId, sims] of grouped.entries()) {
+      for (const [visitorId, sims] of grouped.entries()) {
         sims.sort((a, b) => new Date(b.created_at || '').getTime() - new Date(a.created_at || '').getTime());
-        const journey = journeyMap.get(sessionId);
+        const journey = journeyMap.get(visitorId);
         result.push({
-          session_id: sessionId,
+          visitor_id: visitorId,
           simulacoes: sims,
           total_simulacoes: sims.length,
           utm_source: journey?.utm_source ?? null,

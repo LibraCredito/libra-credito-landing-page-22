@@ -335,6 +335,16 @@ export const supabaseApi = {
     return data || [];
   },
 
+  async getUserJourneysByVisitorIds(visitorIds: string[]) {
+    const { data, error } = await supabase
+      .from('user_journey')
+      .select('*')
+      .in('visitor_id', visitorIds);
+
+    if (error) throw error;
+    return data || [];
+  },
+
   // Analytics
   async getSimulacaoStats() {
     const { data, error } = await supabase
