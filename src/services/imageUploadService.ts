@@ -3,7 +3,7 @@
  * Suporta tanto armazenamento local quanto Supabase Storage
  */
 
-import { supabaseApi } from '@/lib/supabase';
+import { supabaseApi, supabase } from '@/lib/supabase';
 
 export interface UploadResult {
   url: string;
@@ -37,6 +37,9 @@ export class ImageUploadService {
    * Upload usando Supabase Storage
    */
   private static async uploadToSupabase(file: File): Promise<UploadResult> {
+    if (!supabase) {
+      throw new Error('SERVICO_INDISPONIVEL: Supabase não configurado');
+    }
     try {
       const url = await supabaseApi.uploadBlogImage(file);
       console.log('Upload Supabase realizado com sucesso:', url);
@@ -155,6 +158,9 @@ export class ImageUploadService {
     try {
       // Se for URL do Supabase, tentar deletar de lá
       if (imageUrl.includes('supabase')) {
+        if (!supabase) {
+          throw new Error('SERVICO_INDISPONIVEL: Supabase não configurado');
+        }
         await supabaseApi.deleteBlogImage(imageUrl);
         return true;
       }

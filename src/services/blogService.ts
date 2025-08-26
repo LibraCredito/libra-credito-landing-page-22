@@ -5,7 +5,9 @@
  * @description Gerencia CRUD de posts do blog, categorias e configurações
  */
 
-import { supabaseApi, type BlogPostData } from '@/lib/supabase';
+import { supabaseApi, type BlogPostData, supabase } from '@/lib/supabase';
+
+const SUPABASE_ERROR = 'SERVICO_INDISPONIVEL: Supabase não configurado';
 
 export interface BlogPost {
   id?: string;
@@ -529,22 +531,40 @@ export class BlogService {
    * Obter todos os posts (Supabase como primary, localStorage como cache)
    */
   static async getAllPosts(): Promise<BlogPost[]> {
+    if (!supabase) {
+      console.warn('Supabase não configurado. Usando cache local.');
+      try {
+        const stored = localStorage.getItem(this.STORAGE_KEY);
+        if (stored) {
+          const posts = JSON.parse(stored);
+          console.log(`📱 Posts encontrados no localStorage: ${posts.length}`);
+          return posts;
+        }
+        console.log('🆕 Primeira execução - inicializando com posts padrão');
+        this.saveToLocalStorageWithCleanup(EXISTING_POSTS);
+        return EXISTING_POSTS;
+      } catch (error) {
+        console.error('❌ Erro ao carregar posts do localStorage:', error);
+        return EXISTING_POSTS;
+      }
+    }
+
     try {
       console.log('🔍 Buscando posts do Supabase...');
-      
+
       // Tentar buscar do Supabase primeiro (SEMPRE)
       const supabasePosts = await supabaseApi.getAllBlogPosts();
       console.log(`📊 Posts encontrados no Supabase: ${supabasePosts?.length || 0}`);
-      
+
       if (supabasePosts && supabasePosts.length >= 0) {
         // Converter formato Supabase para BlogPost
         const convertedPosts = supabasePosts.map(this.convertSupabaseToBlogPost);
-        
+
         // Se não há posts no Supabase, mas há posts locais, sincronizar
         if (convertedPosts.length === 0) {
           console.log('📤 Nenhum post no Supabase, verificando localStorage para sync...');
           await this.syncLocalToSupabase();
-          
+
           // Tentar buscar novamente após sync
           const reloadedPosts = await supabaseApi.getAllBlogPosts();
           if (reloadedPosts && reloadedPosts.length > 0) {
@@ -553,7 +573,7 @@ export class BlogService {
             return reloadedConverted;
           }
         }
-        
+
         // Atualizar cache local
         this.saveToLocalStorageWithCleanup(convertedPosts);
         console.log('✅ Posts carregados do Supabase e cache atualizado');
@@ -561,7 +581,7 @@ export class BlogService {
       }
     } catch (error) {
       console.error('❌ Erro ao buscar posts do Supabase:', error);
-      
+
       // Tentar sincronizar dados locais
       try {
         console.log('🔄 Tentando sincronização de emergência...');
@@ -583,14 +603,14 @@ export class BlogService {
         // Primeira vez acessando - inicializar com posts existentes
         console.log('🆕 Primeira execução - inicializando com posts padrão');
         this.saveToLocalStorageWithCleanup(EXISTING_POSTS);
-        
+
         // Tentar criar posts padrão no Supabase
         try {
           await this.initializeDefaultPosts();
         } catch (initError) {
           console.error('❌ Erro ao inicializar posts padrão no Supabase:', initError);
         }
-        
+
         return EXISTING_POSTS;
       }
     } catch (error) {
@@ -619,6 +639,10 @@ export class BlogService {
    * Sincronizar posts do localStorage para Supabase
    */
   static async syncLocalToSupabase(): Promise<void> {
+    if (!supabase) {
+      console.warn('Supabase não configurado. Sincronização ignorada.');
+      return;
+    }
     try {
       const stored = localStorage.getItem(this.STORAGE_KEY);
       if (!stored) return;
@@ -655,6 +679,10 @@ export class BlogService {
    * Inicializar posts padrão no Supabase
    */
   static async initializeDefaultPosts(): Promise<void> {
+    if (!supabase) {
+      console.warn('Supabase não configurado. Inicialização ignorada.');
+      return;
+    }
     try {
       console.log('🚀 Inicializando posts padrão no Supabase...');
       
@@ -685,6 +713,25 @@ export class BlogService {
     }
 
     console.log('📝 Criando novo post:', postData.title);
+
+    if (!supabase) {
+      console.warn('Supabase não configurado. Salvando localmente.');
+      const posts = await this.getAllPosts();
+      const existingSlug = posts.find(p => p.slug === postData.slug);
+      if (existingSlug) {
+        throw new Error('Slug já existe. Escolha outro.');
+      }
+      const newPost: BlogPost = {
+        ...postData,
+        id: `local-${Date.now()}`,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        readTime: postData.readTime || this.calculateReadTime(postData.content)
+      };
+      posts.unshift(newPost);
+      this.saveToLocalStorageWithCleanup(posts);
+      return newPost;
+    }
 
     // SEMPRE tentar criar no Supabase primeiro
     try {
@@ -754,6 +801,9 @@ export class BlogService {
    * Atualizar post existente (Supabase como primary, localStorage como fallback)
    */
   static async updatePost(id: string, postData: Partial<BlogPost>): Promise<BlogPost> {
+    if (!supabase) {
+      throw new Error(SUPABASE_ERROR);
+    }
     // Tentar atualizar no Supabase primeiro
     try {
       const supabaseData = this.convertBlogPostToSupabase(postData as BlogPost);
@@ -808,6 +858,9 @@ export class BlogService {
    * Deletar post
    */
   static async deletePost(id: string): Promise<boolean> {
+    if (!supabase) {
+      throw new Error(SUPABASE_ERROR);
+    }
     try {
       // Primeiro, tentar deletar do Supabase
       await supabaseApi.deleteBlogPost(id);

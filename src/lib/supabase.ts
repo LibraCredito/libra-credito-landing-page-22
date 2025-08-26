@@ -18,23 +18,46 @@
  * - user_journey: Tracking de jornada do usuário
  */
 
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
-// Configurações do Supabase - obtidas de variáveis de ambiente
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Cliente Supabase (pode ficar nulo em modo degradado)
+export let supabase: SupabaseClient<Database> | null = null;
 
-// Verificação obrigatória das variáveis de ambiente
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error(
-    '⚠️ Supabase não configurado: defina VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY'
+try {
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error(
+      'Supabase não configurado: defina VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY'
+    );
+  }
+
+  // Log para debug (apenas em development)
+  if (typeof window !== 'undefined' && import.meta.env.DEV) {
+    console.log('Supabase URL:', supabaseUrl);
+    console.log('Supabase Key:', supabaseAnonKey.substring(0, 20) + '...');
+  }
+
+  // Criar cliente Supabase
+  supabase = createClient<Database>(
+    supabaseUrl,
+    supabaseAnonKey,
+    {
+      auth: {
+        persistSession: false // Não precisamos de autenticação de usuário
+      },
+      global: {
+        headers: {
+          'Accept': 'application/json'
+        }
+      }
+    }
   );
-}
-
-// Log para debug (apenas em development)
-if (typeof window !== 'undefined' && import.meta.env.DEV) {
-  console.log('Supabase URL:', supabaseUrl);
-  console.log('Supabase Key:', supabaseAnonKey.substring(0, 20) + '...');
+} catch (error) {
+  if (import.meta.env.DEV) {
+    console.warn('⚠️ Supabase desabilitado:', (error as Error).message);
+  }
 }
 
 // Tipos TypeScript para as tabelas
@@ -159,28 +182,12 @@ export interface Database {
   };
 }
 
-// Cliente Supabase tipado
-export const supabase = createClient<Database>(
-  supabaseUrl,
-  supabaseAnonKey,
-  {
-    auth: {
-      persistSession: false // Não precisamos de autenticação de usuário
-    },
-    global: {
-      headers: {
-        'Accept': 'application/json'
-      }
-    }
-  }
-);
-
 // Funções auxiliares para operações no banco
-export const supabaseApi = {
+const createSupabaseApi = () => ({
   // Teste de conexão
   async testConnection() {
     try {
-      const { error } = await supabase
+      const { error } = await supabase!
         .from('parceiros')
         .select('*')
         .limit(1);
@@ -208,7 +215,7 @@ export const supabaseApi = {
 
   // Simulações
   async createSimulacao(data: Database['public']['Tables']['simulacoes']['Insert']) {
-    const { data: result, error } = await supabase
+    const { data: result, error } = await supabase!
       .from('simulacoes')
       .insert(data)
       .select()
@@ -219,7 +226,7 @@ export const supabaseApi = {
   },
 
   async getSimulacoes(limit = 1000) {
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('simulacoes')
       .select('*')
       .order('created_at', { ascending: false })
@@ -230,7 +237,7 @@ export const supabaseApi = {
   },
 
   async updateSimulacaoStatus(id: string, status: string) {
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('simulacoes')
       .update({ status })
       .eq('id', id)
@@ -243,7 +250,7 @@ export const supabaseApi = {
 
   // Parceiros
   async createParceiro(data: Database['public']['Tables']['parceiros']['Insert']) {
-    const { data: result, error } = await supabase
+    const { data: result, error } = await supabase!
       .from('parceiros')
       .insert(data)
       .select()
@@ -254,7 +261,7 @@ export const supabaseApi = {
   },
 
   async getParceiros(limit = 50) {
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('parceiros')
       .select('*')
       .order('created_at', { ascending: false })
@@ -265,7 +272,7 @@ export const supabaseApi = {
   },
 
   async updateParceiroStatus(id: string, status: string) {
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('parceiros')
       .update({ status })
       .eq('id', id)
@@ -279,7 +286,7 @@ export const supabaseApi = {
   // User Journey
   async createUserJourney(data: Database['public']['Tables']['user_journey']['Insert']) {
     // Usar insert simples primeiro, depois upsert se necessário
-    const { data: result, error } = await supabase
+    const { data: result, error } = await supabase!
       .from('user_journey')
       .insert(data)
       .select()
@@ -288,7 +295,7 @@ export const supabaseApi = {
     if (error) {
       // Se der erro de conflito, tentar upsert
       if (error.code === '23505') { // código de unique constraint violation
-        const { data: upsertResult, error: upsertError } = await supabase
+        const { data: upsertResult, error: upsertError } = await supabase!
           .from('user_journey')
           .upsert(data, { onConflict: 'session_id' })
           .select()
@@ -303,7 +310,7 @@ export const supabaseApi = {
   },
 
   async updateUserJourney(sessionId: string, data: Database['public']['Tables']['user_journey']['Update']) {
-    const { data: result, error } = await supabase
+    const { data: result, error } = await supabase!
       .from('user_journey')
       .update(data)
       .eq('session_id', sessionId)
@@ -315,7 +322,7 @@ export const supabaseApi = {
   },
 
   async getUserJourney(sessionId: string) {
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('user_journey')
       .select('*')
       .eq('session_id', sessionId)
@@ -326,7 +333,7 @@ export const supabaseApi = {
   },
 
   async getUserJourneysBySessionIds(sessionIds: string[]) {
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('user_journey')
       .select('*')
       .in('session_id', sessionIds);
@@ -336,7 +343,7 @@ export const supabaseApi = {
   },
 
   async getUserJourneysByVisitorIds(visitorIds: string[]) {
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('user_journey')
       .select('*')
       .in('visitor_id', visitorIds);
@@ -347,7 +354,7 @@ export const supabaseApi = {
 
   // Analytics
   async getSimulacaoStats() {
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .rpc('get_simulacao_stats'); // Função SQL customizada
     
     if (error) throw error;
@@ -356,7 +363,7 @@ export const supabaseApi = {
 
   // Blog Posts
   async getAllBlogPosts() {
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('blog_posts')
       .select('*')
       .order('created_at', { ascending: false });
@@ -366,7 +373,7 @@ export const supabaseApi = {
   },
 
   async getPublishedBlogPosts() {
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('blog_posts')
       .select('*')
       .eq('published', true)
@@ -377,7 +384,7 @@ export const supabaseApi = {
   },
 
   async getBlogPostById(id: string) {
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('blog_posts')
       .select('*')
       .eq('id', id)
@@ -388,7 +395,7 @@ export const supabaseApi = {
   },
 
   async getBlogPostBySlug(slug: string) {
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('blog_posts')
       .select('*')
       .eq('slug', slug)
@@ -399,7 +406,7 @@ export const supabaseApi = {
   },
 
   async createBlogPost(data: Database['public']['Tables']['blog_posts']['Insert']) {
-    const { data: result, error } = await supabase
+    const { data: result, error } = await supabase!
       .from('blog_posts')
       .insert(data)
       .select()
@@ -410,7 +417,7 @@ export const supabaseApi = {
   },
 
   async updateBlogPost(id: string, data: Database['public']['Tables']['blog_posts']['Update']) {
-    const { data: result, error } = await supabase
+    const { data: result, error } = await supabase!
       .from('blog_posts')
       .update({ ...data, updated_at: new Date().toISOString() })
       .eq('id', id)
@@ -422,7 +429,7 @@ export const supabaseApi = {
   },
 
   async deleteBlogPost(id: string) {
-    const { error } = await supabase
+    const { error } = await supabase!
       .from('blog_posts')
       .delete()
       .eq('id', id);
@@ -432,7 +439,7 @@ export const supabaseApi = {
   },
 
   async getBlogPostsByCategory(category: string) {
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('blog_posts')
       .select('*')
       .eq('category', category)
@@ -444,7 +451,7 @@ export const supabaseApi = {
   },
 
   async getFeaturedBlogPosts() {
-    const { data, error } = await supabase
+    const { data, error } = await supabase!
       .from('blog_posts')
       .select('*')
       .eq('featured_post', true)
@@ -464,7 +471,7 @@ export const supabaseApi = {
     const finalFileName = fileName || `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
     const filePath = `${new Date().getFullYear()}/${String(new Date().getMonth() + 1).padStart(2, '0')}/${finalFileName}`;
 
-    const { error } = await supabase.storage
+    const { error } = await supabase!.storage
       .from('blog-images')
       .upload(filePath, file, {
         cacheControl: '3600',
@@ -475,7 +482,7 @@ export const supabaseApi = {
     if (error) throw error;
 
     // Retornar URL pública da imagem
-    const { data: publicURL } = supabase.storage
+    const { data: publicURL } = supabase!.storage
       .from('blog-images')
       .getPublicUrl(filePath);
 
@@ -486,7 +493,7 @@ export const supabaseApi = {
   async ensureBlogImagesBucketExists(): Promise<void> {
     try {
       // Apenas verifica acesso; criação deve ser feita manualmente via dashboard
-      const { error } = await supabase.storage.from('blog-images').list('', { limit: 1 });
+      const { error } = await supabase!.storage.from('blog-images').list('', { limit: 1 });
 
       if (error) {
         console.warn(
@@ -506,13 +513,23 @@ export const supabaseApi = {
 
     const filePath = urlParts.slice(bucketIndex + 1).join('/');
 
-    const { error } = await supabase.storage
+    const { error } = await supabase!.storage
       .from('blog-images')
       .remove([filePath]);
     
     if (error) throw error;
     return true;
   }
+});
+
+const friendlyError = async () => {
+  return Promise.reject(
+    new Error('Supabase não configurado. Defina VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY.')
+  );
 };
+
+export const supabaseApi = supabase ? createSupabaseApi() : new Proxy({}, {
+  get: () => friendlyError
+}) as ReturnType<typeof createSupabaseApi>;
 
 export default supabase;
