@@ -740,9 +740,9 @@ const AdminDashboard: React.FC = () => {
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:underline break-all"
-                              title={session.landing_page}
+                              title={visitor.landing_page}
                             >
-                              {shortenUrl(session.landing_page)}
+                              {shortenUrl(visitor.landing_page)}
 
                             </a>
                           )}
@@ -752,9 +752,9 @@ const AdminDashboard: React.FC = () => {
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:underline break-all"
-                              title={session.referrer}
+                              title={visitor.referrer}
                             >
-                              {shortenUrl(session.referrer)}
+                              {shortenUrl(visitor.referrer)}
 
                             </a>
                           )}
