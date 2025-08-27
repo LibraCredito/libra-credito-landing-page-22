@@ -11,10 +11,10 @@
  * - Export simples
  * - Atualização de status
  * 
- * @security
- * - Acesso via URL simples (sem autenticação por ora)
- * - Dados sensíveis mascarados
- */
+* @security
+* - Acesso via URL simples (sem autenticação por ora)
+* - Admin vê as informações completas
+*/
 
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -33,6 +33,7 @@ import ImageUploader from '@/components/ImageUploader';
 import StorageStats from '@/components/StorageStats';
 import SupabaseDiagnostics from '@/components/SupabaseDiagnostics';
 import { ParceiroData } from '@/lib/supabase';
+import { formatPhone } from '@/utils/validations';
 import Eye from 'lucide-react/dist/esm/icons/eye';
 import Download from 'lucide-react/dist/esm/icons/download';
 import RefreshCw from 'lucide-react/dist/esm/icons/refresh-cw';
@@ -474,21 +475,6 @@ const AdminDashboard: React.FC = () => {
     a.click();
   };
 
-  const formatPhone = (phone: string) => {
-    if (phone.length > 6) {
-      return phone.substring(0, phone.length - 4) + '****';
-    }
-    return phone;
-  };
-
-  const formatEmail = (email: string) => {
-    const [user, domain] = email.split('@');
-    if (user.length > 3) {
-      return user.substring(0, 3) + '***@' + domain;
-    }
-    return email;
-  };
-
   const shortenUrl = (url: string) => {
     try {
       const { hostname, pathname } = new URL(url);
@@ -764,7 +750,7 @@ const AdminDashboard: React.FC = () => {
                           {simulacao.nome_completo}
                         </TableCell>
                         <TableCell className="text-sm">
-                          <div>{formatEmail(simulacao.email)}</div>
+                          <div>{simulacao.email}</div>
                           <div className="text-gray-500">{formatPhone(simulacao.telefone)}</div>
                         </TableCell>
                         <TableCell>{simulacao.cidade}</TableCell>
