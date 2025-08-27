@@ -340,7 +340,8 @@ const AdminDashboard: React.FC = () => {
         return (
           !!sim.nome_completo?.trim() &&
           !!sim.email?.trim() &&
-          !!sim.telefone?.trim()
+          !!sim.telefone?.trim() &&
+          sim.status !== 'novo'
         );
       });
       setVisitorGroups(completed);
