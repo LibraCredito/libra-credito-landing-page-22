@@ -59,6 +59,7 @@ export interface ContactFormInput {
   nomeCompleto: string;
   email: string;
   telefone: string;
+  cidade?: string;
   imovelProprio: 'proprio' | 'terceiro';
   observacoes?: string;
 }

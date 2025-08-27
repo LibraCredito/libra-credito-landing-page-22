@@ -40,7 +40,8 @@ describe('ContactForm', () => {
     amortizacao: 'PRICE',
     parcelas: 12,
     valorEmprestimo: 50000,
-    valorImovel: 100000
+    valorImovel: 100000,
+    cidade: 'São Paulo'
   } as any;
 
   it('forwards journey UTM params to LocalSimulationService.processContact', async () => {
@@ -73,7 +74,8 @@ describe('ContactForm', () => {
           utm_term: 'term',
           utm_content: 'content',
           landing_page: 'https://example.com',
-          referrer: 'https://referrer.com'
+          referrer: 'https://referrer.com',
+          cidade: 'São Paulo'
         })
       );
     });
@@ -101,7 +103,8 @@ describe('ContactForm', () => {
           utm_term: null,
           utm_content: null,
           landing_page: null,
-          referrer: null
+          referrer: null,
+          cidade: 'São Paulo'
         })
       );
     });

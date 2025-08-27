@@ -27,6 +27,9 @@ interface ContactFormProps {
     parcelas: number;
     primeiraParcela?: number;
     ultimaParcela?: number;
+    valorEmprestimo: number;
+    valorImovel: number;
+    cidade: string;
   };
   className?: string;
   inputClassName?: string;
@@ -152,6 +155,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
         nomeCompleto: nome,
         email,
         telefone,
+        cidade: simulationResult.cidade,
         imovelProprio,
         observacoes: `Simulação: ${simulationResult.amortizacao} - ${simulationResult.parcelas}x - R$ ${simulationResult.valor.toLocaleString('pt-BR')}`,
         // Dados adicionais para API Ploomes
