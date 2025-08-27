@@ -491,8 +491,12 @@ export class LocalSimulationService {
               console.log('➕ Simulação não existe no Supabase, criando nova...');
               
               // Buscar dados da simulação do localStorage
-              const localSimulations = JSON.parse(localStorage.getItem('simulationData') || '[]');
-              const localSimulation = localSimulations.find((s: any) => s.id === input.simulationId);
+              const localSimulations = JSON.parse(
+                localStorage.getItem('libra_local_simulations') || '[]'
+              );
+              const localSimulation = localSimulations.find(
+                (s: any) => s.id === input.simulationId
+              );
               
               if (!localSimulation) {
                 throw new Error('Dados da simulação não encontrados no localStorage');
