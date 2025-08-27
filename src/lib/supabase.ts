@@ -222,6 +222,13 @@ export const supabaseApi = {
     const { data, error } = await supabase
       .from('simulacoes')
       .select('*')
+      .not('nome_completo', 'is', null)
+      .neq('nome_completo', '')
+      .not('email', 'is', null)
+      .neq('email', '')
+      .not('telefone', 'is', null)
+      .neq('telefone', '')
+      .neq('status', 'novo')
       .order('created_at', { ascending: false })
       .limit(limit);
     
