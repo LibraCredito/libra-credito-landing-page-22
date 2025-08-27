@@ -111,6 +111,7 @@ export class SimulationService {
         tipo_amortizacao: input.tipoAmortizacao,
         parcela_inicial: processedResult.primeiraParcela,
         parcela_final: processedResult.ultimaParcela || processedResult.valor,
+        imovel_proprio: 'proprio',
         ip_address: input.ipAddress,
         user_agent: input.userAgent,
         status: 'novo'
