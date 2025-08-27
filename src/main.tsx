@@ -4,6 +4,7 @@ import App from './App.tsx'
 import './index.css';
 import './styles/overflow-fix.css';
 import { requestIdleCallback as requestIdleCb } from './utils/performance';
+import { LocalSimulationService } from '@/services/localSimulationService';
 
 // Hidratação do HTML pré-renderizado para LCP otimizado
 const renderApp = () => {
@@ -30,3 +31,4 @@ const renderApp = () => {
 };
 
 renderApp();
+LocalSimulationService.resendPendingContacts();

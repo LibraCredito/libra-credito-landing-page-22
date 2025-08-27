@@ -289,15 +289,18 @@ export class LocalSimulationService {
    * Processa contato pós-simulação
    * Integra com API Ploomes e Supabase
    */
-  static async processContact(input: ContactFormInput & {
-    valorDesejadoEmprestimo?: number;
-    valorImovelGarantia?: number;
-    quantidadeParcelas?: number;
-    tipoAmortizacao?: string;
-    valorParcelaCalculada?: number;
-    aceitaPolitica?: boolean;
-    referrer?: string | null;
-  }): Promise<{success: boolean, message: string}> {
+  static async processContact(
+    input: ContactFormInput & {
+      valorDesejadoEmprestimo?: number;
+      valorImovelGarantia?: number;
+      quantidadeParcelas?: number;
+      tipoAmortizacao?: string;
+      valorParcelaCalculada?: number;
+      aceitaPolitica?: boolean;
+      referrer?: string | null;
+    },
+    options: { isRetry?: boolean } = {}
+  ): Promise<{success: boolean, message: string}> {
     try {
       console.log('📧 Processando contato com integração:', input);
       
@@ -620,10 +623,16 @@ export class LocalSimulationService {
         console.warn('⚠️ Continuando apesar do erro no Supabase');
       }
 
-      // Salvar contato localmente como backup
-      this.saveContactLocally(input);
+      // Remover do armazenamento local se existir
+      this.removeContactLocally(input);
 
       console.log('✅ Contato processado com sucesso');
+
+      // Após sucesso, tentar reenviar contatos pendentes (exceto quando já é uma tentativa)
+      if (!options.isRetry) {
+        await this.resendPendingContacts();
+      }
+
       return {
         success: true,
         message: 'Dados enviados com sucesso! Nossa equipe entrará em contato em breve.'
@@ -834,6 +843,52 @@ export class LocalSimulationService {
       console.log('💾 Contato salvo localmente');
     } catch (error) {
       console.warn('⚠️ Erro ao salvar contato localmente:', error);
+    }
+  }
+
+  /**
+   * Remove contato do localStorage após envio bem-sucedido
+   */
+  private static removeContactLocally(input: ContactFormInput): void {
+    try {
+      const existing = localStorage.getItem('libra_local_contacts');
+      if (!existing) return;
+      const contacts = JSON.parse(existing);
+      const filtered = contacts.filter(
+        (c: any) => c.simulationId !== input.simulationId || c.sessionId !== input.sessionId
+      );
+      if (filtered.length === 0) {
+        localStorage.removeItem('libra_local_contacts');
+      } else {
+        localStorage.setItem('libra_local_contacts', JSON.stringify(filtered));
+      }
+      console.log('🗑️ Contato removido do armazenamento local');
+    } catch (error) {
+      console.warn('⚠️ Erro ao remover contato localmente:', error);
+    }
+  }
+
+  /**
+   * Reenvia contatos locais pendentes ao Supabase
+   */
+  static async resendPendingContacts(): Promise<void> {
+    try {
+      const existing = localStorage.getItem('libra_local_contacts');
+      if (!existing) return;
+      const contacts: ContactFormInput[] = JSON.parse(existing);
+      if (contacts.length === 0) return;
+
+      console.log('🔄 Reenviando contatos locais pendentes:', contacts.length);
+
+      for (const contact of contacts) {
+        try {
+          await this.processContact(contact, { isRetry: true });
+        } catch (err) {
+          console.error('❌ Falha ao reenviar contato local:', err);
+        }
+      }
+    } catch (error) {
+      console.warn('⚠️ Erro ao reenviar contatos locais:', error);
     }
   }
 
