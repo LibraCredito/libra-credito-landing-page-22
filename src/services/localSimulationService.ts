@@ -96,6 +96,7 @@ export class LocalSimulationService {
     const results: T[] = [];
     for (let i = 0; i < ids.length; i += chunkSize) {
       const chunk = ids.slice(i, i + chunkSize);
+      let supabaseErrorOccurred = false;
       try {
         results.push(...await fetchFn(chunk));
       } catch (journeyError) {
@@ -433,6 +434,7 @@ export class LocalSimulationService {
       console.log('✅ Sucesso na API Ploomes:', ploomesResult);
 
       // Salvar/Atualizar contato no Supabase com dados completos
+      let supabaseErrorOccurred = false;
       try {
         if (input.simulationId) {
           // Validar e preparar dados para atualização
@@ -612,19 +614,26 @@ export class LocalSimulationService {
           throw new Error('ID da simulação não fornecido para atualização');
         }
       } catch (supabaseError) {
+        supabaseErrorOccurred = true;
         console.error('❌ Erro crítico ao atualizar contato no Supabase:', supabaseError);
         // Re-throw para mostrar erro ao usuário se for crítico
-        if (supabaseError instanceof Error && 
-            (supabaseError.message.includes('não encontrada') || 
+        if (supabaseError instanceof Error &&
+            (supabaseError.message.includes('não encontrada') ||
              supabaseError.message.includes('ID da simulação'))) {
           throw supabaseError;
         }
         // Para outros erros, apenas avisar mas continuar
         console.warn('⚠️ Continuando apesar do erro no Supabase');
+        console.warn('📌 Contato mantido no armazenamento local para novo envio');
+        if (!options.isRetry) {
+          this.saveContactLocally(input);
+        }
       }
 
-      // Remover do armazenamento local se existir
-      this.removeContactLocally(input);
+      // Remover do armazenamento local somente se atualização foi bem-sucedida
+      if (!supabaseErrorOccurred) {
+        this.removeContactLocally(input);
+      }
 
       console.log('✅ Contato processado com sucesso');
 
