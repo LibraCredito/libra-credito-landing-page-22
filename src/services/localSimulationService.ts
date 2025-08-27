@@ -57,6 +57,7 @@ export interface ContactFormInput {
   nomeCompleto: string;
   email: string;
   telefone: string;
+  cidade?: string;
   imovelProprio: 'proprio' | 'terceiro';
   observacoes?: string;
   utm_source?: string | null;
@@ -359,7 +360,7 @@ export class LocalSimulationService {
 
       // Preparar payload para API Ploomes com validação de tipos
       const ploomesPayload = {
-        cidade: simulationData?.cidade || 'Não informado',
+        cidade: input.cidade?.trim() || simulationData?.cidade || 'Não informado',
         valorDesejadoEmprestimo: Number(input.valorDesejadoEmprestimo || simulationData?.valor_emprestimo || 0),
         valorImovelGarantia: Number(input.valorImovelGarantia || simulationData?.valor_imovel || 0),
         quantidadeParcelas: Number(input.quantidadeParcelas || simulationData?.parcelas || 36),
@@ -380,6 +381,9 @@ export class LocalSimulationService {
       };
 
       // Validar campos obrigatórios
+      if (!ploomesPayload.cidade || ploomesPayload.cidade.trim() === '' || ploomesPayload.cidade === 'Não informado') {
+        throw new Error('Cidade é obrigatória');
+      }
       if (!ploomesPayload.nomeCompleto) {
         throw new Error('Nome completo é obrigatório');
       }

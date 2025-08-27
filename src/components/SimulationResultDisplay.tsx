@@ -222,7 +222,12 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
         </div>
         
         <ContactForm
-          simulationResult={resultado}
+          simulationResult={{
+            ...resultado,
+            valorEmprestimo: _valorEmprestimo,
+            valorImovel: _valorImovel,
+            cidade: _cidade
+          }}
           compact={true}
           className="space-y-3"
           inputClassName="bg-white/90 text-gray-800 placeholder-gray-500"
@@ -335,7 +340,12 @@ const SimulationResultDisplay: React.FC<SimulationResultDisplayProps> = ({
       </div>
       
       <ContactForm
-        simulationResult={resultado}
+        simulationResult={{
+          ...resultado,
+          valorEmprestimo: _valorEmprestimo,
+          valorImovel: _valorImovel,
+          cidade: _cidade
+        }}
         compact={true}
         className="space-y-3"
         inputClassName="bg-white/90 text-gray-800 placeholder-gray-500"
