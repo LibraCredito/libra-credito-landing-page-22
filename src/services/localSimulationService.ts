@@ -225,6 +225,7 @@ export class LocalSimulationService {
             tipo_amortizacao: input.tipoAmortizacao,
             parcela_inicial: calculation.parcelaSac.inicial,
             parcela_final: calculation.parcelaSac.final,
+            imovel_proprio: 'proprio',
             user_agent: input.userAgent || '',
             ip_address: input.ipAddress || '',
             status: 'novo' // Status inicial para compatibilidade com AdminDashboard
