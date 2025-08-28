@@ -139,8 +139,8 @@ export const validateForm = (
   const emprestimoValue = norm(emprestimo);
   const garantiaValue = norm(garantia);
   
-  // Empréstimo deve estar entre 75k e 5M
-  const emprestimoForaRange = emprestimoValue < 75000 || emprestimoValue > 5000000;
+  // Empréstimo deve estar entre 100k e 5M
+  const emprestimoForaRange = emprestimoValue < 100000 || emprestimoValue > 5000000;
   
   // Garantia deve ser pelo menos 2x o empréstimo
   const emprestimoExcedeGarantia = emprestimoValue > (garantiaValue / 2);
@@ -150,7 +150,7 @@ export const validateForm = (
   
   // Validações básicas
   const dadosBasicosValidos = 
-    emprestimoValue >= 75000 &&
+    emprestimoValue >= 100000 &&
     emprestimoValue <= 5000000 &&
     garantiaValue > 0 && 
     parcelasValidas && 
