@@ -434,206 +434,206 @@ export class LocalSimulationService {
       const ploomesResult = await ploomesResponse.json();
       console.log('✅ Sucesso na API Ploomes:', ploomesResult);
 
-      // Salvar/Atualizar contato no Supabase com dados completos
-      let supabaseErrorOccurred = false;
-      try {
-        if (input.simulationId) {
-          // Validar e preparar dados para atualização
-          const updateData = {
-            nome_completo: input.nomeCompleto.trim(),
-            email: input.email.trim().toLowerCase(),
-            telefone: input.telefone.replace(/\D/g, ''), // Limpar telefone
-            imovel_proprio: input.imovelProprio as 'proprio' | 'terceiro', // Garantir tipo correto
-            status: 'interessado', // Status após contato para compatibilidade com AdminDashboard
-            visitor_id: input.visitorId
-          };
-          
-          // Validar dados antes da atualização
-          if (!updateData.nome_completo) {
-            throw new Error('Nome completo é obrigatório para atualização');
-          }
-          if (!updateData.email.includes('@')) {
-            throw new Error('Email válido é obrigatório para atualização');
-          }
-          if (!updateData.telefone || updateData.telefone.length < 10) {
-            throw new Error('Telefone válido é obrigatório para atualização');
-          }
-          if (!['proprio', 'terceiro'].includes(updateData.imovel_proprio)) {
-            throw new Error('Tipo de imóvel deve ser "proprio" ou "terceiro"');
-          }
-          
-          console.log('🔄 Atualizando simulação no Supabase:', {
-            simulationId: input.simulationId,
-            updateData,
-            inputData: {
-              nomeCompleto: input.nomeCompleto,
-              email: input.email,
-              telefone: input.telefone,
-              imovelProprio: input.imovelProprio
-            }
-          });
-          
-          // Usar a mesma lógica de busca para atualização/criação
-          const isLocalId = input.simulationId.startsWith('local_');
-          let existingData = null;
-          let updateResult = null;
-          
-          if (isLocalId) {
-            console.log('🏠 Verificando se existe simulação por session_id:', input.sessionId);
-            // Para IDs locais, buscar pela session_id mais recente
-            const { data: searchResults, error: selectError } = await supabase
-              .from('simulacoes')
-              .select('id, nome_completo, email, telefone, imovel_proprio, status, session_id, visitor_id, created_at')
-              .eq('session_id', input.sessionId)
-              .order('created_at', { ascending: false })
-              .limit(1);
-              
-            // Pegar o primeiro resultado se existir
-            const searchData = searchResults && searchResults.length > 0 ? searchResults[0] : null;
-              
-            if (selectError) {
-              console.error('❌ Erro ao buscar simulação por session_id:', selectError);
-              throw new Error(`Erro na busca: ${selectError.message}`);
-            }
-            
-            if (!searchData) {
-              // Não existe no Supabase, criar novo registro
-              console.log('➕ Simulação não existe no Supabase, criando nova...');
-              
-              // Buscar dados da simulação do localStorage
-              const localSimulations = JSON.parse(
-                localStorage.getItem('libra_local_simulations') || '[]'
-              );
-              const localSimulation = localSimulations.find(
-                (s: any) => s.id === input.simulationId
-              );
-              
-              if (!localSimulation) {
-                throw new Error('Dados da simulação não encontrados no localStorage');
-              }
-              
-              // Criar registro completo no Supabase
-              const createData = {
-                session_id: input.sessionId,
-                visitor_id: input.visitorId || null,
+      // Salvar/Atualizar contato no Supabase com dados completos (com retry)
+      const maxSupabaseRetries = 3;
+      let lastSupabaseError: unknown = null;
+      for (let attempt = 1; attempt <= maxSupabaseRetries; attempt++) {
+        try {
+          if (input.simulationId) {
+            // Validar e preparar dados para atualização
+            const updateData = {
+              nome_completo: input.nomeCompleto.trim(),
+              email: input.email.trim().toLowerCase(),
+              telefone: input.telefone.replace(/\D/g, ''), // Limpar telefone
+              imovel_proprio: input.imovelProprio as 'proprio' | 'terceiro', // Garantir tipo correto
+              status: 'interessado', // Status após contato para compatibilidade com AdminDashboard
+              visitor_id: input.visitorId
+            };
 
-                nome_completo: updateData.nome_completo,
-                email: updateData.email,
-                telefone: updateData.telefone,
-                cidade: localSimulation.cidade,
-                valor_emprestimo: localSimulation.valorEmprestimo,
-                valor_imovel: localSimulation.valorImovel,
-                parcelas: localSimulation.parcelas,
-                tipo_amortizacao: localSimulation.amortizacao,
-                parcela_inicial: localSimulation.primeiraParcela || localSimulation.valor,
-                parcela_final: localSimulation.ultimaParcela || localSimulation.valor,
-                imovel_proprio: updateData.imovel_proprio,
-                user_agent: '',
-                ip_address: '',
-                status: updateData.status
-              };
-              
-              console.log('💾 Criando nova simulação no Supabase:', createData);
-              const { data, error } = await supabase
+            // Validar dados antes da atualização
+            if (!updateData.nome_completo) {
+              throw new Error('Nome completo é obrigatório para atualização');
+            }
+            if (!updateData.email.includes('@')) {
+              throw new Error('Email válido é obrigatório para atualização');
+            }
+            if (!updateData.telefone || updateData.telefone.length < 10) {
+              throw new Error('Telefone válido é obrigatório para atualização');
+            }
+            if (!['proprio', 'terceiro'].includes(updateData.imovel_proprio)) {
+              throw new Error('Tipo de imóvel deve ser "proprio" ou "terceiro"');
+            }
+
+            console.log('🔄 Atualizando simulação no Supabase:', {
+              simulationId: input.simulationId,
+              updateData,
+              inputData: {
+                nomeCompleto: input.nomeCompleto,
+                email: input.email,
+                telefone: input.telefone,
+                imovelProprio: input.imovelProprio
+              }
+            });
+
+            // Usar a mesma lógica de busca para atualização/criação
+            const isLocalId = input.simulationId.startsWith('local_');
+            let existingData = null;
+            let updateResult = null;
+
+            if (isLocalId) {
+              console.log('🏠 Verificando se existe simulação por session_id:', input.sessionId);
+              // Para IDs locais, buscar pela session_id mais recente
+              const { data: searchResults, error: selectError } = await supabase
                 .from('simulacoes')
-                .insert(createData)
-                .select();
-                
-              updateResult = { data, error };
-              console.log('✅ Nova simulação criada:', { data, error });
+                .select('id, nome_completo, email, telefone, imovel_proprio, status, session_id, visitor_id, created_at')
+                .eq('session_id', input.sessionId)
+                .order('created_at', { ascending: false })
+                .limit(1);
+
+              // Pegar o primeiro resultado se existir
+              const searchData = searchResults && searchResults.length > 0 ? searchResults[0] : null;
+
+              if (selectError) {
+                console.error('❌ Erro ao buscar simulação por session_id:', selectError);
+                throw new Error(`Erro na busca: ${selectError.message}`);
+              }
+
+              if (!searchData) {
+                // Não existe no Supabase, criar novo registro
+                console.log('➕ Simulação não existe no Supabase, criando nova...');
+
+                // Buscar dados da simulação do localStorage
+                const localSimulations = JSON.parse(
+                  localStorage.getItem('libra_local_simulations') || '[]'
+                );
+                const localSimulation = localSimulations.find(
+                  (s: any) => s.id === input.simulationId
+                );
+
+                if (!localSimulation) {
+                  throw new Error('Dados da simulação não encontrados no localStorage');
+                }
+
+                // Criar registro completo no Supabase
+                const createData = {
+                  session_id: input.sessionId,
+                  visitor_id: input.visitorId || null,
+
+                  nome_completo: updateData.nome_completo,
+                  email: updateData.email,
+                  telefone: updateData.telefone,
+                  cidade: localSimulation.cidade,
+                  valor_emprestimo: localSimulation.valorEmprestimo,
+                  valor_imovel: localSimulation.valorImovel,
+                  parcelas: localSimulation.parcelas,
+                  tipo_amortizacao: localSimulation.amortizacao,
+                  parcela_inicial: localSimulation.primeiraParcela || localSimulation.valor,
+                  parcela_final: localSimulation.ultimaParcela || localSimulation.valor,
+                  imovel_proprio: updateData.imovel_proprio,
+                  user_agent: '',
+                  ip_address: '',
+                  status: updateData.status
+                };
+
+                console.log('💾 Criando nova simulação no Supabase:', createData);
+                const { data, error } = await supabase
+                  .from('simulacoes')
+                  .insert(createData)
+                  .select();
+
+                updateResult = { data, error };
+                console.log('✅ Nova simulação criada:', { data, error });
+              } else {
+                // Existe no Supabase, atualizar
+                existingData = searchData;
+                console.log('✅ Simulação encontrada para atualização:', {
+                  id: existingData.id,
+                  session_id: existingData.session_id,
+                  nome_atual: existingData.nome_completo,
+                  novo_nome: updateData.nome_completo
+                });
+
+                // Atualizar usando o ID real do Supabase
+                const { data, error } = await supabase
+                  .from('simulacoes')
+                  .update(updateData)
+                  .eq('id', existingData.id)
+                  .select();
+
+                console.log('🔄 Resultado da atualização:', { data, error });
+                updateResult = { data, error };
+              }
             } else {
-              // Existe no Supabase, atualizar
+              // Para IDs do Supabase, buscar e atualizar normalmente
+              const { data: searchData, error: selectError } = await supabase
+                .from('simulacoes')
+                .select('id, nome_completo, email, telefone, imovel_proprio, status, visitor_id')
+                .eq('id', input.simulationId)
+                .single();
+
+              if (selectError) {
+                console.error('❌ Erro ao buscar simulação:', selectError);
+                throw new Error(`Simulação não encontrada: ${selectError.message}`);
+              }
+
               existingData = searchData;
-              console.log('✅ Simulação encontrada para atualização:', {
-                id: existingData.id,
-                session_id: existingData.session_id,
-                nome_atual: existingData.nome_completo,
-                novo_nome: updateData.nome_completo
-              });
-              
-              // Atualizar usando o ID real do Supabase
+
               const { data, error } = await supabase
                 .from('simulacoes')
                 .update(updateData)
-                .eq('id', existingData.id)
+                .eq('id', input.simulationId)
                 .select();
-              
-              console.log('🔄 Resultado da atualização:', { data, error });
+
               updateResult = { data, error };
             }
-          } else {
-            // Para IDs do Supabase, buscar e atualizar normalmente
-            const { data: searchData, error: selectError } = await supabase
-              .from('simulacoes')
-              .select('id, nome_completo, email, telefone, imovel_proprio, status, visitor_id')
-              .eq('id', input.simulationId)
-              .single();
-              
-            if (selectError) {
-              console.error('❌ Erro ao buscar simulação:', selectError);
-              throw new Error(`Simulação não encontrada: ${selectError.message}`);
+
+            if (existingData) {
+              console.log('📊 Dados antes da atualização:', existingData);
             }
-            
-            existingData = searchData;
-            
-            const { data, error } = await supabase
-              .from('simulacoes')
-              .update(updateData)
-              .eq('id', input.simulationId)
-              .select();
-              
-            updateResult = { data, error };
-          }
-          
-          if (existingData) {
-            console.log('📊 Dados antes da atualização:', existingData);
-          }
-          
-          const { data, error } = updateResult;
-            
-          if (error) {
-            console.error('❌ Erro ao atualizar Supabase:', {
-              error,
-              code: error.code,
-              message: error.message,
-              details: error.details,
-              hint: error.hint
+
+            const { data, error } = updateResult;
+
+            if (error) {
+              console.error('❌ Erro ao atualizar Supabase:', {
+                error,
+                code: error.code,
+                message: error.message,
+                details: error.details,
+                hint: error.hint
+              });
+              throw error;
+            }
+
+            console.log('✅ Contato atualizado no Supabase:', {
+              antes: existingData,
+              depois: data?.[0],
+              success: !!data?.[0]
             });
-            throw error;
+
+            if (!data || data.length === 0) {
+              throw new Error('Nenhuma linha foi atualizada no Supabase');
+            }
+          } else {
+            throw new Error('ID da simulação não fornecido para atualização');
           }
-          
-          console.log('✅ Contato atualizado no Supabase:', {
-            antes: existingData,
-            depois: data?.[0],
-            success: !!data?.[0]
-          });
-          
-          if (!data || data.length === 0) {
-            throw new Error('Nenhuma linha foi atualizada no Supabase');
+
+          // Se chegou aqui, a operação foi bem-sucedida
+          this.removeContactLocally(input);
+          lastSupabaseError = null;
+          break;
+        } catch (supabaseError) {
+          lastSupabaseError = supabaseError;
+          console.error(`❌ Erro ao atualizar contato no Supabase (tentativa ${attempt}):`, supabaseError);
+          if (attempt < maxSupabaseRetries) {
+            const delay = 500 * Math.pow(2, attempt - 1);
+            console.log(`⏳ Aguardando ${delay}ms antes da nova tentativa...`);
+            await this.delay(delay);
           }
-        } else {
-          throw new Error('ID da simulação não fornecido para atualização');
-        }
-      } catch (supabaseError) {
-        supabaseErrorOccurred = true;
-        console.error('❌ Erro crítico ao atualizar contato no Supabase:', supabaseError);
-        // Re-throw para mostrar erro ao usuário se for crítico
-        if (supabaseError instanceof Error &&
-            (supabaseError.message.includes('não encontrada') ||
-             supabaseError.message.includes('ID da simulação'))) {
-          throw supabaseError;
-        }
-        // Para outros erros, apenas avisar mas continuar
-        console.warn('⚠️ Continuando apesar do erro no Supabase');
-        console.warn('📌 Contato mantido no armazenamento local para novo envio');
-        if (!options.isRetry) {
-          this.saveContactLocally(input);
         }
       }
 
-      // Remover do armazenamento local somente se atualização foi bem-sucedida
-      if (!supabaseErrorOccurred) {
-        this.removeContactLocally(input);
+      if (lastSupabaseError) {
+        throw lastSupabaseError;
       }
 
       console.log('✅ Contato processado com sucesso');
@@ -650,16 +650,21 @@ export class LocalSimulationService {
 
     } catch (error) {
       console.error('❌ Erro ao processar contato:', error);
-      
-      // Salvar localmente mesmo em caso de erro
-      try {
-        this.saveContactLocally(input);
-        console.log('💾 Dados salvos localmente como backup');
-      } catch (localError) {
-        console.error('❌ Erro ao salvar localmente:', localError);
+
+      // Salvar localmente mesmo em caso de erro (somente na primeira tentativa)
+      if (!options.isRetry) {
+        try {
+          this.saveContactLocally(input);
+          console.log('💾 Dados salvos localmente como backup');
+        } catch (localError) {
+          console.error('❌ Erro ao salvar localmente:', localError);
+        }
       }
-      
-      throw error;
+
+      // Enviar alerta para intervenção manual
+      await this.sendFailureAlert(input, error);
+
+      throw new Error('Não foi possível enviar seus dados. Tente novamente mais tarde.');
     }
   }
 
@@ -876,6 +881,40 @@ export class LocalSimulationService {
     } catch (error) {
       console.warn('⚠️ Erro ao remover contato localmente:', error);
     }
+  }
+
+  /**
+   * Envia alerta via webhook quando o contato não pôde ser salvo
+   */
+  private static async sendFailureAlert(input: ContactFormInput, error: unknown): Promise<void> {
+    const webhookUrl = process.env.VITE_ALERT_WEBHOOK_URL;
+    if (!webhookUrl) {
+      console.warn('⚠️ URL de alerta não configurada');
+      return;
+    }
+
+    try {
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'contact_failure',
+          input,
+          error: error instanceof Error ? error.message : String(error),
+          timestamp: new Date().toISOString()
+        })
+      });
+      console.log('🚨 Alerta de falha enviado');
+    } catch (alertError) {
+      console.error('❌ Erro ao enviar alerta de falha:', alertError);
+    }
+  }
+
+  /**
+   * Utilitário simples de atraso
+   */
+  private static async delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   /**
