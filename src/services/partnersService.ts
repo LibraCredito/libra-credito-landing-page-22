@@ -11,7 +11,7 @@
  * - Gestão de status
  */
 
-import { supabaseApi, ParceiroData } from '@/lib/supabase';
+import { supabaseApi, supabase, ParceiroData } from '@/lib/supabase';
 import { validateEmail, validatePhone, formatPhone } from '@/utils/validations';
 import { EmailService, PartnerEmailData } from './emailService';
 
@@ -47,11 +47,15 @@ export class PartnersService {
   
   /**
    * Cria nova solicitação de parceria
-   */
+  */
   static async createPartnership(input: PartnerInput): Promise<PartnerResult> {
     try {
+      if (!supabase) {
+        throw new Error('SERVICO_INDISPONIVEL: Supabase não configurado');
+      }
+
       console.log('🤝 Criando solicitação de parceria:', input);
-      
+
       // 0. Testar conexão primeiro
       console.log('🔄 Testando conexão Supabase...');
       await supabaseApi.testConnection();
@@ -168,6 +172,9 @@ export class PartnersService {
    */
   static async getParceiros(limit = 50) {
     try {
+      if (!supabase) {
+        throw new Error('SERVICO_INDISPONIVEL: Supabase não configurado');
+      }
       return await supabaseApi.getParceiros(limit);
     } catch (error) {
       console.error('❌ Erro ao buscar parceiros:', error);
@@ -180,6 +187,9 @@ export class PartnersService {
    */
   static async updatePartnerStatus(id: string, status: string) {
     try {
+      if (!supabase) {
+        throw new Error('SERVICO_INDISPONIVEL: Supabase não configurado');
+      }
       return await supabaseApi.updateParceiroStatus(id, status);
     } catch (error) {
       console.error('❌ Erro ao atualizar status do parceiro:', error);
@@ -192,7 +202,9 @@ export class PartnersService {
    */
   static async getPartnersStats() {
     try {
-      const { supabase } = await import('@/lib/supabase');
+      if (!supabase) {
+        throw new Error('SERVICO_INDISPONIVEL: Supabase não configurado');
+      }
       const { data, error } = await supabase.rpc('get_parceiros_stats');
       
       if (error) throw error;

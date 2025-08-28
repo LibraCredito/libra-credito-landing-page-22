@@ -19,7 +19,7 @@
  * 5. Retorna dados para o componente
  */
 
-import { supabaseApi, SimulacaoData } from '@/lib/supabase';
+import { supabaseApi, supabase, SimulacaoData } from '@/lib/supabase';
 import { simulateCredit } from '@/services/simulationApi';
 import { validateEmail, validatePhone, formatPhone } from '@/utils/validations';
 import { PloomesService } from '@/services/ploomesService';
@@ -72,6 +72,10 @@ export class SimulationService {
    */
   static async performSimulation(input: SimulationInput): Promise<SimulationResult> {
     try {
+      if (!supabase) {
+        throw new Error('SERVICO_INDISPONIVEL: Supabase não configurado');
+      }
+
       console.log('🎯 Iniciando simulação:', input);
       
       // 1. Validar dados de entrada
@@ -118,7 +122,7 @@ export class SimulationService {
       };
       
       console.log('💾 Salvando no Supabase:', supabaseData);
-      
+
       // 6. Salvar no Supabase
       const savedSimulation = await supabaseApi.createSimulacao(supabaseData);
       
@@ -311,6 +315,9 @@ export class SimulationService {
    */
   static async getSimulacoes(limit = 50) {
     try {
+      if (!supabase) {
+        throw new Error('SERVICO_INDISPONIVEL: Supabase não configurado');
+      }
       return await supabaseApi.getSimulacoes(limit);
     } catch (error) {
       console.error('❌ Erro ao buscar simulações:', error);
@@ -323,6 +330,9 @@ export class SimulationService {
    */
   static async updateSimulationStatus(id: string, status: string) {
     try {
+      if (!supabase) {
+        throw new Error('SERVICO_INDISPONIVEL: Supabase não configurado');
+      }
       return await supabaseApi.updateSimulacaoStatus(id, status);
     } catch (error) {
       console.error('❌ Erro ao atualizar status:', error);
