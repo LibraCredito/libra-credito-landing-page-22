@@ -6,6 +6,7 @@ const Sucesso = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     document.title = 'Solicitação Recebida | Libra Crédito';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
