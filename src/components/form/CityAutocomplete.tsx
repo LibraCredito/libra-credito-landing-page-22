@@ -26,6 +26,7 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
   const cancelScrollRef = useRef<((e: PointerEvent) => void) | null>(null);
+
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Keep input in sync if parent resets the value
@@ -120,6 +121,7 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
       document.removeEventListener('pointerdown', cancelScrollRef.current);
       cancelScrollRef.current = null;
     }
+
     // Delay hiding suggestions to allow selection
     setTimeout(() => {
       setIsFocused(false);
