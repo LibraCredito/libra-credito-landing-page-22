@@ -32,6 +32,7 @@ import AdminLogin from '@/components/AdminLogin';
 import ImageUploader from '@/components/ImageUploader';
 import StorageStats from '@/components/StorageStats';
 import SupabaseDiagnostics from '@/components/SupabaseDiagnostics';
+import UTMDetails from '@/components/UTMDetails';
 import { ParceiroData } from '@/lib/supabase';
 import { formatPhone } from '@/utils/validations';
 import Eye from 'lucide-react/dist/esm/icons/eye';
@@ -475,16 +476,6 @@ const AdminDashboard: React.FC = () => {
     a.click();
   };
 
-  const shortenUrl = (url: string) => {
-    try {
-      const { hostname, pathname } = new URL(url);
-      return `${hostname}${pathname}`;
-    } catch {
-      return url;
-    }
-  };
-
-
   const filteredVisitors = getFilteredVisitors();
 
 
@@ -716,35 +707,7 @@ const AdminDashboard: React.FC = () => {
                         </TableCell>
 
                         <TableCell className="text-xs">
-                          <div>
-                            {[visitor.utm_source, visitor.utm_medium, visitor.utm_campaign]
-                              .filter(Boolean)
-                              .join(' / ') || '-'}
-                          </div>
-                          {visitor.landing_page && (
-                            <a
-                              href={visitor.landing_page}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-600 hover:underline break-all"
-                              title={visitor.landing_page}
-                            >
-                              {shortenUrl(visitor.landing_page)}
-
-                            </a>
-                          )}
-                          {!visitor.landing_page && visitor.referrer && (
-                            <a
-                              href={visitor.referrer}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-600 hover:underline break-all"
-                              title={visitor.referrer}
-                            >
-                              {shortenUrl(visitor.referrer)}
-
-                            </a>
-                          )}
+                          <UTMDetails visitor={visitor} />
                         </TableCell>
                         <TableCell className="font-medium">
                           {simulacao.nome_completo}
