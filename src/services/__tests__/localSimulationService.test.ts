@@ -24,13 +24,14 @@ describe('LocalSimulationService', () => {
       statusText: 'OK',
       headers: { entries: () => [] }
     }));
+    process.env.VITE_ALERT_WEBHOOK_URL = 'https://alert.test';
   });
 
   afterEach(() => {
     delete (global as any).fetch;
   });
 
-  it('mantém contato local quando atualização no Supabase falha', async () => {
+  it('salva contato local e envia alerta quando atualização no Supabase falha', async () => {
     let call = 0;
     supabaseMock.from.mockImplementation(() => {
       call++;
@@ -47,8 +48,8 @@ describe('LocalSimulationService', () => {
           })
         };
       }
-      if (call === 2) {
-        // Busca para atualizar
+      if (call % 2 === 0) {
+        // Busca para atualização em cada tentativa
         return {
           select: () => ({
             eq: () => ({
@@ -92,10 +93,11 @@ describe('LocalSimulationService', () => {
       aceitaPolitica: true
     };
 
-    const result = await LocalSimulationService.processContact(input);
-    expect(result.success).toBe(true);
+    await expect(LocalSimulationService.processContact(input)).rejects.toThrow();
     const stored = JSON.parse(localStorage.getItem('libra_local_contacts') || '[]');
     expect(stored.length).toBe(1);
     expect(stored[0].simulationId).toBe('123');
+    const fetchCalls = (global as any).fetch.mock.calls.map((c: any[]) => c[0]);
+    expect(fetchCalls).toContain('https://alert.test');
   });
 });
