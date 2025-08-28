@@ -289,7 +289,6 @@ const AdminDashboard: React.FC = () => {
     setLoadingConfig(true);
     try {
       localStorage.setItem('libra_simulation_config', JSON.stringify(simulationConfig));
-      console.log('✅ Configurações do simulador salvas:', simulationConfig);
       alert('Configurações do simulador salvas com sucesso!');
     } catch (error) {
       console.error('Erro ao salvar configurações:', error);
