@@ -4,7 +4,7 @@
  * @interface SimulationPayload
  * @description Define a estrutura de dados necessária para realizar uma simulação de crédito
  * 
- * @property {number} valor_solicitado - Valor do empréstimo solicitado (R$ 75.000 a R$ 5.000.000)
+ * @property {number} valor_solicitado - Valor do empréstimo solicitado (R$ 100.000 a R$ 5.000.000)
  * @property {number} vlr_imovel - Valor do imóvel em garantia (mínimo 2x valor solicitado)
  * @property {number} numero_parcelas - Quantidade de parcelas (36 a 180 meses)
  * @property {string} amortizacao - Sistema de amortização ('SAC' ou 'PRICE')
