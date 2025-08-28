@@ -25,6 +25,8 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
   const fetchTimeout = useRef<NodeJS.Timeout | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+  const cancelScrollRef = useRef<((e: PointerEvent) => void) | null>(null);
+
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Keep input in sync if parent resets the value
@@ -81,6 +83,25 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
           scrollToTarget(inputRef.current as HTMLElement, -headerHeight);
         }
       }, 300);
+
+      if (cancelScrollRef.current) {
+        document.removeEventListener('pointerdown', cancelScrollRef.current);
+      }
+
+      const cancelScroll = (e: PointerEvent): void => {
+        if (inputRef.current && e.target instanceof Node && inputRef.current.contains(e.target)) {
+          return;
+        }
+        if (scrollTimeout.current) {
+          clearTimeout(scrollTimeout.current);
+          scrollTimeout.current = null;
+        }
+        document.removeEventListener('pointerdown', cancelScroll);
+        cancelScrollRef.current = null;
+      };
+
+      cancelScrollRef.current = cancelScroll;
+      document.addEventListener('pointerdown', cancelScroll);
     }
   };
 
@@ -96,6 +117,11 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
       clearTimeout(scrollTimeout.current);
       scrollTimeout.current = null;
     }
+    if (cancelScrollRef.current) {
+      document.removeEventListener('pointerdown', cancelScrollRef.current);
+      cancelScrollRef.current = null;
+    }
+
     // Delay hiding suggestions to allow selection
     setTimeout(() => {
       setIsFocused(false);
