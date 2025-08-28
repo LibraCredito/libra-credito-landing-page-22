@@ -40,7 +40,7 @@
  * @see {@link formatBRL} para formatação de valores
  */
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { validateForm } from '@/utils/validations';
@@ -73,6 +73,8 @@ const SimulationForm: React.FC = () => {
   const [erro, setErro] = useState('');
   const [apiMessage, setApiMessage] = useState<ApiMessageAnalysis | null>(null);
   const [isRuralProperty, setIsRuralProperty] = useState(false);
+
+  const cityAutocompleteRef = useRef<{ handleBlur: () => void }>(null);
 
   // Validações
   const validation = validateForm(emprestimo, garantia, parcelas, amortizacao, cidade);
@@ -134,6 +136,7 @@ const SimulationForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    cityAutocompleteRef.current?.handleBlur();
 
     if (!validation.formularioValido) {
       toast({
@@ -223,6 +226,7 @@ const SimulationForm: React.FC = () => {
   };
 
   const handleClear = () => {
+    cityAutocompleteRef.current?.handleBlur();
     setEmprestimo('');
     setGarantia('');
     setParcelas(180);
@@ -454,6 +458,7 @@ const SimulationForm: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-2">
               
               <CityAutocomplete
+                ref={cityAutocompleteRef}
                 value={cidade}
                 onCityChange={setCidade}
                 isInvalid={invalidCity}

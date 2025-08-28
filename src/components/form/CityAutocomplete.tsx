@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useRef, useState, forwardRef } from 'react';
 import MapPin from 'lucide-react/dist/esm/icons/map-pin';
 import scrollToTarget from '@/utils/scrollToTarget';
 
@@ -15,7 +15,8 @@ interface CityAutocompleteProps {
  * Searches city suggestions from LTV_Cidades.json as user types 
  * and only allows selection of valid cities.
  */
-const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityChange, isInvalid = false }) => {
+const CityAutocomplete = forwardRef<{ handleBlur: () => void }, CityAutocompleteProps>(
+  ({ value = '', onCityChange, isInvalid = false }, ref) => {
   const [inputValue, setInputValue] = useState<string>(value);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -28,6 +29,19 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
   const cancelScrollRef = useRef<((e: PointerEvent) => void) | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Cleanup listeners on unmount
+  useEffect(() => {
+    return () => {
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+      if (cancelScrollRef.current) {
+        document.removeEventListener('pointerdown', cancelScrollRef.current);
+        cancelScrollRef.current = null;
+      }
+    };
+  }, []);
 
   // Keep input in sync if parent resets the value
   useEffect(() => {
@@ -166,6 +180,9 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
     }
   };
 
+  // Expose blur handler to parent components
+  useImperativeHandle(ref, () => ({ handleBlur }));
+
   // Check if we should show suggestions
   const showSuggestions = isFocused && inputValue.length >= 2 && (isLoading || error || suggestions.length > 0);
 
@@ -248,6 +265,9 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
       </div>
     </div>
   );
-};
+  }
+);
+
+CityAutocomplete.displayName = 'CityAutocomplete';
 
 export default CityAutocomplete;
