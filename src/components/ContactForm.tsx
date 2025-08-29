@@ -304,6 +304,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 imovelProprio === 'proprio' ? 'bg-white text-libra-blue' : 'bg-white/50 text-libra-navy'
               }`}
             >
+              {/* Disable pointer events on hidden input to allow page scrolling */}
               <input
                 type="radio"
                 name="imovelProprioCompact"
