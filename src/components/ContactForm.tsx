@@ -300,7 +300,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
           </legend>
           <div className="flex gap-3" role="radiogroup" aria-labelledby="tipo-imovel-label">
             <label
-              className={`flex-1 flex items-center justify-center gap-2 rounded-lg text-sm font-medium cursor-pointer ${
+              className={`relative flex-1 flex items-center justify-center gap-2 rounded-lg text-sm font-medium cursor-pointer ${
                 imovelProprio === 'proprio' ? 'bg-white text-libra-blue' : 'bg-white/50 text-libra-navy'
               }`}
             >
@@ -310,14 +310,14 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 value="proprio"
                 checked={imovelProprio === 'proprio'}
                 onChange={(e) => setImovelProprio(e.target.value as 'proprio')}
-                className="sr-only"
+                className="absolute inset-0 opacity-0"
                 required
               />
               <Home className="w-4 h-4" />
               Imóvel Próprio
             </label>
             <label
-              className={`flex-1 flex items-center justify-center gap-2 rounded-lg text-sm font-medium cursor-pointer ${
+              className={`relative flex-1 flex items-center justify-center gap-2 rounded-lg text-sm font-medium cursor-pointer ${
                 imovelProprio === 'terceiro' ? 'bg-white text-libra-blue' : 'bg-white/50 text-libra-navy'
               }`}
             >
@@ -327,7 +327,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 value="terceiro"
                 checked={imovelProprio === 'terceiro'}
                 onChange={(e) => setImovelProprio(e.target.value as 'terceiro')}
-                className="sr-only"
+                className="absolute inset-0 opacity-0"
                 required
               />
               <Building className="w-4 h-4" />
