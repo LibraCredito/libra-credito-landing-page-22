@@ -36,6 +36,14 @@ const Confirmacao = () => {
     }
   }, []);
 
+  const whatsappNumber = '5516997338791';
+  const whatsappMessage = summary
+    ? encodeURIComponent(
+        `Olá, meu nome é ${summary.name}. Solicitei um crédito de ${formatCurrency(summary.loanAmount)} utilizando como garantia um imóvel de ${formatCurrency(summary.propertyValue)} em ${summary.city}. O empréstimo foi feito em ${summary.installments} vezes, com parcela estimada de ${formatCurrency(summary.installmentValue)}. Meu e-mail é ${summary.email || 'não informado'} e meu telefone é ${summary.phone}.`
+      )
+    : '';
+  const whatsappLink = `https://wa.me/${whatsappNumber}${whatsappMessage ? `?text=${whatsappMessage}` : ''}`;
+
   return (
     <MobileLayout>
       <WaveSeparator variant="hero" height="md" inverted />
@@ -67,7 +75,7 @@ const Confirmacao = () => {
           </Button>
           <Button asChild variant="outline" className="px-6">
             <a
-              href="https://wa.me/5516996360424"
+              href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
             >
