@@ -38,7 +38,7 @@ const Simulacao = () => {
 
   return (
     <MobileLayout showFooter={false}>
-      <WaveSeparator variant="hero" height="md" inverted />
+      <WaveSeparator variant="hero" inverted data-wave-separator />
       <LazySection load={() => import('@/components/SimulationForm')}>
         <div className="bg-white lg:flex lg:justify-center">
           <Suspense fallback={null}>
