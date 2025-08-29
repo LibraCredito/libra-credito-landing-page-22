@@ -17,7 +17,7 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
   const { isDesktop } = useDevice();
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-[100dvh] flex flex-col">
       {/* Skip Navigation Links for Accessibility */}
       <div className="sr-only focus-within:not-sr-only">
         <a
