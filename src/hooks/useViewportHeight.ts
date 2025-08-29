@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 /**
  * Hook to set a CSS custom property `--vh` representing 1% of the viewport height.
- * Updates the value on window resize or orientation change to address mobile browser UI chrome.
+ * Updates the value on window resize to address mobile browser UI chrome.
  */
 export const useViewportHeight = () => {
   useEffect(() => {
@@ -15,11 +15,9 @@ export const useViewportHeight = () => {
 
     setVh();
     window.addEventListener('resize', setVh);
-    window.addEventListener('orientationchange', setVh);
 
     return () => {
       window.removeEventListener('resize', setVh);
-      window.removeEventListener('orientationchange', setVh);
     };
   }, []);
 };
