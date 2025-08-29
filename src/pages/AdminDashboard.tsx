@@ -23,6 +23,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Switch } from '@/components/ui/switch';
 import { LocalSimulationService, type SessionGroupWithJourney } from '@/services/localSimulationService';
 
 import { PartnersService } from '@/services/partnersService';
@@ -111,7 +112,8 @@ const AdminDashboard: React.FC = () => {
     custoOperacional: 11.0,
     dfiPercentual: 0.014,
     prestamistaPercentual: 0.035,
-    taxaAdministrativa: 40
+    taxaAdministrativa: 40,
+    showWhatsappButton: true
   });
   const [loadingConfig, setLoadingConfig] = useState(false);
   const [loadingParceiros, setLoadingParceiros] = useState(false);
@@ -202,7 +204,8 @@ const AdminDashboard: React.FC = () => {
           custoOperacional: config.custoOperacional || 11.0,
           dfiPercentual: config.dfiPercentual || 0.014,
           prestamistaPercentual: config.prestamistaPercentual || 0.035,
-          taxaAdministrativa: config.taxaAdministrativa || 40
+          taxaAdministrativa: config.taxaAdministrativa || 40,
+          showWhatsappButton: config.showWhatsappButton ?? true
         });
       }
     } catch (error) {
@@ -1619,10 +1622,27 @@ Escreva seu conteúdo aqui...
                     </div>
                   </div>
                 </div>
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-3">Botão do WhatsApp</h4>
+                  <div className="flex items-center gap-2">
+                    <Switch
+                      id="show-whatsapp-button"
+                      checked={simulationConfig.showWhatsappButton}
+                      onCheckedChange={(checked) =>
+                        setSimulationConfig({
+                          ...simulationConfig,
+                          showWhatsappButton: checked
+                        })
+                      }
+                    />
+                    <label htmlFor="show-whatsapp-button" className="text-sm text-gray-700">
+                      Exibir botão "Falar com a Atendente" na confirmação
+                    </label>
+                  </div>
+                </div>
 
-                
                 <div className="pt-4 border-t">
-                  <Button 
+                  <Button
                     className="bg-libra-blue hover:bg-libra-blue/90"
                     onClick={handleSaveConfig}
                     disabled={loadingConfig}

@@ -59,9 +59,10 @@ export interface SimulationConfig {
   
   // URL da API
   apiUrl: string;
-  
+
   // Configurações gerais
   custoOperacional: number;
+  showWhatsappButton: boolean;
   updateAt?: string;
 }
 
@@ -874,7 +875,14 @@ export class BlogService {
   static async getSimulationConfig(): Promise<SimulationConfig> {
     try {
       const stored = localStorage.getItem(this.CONFIG_KEY);
-      return stored ? JSON.parse(stored) : {
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return {
+          showWhatsappButton: true,
+          ...parsed
+        } as SimulationConfig;
+      }
+      return {
         // Limites de valor (baseado na API atual)
         valorMinimo: 100000,
         valorMaximo: 5000000,
@@ -891,9 +899,10 @@ export class BlogService {
         
         // URL da API
         apiUrl: 'https://api-calculos.vercel.app/simulacao',
-        
+
         // Configurações gerais
-        custoOperacional: 0.5
+        custoOperacional: 0.5,
+        showWhatsappButton: true
       };
     } catch (error) {
       console.error('Erro ao carregar configurações:', error);
