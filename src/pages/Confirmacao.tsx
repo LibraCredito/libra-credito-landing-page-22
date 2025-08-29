@@ -27,15 +27,14 @@ const Confirmacao = () => {
     value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
   const summaryText = summary
-    ? (() => {
-        const modalidade = summary.amortizacao.toLowerCase() === 'sac' ? 'saque' : 'price';
-        const tipoImovel = summary.imovelProprio === 'proprio' ? 'um imóvel próprio' : 'um imóvel de terceiro';
-        return `${summary.nome}, você solicitou um crédito de ${formatCurrency(summary.valorEmprestimo)} na modalidade ${modalidade} utilizando ${tipoImovel} de ${formatCurrency(summary.valorImovel)} em ${summary.cidade}, em ${summary.parcelas} parcelas de ${formatCurrency(summary.valorParcela)}. E-mail ${summary.emailValido ? 'validado' : 'inválido'}: ${summary.email}.`;
-      })()
-
+    ? `Obrigado, ${summary.nome}, pela confiança. Registramos que você solicitou um crédito no valor de ${formatCurrency(summary.valorEmprestimo)}, utilizando como garantia um imóvel na cidade de ${summary.cidade} no valor de ${formatCurrency(summary.valorImovel)}. Esse empréstimo seria realizado em ${summary.parcelas} vezes, resultando parcelas a partir de ${formatCurrency(summary.valorParcela)}.`
     : '';
 
-  const whatsappLink = `https://wa.me/5516997338791?text=${encodeURIComponent(summaryText)}`;
+  const whatsappMessage = summary
+    ? `Olá, eu sou ${summary.nome} e fiz a solicitação de um crédito no valor de ${formatCurrency(summary.valorEmprestimo)}, utilizando como garantia um imóvel na cidade de ${summary.cidade} no valor de ${formatCurrency(summary.valorImovel)}. Esse empréstimo seria realizado em ${summary.parcelas} vezes, resultando parcelas a partir de ${formatCurrency(summary.valorParcela)}. Quando podemos iniciar o atendimento?`
+    : '';
+
+  const whatsappLink = `https://wa.me/5516997338791?text=${encodeURIComponent(whatsappMessage)}`;
 
   useEffect(() => {
     document.title = 'Simulação Enviada | Libra Crédito';
