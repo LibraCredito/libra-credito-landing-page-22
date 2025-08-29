@@ -189,6 +189,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
         amortizacao: simulationResult.amortizacao,
         imovelProprio,
         emailValido: !invalidEmail
+
       };
 
       navigate('/confirmacao', { state: { summary } });
