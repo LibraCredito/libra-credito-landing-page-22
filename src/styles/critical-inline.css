@@ -11,11 +11,11 @@ body {
   font-weight: 300;
   background: #ffffff;
   scrollbar-gutter: stable both-axis;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 html {
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 :root {

@@ -45,11 +45,11 @@
 
 /* Estilos de base do corpo */
 html {
-  @apply overflow-hidden;
+  @apply overflow-x-hidden;
 }
 
 body {
-  @apply bg-background text-foreground overflow-hidden;
+  @apply bg-background text-foreground overflow-x-hidden;
   scrollbar-gutter: stable both-axis;
   font-feature-settings: "rlig" 1, "calt" 1;
 }
