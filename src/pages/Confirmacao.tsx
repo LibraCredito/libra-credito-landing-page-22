@@ -1,9 +1,26 @@
 import React, { useEffect } from 'react';
 import MobileLayout from '@/components/MobileLayout';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import WaveSeparator from '@/components/ui/WaveSeparator';
 const Confirmacao = () => {
+  const location = useLocation();
+  const state = (location.state as {
+    summaryText?: string;
+    whatsappLink?: string;
+  }) || {};
+  const summaryText =
+    state.summaryText ||
+    (typeof window !== 'undefined'
+      ? localStorage.getItem('summaryText')
+      : null) ||
+    '';
+  const whatsappLink =
+    state.whatsappLink ||
+    (typeof window !== 'undefined'
+      ? localStorage.getItem('whatsappLink')
+      : null) ||
+    '';
   useEffect(() => {
     document.title = 'Simulação Enviada | Libra Crédito';
     const metaDescription = document.querySelector('meta[name="description"]');
