@@ -77,10 +77,11 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
         clearTimeout(scrollTimeout.current);
       }
       scrollTimeout.current = setTimeout(() => {
-        const headerHeight = 80;
+        const headerHeight = document.querySelector('header')?.offsetHeight ?? 0;
+        const waveHeight = document.querySelector('[data-wave-separator]')?.offsetHeight ?? 0;
         const card = document.getElementById('simulation-card');
         if (document.activeElement === inputRef.current && card) {
-          scrollToTarget(card as HTMLElement, -headerHeight);
+          scrollToTarget(card as HTMLElement, -(headerHeight + waveHeight));
         }
       }, 300);
 
