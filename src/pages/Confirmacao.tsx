@@ -19,12 +19,15 @@ const Confirmacao = () => {
     <MobileLayout>
       <WaveSeparator variant="hero" height="md" inverted />
       <div className="flex flex-col items-center justify-center py-12 px-4 text-center space-y-6 bg-white">
-        <h1 className="text-2xl font-bold text-libra-navy">Simulação enviada com sucesso</h1>
+
+        <h1 className="text-2xl font-bold text-libra-navy">✅Simulação enviada com sucesso</h1>
         <p className="text-base text-gray-700">
           Recebemos seus dados e em breve, um dos nossos analistas entrará em contato com você.
         </p>
         <p className="text-base text-gray-700">
           Fique atento ao telefone (16) 36007956 para nosso contato.
+          Quer acelerar seu processo? Fale com nossa Atendente Virtual
+
         </p>
         <div className="flex flex-col sm:flex-row gap-4 mt-4">
           <Button asChild variant="default" className="px-6">
