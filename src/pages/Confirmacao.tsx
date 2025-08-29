@@ -1,8 +1,9 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import MobileLayout from '@/components/MobileLayout';
 import { Button } from '@/components/ui/button';
 import { Link, useLocation } from 'react-router-dom';
 import WaveSeparator from '@/components/ui/WaveSeparator';
+import { BlogService } from '@/services/blogService';
 
 const Confirmacao = () => {
   const location = useLocation();
@@ -10,6 +11,7 @@ const Confirmacao = () => {
     (location.state as { summary?: unknown; whatsappLink?: string }) || {};
   void summary;
   const whatsappLink = stateWhatsappLink || 'https://wa.me/5516997338791';
+  const [showWhatsappButton, setShowWhatsappButton] = useState(true);
   useEffect(() => {
     // Runs once on mount to update page metadata
     document.title = 'Simulação Enviada | Libra Crédito';
@@ -20,6 +22,18 @@ const Confirmacao = () => {
         'Confirmação de envio da simulação. Em breve nossa equipe entrará em contato.'
       );
     }
+  }, []);
+
+  useEffect(() => {
+    const loadConfig = async () => {
+      try {
+        const config = await BlogService.getSimulationConfig();
+        setShowWhatsappButton(config.showWhatsappButton);
+      } catch (error) {
+        console.error('Erro ao carregar configuração:', error);
+      }
+    };
+    void loadConfig();
   }, []);
 
   useLayoutEffect(() => {
@@ -43,19 +57,23 @@ const Confirmacao = () => {
         <p className="text-base text-gray-700">
           Fique atento ao telefone (16) 36007956 para nosso contato.
         </p>
-        <p className="text-base text-gray-700">
-          Quer acelerar seu processo? Fale com nossa Atendente Virtual
-        </p>
+        {showWhatsappButton && (
+          <p className="text-base text-gray-700">
+            Quer acelerar seu processo? Fale com nossa Atendente Virtual
+          </p>
+        )}
 
         <div className="flex flex-col sm:flex-row gap-4 mt-4">
-          <Button
-            asChild
-            className="px-6 bg-[#25D366] hover:bg-[#1EBEA5] text-white"
-          >
-            <Link to={whatsappLink} target="_blank" rel="noopener noreferrer">
-              Falar com a Atendente
-            </Link>
-          </Button>
+          {showWhatsappButton && (
+            <Button
+              asChild
+              className="px-6 bg-[#25D366] hover:bg-[#1EBEA5] text-white"
+            >
+              <Link to={whatsappLink} target="_blank" rel="noopener noreferrer">
+                Falar com a Atendente
+              </Link>
+            </Button>
+          )}
           <Button asChild variant="default" className="px-6">
             <Link to="/quem-somos">Conheça a Libra</Link>
           </Button>
