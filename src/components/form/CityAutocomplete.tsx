@@ -70,17 +70,17 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
     };
   }, [inputValue]);
 
-  // Function to scroll input to top of viewport
+  // Function to scroll simulation card to top of viewport on mobile
   const scrollToInput = (): void => {
-    if (inputRef.current && window.innerWidth < 768) {
+    if (window.innerWidth < 768) {
       if (scrollTimeout.current) {
         clearTimeout(scrollTimeout.current);
       }
       scrollTimeout.current = setTimeout(() => {
-        if (!inputRef.current) return;
         const headerHeight = 80;
-        if (document.activeElement === inputRef.current) {
-          scrollToTarget(inputRef.current as HTMLElement, -headerHeight);
+        const card = document.getElementById('simulation-card');
+        if (document.activeElement === inputRef.current && card) {
+          scrollToTarget(card as HTMLElement, -headerHeight);
         }
       }, 300);
 
