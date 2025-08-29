@@ -25,27 +25,10 @@ describe('Confirmacao page', () => {
 
   beforeEach(() => {
     window.localStorage.clear();
+    // Mock scrollTo to avoid jsdom not implemented error
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    window.scrollTo = vi.fn();
 
-    const main = document.createElement('div');
-    main.id = 'main-content';
-    mainScrollMock = vi.fn();
-    // @ts-expect-error - assigning mock to scrollTo for test environment
-    main.scrollTo = mainScrollMock;
-    document.body.appendChild(main);
-
-    windowScrollMock = vi.fn();
-    // @ts-expect-error - jsdom doesn't implement scrollTo by default
-    window.scrollTo = windowScrollMock;
-
-    const meta = document.createElement('meta');
-    meta.name = 'description';
-    metaSetAttributeMock = vi.spyOn(meta, 'setAttribute');
-    document.head.appendChild(meta);
-  });
-
-  afterEach(() => {
-    document.body.innerHTML = '';
-    document.head.innerHTML = '';
   });
 
   it('renders without preloaded data', () => {
@@ -61,9 +44,13 @@ describe('Confirmacao page', () => {
     expect(
       screen.getByRole('link', { name: /Conheça a Libra/i })
     ).toBeInTheDocument();
-    expect(
-      screen.queryByRole('link', { name: /Falar com a Atendente/i })
-    ).toBeNull();
+    const atendenteLink = screen.getByRole('link', {
+      name: /Falar com a Atendente/i,
+    });
+    expect(atendenteLink).toHaveAttribute(
+      'href',
+      'https://wa.me/551636007956'
+    );
   });
 
   it('scrolls to top on mount', () => {
