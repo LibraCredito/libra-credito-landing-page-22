@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import MapPin from 'lucide-react/dist/esm/icons/map-pin';
 import scrollToTarget from '@/utils/scrollToTarget';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 import { cn } from '@/lib/utils';
 
@@ -28,6 +29,7 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
   const cancelScrollRef = useRef<((e: PointerEvent) => void) | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   // Keep input in sync if parent resets the value
   useEffect(() => {
@@ -72,7 +74,7 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
 
   // Function to scroll input to top of viewport
   const scrollToInput = (): void => {
-    if (inputRef.current && window.innerWidth < 768) {
+    if (inputRef.current && isMobile) {
       if (scrollTimeout.current) {
         clearTimeout(scrollTimeout.current);
       }
@@ -170,7 +172,15 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
   const showSuggestions = isFocused && inputValue.length >= 2 && (isLoading || error || suggestions.length > 0);
 
   return (
-    <div ref={containerRef} className="flex flex-col gap-1 relative">
+    <div
+      ref={containerRef}
+      className={cn(
+        'flex flex-col gap-1',
+        isMobile && isFocused
+          ? 'fixed top-0 left-0 right-0 p-4 bg-white z-50'
+          : 'relative'
+      )}
+    >
       <label className="text-xs font-medium text-green-700 mb-1">
         Selecione a cidade do imóvel a ser utilizado como garantia
       </label>
@@ -203,7 +213,7 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
           {/* Suggestion dropdown - Fixed positioning for mobile */}
           {showSuggestions && (
             <div className="absolute left-0 right-0 mt-1 z-50">
-              <ul className="max-h-60 overflow-auto rounded-md border border-gray-300 bg-white text-sm shadow-lg">
+              <ul className="max-h-[50vh] md:max-h-60 overflow-auto rounded-md border border-gray-300 bg-white text-sm shadow-lg">
                 {isLoading && (
                   <li className="px-3 py-2 text-center text-gray-500">
                     <div className="flex items-center justify-center gap-2">
