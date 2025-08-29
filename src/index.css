@@ -250,12 +250,12 @@
   
   /* Para Hero sections que ocupam viewport completo */
   .min-h-screen-header {
-    min-height: calc(100vh - var(--header-offset-mobile));
+    min-height: calc(var(--vh) * 100 - var(--header-offset-mobile));
   }
-  
+
   @media (min-width: 768px) {
     .min-h-screen-header {
-      min-height: calc(100vh - var(--header-offset-desktop));
+      min-height: calc(var(--vh) * 100 - var(--header-offset-desktop));
     }
   }
 }

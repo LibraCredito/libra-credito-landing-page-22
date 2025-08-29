@@ -11,11 +11,11 @@ body {
   font-weight: 300;
   background: #ffffff;
   scrollbar-gutter: stable both-axis;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 html {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 :root {
@@ -52,7 +52,7 @@ p { font-weight: 300; }
 
 /* Hero Critical */
 .hero-section {
-  min-height: 100vh;
+  min-height: calc(var(--vh) * 100);
   padding-top: var(--header-height);
   background: linear-gradient(135deg, #003399 0%, #0066cc 50%, #00ccff 100%);
   color: white;
@@ -127,7 +127,7 @@ p { font-weight: 300; }
 }
 
 .page-loading {
-  min-height: 100vh;
+  min-height: calc(var(--vh) * 100);
   display: flex;
   align-items: center;
   justify-content: center;
