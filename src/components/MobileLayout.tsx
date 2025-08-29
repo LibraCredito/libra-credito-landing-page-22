@@ -37,7 +37,7 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
         <main
           id="main-content"
           data-has-header={showHeader ? 'true' : 'false'}
-          className={`flex-1 ${showHeader ? 'pt-header' : ''}`}
+          className={`flex-1 overflow-y-auto ${showHeader ? 'pt-header' : ''}`}
           role="main"
           aria-label="Conteúdo principal"
         >
