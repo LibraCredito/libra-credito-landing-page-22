@@ -43,7 +43,7 @@ const Confirmacao = () => {
       <WaveSeparator variant="hero" height="md" inverted />
       <div className="flex flex-col items-center justify-center py-12 px-4 text-center space-y-6 bg-white">
 
-        <h1 className="text-2xl font-bold text-libra-navy">✅Simulação enviada com sucesso</h1>
+        <h1 className="text-2xl font-bold text-libra-navy">✅ Simulação enviada com sucesso</h1>
         <p className="text-base text-gray-700">
           Recebemos seus dados e em breve, um dos nossos analistas entrará em contato com você.
         </p>
