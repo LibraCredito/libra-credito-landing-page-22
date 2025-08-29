@@ -192,7 +192,17 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
       };
 
-      navigate('/confirmacao', { state: { summary } });
+      const currency = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      });
+      const valorEmprestimo = currency.format(summary.valorEmprestimo);
+      const valorParcela = currency.format(summary.valorParcela);
+      const valorImovel = currency.format(summary.valorImovel);
+      const mensagem = `Olá, meu nome é ${summary.nome}. Gostaria de um empréstimo de ${valorEmprestimo} em ${summary.parcelas} parcelas pelo sistema ${summary.amortizacao}. A parcela fica ${valorParcela}. Tenho ${summary.imovelProprio === 'proprio' ? 'imóvel próprio' : 'imóvel de terceiro'} em ${summary.cidade} avaliado em ${valorImovel}.`;
+      const whatsappLink = `https://wa.me/5516997338791?text=${encodeURIComponent(mensagem)}`;
+
+      navigate('/confirmacao', { state: { summary, whatsappLink } });
       
       // Limpar formulário
       setNome('');

@@ -25,10 +25,23 @@ describe('Confirmacao page', () => {
 
   beforeEach(() => {
     window.localStorage.clear();
-    // Mock scrollTo to avoid jsdom not implemented error
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    window.scrollTo = vi.fn();
+    mainScrollMock = vi.fn();
+    windowScrollMock = vi.fn();
+    metaSetAttributeMock = vi.fn();
+    document.getElementById = vi.fn().mockReturnValue({ scrollTo: mainScrollMock });
+    document.querySelector = vi
+      .fn()
+      .mockImplementation((selector) =>
+        selector === 'meta[name="description"]'
+          ? { setAttribute: metaSetAttributeMock }
+          : null
+      );
+    window.scrollTo = windowScrollMock;
 
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   it('renders without preloaded data', () => {
@@ -49,7 +62,7 @@ describe('Confirmacao page', () => {
     });
     expect(atendenteLink).toHaveAttribute(
       'href',
-      'https://wa.me/551636007956'
+      'https://wa.me/5516997338791'
     );
   });
 
