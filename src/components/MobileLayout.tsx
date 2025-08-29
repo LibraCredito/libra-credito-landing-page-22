@@ -32,7 +32,7 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
       {/* Header - Simplificado em mobile */}
       {showHeader && <Header />}
 
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 overflow-y-auto">
         {/* Main Content */}
         <main
           id="main-content"

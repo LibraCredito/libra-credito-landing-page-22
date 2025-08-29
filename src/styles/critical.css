@@ -44,14 +44,18 @@
 }
 
 /* Estilos de base do corpo */
+html {
+  @apply overflow-hidden;
+}
+
 body {
-  @apply bg-background text-foreground overflow-x-hidden;
+  @apply bg-background text-foreground overflow-hidden;
   scrollbar-gutter: stable both-axis;
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
 /* Layout Principal e Header */
-.min-h-screen { min-height: 100vh; }
+.min-h-screen { min-height: calc(var(--vh) * 100); }
 .flex { display: flex; }
 .flex-col { flex-direction: column; }
 .flex-1 { flex: 1 1 0%; }
@@ -284,7 +288,7 @@ header[data-desktop="true"], header[data-mobile="true"] {
 }
 
 @media (min-width: 1280px) {
-  .xl\:min-h-\[calc\(100vh-280px\)\] { min-height: calc(100vh - 280px); }
+  .xl\:min-h-\[calc\(var\(--vh\)\*100-280px\)\] { min-height: calc(var(--vh) * 100 - 280px); }
   .xl\:space-y-5 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-y-reverse: 0;
     margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));

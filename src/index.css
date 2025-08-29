@@ -250,12 +250,12 @@
   
   /* Para Hero sections que ocupam viewport completo */
   .min-h-screen-header {
-    min-height: calc(100vh - var(--header-offset-mobile));
+    min-height: calc(var(--vh) * 100 - var(--header-offset-mobile));
   }
-  
+
   @media (min-width: 768px) {
     .min-h-screen-header {
-      min-height: calc(100vh - var(--header-offset-desktop));
+      min-height: calc(var(--vh) * 100 - var(--header-offset-desktop));
     }
   }
 }
@@ -328,11 +328,11 @@
   html {
     /* Ensures minimum 12px fonts for accessibility */
     font-size: 100%;
-    overflow-x: hidden;
+    overflow: hidden;
   }
 
   body {
-    @apply bg-background text-foreground overflow-x-hidden;
+    @apply bg-background text-foreground overflow-hidden;
     scrollbar-gutter: stable both-axis;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
@@ -495,8 +495,6 @@
 
 /* Wizard specific styles */
 .wizard-container {
-  height: 100vh;
-  height: -webkit-fill-available;
   height: calc(var(--vh) * 100);
 }
 
