@@ -105,6 +105,29 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityC
     }
   };
 
+  // Ensure suggestion list stays visible above the mobile keyboard
+  useEffect(() => {
+    if (!isFocused || suggestions.length === 0) return;
+
+    const timeout = setTimeout(() => {
+      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+      const container = containerRef.current;
+      const list = container?.querySelector('ul');
+      if (!container || !list) return;
+
+      const containerTop = container.getBoundingClientRect().top;
+      const listHeight = list.getBoundingClientRect().height;
+      const excess = containerTop + listHeight - viewportHeight;
+
+      if (excess > 0) {
+        const headerHeight = 80;
+        scrollToTarget(container, excess - headerHeight);
+      }
+    }, 0);
+
+    return () => clearTimeout(timeout);
+  }, [suggestions, isFocused]);
+
   // Handle focus
   const handleFocus = (): void => {
     setIsFocused(true);
