@@ -13,6 +13,10 @@ interface Summary {
   cidade: string;
   parcelas: number;
   valorParcela: number;
+  amortizacao: string;
+  imovelProprio: 'proprio' | 'terceiro';
+  emailValido: boolean;
+
 }
 
 const Confirmacao = () => {
@@ -23,7 +27,12 @@ const Confirmacao = () => {
     value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
   const summaryText = summary
-    ? `${summary.nome}, você solicitou um crédito de ${formatCurrency(summary.valorEmprestimo)} para um imóvel de ${formatCurrency(summary.valorImovel)} em ${summary.cidade}, em ${summary.parcelas} parcelas de ${formatCurrency(summary.valorParcela)}.`
+    ? (() => {
+        const modalidade = summary.amortizacao.toLowerCase() === 'sac' ? 'saque' : 'price';
+        const tipoImovel = summary.imovelProprio === 'proprio' ? 'um imóvel próprio' : 'um imóvel de terceiro';
+        return `${summary.nome}, você solicitou um crédito de ${formatCurrency(summary.valorEmprestimo)} na modalidade ${modalidade} utilizando ${tipoImovel} de ${formatCurrency(summary.valorImovel)} em ${summary.cidade}, em ${summary.parcelas} parcelas de ${formatCurrency(summary.valorParcela)}. E-mail ${summary.emailValido ? 'validado' : 'inválido'}: ${summary.email}.`;
+      })()
+
     : '';
 
   const whatsappLink = `https://wa.me/5516997338791?text=${encodeURIComponent(summaryText)}`;
