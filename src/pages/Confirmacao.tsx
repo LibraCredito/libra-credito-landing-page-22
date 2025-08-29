@@ -47,11 +47,14 @@ const Confirmacao = () => {
         <p className="text-base text-gray-700">
           Recebemos seus dados e em breve, um dos nossos analistas entrará em contato com você.
         </p>
-        <p className="text-base text-gray-700">
-          Fique atento ao telefone (16) 36007956 para nosso contato.
-          Quer acelerar seu processo? Fale com nossa Atendente Virtual
-
-        </p>
+        <div className="space-y-2">
+          <p className="text-base text-gray-700">
+            Fique atento ao telefone (16) 36007956 para nosso contato.
+          </p>
+          <p className="text-base text-gray-700">
+            Quer acelerar o processo? Fale com a atendente virtual.
+          </p>
+        </div>
         <div className="flex flex-col sm:flex-row gap-4 mt-4">
           <Button asChild variant="default" className="px-6">
             <Link to="/quem-somos">Conheça a Libra</Link>
