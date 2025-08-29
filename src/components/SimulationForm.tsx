@@ -40,7 +40,7 @@
  * @see {@link formatBRL} para formatação de valores
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { validateForm } from '@/utils/validations';
@@ -63,6 +63,7 @@ import { toast } from '@/components/ui/use-toast';
 const SimulationForm: React.FC = () => {
   const { sessionId, visitorId, trackSimulation } = useUserJourney();
   const isMobile = useIsMobile();
+  const loanAmountRef = useRef<HTMLInputElement>(null);
   const [emprestimo, setEmprestimo] = useState('');
   const [garantia, setGarantia] = useState('');
   const [parcelas, setParcelas] = useState<number>(180);
@@ -455,11 +456,17 @@ const SimulationForm: React.FC = () => {
               
               <CityAutocomplete
                 value={cidade}
-                onCityChange={setCidade}
+                onCityChange={(city) => {
+                  setCidade(city);
+                  if (isMobile && city) {
+                    setTimeout(() => loanAmountRef.current?.focus(), 0);
+                  }
+                }}
                 isInvalid={invalidCity}
               />
 
               <LoanAmountField
+                ref={loanAmountRef}
                 value={emprestimo}
                 onChange={handleEmprestimoChange}
                 isInvalid={invalidLoan}
