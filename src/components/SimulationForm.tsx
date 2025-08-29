@@ -66,7 +66,7 @@ const SimulationForm: React.FC = () => {
   const [emprestimo, setEmprestimo] = useState('');
   const [garantia, setGarantia] = useState('');
   const [parcelas, setParcelas] = useState<number>(180);
-  const [amortizacao, setAmortizacao] = useState('');
+  const [amortizacao, setAmortizacao] = useState('PRICE');
   const [cidade, setCidade] = useState('');
   const [loading, setLoading] = useState(false);
   const [resultado, setResultado] = useState<SimulationResult | null>(null);
@@ -226,7 +226,7 @@ const SimulationForm: React.FC = () => {
     setEmprestimo('');
     setGarantia('');
     setParcelas(180);
-    setAmortizacao('');
+    setAmortizacao('PRICE');
     setCidade('');
     setResultado(null);
     setErro('');
