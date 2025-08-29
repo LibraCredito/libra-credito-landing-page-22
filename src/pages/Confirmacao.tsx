@@ -30,6 +30,17 @@ const Confirmacao = () => {
           <Button asChild variant="default" className="px-6">
             <Link to="/quem-somos">Conheça a Libra</Link>
           </Button>
+          {summaryText && (
+            <Button
+              asChild
+              className="px-6 bg-[#25D366] hover:bg-[#1EBEA5] text-white"
+            >
+              <Link to={whatsappLink} target="_blank" rel="noopener noreferrer">
+                Falar com a Atendente
+              </Link>
+            </Button>
+          )}
+
         </div>
       </div>
     </MobileLayout>
