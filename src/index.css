@@ -497,7 +497,7 @@
 .wizard-container {
   height: 100vh;
   height: -webkit-fill-available;
-  height: 100dvh;
+  height: calc(var(--vh) * 100);
 }
 
 /* Bottom Navigation Safe Area */

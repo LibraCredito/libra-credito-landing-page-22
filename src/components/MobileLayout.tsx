@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDevice } from '@/hooks/useDevice';
+import { useViewportHeight } from '@/hooks/useViewportHeight';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -14,10 +14,10 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
   showHeader = true,
   showFooter = true
 }) => {
-  const { isDesktop } = useDevice();
+  useViewportHeight();
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex flex-col" style={{ minHeight: 'calc(var(--vh) * 100)' }}>
       {/* Skip Navigation Links for Accessibility */}
       <div className="sr-only focus-within:not-sr-only">
         <a
