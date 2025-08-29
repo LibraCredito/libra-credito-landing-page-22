@@ -13,6 +13,12 @@ const Confirmacao = () => {
         'Confirmação de envio da simulação. Em breve nossa equipe entrará em contato.'
       );
     }
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) {
+      // Garante que o usuário comece no topo da página de confirmação
+      mainContent.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, []);
 
   return (
