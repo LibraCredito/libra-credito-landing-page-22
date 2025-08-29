@@ -310,7 +310,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 value="proprio"
                 checked={imovelProprio === 'proprio'}
                 onChange={(e) => setImovelProprio(e.target.value as 'proprio')}
-                className="absolute inset-0 opacity-0"
+                className="absolute inset-0 opacity-0 pointer-events-none"
                 required
               />
               <Home className="w-4 h-4" />
@@ -327,7 +327,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                 value="terceiro"
                 checked={imovelProprio === 'terceiro'}
                 onChange={(e) => setImovelProprio(e.target.value as 'terceiro')}
-                className="absolute inset-0 opacity-0"
+                className="absolute inset-0 opacity-0 pointer-events-none"
                 required
               />
               <Building className="w-4 h-4" />
