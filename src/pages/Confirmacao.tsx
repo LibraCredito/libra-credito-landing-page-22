@@ -57,6 +57,9 @@ const Confirmacao = () => {
           <p className="text-base text-gray-700">{summaryText}</p>
         )}
         <p className="text-base text-gray-700">Em breve, um de nossos especialistas entrará em contato com você.</p>
+        <p className="text-lg font-semibold text-libra-navy">
+          Quer acelerar seu processo? Fale com nossa Atendente Virtual
+        </p>
         <div className="flex flex-col sm:flex-row gap-4 mt-4">
           <Button asChild variant="default" className="px-6">
             <Link to="/quem-somos">Conheça a Libra</Link>
