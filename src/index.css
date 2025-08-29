@@ -328,11 +328,11 @@
   html {
     /* Ensures minimum 12px fonts for accessibility */
     font-size: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
   }
 
   body {
-    @apply bg-background text-foreground overflow-hidden;
+    @apply bg-background text-foreground overflow-x-hidden;
     scrollbar-gutter: stable both-axis;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
