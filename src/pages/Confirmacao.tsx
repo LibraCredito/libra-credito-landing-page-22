@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import MobileLayout from '@/components/MobileLayout';
 import { Button } from '@/components/ui/button';
 import { Link, useLocation } from 'react-router-dom';
@@ -22,6 +22,7 @@ const Confirmacao = () => {
       : null) ||
     '';
   useEffect(() => {
+    // Runs once on mount to update page metadata
     document.title = 'Simulação Enviada | Libra Crédito';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
@@ -30,6 +31,9 @@ const Confirmacao = () => {
         'Confirmação de envio da simulação. Em breve nossa equipe entrará em contato.'
       );
     }
+  }, []);
+
+  useLayoutEffect(() => {
     const mainContent = document.getElementById('main-content');
     if (mainContent) {
       // Garante que o usuário comece no topo da página de confirmação
