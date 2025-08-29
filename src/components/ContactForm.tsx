@@ -175,8 +175,19 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
       });
       
-      // Redirecionar diretamente para a página de confirmação
-      navigate('/confirmacao');
+      // Redirecionar diretamente para a página de confirmação com resumo
+      const summary = {
+        nome,
+        email,
+        telefone,
+        valorEmprestimo: simulationResult.valorEmprestimo,
+        valorImovel: simulationResult.valorImovel,
+        cidade: simulationResult.cidade,
+        parcelas: simulationResult.parcelas,
+        valorParcela: simulationResult.valor
+      };
+
+      navigate('/confirmacao', { state: { summary } });
       
       // Limpar formulário
       setNome('');
