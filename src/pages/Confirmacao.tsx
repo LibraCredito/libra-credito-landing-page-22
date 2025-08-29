@@ -6,17 +6,10 @@ import WaveSeparator from '@/components/ui/WaveSeparator';
 
 const Confirmacao = () => {
   const location = useLocation();
-  const state =
-    (location.state as {
-      whatsappLink?: string;
-    }) || {};
-
-  const whatsappLink =
-    state.whatsappLink ||
-    (typeof window !== 'undefined'
-      ? localStorage.getItem('whatsappLink')
-      : null) ||
-    'https://wa.me/551636007956';
+  const { summary, whatsappLink: stateWhatsappLink } =
+    (location.state as { summary?: unknown; whatsappLink?: string }) || {};
+  void summary;
+  const whatsappLink = stateWhatsappLink || 'https://wa.me/5516997338791';
   useEffect(() => {
     // Runs once on mount to update page metadata
     document.title = 'Simulação Enviada | Libra Crédito';
