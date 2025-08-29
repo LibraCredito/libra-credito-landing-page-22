@@ -21,6 +21,9 @@ vi.mock('@/components/ui/button', () => ({
 describe('Confirmacao page', () => {
   beforeEach(() => {
     window.localStorage.clear();
+    // Mock scrollTo to avoid jsdom not implemented error
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    window.scrollTo = vi.fn();
   });
 
   it('renders without preloaded data', () => {
@@ -36,9 +39,13 @@ describe('Confirmacao page', () => {
     expect(
       screen.getByRole('link', { name: /Conheça a Libra/i })
     ).toBeInTheDocument();
-    expect(
-      screen.queryByRole('link', { name: /Falar com a Atendente/i })
-    ).toBeNull();
+    const atendenteLink = screen.getByRole('link', {
+      name: /Falar com a Atendente/i,
+    });
+    expect(atendenteLink).toHaveAttribute(
+      'href',
+      'https://wa.me/551636007956'
+    );
   });
 });
 

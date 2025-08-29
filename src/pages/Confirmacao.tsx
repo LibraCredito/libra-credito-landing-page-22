@@ -3,24 +3,20 @@ import MobileLayout from '@/components/MobileLayout';
 import { Button } from '@/components/ui/button';
 import { Link, useLocation } from 'react-router-dom';
 import WaveSeparator from '@/components/ui/WaveSeparator';
+
 const Confirmacao = () => {
   const location = useLocation();
-  const state = (location.state as {
-    summaryText?: string;
-    whatsappLink?: string;
-  }) || {};
-  const summaryText =
-    state.summaryText ||
-    (typeof window !== 'undefined'
-      ? localStorage.getItem('summaryText')
-      : null) ||
-    '';
+  const state =
+    (location.state as {
+      whatsappLink?: string;
+    }) || {};
+
   const whatsappLink =
     state.whatsappLink ||
     (typeof window !== 'undefined'
       ? localStorage.getItem('whatsappLink')
       : null) ||
-    '';
+    'https://wa.me/551636007956';
   useEffect(() => {
     document.title = 'Simulação Enviada | Libra Crédito';
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -49,24 +45,22 @@ const Confirmacao = () => {
         </p>
         <p className="text-base text-gray-700">
           Fique atento ao telefone (16) 36007956 para nosso contato.
+        </p>
+        <p className="text-base text-gray-700">
           Quer acelerar seu processo? Fale com nossa Atendente Virtual
-
         </p>
         <div className="flex flex-col sm:flex-row gap-4 mt-4">
+          <Button
+            asChild
+            className="px-6 bg-[#25D366] hover:bg-[#1EBEA5] text-white"
+          >
+            <Link to={whatsappLink} target="_blank" rel="noopener noreferrer">
+              Falar com a Atendente
+            </Link>
+          </Button>
           <Button asChild variant="default" className="px-6">
             <Link to="/quem-somos">Conheça a Libra</Link>
           </Button>
-          {summaryText && (
-            <Button
-              asChild
-              className="px-6 bg-[#25D366] hover:bg-[#1EBEA5] text-white"
-            >
-              <Link to={whatsappLink} target="_blank" rel="noopener noreferrer">
-                Falar com a Atendente
-              </Link>
-            </Button>
-          )}
-
         </div>
       </div>
     </MobileLayout>
