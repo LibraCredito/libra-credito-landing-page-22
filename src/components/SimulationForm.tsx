@@ -40,8 +40,7 @@
  * @see {@link formatBRL} para formatação de valores
  */
 
-import React, { useRef, useState } from 'react';
-
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { validateForm } from '@/utils/validations';
@@ -60,7 +59,6 @@ import { ApiMessageAnalysis } from '@/utils/apiMessageAnalyzer';
 import { analyzeLocalMessage } from '@/utils/localMessageAnalyzer';
 import { formatBRL, norm } from '@/utils/formatters';
 import { toast } from '@/components/ui/use-toast';
-import scrollToTarget from '@/utils/scrollToTarget';
 
 const SimulationForm: React.FC = () => {
   const { sessionId, visitorId, trackSimulation } = useUserJourney();
@@ -75,8 +73,6 @@ const SimulationForm: React.FC = () => {
   const [erro, setErro] = useState('');
   const [apiMessage, setApiMessage] = useState<ApiMessageAnalysis | null>(null);
   const [isRuralProperty, setIsRuralProperty] = useState(false);
-
-  const cityAutocompleteRef = useRef<{ handleBlur: () => void }>(null);
 
   // Validações
   const validation = validateForm(emprestimo, garantia, parcelas, amortizacao, cidade);
@@ -128,27 +124,16 @@ const SimulationForm: React.FC = () => {
   const scrollToApiMessage = () => {
     if (isMobile) {
       setTimeout(() => {
-        const messageElement = document.querySelector('[data-api-message="true"]') as HTMLElement | null;
+        const messageElement = document.querySelector('[data-api-message="true"]');
         if (messageElement) {
-          const headerHeight = document.querySelector('header')?.offsetHeight ?? 80;
-          scrollToTarget(messageElement, -headerHeight);
+          (messageElement as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 300);
     }
   };
 
-  useEffect(() => {
-    if (
-      apiMessage &&
-      (apiMessage.type === 'limit_30_general' || apiMessage.type === 'limit_30_rural')
-    ) {
-      scrollToApiMessage();
-    }
-  }, [apiMessage]);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    cityAutocompleteRef.current?.handleBlur();
 
     if (!validation.formularioValido) {
       toast({
@@ -212,6 +197,9 @@ const SimulationForm: React.FC = () => {
           // É uma mensagem estruturada do serviço local
           setApiMessage(analysis);
           setErro(''); // Limpar erro genérico
+          if (analysis.type === 'limit_30_general' || analysis.type === 'limit_30_rural') {
+            scrollToApiMessage();
+          }
         } else {
           // É um erro genérico
           let errorMessage = 'Erro desconhecido ao realizar simulação';
@@ -235,7 +223,6 @@ const SimulationForm: React.FC = () => {
   };
 
   const handleClear = () => {
-    cityAutocompleteRef.current?.handleBlur();
     setEmprestimo('');
     setGarantia('');
     setParcelas(180);
@@ -325,6 +312,9 @@ const SimulationForm: React.FC = () => {
           if (analysis.type !== 'unknown_error') {
             setApiMessage(analysis);
             setErro('');
+            if (analysis.type === 'limit_30_general' || analysis.type === 'limit_30_rural') {
+              scrollToApiMessage();
+            }
           } else {
             let errorMessage = 'Erro ao processar simulação automática';
             
@@ -419,6 +409,9 @@ const SimulationForm: React.FC = () => {
           if (analysis.type !== 'unknown_error') {
             setApiMessage(analysis);
             setErro('');
+            if (analysis.type === 'limit_30_general' || analysis.type === 'limit_30_rural') {
+              scrollToApiMessage();
+            }
           } else {
             setErro('Erro ao refazer simulação com tabela PRICE');
             setApiMessage(null);
@@ -461,7 +454,6 @@ const SimulationForm: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-2">
               
               <CityAutocomplete
-                ref={cityAutocompleteRef}
                 value={cidade}
                 onCityChange={setCidade}
                 isInvalid={invalidCity}

@@ -55,7 +55,8 @@ const ContactForm: React.FC<ContactFormProps> = ({
   const [showIncompleteError, setShowIncompleteError] = useState(false);
 
   const invalidNome = nome.trim() === '';
-  const invalidEmail = email.trim() === '';
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const invalidEmail = !emailRegex.test(email.trim());
   const invalidTelefone = telefone.trim() === '';
   const invalidImovelProprio = imovelProprio === '';
   const invalidAceite = !aceitePrivacidade;
@@ -175,8 +176,22 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
       });
       
-      // Redirecionar diretamente para a página de confirmação
-      navigate('/confirmacao');
+      // Redirecionar diretamente para a página de confirmação com resumo
+      const summary = {
+        nome,
+        email,
+        telefone,
+        valorEmprestimo: simulationResult.valorEmprestimo,
+        valorImovel: simulationResult.valorImovel,
+        cidade: simulationResult.cidade,
+        parcelas: simulationResult.parcelas,
+        valorParcela: simulationResult.valor,
+        amortizacao: simulationResult.amortizacao,
+        imovelProprio,
+        emailValido: !invalidEmail
+      };
+
+      navigate('/confirmacao', { state: { summary } });
       
       // Limpar formulário
       setNome('');

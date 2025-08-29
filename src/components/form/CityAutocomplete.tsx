@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle, useRef, useState, forwardRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import MapPin from 'lucide-react/dist/esm/icons/map-pin';
 import scrollToTarget from '@/utils/scrollToTarget';
 
@@ -15,8 +15,7 @@ interface CityAutocompleteProps {
  * Searches city suggestions from LTV_Cidades.json as user types 
  * and only allows selection of valid cities.
  */
-const CityAutocomplete = forwardRef<{ handleBlur: () => void }, CityAutocompleteProps>(
-  ({ value = '', onCityChange, isInvalid = false }, ref) => {
+const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ value = '', onCityChange, isInvalid = false }) => {
   const [inputValue, setInputValue] = useState<string>(value);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -29,19 +28,6 @@ const CityAutocomplete = forwardRef<{ handleBlur: () => void }, CityAutocomplete
   const cancelScrollRef = useRef<((e: PointerEvent) => void) | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Cleanup listeners on unmount
-  useEffect(() => {
-    return () => {
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current);
-      }
-      if (cancelScrollRef.current) {
-        document.removeEventListener('pointerdown', cancelScrollRef.current);
-        cancelScrollRef.current = null;
-      }
-    };
-  }, []);
 
   // Keep input in sync if parent resets the value
   useEffect(() => {
@@ -93,9 +79,8 @@ const CityAutocomplete = forwardRef<{ handleBlur: () => void }, CityAutocomplete
       scrollTimeout.current = setTimeout(() => {
         if (!inputRef.current) return;
         const headerHeight = 80;
-        const extraOffset = 240;
         if (document.activeElement === inputRef.current) {
-          scrollToTarget(inputRef.current, -(headerHeight + extraOffset));
+          scrollToTarget(inputRef.current as HTMLElement, -headerHeight);
         }
       }, 300);
 
@@ -181,9 +166,6 @@ const CityAutocomplete = forwardRef<{ handleBlur: () => void }, CityAutocomplete
     }
   };
 
-  // Expose blur handler to parent components
-  useImperativeHandle(ref, () => ({ handleBlur }));
-
   // Check if we should show suggestions
   const showSuggestions = isFocused && inputValue.length >= 2 && (isLoading || error || suggestions.length > 0);
 
@@ -211,7 +193,7 @@ const CityAutocomplete = forwardRef<{ handleBlur: () => void }, CityAutocomplete
               inputValue.length < 2 ? 'Digite 2 ou mais caracteres' : 'Busque a cidade'
             }
             className={cn(
-              'text-sm w-full px-3 py-2 rounded-md border-2 focus:outline-none transition-colors scroll-mt-header scroll-mb-60',
+              'text-sm w-full px-3 py-2 rounded-md border-2 focus:outline-none transition-colors scroll-mt-header',
               isInvalid
                 ? 'border-red-500 focus:border-red-500'
                 : 'border-green-700 focus:border-green-800'
@@ -266,9 +248,6 @@ const CityAutocomplete = forwardRef<{ handleBlur: () => void }, CityAutocomplete
       </div>
     </div>
   );
-  }
-);
-
-CityAutocomplete.displayName = 'CityAutocomplete';
+};
 
 export default CityAutocomplete;
