@@ -12,29 +12,32 @@ interface LoanAmountFieldProps {
   isInvalid?: boolean;
 }
 
-const LoanAmountField: React.FC<LoanAmountFieldProps> = ({ value, onChange, isInvalid = false }) => {
-  return (
-    <div className="flex flex-col gap-1">
-      <label className="text-xs font-medium text-green-700 mb-1 flex items-center gap-1">
-        Digite o valor desejado do Empréstimo
-        <ResponsiveInfo content="Insira aqui o valor que você pretende pegar de empréstimo." />
-      </label>
-      <div className="flex items-center gap-2">
-        <div className="bg-libra-light p-1.5 rounded-full flex-shrink-0">
-          <DollarSign className="w-4 h-4 text-green-700" />
-        </div>
-        <div className="flex-1">
-          <Input
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            placeholder="entre 100 mil e 5 milhões"
-            className={cn('text-sm', isInvalid && 'border-red-500 focus:border-red-500 focus:ring-red-500')}
-            inputMode="numeric"
-          />
+const LoanAmountField = React.forwardRef<HTMLInputElement, LoanAmountFieldProps>(
+  ({ value, onChange, isInvalid = false }, ref) => {
+    return (
+      <div className="flex flex-col gap-1">
+        <label className="text-xs font-medium text-green-700 mb-1 flex items-center gap-1">
+          Digite o valor desejado do Empréstimo
+          <ResponsiveInfo content="Insira aqui o valor que você pretende pegar de empréstimo." />
+        </label>
+        <div className="flex items-center gap-2">
+          <div className="bg-libra-light p-1.5 rounded-full flex-shrink-0">
+            <DollarSign className="w-4 h-4 text-green-700" />
+          </div>
+          <div className="flex-1">
+            <Input
+              ref={ref}
+              value={value}
+              onChange={(e) => onChange(e.target.value)}
+              placeholder="entre 100 mil e 5 milhões"
+              className={cn('text-sm', isInvalid && 'border-red-500 focus:border-red-500 focus:ring-red-500')}
+              inputMode="numeric"
+            />
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export default LoanAmountField;
