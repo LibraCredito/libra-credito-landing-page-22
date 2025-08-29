@@ -75,6 +75,14 @@ const SimulationForm: React.FC = () => {
   const [apiMessage, setApiMessage] = useState<ApiMessageAnalysis | null>(null);
   const [isRuralProperty, setIsRuralProperty] = useState(false);
 
+  const amortizationRef = useRef<HTMLDivElement>(null);
+
+  const handleProceedToAmortization = () => {
+    const active = document.activeElement as HTMLElement | null;
+    active?.blur();
+    amortizationRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
   // Validações
   const validation = validateForm(emprestimo, garantia, parcelas, amortizacao, cidade);
 
@@ -479,13 +487,25 @@ const SimulationForm: React.FC = () => {
                 isInvalid={invalidGuarantee}
               />
 
+              {isMobile && (
+                <Button
+                  type="button"
+                  onClick={handleProceedToAmortization}
+                  className="w-full bg-green-500 hover:bg-green-600 text-white py-2 text-sm font-semibold"
+                >
+                  Prosseguir
+                </Button>
+              )}
+
               <InstallmentsField value={parcelas} onChange={setParcelas} />
 
-              <AmortizationField
-                value={amortizacao}
-                onChange={setAmortizacao}
-                isInvalid={invalidAmortization}
-              />
+              <div ref={amortizationRef}>
+                <AmortizationField
+                  value={amortizacao}
+                  onChange={setAmortizacao}
+                  isInvalid={invalidAmortization}
+                />
+              </div>
 
               {/* Botões */}
               <div className="flex gap-2 pt-2">
